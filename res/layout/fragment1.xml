@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#0065ac"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Платежная система"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="96dp"
+            android:textColor="#ffffff"
+            android:textColorHighlight="#a9f0ff"
+            android:editable="false"
+            android:singleLine="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textColor="#0065ac"
+            android:text="Логин"
+            android:ems="10"
+            android:id="@+id/epid"
+            android:editable="true"
+            android:background="#FFFFFF"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:enabled="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/epass"
+            android:text="Пароль"
+            android:textColor="#0065ac"
+            android:password="false"
+            android:enabled="true"
+            android:background="#FFFFFF"
+            android:clickable="false"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:editable="true" />
+
+        <Button
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:text="Вход"
+            android:id="@+id/singin"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textColor="#ffffff" />
+
+    </LinearLayout>
+</LinearLayout>
