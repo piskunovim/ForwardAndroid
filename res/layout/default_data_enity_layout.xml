@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <TextView 
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"        
+        android:id="@+id/data_entry_title"
+        android:text="Проведение платежа"
+    />
+    
+    <LinearLayout  
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/data_entry_fields_container"
+    />
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        
+        <Button 
+            android:text="@string/data_entry_button_start_text"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/data_entry_button_start"
+        />
+        
+        <Button 
+            android:text="@string/data_entry_button_check_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_entry_button_check"
+        />
+        
+    </LinearLayout>
+        
+        
+    
+</LinearLayout>
