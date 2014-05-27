@@ -50,15 +50,15 @@ public class TPostData extends AsyncTask<String, String, String> {
         protected String doInBackground(String... params) {
             // Создадим HttpClient и PostHandler
             HttpClient httpclient = new DefaultHttpClient();
-            //HttpPost httppost = new HttpPost("http://192.168.1.253:8170");
-            HttpPost httppost = new HttpPost("http://www.forwardmobile.ru:8193");
+            HttpPost httppost = new HttpPost("http://192.168.1.253:8170");
+            //HttpPost httppost = new HttpPost("http://www.forwardmobile.ru:8193");
             Log.d(LOG_TAG, "pointid: " + pointID + " password: " + password);
 
 
             try {
                 // Добавим данные (пара - "название - значение")
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                /*nameValuePairs.add(new BasicNameValuePair("command", "JT_EXPORT_CONFIGURATION"));
+                nameValuePairs.add(new BasicNameValuePair("command", "JT_EXPORT_CONFIGURATION"));
                 nameValuePairs.add(new BasicNameValuePair("pointid", pointID));
                 nameValuePairs.add(new BasicNameValuePair("password", password));
                 //nameValuePairs.add(new BasicNameValuePair("pointid", "1197"));
@@ -79,7 +79,7 @@ public class TPostData extends AsyncTask<String, String, String> {
 
                 Log.d("ResponseContentLength", String.valueOf(response.getEntity().getContentLength()));
                 Log.d("ResponseLength", String.valueOf(counto));
-*/
+  /*Раскомментировать если мы хотим использовать библиотеку IRequest
                 TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
                 TSettings.set(TSettings.SERVER_PORT, "8193");
                 StringBuilder builder = new StringBuilder();
@@ -90,8 +90,8 @@ public class TPostData extends AsyncTask<String, String, String> {
                 IRequest request = ServerRequestFactory.getRequest(builder.toString());
                 HttpTransport transport = new HttpTransport();
                 byte[] resp = transport.send(request);
-                return new String(resp);
-                //return responseStr.toString();
+                return new String(resp);*/
+                return responseStr.toString();
             } catch (ClientProtocolException e) {
                 // Ошибка :(
                 Log.d("ClientProtocolException:", e.getMessage());

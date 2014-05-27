@@ -86,17 +86,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//Operators data
         sqld.execSQL("CREATE TABLE " + F_TABLE_NAME	
-				+ "(provider integer, name text, prefix text, title text, mask text, required text, type text)");        
+				+ "(id integer primary key, fn text, fc text, fm text, fr text, ft text)");        
     }
     
     
-    public Cursor getProvider(Integer id) {
-        throw new UnsupportedOperationException();
-    }
     
-    public Cursor getProviderFields(Integer id) {
-        return db.rawQuery("select name, prefix, title, mask, type from " + F_TABLE_NAME + " where op = ? ", new String[]{
-            String.valueOf(id)
-        });
-    }
 }

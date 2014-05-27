@@ -20,33 +20,58 @@
             android:text="Платежная система"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="94dp"
             android:textColor="#ffffff"
             android:textColorHighlight="#a9f0ff"
             android:editable="false"
             android:singleLine="true" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Логин:"
+            android:id="@+id/textView2"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#ffffff"
+            android:phoneNumber="true"
+            android:layout_gravity="center_horizontal" />
+
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:textColor="#0065ac"
-            android:text="Логин"
             android:ems="10"
             android:id="@+id/epid"
             android:editable="true"
             android:background="#FFFFFF"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:enabled="true" />
+            android:layout_marginTop="6dp"
+            android:enabled="true"
+            android:textIsSelectable="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Пароль:"
+            android:id="@+id/textView3"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="-12dp"
+            android:textColor="#ffffff"
+            android:phoneNumber="true"
+            android:layout_gravity="center_horizontal" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:ems="10"
             android:id="@+id/epass"
-            android:text="Пароль"
             android:textColor="#0065ac"
             android:password="false"
             android:enabled="true"
