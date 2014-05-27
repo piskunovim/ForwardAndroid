@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
         LoginFrag = new TLoginForm();
         HomeFrag = new THomeActivity();
-        EmptyFrag = new TEmptyFrag();
+        //EmptyFrag = new TEmptyFrag();
         fTrans = getFragmentManager().beginTransaction();
         fTrans.add(R.id.frgmCont, LoginFrag);
         fTrans.commit();
@@ -111,7 +111,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                                     int position, long id) {
                 String name = (String) parent.getItemAtPosition(position);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-                Cursor c = db.rawQuery("SELECT * FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
+                Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
                 c.moveToNext();
                 Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
                 OperatorsListView(c.getString(c.getColumnIndex("id")));//, oplistContent);
@@ -127,6 +127,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                 Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
                 OperatorsListView(c.getString(c.getColumnIndex("id")));//, oplistContent);
             }
+
 
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d(LOG_TAG, "itemSelect: nothing");
@@ -232,6 +233,21 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1, operatorgroup);
             listContent.setAdapter(adapter);
+            listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    String name = (String) parent.getItemAtPosition(position);
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    Cursor cr = db.rawQuery("SELECT id FROM p WHERE TRIM(name) = '"+name.trim()+"'", null);
+                    cr.moveToNext();
+                    Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ cr.getString(cr.getColumnIndex("id")));
+                    //
+                    //! Здесь будем передавать id
+                    //
+                    // cr.getString(cr.getColumnIndex("id")
+                }
+            });
+
         } else
             Log.d(LOG_TAG, "Got 0 rows");
         listpc.close();
