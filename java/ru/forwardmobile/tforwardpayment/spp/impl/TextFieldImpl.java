@@ -15,7 +15,6 @@ public class TextFieldImpl extends BaseField {
 
         valueView = new EditText(ctx);
         valueView.setLayoutParams(DEFAULT_LAYOUT_PARAMS);
-        valueView.setText(name);
         
         this.addView(valueView);
     }

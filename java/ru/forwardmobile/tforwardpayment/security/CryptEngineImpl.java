@@ -38,22 +38,22 @@ public class CryptEngineImpl implements ICryptEngine {
         // Получаем действующее хранилище
         IKeyStorage storage = KeyStorageFactory.getKeyStorage(ctx);
        
-        Log.v("FORWARD.CRYPT", "Decoding public key...");
+        Log.v("TFORWARD.CryptEngineImpl", "Decoding public key...");
         byte[] publicKey = Base64.decode( storage.getKey(IKeyStorage.PUBLIC_KEY_TYPE), Base64.DEFAULT);
             
-        Log.v("FORWARD.CRYPT", "Decoding ASN1 Structure");
+        Log.v("TFORWARD.CryptEngineImpl", "Decoding ASN1 Structure");
         ASN1InputStream asnStream = new ASN1InputStream(publicKey);
         
         
         ASN1Sequence sequence = null;
         try {
-            Log.v("FORWARD.CRYPT", "Reading ASN1 Sequence");
+            Log.v("TFORWARD.CryptEngineImpl", "Reading ASN1 Sequence");
             sequence = (ASN1Sequence)  asnStream.readObject();
         } finally {
             asnStream.close();
         }
         
-        Log.v("FORWARD.CRYPT", "Creating certificate. " + sequence.size());
+        Log.v("TFORWARD.CryptEngineImpl", "Creating certificate. " + sequence.size());
         Certificate certificate = Certificate.getInstance(sequence);
         SubjectPublicKeyInfo publicKeyInfo = certificate.getSubjectPublicKeyInfo();
         

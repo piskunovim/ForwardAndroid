@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import ru.forwardmobile.tforwardpayment.spp.IField;
+import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 
 /**
  *
@@ -42,5 +43,18 @@ public abstract class BaseField extends LinearLayout implements IField {
 
     public View getView() {
         return this;
+    }
+    
+    public static IFieldInfo fieldInfo(final String name, final String value) {
+        return new IFieldInfo() {
+
+            public String getName() {
+                return name;
+            }
+
+            public String getValue() {
+                return value;
+            }
+        };
     }
 }
