@@ -39,12 +39,12 @@ public class HttpTransport
         request.setPort(TSettings.getInt(TSettings.SERVER_PORT));
         request.setPath("/?v=" + TSettings.getVersion());
 
-        Log.i("HTTPT", request.toString());
+        Log.i("TFORWARD.HttpTransport", request.toString());
         
         ITransport transport = TransportFactory.getTransport();
         IResponse  response  = transport.send(request);        
         
-        Log.i("HTTPT", response.toString());
+        Log.i("TFORWARD.HttpTransport", response.toString());
         
         //  Ответ от сервера так же может быть разбит на две части
         InputStream is = new ByteArrayInputStream( response.getData() );

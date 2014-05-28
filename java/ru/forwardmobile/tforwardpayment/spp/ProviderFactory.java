@@ -2,6 +2,8 @@ package ru.forwardmobile.tforwardpayment.spp;
 
 import android.content.Context;
 import android.database.Cursor;
+import java.util.Arrays;
+import java.util.Collection;
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.spp.impl.EnumFieldImpl;
 import ru.forwardmobile.tforwardpayment.spp.impl.ProviderPojoImpl;
@@ -56,5 +58,29 @@ public class ProviderFactory {
         
         // Провайдер не найден
         return null;
+    }
+    
+    // Провайдер для тестов
+    public static IProvider mockProvider(final Context ctx) {
+        return new IProvider() {
+            
+            public Integer getId() {
+                return 1;
+            }
+            
+            public Double getMaxSumm() {
+                return 5000.00;
+            }
+            
+            public Double getMinSumm() {
+                return 10.00;
+            }
+
+            public Collection<IField> getFields() {
+                return Arrays.asList(
+                    (IField) new TextFieldImpl(ctx, "target", "Номер телефона")
+                );
+            }
+        };
     }
 }
