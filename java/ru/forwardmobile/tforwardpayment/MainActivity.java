@@ -1,17 +1,11 @@
 package ru.forwardmobile.tforwardpayment;
 
-import android.app.Activity;
-import android.content.ContentValues;
-import android.content.Context;
-import android.support.v4.app.Fragment;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,21 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpParams;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
+import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+
 
 public class MainActivity extends FragmentActivity implements OnClickListener {
 
@@ -47,12 +31,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     EditText etName, etPass;
     //Context context;
 
-    TDataBase dbHelper;
-    TPostData pd;
-    TLoginForm LoginFrag;
-    THomeActivity HomeFrag;
-    TEmptyFrag EmptyFrag;
-    FragmentTransaction fTrans;
+    SQLiteOpenHelper        dbHelper;
+    TPostData               pd;
+    TLoginForm              LoginFrag;
+    THomeActivity           HomeFrag;
+
 
     ArrayList<String> operatorgroup = new ArrayList<String>();
    // ContentValues cv;
@@ -66,39 +49,38 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
         LoginFrag = new TLoginForm();
         HomeFrag = new THomeActivity();
-        //EmptyFrag = new TEmptyFrag();
-        fTrans = getFragmentManager().beginTransaction();
-        fTrans.add(R.id.frgmCont, LoginFrag);
-        fTrans.commit();
 
+        getSupportFragmentManager().beginTransaction()
+            .add(R.id.frgmCont, LoginFrag)
+            .commit();
+
+        dbHelper = new DatabaseHelper(this);
     }
 
 
     public void SingIn(String pointid, String password){
+
         pd = new TPostData();
         pd.pointID = pointid;
         pd.password = password;
 
         try{
 
-        fTrans = getFragmentManager().beginTransaction();
-        fTrans.replace(R.id.frgmCont,EmptyFrag);
-        fTrans.commit();
-        TParseOperators parse = new TParseOperators();
-        dbHelper = new TDataBase(this);
-        String responseStr = pd.execute().get();
+            getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frgmCont, new TEmptyFrag())
+                .commit();
 
-        parse.GetXMLSettings(responseStr, dbHelper);
-        Log.d(LOG_TAG,responseStr);
+            TParseOperators parse = new TParseOperators();
+            String responseStr = pd.execute().get();
 
-
-
-        //parse.GetXMLSettings(xmlstring, dbHelper);
+            parse.GetXMLSettings(responseStr, dbHelper);
+            Log.d(LOG_TAG,responseStr);
 
         }
         catch(Exception e)
         {
-            Log.d(LOG_TAG,e.getMessage());
+            // Log.d(LOG_TAG,e.getMessage());
+            e.printStackTrace();
         }
 
 
@@ -143,7 +125,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
         ListView listContent = (ListView)findViewById(R.id.listView);
         if (item.getTitle().equals("Назад"))
         {
@@ -254,7 +235,4 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         dbHelper.close();
 
     }
-
-
-
 }
