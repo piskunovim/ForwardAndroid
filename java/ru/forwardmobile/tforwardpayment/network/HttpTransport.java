@@ -1,11 +1,13 @@
 package ru.forwardmobile.tforwardpayment.network;
 
 import android.util.Log;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import ru.forwardmobile.tforwardpayment.security.ICryptEngine;
+
 import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.security.ICryptEngine;
 import ru.forwardmobile.util.http.IRequest;
 import ru.forwardmobile.util.http.IResponse;
 import ru.forwardmobile.util.http.ITransport;
@@ -47,7 +49,7 @@ public class HttpTransport
         Log.i("TFORWARD.HttpTransport", response.toString());
         
         //  Ответ от сервера так же может быть разбит на две части
-        InputStream is = new ByteArrayInputStream( response.getData() );
+        InputStream is =  new ByteArrayInputStream(response.getData());
         ByteArrayOutputStream answer    = new ByteArrayOutputStream();
         ByteArrayOutputStream signature = new ByteArrayOutputStream();
         
@@ -70,9 +72,8 @@ public class HttpTransport
         // И проверка подписи, если она необходима
         if(  cryptEngine != null  ) {
             cryptEngine.verifySignature(answer.toByteArray(), signature.toByteArray());
-        } else {
         }
-        
+
         return answer.toByteArray();
     }
     
