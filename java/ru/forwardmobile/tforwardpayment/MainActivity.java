@@ -225,7 +225,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
                     PaymentActivity pa= new PaymentActivity();
 
-                    pa.SetOperatorId(Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    //pa.SetOperatorId(Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
                     //pa.operator_id = cr.getColumnIndex("id");
                     //pa.ShowOperatorId();
                     //
