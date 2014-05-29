@@ -1,6 +1,7 @@
 package ru.forwardmobile.tforwardpayment;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -92,7 +93,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 String name = (String) parent.getItemAtPosition(position);
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
                 Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
                 c.moveToNext();
                 Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
@@ -101,15 +102,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         });
 
         listContent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 String name = (String) parent.getItemAtPosition(position);
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
                 Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
                 Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
                 OperatorsListView(c.getString(c.getColumnIndex("id")));//, oplistContent);
             }
-
 
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d(LOG_TAG, "itemSelect: nothing");
@@ -148,7 +149,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     public void GenerateListView(String table, String column, ListView listContent){
         Log.d(LOG_TAG, "--- table: "+ table + " ---");
         Log.d(LOG_TAG, "--- column: "+ column + " ---");
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Log.d(LOG_TAG, "--- Got rows in pg table: ---");
         // делаем запрос всех данных из таблицы mytable, получаем Cursor
         operatorgroup.clear();
@@ -187,7 +188,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         Log.d(LOG_TAG, "Start OperatorsListView");
         operatorgroup.clear();
         ListView listContent = (ListView)findViewById(R.id.listView);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         // делаем запрос всех данных из таблицы mytable, получаем Cursor
         Cursor listpc = db.query("p", null, null, null, null, null, null);
 
@@ -218,7 +219,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     String name = (String) parent.getItemAtPosition(position);
-                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    SQLiteDatabase db = dbHelper.getReadableDatabase();
                     Cursor cr = db.rawQuery("SELECT id FROM p WHERE TRIM(name) = '"+name.trim()+"'", null);
                     cr.moveToNext();
                     Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ cr.getString(cr.getColumnIndex("id")));
@@ -231,7 +232,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                     //
                     //! Здесь будем передавать id
                     //
-                    // cr.getString(cr.getColumnIndex("id")
+                    // cr.getString(cr.getColumnIndex("id"));
+                    Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
+                    startActivity(intent);
                 }
             });
 
