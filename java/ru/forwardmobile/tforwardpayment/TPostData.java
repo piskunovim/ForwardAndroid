@@ -20,8 +20,8 @@ import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.network.ServerRequestFactory;
-import com.example.util.http.Converter;
-import com.example.util.http.IRequest;
+import ru.forwardmobile.util.http.Converter;
+import ru.forwardmobile.util.http.IRequest;
 
 /**
  * Created by PiskunovI on 12.05.14.
@@ -30,7 +30,7 @@ public class TPostData extends AsyncTask<String, String, String> {
 
         String pointID;
         String password;
-        final String LOG_TAG = "TTestActivity.TPostData";
+        final String LOG_TAG = "TFORWARD.TPostData";
 
         public TPostData() {
 
@@ -44,23 +44,26 @@ public class TPostData extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
-
+            // ???????? HttpClient ? PostHandler
             HttpClient httpclient = new DefaultHttpClient();
-
+            //HttpPost httppost = new HttpPost("http://192.168.1.253:8170");
             HttpPost httppost = new HttpPost("http://www.forwardmobile.ru:8193");
-
             Log.d(LOG_TAG, "pointid: " + pointID + " password: " + password);
 
 
             try {
+                // ??????? ?????? (???? - "???????? - ????????")
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("command", "JT_EXPORT_CONFIGURATION"));
                 nameValuePairs.add(new BasicNameValuePair("pointid", pointID));
                 nameValuePairs.add(new BasicNameValuePair("password", password));
+                //nameValuePairs.add(new BasicNameValuePair("pointid", "1197"));
+                //nameValuePairs.add(new BasicNameValuePair("password", "123123"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 
 
+                // ???????? ??????
                 HttpResponse response = httpclient.execute(httppost);
 
 
@@ -70,9 +73,11 @@ public class TPostData extends AsyncTask<String, String, String> {
                 String responseStr = EntityUtils.toString(response.getEntity());
                 int counto = responseStr.length();
 
-                Log.d(LOG_TAG + " ResponseContentLength", String.valueOf(response.getEntity().getContentLength()));
-                Log.d(LOG_TAG + " ResponseLength", String.valueOf(counto));
+                Log.d("ResponseContentLength", String.valueOf(response.getEntity().getContentLength()));
+                Log.d("ResponseLength", String.valueOf(counto));
 
+                //TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
+                //TSettings.set(TSettings.SERVER_PORT, "8170");
                 TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
                 TSettings.set(TSettings.SERVER_PORT, "8193");
                 StringBuilder builder = new StringBuilder();
@@ -86,9 +91,11 @@ public class TPostData extends AsyncTask<String, String, String> {
                 return Converter.toUnicode(resp);
                 //return responseStr.toString();
             } catch (ClientProtocolException e) {
-                Log.d(LOG_TAG + " ClientProtocolException:", e.getMessage());
+                // ?????? :(
+                Log.d("ClientProtocolException:", e.getMessage());
             } catch (IOException e) {
-                Log.d(LOG_TAG + " IOException:", e.getMessage());
+                // ?????? :(
+                Log.d("IOException:", e.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
             }
