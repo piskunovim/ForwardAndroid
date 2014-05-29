@@ -14,18 +14,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.network.ServerRequestFactory;
+import ru.forwardmobile.util.http.Converter;
 import ru.forwardmobile.util.http.IRequest;
-import ru.forwardmobile.util.http.IResponse;
-import ru.forwardmobile.util.http.RequestFactory;
 
 /**
  * Created by PiskunovI on 12.05.14.
@@ -48,15 +44,15 @@ public class TPostData extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
-            // Создадим HttpClient и PostHandler
+            // ???????? HttpClient ? PostHandler
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://192.168.1.253:8170");
-            //HttpPost httppost = new HttpPost("http://www.forwardmobile.ru:8193");
+            //HttpPost httppost = new HttpPost("http://192.168.1.253:8170");
+            HttpPost httppost = new HttpPost("http://www.forwardmobile.ru:8193");
             Log.d(LOG_TAG, "pointid: " + pointID + " password: " + password);
 
 
             try {
-                // Добавим данные (пара - "название - значение")
+                // ??????? ?????? (???? - "???????? - ????????")
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("command", "JT_EXPORT_CONFIGURATION"));
                 nameValuePairs.add(new BasicNameValuePair("pointid", pointID));
@@ -67,7 +63,7 @@ public class TPostData extends AsyncTask<String, String, String> {
 
 
 
-                // Выполним запрос
+                // ???????? ??????
                 HttpResponse response = httpclient.execute(httppost);
 
 
@@ -79,7 +75,9 @@ public class TPostData extends AsyncTask<String, String, String> {
 
                 Log.d("ResponseContentLength", String.valueOf(response.getEntity().getContentLength()));
                 Log.d("ResponseLength", String.valueOf(counto));
-  /*Раскомментировать если мы хотим использовать библиотеку IRequest
+
+                //TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
+                //TSettings.set(TSettings.SERVER_PORT, "8170");
                 TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
                 TSettings.set(TSettings.SERVER_PORT, "8193");
                 StringBuilder builder = new StringBuilder();
@@ -90,13 +88,13 @@ public class TPostData extends AsyncTask<String, String, String> {
                 IRequest request = ServerRequestFactory.getRequest(builder.toString());
                 HttpTransport transport = new HttpTransport();
                 byte[] resp = transport.send(request);
-                return new String(resp);*/
-                return responseStr.toString();
+                return Converter.toUnicode(resp);
+                //return responseStr.toString();
             } catch (ClientProtocolException e) {
-                // Ошибка :(
+                // ?????? :(
                 Log.d("ClientProtocolException:", e.getMessage());
             } catch (IOException e) {
-                // Ошибка :(
+                // ?????? :(
                 Log.d("IOException:", e.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
