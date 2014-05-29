@@ -66,7 +66,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
         LoginFrag = new TLoginForm();
         HomeFrag = new THomeActivity();
-        //EmptyFrag = new TEmptyFrag();
+        EmptyFrag = new TEmptyFrag();
         fTrans = getFragmentManager().beginTransaction();
         fTrans.add(R.id.frgmCont, LoginFrag);
         fTrans.commit();
@@ -241,6 +241,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                     Cursor cr = db.rawQuery("SELECT id FROM p WHERE TRIM(name) = '"+name.trim()+"'", null);
                     cr.moveToNext();
                     Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ cr.getString(cr.getColumnIndex("id")));
+
+                    PaymentActivity pa= new PaymentActivity();
+
+                    pa.SetOperatorId(Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    //pa.operator_id = cr.getColumnIndex("id");
+                    //pa.ShowOperatorId();
                     //
                     //! Здесь будем передавать id
                     //
