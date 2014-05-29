@@ -11,12 +11,12 @@ import ru.forwardmobile.tforwardpayment.TSettings;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int        SQLITE_DATABASE_VERSION = 6;
-    private static final String     SQLITE_DATABASE_NAME    = "forward";
-    private static final String     SETTINGS_TABLE_NAME     = "settings";
-    private static final String     PG_TABLE_NAME           = "pg";  
-    private static final String     P_TABLE_NAME            = "p";  
-    private static final String     F_TABLE_NAME            = "f"; 
+    public static final int        SQLITE_DATABASE_VERSION = 6;
+    public static final String     SQLITE_DATABASE_NAME    = "forward";
+    public static final String     SETTINGS_TABLE_NAME     = "settings";
+    public static final String     PG_TABLE_NAME           = "pg";
+    public static final String     P_TABLE_NAME            = "p";
+    public static final String     F_TABLE_NAME            = "f";
 	
 
     public DatabaseHelper(Context context) {
@@ -91,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     
     public Cursor getProviderFields(Integer id) {
-        return getReadableDatabase().rawQuery("select name, prefix, title, mask, type from " + F_TABLE_NAME + " where op = ? ", new String[]{
+        return getReadableDatabase().rawQuery("select name, prefix, title, mask, type from " + F_TABLE_NAME + " where provider = ? ", new String[]{
             String.valueOf(id)
         });
     }

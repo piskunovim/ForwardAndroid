@@ -14,6 +14,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.StringReader;
 
+import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+
 /**
  * Created by PiskunovI on 08.05.14.
  */
@@ -30,8 +32,6 @@ public TParseOperators(){
 }
 
 
-
-
 public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
 
     // создаем объект для данных
@@ -42,10 +42,23 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
 
     // подключаемся к БД
     SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+    // Для того чтобы правильно загрузить настройки,
+    // нужно сначала очистить старые. Но, если что-то пойдет не так,
+    // то у нас не будет ни старых ни новых настроек
+    // Поэтому перед загрузкой создается транзакция БД, в которую войдут все запросы
+    // по очистке и загрузке. Она либо срабатывает вся целиком, либо откатывается, в случае ошибки
+    db.beginTransaction();
+
+
     try {
+        // Чистим таблицы
+        db.execSQL("delete from " + DatabaseHelper.P_TABLE_NAME);
+        db.execSQL("delete from " + DatabaseHelper.PG_TABLE_NAME);
+        db.execSQL("delete from " + DatabaseHelper.F_TABLE_NAME);
+
 
         XmlPullParser xpp = prepareXpp(xmlstring);
-
 
         while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
             switch (xpp.getEventType()) {
@@ -67,7 +80,7 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
                            {
                             cv.put("name",xpp.getAttributeValue(i));
                            }
-                           db.replace("pg", null, cv);
+                           db.insert("pg", null, cv);
                         }
                     }
 
@@ -95,13 +108,13 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
                         else if (xpp.getAttributeName(i).equals("max")){
                             cv.put("max", xpp.getAttributeValue(i));
 
-                           long rowID = db.replace("p", null, cv);
+                           long rowID = db.insert("p", null, cv);
                         }
                       }
                     }
                     else if (tag_name.equals("f")){
                         for (int i = 0; i < xpp.getAttributeCount(); i++){
-                            cv = new ContentValues();
+                            cv.clear();
                             cv.put("provider", id);
                             if (xpp.getAttributeName(i).equals("n"))
                             {
@@ -128,7 +141,7 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
                             else if (xpp.getAttributeName(i).equals("t"))
                             {
                                 cv.put("type", xpp.getAttributeValue(i));
-                                db.replace("f", null, cv);
+                                db.insert("f", null, cv);
                             }
                         }
                     }
@@ -155,12 +168,18 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
             xpp.next();
         }
 
+        // Подтверждаем изменения
+        db.setTransactionSuccessful();
 
     } catch (XmlPullParserException e) {
         e.printStackTrace();
     } catch (IOException e) {
         e.printStackTrace();
     }
+
+    // завершаем транзакцию, если до этого вызова не было вызова setTransactionSuccessful(),
+    // все изменения, которые успели произойти, откатятся
+    db.endTransaction();
    }
 
     XmlPullParser prepareXpp(String xmlstring) throws XmlPullParserException {
