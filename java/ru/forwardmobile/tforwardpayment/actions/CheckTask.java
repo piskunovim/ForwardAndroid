@@ -3,12 +3,17 @@ package ru.forwardmobile.tforwardpayment.actions;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.net.URLEncoder;
+import java.util.Map;
+
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.network.ServerRequestFactory;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
 import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
+import ru.forwardmobile.util.http.HttpUtils;
 import ru.forwardmobile.util.http.IRequest;
 
 /**
@@ -65,14 +70,14 @@ public class CheckTask extends AsyncTask<Void, Integer, Integer> {
         
         try {
             byte[] response = transport.send(request);
-            Log.i(TAG, new String(response));
+            Map<String,String> responseParams = HttpUtils.getRequestParams(new String(response));
+
+            return Integer.valueOf(responseParams.get("done"));
 
         } catch(Exception ex) {
             Log.e(TAG, "Transport exception " + ex.getMessage());
             return -1;
         }
-        
-        return 0;
     }
     
     @Override
@@ -83,5 +88,12 @@ public class CheckTask extends AsyncTask<Void, Integer, Integer> {
     @Override
     protected void onPostExecute(Integer result) {
         super.onPostExecute(result); //To change body of generated methods, choose Tools | Templates.
+
+        String text = "Проверка прошла успешно!";
+        if(result != 1) {
+            text = "Ошибка при проверке номера. Код " + result;
+        }
+
+        Toast.makeText(ctx,text,Toast.LENGTH_LONG).show();
     }
 }
