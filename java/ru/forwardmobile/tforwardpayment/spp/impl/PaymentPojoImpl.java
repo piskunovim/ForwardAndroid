@@ -7,7 +7,7 @@ import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 /**
- * POJO реализация платежа
+ * POJO реализация провайдера
  * @author Vasiliy Vanin
  */
 public class PaymentPojoImpl implements IPayment {

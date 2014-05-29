@@ -3,7 +3,7 @@ package ru.forwardmobile.tforwardpayment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -13,8 +13,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
-
-import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by PiskunovI on 08.05.14.
@@ -32,7 +32,9 @@ public TParseOperators(){
 }
 
 
-public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
+
+
+public void GetXMLSettings(String xmlstring, TDataBase dbHelper){
 
     // создаем объект для данных
     ContentValues cv = new ContentValues();
@@ -42,23 +44,10 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
 
     // подключаемся к БД
     SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-    // Для того чтобы правильно загрузить настройки,
-    // нужно сначала очистить старые. Но, если что-то пойдет не так,
-    // то у нас не будет ни старых ни новых настроек
-    // Поэтому перед загрузкой создается транзакция БД, в которую войдут все запросы
-    // по очистке и загрузке. Она либо срабатывает вся целиком, либо откатывается, в случае ошибки
-    db.beginTransaction();
-
-
     try {
-        // Чистим таблицы
-        db.execSQL("delete from " + DatabaseHelper.P_TABLE_NAME);
-        db.execSQL("delete from " + DatabaseHelper.PG_TABLE_NAME);
-        db.execSQL("delete from " + DatabaseHelper.F_TABLE_NAME);
-
 
         XmlPullParser xpp = prepareXpp(xmlstring);
+
 
         while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
             switch (xpp.getEventType()) {
@@ -86,7 +75,7 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
 
                     else if (tag_name.equals("p"))
                     {
-                      for (int i = 0; i < xpp.getAttributeCount(); i++) {
+                    for (int i = 0; i < xpp.getAttributeCount(); i++) {
                         cv.put("gid",gid);
                         if (xpp.getAttributeName(i).equals("i"))
                         {
@@ -114,35 +103,34 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
                     }
                     else if (tag_name.equals("f")){
                         for (int i = 0; i < xpp.getAttributeCount(); i++){
-                            cv.clear();
-                            cv.put("provider", id);
-                            if (xpp.getAttributeName(i).equals("n"))
-                            {
-                                cv.put("name", xpp.getAttributeValue(i));
-                            }
-                            else if (xpp.getAttributeName(i).equals("c"))
-                            {
-                                cv.put("title", xpp.getAttributeValue(i));
-                            }
-                            else if (xpp.getAttributeName(i).equals("p"))
-                            {
-                                cv.put("prefix", xpp.getAttributeValue(i));
-                                //Log.d("TagFGot: ",xpp.getAttributeValue(i));
-                            }
-                            else if (xpp.getAttributeName(i).equals("m"))
-                            {
-                                cv.put("mask", xpp.getAttributeValue(i));
-                                //Log.d("TagFGot: ",xpp.getAttributeValue(i));
-                            }
-                            else if (xpp.getAttributeName(i).equals("r"))
-                            {
-                                cv.put("required", xpp.getAttributeValue(i));
-                            }
-                            else if (xpp.getAttributeName(i).equals("t"))
-                            {
-                                cv.put("type", xpp.getAttributeValue(i));
-                                db.insert("f", null, cv);
-                            }
+                         cv.put("id", id);
+                        if (xpp.getAttributeName(i).equals("n"))
+                        {
+                         cv.put("fn", xpp.getAttributeValue(i));
+                        }
+                        else if (xpp.getAttributeName(i).equals("c"))
+                        {
+                            cv.put("fc", xpp.getAttributeValue(i));
+                        }
+                        /*else if (xpp.getAttributeName(i).equals("p"))
+                        {
+                            cv.put("fp", xpp.getAttributeValue(i));
+                            //Log.d("TagFGot: ",xpp.getAttributeValue(i));
+                        }*/
+                       /* else if (xpp.getAttributeName(i).equals("m"))
+                        {
+                            cv.put("fm", xpp.getAttributeValue(i));
+                            //Log.d("TagFGot: ",xpp.getAttributeValue(i));
+                        }*/
+                        else if (xpp.getAttributeName(i).equals("r"))
+                        {
+                            cv.put("fr", xpp.getAttributeValue(i));
+                        }
+                        else if (xpp.getAttributeName(i).equals("t"))
+                        {
+                            cv.put("ft", xpp.getAttributeValue(i));
+                            db.insert("f", null, cv);
+                        }
                         }
                     }
 
@@ -168,18 +156,12 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
             xpp.next();
         }
 
-        // Подтверждаем изменения
-        db.setTransactionSuccessful();
 
     } catch (XmlPullParserException e) {
         e.printStackTrace();
     } catch (IOException e) {
         e.printStackTrace();
     }
-
-    // завершаем транзакцию, если до этого вызова не было вызова setTransactionSuccessful(),
-    // все изменения, которые успели произойти, откатятся
-    db.endTransaction();
    }
 
     XmlPullParser prepareXpp(String xmlstring) throws XmlPullParserException {

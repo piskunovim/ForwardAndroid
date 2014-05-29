@@ -51,7 +51,7 @@ public class ProviderPojoImpl implements IProvider {
     }
 
     public Collection<IField> getFields() {
-        return Collections.unmodifiableCollection(fields);
+        return fields;
     }
     
     @Override

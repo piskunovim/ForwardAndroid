@@ -26,7 +26,7 @@ public class ProviderFactory {
             if(psCursor.moveToFirst()) {
         
                 ProviderPojoImpl provider =
-                    new ProviderPojoImpl(psCursor.getString(0), id, psCursor.getDouble(1), psCursor.getDouble(2));
+                    new ProviderPojoImpl(psCursor.getString(1), id, psCursor.getDouble(2), psCursor.getDouble(3));
             
                 fieldCursor = helper.getProviderFields(id);
                 while(fieldCursor.moveToNext()) {

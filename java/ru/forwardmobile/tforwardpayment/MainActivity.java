@@ -1,12 +1,17 @@
 package ru.forwardmobile.tforwardpayment;
 
-
-import android.content.Intent;
+import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,11 +22,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpParams;
+
+import java.io.IOException;
 import java.util.ArrayList;
-
-import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-
+import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnClickListener {
 
@@ -32,11 +47,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     EditText etName, etPass;
     //Context context;
 
-    SQLiteOpenHelper        dbHelper;
-    TPostData               pd;
-    TLoginForm              LoginFrag;
-    THomeActivity           HomeFrag;
-
+    TDataBase dbHelper;
+    TPostData pd;
+    TLoginForm LoginFrag;
+    THomeActivity HomeFrag;
+    TEmptyFrag EmptyFrag;
+    FragmentTransaction fTrans;
 
     ArrayList<String> operatorgroup = new ArrayList<String>();
    // ContentValues cv;
@@ -50,38 +66,39 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
         LoginFrag = new TLoginForm();
         HomeFrag = new THomeActivity();
+        EmptyFrag = new TEmptyFrag();
+        fTrans = getFragmentManager().beginTransaction();
+        fTrans.add(R.id.frgmCont, LoginFrag);
+        fTrans.commit();
 
-        getSupportFragmentManager().beginTransaction()
-            .add(R.id.frgmCont, LoginFrag)
-            .commit();
-
-        dbHelper = new DatabaseHelper(this);
     }
 
 
     public void SingIn(String pointid, String password){
-
         pd = new TPostData();
         pd.pointID = pointid;
         pd.password = password;
 
         try{
 
-            getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frgmCont, new TEmptyFrag())
-                .commit();
+        fTrans = getFragmentManager().beginTransaction();
+        fTrans.replace(R.id.frgmCont,EmptyFrag);
+        fTrans.commit();
+        TParseOperators parse = new TParseOperators();
+        dbHelper = new TDataBase(this);
+        String responseStr = pd.execute().get();
 
-            TParseOperators parse = new TParseOperators();
-            String responseStr = pd.execute().get();
+        parse.GetXMLSettings(responseStr, dbHelper);
+        Log.d(LOG_TAG,responseStr);
 
-            parse.GetXMLSettings(responseStr, dbHelper);
-            Log.d(LOG_TAG,responseStr);
+
+
+        //parse.GetXMLSettings(xmlstring, dbHelper);
 
         }
         catch(Exception e)
         {
-            // Log.d(LOG_TAG,e.getMessage());
-            e.printStackTrace();
+            Log.d(LOG_TAG,e.getMessage());
         }
 
 
@@ -93,7 +110,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 String name = (String) parent.getItemAtPosition(position);
-                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
                 Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
                 c.moveToNext();
                 Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
@@ -102,15 +119,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         });
 
         listContent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 String name = (String) parent.getItemAtPosition(position);
-                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
                 Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
                 Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
                 OperatorsListView(c.getString(c.getColumnIndex("id")));//, oplistContent);
             }
+
 
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d(LOG_TAG, "itemSelect: nothing");
@@ -126,6 +143,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
         ListView listContent = (ListView)findViewById(R.id.listView);
         if (item.getTitle().equals("Назад"))
         {
@@ -149,7 +167,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     public void GenerateListView(String table, String column, ListView listContent){
         Log.d(LOG_TAG, "--- table: "+ table + " ---");
         Log.d(LOG_TAG, "--- column: "+ column + " ---");
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "--- Got rows in pg table: ---");
         // делаем запрос всех данных из таблицы mytable, получаем Cursor
         operatorgroup.clear();
@@ -188,7 +206,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         Log.d(LOG_TAG, "Start OperatorsListView");
         operatorgroup.clear();
         ListView listContent = (ListView)findViewById(R.id.listView);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         // делаем запрос всех данных из таблицы mytable, получаем Cursor
         Cursor listpc = db.query("p", null, null, null, null, null, null);
 
@@ -219,16 +237,20 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     String name = (String) parent.getItemAtPosition(position);
-                    SQLiteDatabase db = dbHelper.getReadableDatabase();
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
                     Cursor cr = db.rawQuery("SELECT id FROM p WHERE TRIM(name) = '"+name.trim()+"'", null);
                     cr.moveToNext();
                     Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ cr.getString(cr.getColumnIndex("id")));
+
+                    PaymentActivity pa= new PaymentActivity();
+
+                    pa.SetOperatorId(Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    //pa.operator_id = cr.getColumnIndex("id");
+                    //pa.ShowOperatorId();
                     //
                     //! Здесь будем передавать id
                     //
-                    // cr.getString(cr.getColumnIndex("id"));
-                    Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
-                    startActivity(intent);
+                    // cr.getString(cr.getColumnIndex("id")
                 }
             });
 
@@ -238,4 +260,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         dbHelper.close();
 
     }
+
+
+
 }
