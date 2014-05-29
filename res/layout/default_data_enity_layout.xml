@@ -21,6 +21,28 @@
     />
     
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+    >
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/data_entry_amount_title"
+        />
+        
+        <EditText 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_entry_value_field"
+        />
+        
+    </LinearLayout> 
+    
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">

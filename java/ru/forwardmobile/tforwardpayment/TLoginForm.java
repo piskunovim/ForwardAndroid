@@ -1,7 +1,6 @@
 package ru.forwardmobile.tforwardpayment;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.support.v4.app.Fragment;
 
 /**
  * Created by PiskunovI on 20.05.14.
@@ -40,7 +40,6 @@ public class TLoginForm extends Fragment {
         });
 
         return rootView;
-
     }
 }
 
