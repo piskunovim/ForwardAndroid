@@ -113,11 +113,10 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
                       }
                     }
                     else if (tag_name.equals("f")){
-
                         cv.clear();
                         cv.put("provider", id);
-
                         for (int i = 0; i < xpp.getAttributeCount(); i++){
+
                             if (xpp.getAttributeName(i).equals("n"))
                             {
                                 cv.put("name", xpp.getAttributeValue(i));
@@ -143,11 +142,13 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
                             else if (xpp.getAttributeName(i).equals("t"))
                             {
                                 cv.put("type", xpp.getAttributeValue(i));
+
                             }
                         }
-
                         db.insert("f", null, cv);
                     }
+
+
 
                     if (!TextUtils.isEmpty(tmp))
                         Log.d(LOG_TAG, "Attributes: " + tmp);
