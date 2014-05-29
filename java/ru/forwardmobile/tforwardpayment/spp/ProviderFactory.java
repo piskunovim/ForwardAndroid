@@ -76,6 +76,8 @@ public class ProviderFactory {
                 return 10.00;
             }
 
+            public String getName(){ return "test";}
+
             public Collection<IField> getFields() {
                 return Arrays.asList(
                     (IField) new TextFieldImpl(ctx, "target", "Номер телефона")
