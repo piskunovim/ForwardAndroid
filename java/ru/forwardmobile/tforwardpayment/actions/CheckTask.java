@@ -70,9 +70,14 @@ public class CheckTask extends AsyncTask<Void, Integer, Integer> {
         
         try {
             byte[] response = transport.send(request);
+            Log.i(TAG,"response " + new String(response));
             Map<String,String> responseParams = HttpUtils.getRequestParams(new String(response));
 
-            return Integer.valueOf(responseParams.get("done"));
+            if( responseParams.containsKey("done") ) {
+                return Integer.valueOf( responseParams.get("done") );
+            } else {
+                return Integer.valueOf( responseParams.get("err_code") );
+            }
 
         } catch(Exception ex) {
             Log.e(TAG, "Transport exception " + ex.getMessage());
