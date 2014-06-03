@@ -49,7 +49,6 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         // Получаем ПС с полями
         provider = ProviderFactory.getProvider(getIntent().getIntExtra("psid", 1), this);
         //provider = ProviderFactory.mockProvider(this);
-        Log.d("TForwardPayment.PaymentActivity", provider.getName());
 
         layout = (ViewGroup) getLayoutInflater()
                 .inflate(R.layout.default_data_enity_layout, null);
