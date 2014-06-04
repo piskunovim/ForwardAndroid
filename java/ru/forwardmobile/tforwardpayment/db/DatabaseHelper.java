@@ -104,9 +104,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 // Дополнительные поля
                 " payment_data text, " +
                 // Начало платежа (long Unix Timestamp)
-                " started text, " +
+                " started int, " +
                 // Завершение платежа (long Unix Timestamp)
-                " finished text, " +
+                " finished int, " +
                 // Идентификатор ПС
                 " psid integer, " +
                 // Сумма платежа (коп.)

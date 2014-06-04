@@ -20,6 +20,11 @@ public class PaymentPojoImpl implements IPayment {
 
     private Integer id;
     private Date    startDate;
+    private Integer transactionId;
+    private Integer errorCode;
+    private Date    finishDate;
+    private Integer status;
+
 
     public PaymentPojoImpl(Integer psid, Double value, Double fullValue) {
         this.psId       = psid;
@@ -43,12 +48,12 @@ public class PaymentPojoImpl implements IPayment {
 
     @Override
     public Integer getTransactionId() {
-        return null;
+        return transactionId;
     }
 
     @Override
     public void setTransactionId(Integer transactionId) {
-
+        this.transactionId = transactionId;
     }
 
     public Collection<IFieldInfo> getFields() {
@@ -69,12 +74,12 @@ public class PaymentPojoImpl implements IPayment {
 
     @Override
     public Integer getErrorCode() {
-        return null;
+        return errorCode;
     }
 
     @Override
     public void setErrorCode(Integer errorCode) {
-
+        this.errorCode = errorCode;
     }
 
     @Override
@@ -87,12 +92,12 @@ public class PaymentPojoImpl implements IPayment {
 
     @Override
     public Date getFinishDate() {
-        return null;
+        return finishDate;
     }
 
     @Override
     public void setFinishDate(Date finishDate) {
-
+        this.finishDate = finishDate;
     }
 
     @Override
@@ -108,11 +113,11 @@ public class PaymentPojoImpl implements IPayment {
 
     @Override
     public Integer getStatus() {
-        return null;
+        return status;
     }
 
     @Override
     public void setStatus(Integer status) {
-
+        this.status = status;
     }
 }
