@@ -1,10 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="ru.forwardmobile.tforwardpayment.MainActivity" >
+    tools:context="com.example.tforwardpayment.MainActivity" >
+    <item
+        android:id="@+id/back"
+        android:showAsAction="always"
+        android:title="@string/back">
+    </item>
 
-    <item android:id="@+id/action_help"
-        android:title="@string/help"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
 </menu>

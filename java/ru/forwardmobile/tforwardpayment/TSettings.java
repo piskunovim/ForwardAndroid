@@ -32,6 +32,11 @@ public class TSettings extends Properties {
     public static String get(String name ) {
         return instance.getProperty(name);
     }
+
+    public static String get(String name, String value) {
+        if(instance.containsKey(name)) return get(name);
+        else return value;
+    }
     
     /**
      * @param name
@@ -40,14 +45,27 @@ public class TSettings extends Properties {
     public static int getInt(String name) {
         return Integer.valueOf(get(name));
     }
-
+    public static int getInt(String name, int value) {
+        try {
+            return Integer.parseInt(get(name));
+        }catch(Exception ex) {
+            return value;
+        }
+    }
     /**
      * @param name
      * @return double or null
      */
     public static double getDouble(String name) {
         return Double.valueOf(get(name));
-    }    
+    }
+    public static double getDouble(String name, Double value) {
+        try {
+            return Double.parseDouble(get(name));
+        }catch(Exception ex){
+            return value;
+        }
+    }
     
     /**
      * @param name
