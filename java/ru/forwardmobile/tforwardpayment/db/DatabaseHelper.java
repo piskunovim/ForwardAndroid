@@ -11,13 +11,13 @@ import ru.forwardmobile.tforwardpayment.TSettings;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int        SQLITE_DATABASE_VERSION = 8;
+    public static final int        SQLITE_DATABASE_VERSION = 6;
     public static final String     SQLITE_DATABASE_NAME    = "forward";
     public static final String     SETTINGS_TABLE_NAME     = "settings2";
     public static final String     PG_TABLE_NAME           = "pg";
     public static final String     P_TABLE_NAME            = "p";
     public static final String     F_TABLE_NAME            = "f";
-	public static final String     PAYMENT_QUEUE_TABLE     = "payment_queue";
+	
 
     public DatabaseHelper(Context context) {
         super(context, SQLITE_DATABASE_NAME, null, SQLITE_DATABASE_VERSION);
@@ -31,22 +31,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " (key text primary key, value blob not null)");
 		
 	    initDatabaseV6(sqld);
-        initDatabaseV7(sqld);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqld, int i, int i1) {
-        if( i1 < 5 ) {
+        if(i > 5) {
             sqld.execSQL("CREATE TABLE " + SETTINGS_TABLE_NAME 
                 + " (key text primary key, value blob not null)");
-        }
-
-        if ( i1 < 6) {
+            
+        } else if (i > 6 && i1 < 6) {
             initDatabaseV6(sqld);
-        }
-
-        if(  i1 < 7 ) {
-            initDatabaseV7(sqld);
         }
     }
         
@@ -89,34 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqld.execSQL("CREATE TABLE " + F_TABLE_NAME	
 				+ "(provider integer, name text, prefix text, title text, mask text, required text, type text)");        
     }
-
-    private void initDatabaseV7(SQLiteDatabase sqldb) {
-        sqldb.execSQL("CREATE TABLE " + PAYMENT_QUEUE_TABLE
-            + " ( " +
-                // id - записи
-                " id integer primary key autoincrement," +
-                // Id-транзакции на сервере
-                " transactid integer, " +
-                // Статус платежа
-                " status integer, " +
-                // Лицевой счет
-                " target text, " +
-                // Дополнительные поля
-                " payment_data text, " +
-                // Начало платежа (long Unix Timestamp)
-                " started text, " +
-                // Завершение платежа (long Unix Timestamp)
-                " finished text, " +
-                // Идентификатор ПС
-                " psid integer, " +
-                // Сумма платежа (коп.)
-                " value integer, " +
-                // Полная сумма платежа (коп.)
-                " full_value integer, " +
-                // Код ошибки
-                " error_code integer " +
-            " )");
-    }
+    
     
     public Cursor getProvider(Integer id) {
         return getReadableDatabase().rawQuery("select name, min, max from " + P_TABLE_NAME + " where id = ? ",
