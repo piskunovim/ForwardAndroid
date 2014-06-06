@@ -41,7 +41,7 @@ public class PaymentDaoImpl implements IPaymentDao {
             payment_data.append("<f n=\"" + field.getName() + "\">" + field.getValue() + "</f>");
         }
 
-        if(payment.getId() == null) {
+       /* if(payment.getId() == null) {
             ContentValues cv = new ContentValues();
 
             cv.put("transactid", payment.getTransactionId());
@@ -73,14 +73,14 @@ public class PaymentDaoImpl implements IPaymentDao {
                     String.valueOf(payment.getFullValue() * 100),
                     String.valueOf(payment.getErrorCode())
             });
-        }
+        }*/
 
     }
 
     @Override
     public IPayment find(Integer id) {
 
-        Cursor cursor = db.rawQuery("select id, payment_data, value, psid from " + DatabaseHelper.PAYMENT_QUEUE_TABLE + " where id = ?", new String[]{
+        /*Cursor cursor = db.rawQuery("select id, payment_data, value, psid from " + DatabaseHelper.PAYMENT_QUEUE_TABLE + " where id = ?", new String[]{
                 String.valueOf(id)
         });
 
@@ -93,7 +93,7 @@ public class PaymentDaoImpl implements IPaymentDao {
             }
         }finally {
              cursor.close();
-        }
+        }*/
 
         return null;
     }

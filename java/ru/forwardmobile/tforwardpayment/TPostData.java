@@ -20,8 +20,8 @@ import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.network.ServerRequestFactory;
-import com.example.util.http.Converter;
-import com.example.util.http.IRequest;
+import ru.forwardmobile.util.http.Converter;
+import ru.forwardmobile.util.http.IRequest;
 
 /**
  * Created by PiskunovI on 12.05.14.

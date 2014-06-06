@@ -13,12 +13,12 @@ import ru.forwardmobile.tforwardpayment.spp.impl.PaymentDaoImpl;
  */
 public class TestActivity extends Activity {
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+   /* public void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
         setContentView(R.layout.empty);
 
         try {
-        /*    IPayment payment = PaymentFactory.getPayment(1, 500.00, Arrays.asList(BaseField.fieldInfo("target", "test")));
+            IPayment payment = PaymentFactory.getPayment(1, 500.00, Arrays.asList(BaseField.fieldInfo("target", "test")));
                      payment.setStartDate(new Date());
 
             IPaymentDao paymentDao = new PaymentDaoImpl(new DatabaseHelper(this).getWritableDatabase());
@@ -26,14 +26,14 @@ public class TestActivity extends Activity {
             paymentDao.save(payment);
             Log.i("TESTTFWD", "ID Is: " + payment.getId());*/
 
-            IPayment payment = new PaymentDaoImpl(new DatabaseHelper(this).getWritableDatabase()).find(1);
-            Log.i("TESTFWD", payment.getTarget().getValue());
+           // IPayment payment = new PaymentDaoImpl(new DatabaseHelper(this).getWritableDatabase()).find(1);
+            //Log.i("TESTFWD", payment.getTarget().getValue());
 
-        }catch (Exception e){
+       /* }catch (Exception e){
             e.printStackTrace();
         }
 
 
-    }
+    }*/
 
 }
