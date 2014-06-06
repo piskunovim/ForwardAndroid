@@ -2,10 +2,8 @@ package ru.forwardmobile.tforwardpayment.spp;
 
 import android.content.Context;
 import android.database.Cursor;
-
 import java.util.Arrays;
 import java.util.Collection;
-
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.spp.impl.EnumFieldImpl;
 import ru.forwardmobile.tforwardpayment.spp.impl.ProviderPojoImpl;
@@ -35,6 +33,7 @@ public class ProviderFactory {
                     
                     IField field = null;
                     int fieldType = fieldCursor.getInt(4);
+                    
                     switch( fieldType ) {
                         case IField.TEXT_FIELD_TYPE: 
                             field = new TextFieldImpl(ctx, fieldCursor.getString(0), fieldCursor.getString(2));

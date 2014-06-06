@@ -8,7 +8,7 @@ import ru.forwardmobile.util.http.RequestFactory;
  */
 public class ServerRequestFactory {
     
-    private static final int DEFAULT_TIMEOUT = 30;
+    private static final int DEFAULT_TIMEOUT = 15;
 
     public static IRequest getRequest(String command) {
         
