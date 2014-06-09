@@ -50,8 +50,6 @@ public class ProviderPojoImpl implements IProvider {
         return minSumm;
     }
 
-    public String getName() { return name; }
-
     public Collection<IField> getFields() {
         return Collections.unmodifiableCollection(fields);
     }

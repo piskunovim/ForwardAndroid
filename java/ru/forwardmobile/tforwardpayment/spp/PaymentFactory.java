@@ -14,6 +14,5 @@ public class PaymentFactory {
             payment.addField(field);
         
         return payment;
-    }
-    
+    }    
 }
