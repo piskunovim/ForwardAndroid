@@ -4,24 +4,22 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-
 import java.util.ArrayList;
+
+import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 
 public class OperatorsActivity extends ActionBarActivity {
 
@@ -65,16 +63,16 @@ public class OperatorsActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_help) {
+        if (id == R.id.operators_action_help) {
             return true;
         }
-        if (id == R.id.action_report) {
+        if (id == R.id.operators_action_report) {
             return true;
         }
-        if (id == R.id.settings) {
+        if (id == R.id.operators_settings) {
             return true;
         }
-        if (id == R.id.payment) {
+        if (id == R.id.operators_payment) {
             return true;
         }
         return super.onOptionsItemSelected(item);

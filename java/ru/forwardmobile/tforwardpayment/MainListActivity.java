@@ -1,7 +1,5 @@
 package ru.forwardmobile.tforwardpayment;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,10 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-
-import java.util.ArrayList;
 
 public class MainListActivity extends ActionBarActivity {
 
@@ -51,9 +48,6 @@ public class MainListActivity extends ActionBarActivity {
 
         GenerateListView("pg", "name", listContent);
 
-
-
-
         listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -68,6 +62,8 @@ public class MainListActivity extends ActionBarActivity {
             }
 
         });
+
+        startPaymentQueue();
     }
 
     public void OpenOperatorActivity(String id){
@@ -130,19 +126,24 @@ public class MainListActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_help) {
+        if (id == R.id.mainlist_action_help) {
             return true;
         }
-        if (id == R.id.action_report) {
+        if (id == R.id.mainlist_action_report) {
             return true;
         }
-        if (id == R.id.settings) {
+        if (id == R.id.mainlist_settings) {
             return true;
         }
-        if (id == R.id.payment) {
+        if (id == R.id.mainlist_payment) {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void  startPaymentQueue() {
+        Intent intent = new Intent(this, TPaymentService.class);
+        startService(intent);
     }
 
   /*  public void OperatorsListView(String gid){//, ListView listContent){

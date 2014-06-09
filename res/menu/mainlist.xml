@@ -1,0 +1,23 @@
+<?xml version="1.0" ecoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainListActivity" >
+
+    <item android:id="@+id/mainlist_action_help"
+        android:title="@string/help"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/mainlist_action_report"
+        android:title="@string/report"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/mainlist_settings"
+        android:title="@string/settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/mainlist_payment"
+        android:title="@string/payment"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>
