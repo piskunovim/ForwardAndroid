@@ -14,7 +14,6 @@ import ru.forwardmobile.tforwardpayment.TSettings;
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
-import ru.forwardmobile.tforwardpayment.security.ICryptEngine;
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
@@ -56,59 +55,28 @@ public class PaymentQueueImpl implements IPaymentQueue {
             paymentDao     = new PaymentDaoImpl( databaseHelper.getWritableDatabase());
 
         } catch (Exception ex) {
-            Log.i( LOGGER_TAG, ex.toString() );
+            Log.i("QUEUE", ex.toString());
             ex.printStackTrace();
         }
     }
 
-
-    public PaymentQueueImpl(ICryptEngine cryptEngine, DatabaseHelper helper) {
-        transport = new HttpTransport();
-        transport.setCryptEngine(cryptEngine);
-
-        databaseHelper = helper;
-        paymentDao = new PaymentDaoImpl( databaseHelper.getWritableDatabase() );
-    }
-
-    public PaymentQueueImpl() {
-        transport = new HttpTransport();
-    }
-
-    public void setTransport(HttpTransport transport) {
-        this.transport = transport;
-    }
-
-    public void setDatabaseHelper(SQLiteOpenHelper helper) {
-        this.databaseHelper = helper;
-        paymentDao = new PaymentDaoImpl( databaseHelper.getWritableDatabase() );
-    }
-
     @Override
     public void start() throws Exception {
-        this.thread = new Thread(this);
-        this.thread.start();
+
     }
 
     @Override
     public void stop() {
 
         this.stop = true;
-
-        try {
-            this.thread.join();
-        }catch (InterruptedException ex){
-            //
-        }
-
         this.thread = null;
-        this.active = false;
 
         databaseHelper.close();
     }
 
     @Override
     public boolean isActive() {
-        return active;
+        return false;
     }
 
     @Override
@@ -156,71 +124,22 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
     @Override
     public void cancelPayment(IPayment payment) throws Exception {
-        throw new UnsupportedOperationException();
+
     }
 
     @Override
     public void deletePayment(IPayment payment) throws Exception {
 
-        synchronized(activePayments) {
-            if ( activePayments.contains(payment) ) {
-                if ( ( payment.getStatus() == IPayment.FAILED ) ||
-                        ( payment.getStatus() == IPayment.CANCELLED ) ||
-                        ( payment.isDelayed() ) ||
-                        ( ( payment.getStatus() == IPayment.NEW ) && !payment.getSended() ) ) {
-                    activePayments.remove(payment);
-                    // PaymentDAO.delete(payment);
-                    // Application.getCounter().count(payment,IPaymentCounter.COUNT_REMOVE);
-                    Log.i(LOGGER_TAG, "#" + payment.getId() + " Payment deleted.");
-                } else {
-                    throw new Exception("Платеж со статусом отличным от \"Ошибочный\" и \"Отмененный\" (\"" + payment.getStatusName() + "\")!");
-                }
-            } else {
-                throw new Exception(PAYMENT_ABSENT);
-            }
-        }
     }
 
     @Override
     public void repeatPayment(IPayment payment) throws Exception {
-        synchronized(activePayments) {
-            if ( activePayments.contains(payment) ) {
-                if ( ( payment.getStatus() == IPayment.FAILED ) || ( payment.getStatus() == IPayment.CANCELLED ) ) {
-                    payment.setStatus(IPayment.NEW);
-                    payment.setSended(false);
-                    payment.setActive(false);
-                    payment.setTryCount(0);
-                    payment.setFinishDate(null);
-                    payment.setDateOfProcess(null);
-         //           PaymentDAO.store(payment);
-                    Log.i(LOGGER_TAG, "#" + payment.getId() + " Payment repeated.");
-                } else {
-                    throw new Exception("Платеж со статусом отличным от \"Ошибочный\" и \"Отмененный\" (\"" + payment.getStatusName() + "\")!");
-                }
-            } else {
-                throw new Exception(PAYMENT_ABSENT);
-            }
-        }
+
     }
 
     @Override
     public void startPayment(IPayment payment) throws Exception {
-        synchronized(activePayments) {
-            if ( activePayments.contains(payment) ) {
-                if ( payment.getStatus() != IPayment.NEW ) {
-                    throw new Exception("Платеж со статусом отличным от \"Новый\" (\"" + payment.getStatusName() + "\")!");
-                } else
-                if ( !payment.isDelayed() ) {
-                    throw new Exception("Платеж уже находится в обработке!");
-                } else {
-                    payment.setDelayed(false);
-                    payment.setTryCount(0);
-                    Log.i(LOGGER_TAG, "#" + payment.getId() + " Payment started.");
-                }
-            } else {
-                throw new Exception(PAYMENT_ABSENT);
-            }
-        }
+
     }
 
     @Override
@@ -320,8 +239,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
                 }
 
             } catch (Exception ex) {
-                Log.e( LOGGER_TAG, "Request creation error: " + ex.getMessage() );
-                return null;
+
             }
         }
 

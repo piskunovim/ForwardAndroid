@@ -1,10 +1,6 @@
 package ru.forwardmobile.tforwardpayment.spp;
 
-import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.Collection;
-
-import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 
 public interface IPaymentQueue extends Runnable {
 
@@ -30,7 +26,4 @@ public interface IPaymentQueue extends Runnable {
     public void startPayment(IPayment payment) throws Exception;
 
     public int hasActivePayments();
-
-    public void setTransport(HttpTransport transport);
-    public void setDatabaseHelper(SQLiteOpenHelper helper);
 }

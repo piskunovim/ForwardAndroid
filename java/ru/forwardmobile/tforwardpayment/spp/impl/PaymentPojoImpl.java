@@ -220,8 +220,5 @@ public class PaymentPojoImpl implements IPayment {
         return 0;
     }
 
-    @Override
-    public String getStatusName() {
-        return null;
-    }
+
 }

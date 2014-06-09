@@ -1,80 +1,61 @@
 package ru.forwardmobile.tforwardpayment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 
-public class MainActivity extends ActionBarActivity {
 
-    //Инициализация строковой переменной логирования
-    final static String LOG_TAG = "TTestActivity.MainActivity";
-    //Объект передачи сообщения
-    public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
+public class MainActivity extends FragmentActivity implements OnClickListener {
+
+    final String LOG_TAG = "TFORWARD.MainActivity";
 
 
-    //инициализируем наши объекты формы
-    //Button btnSingIn = (Button) findViewById(R.id.singin);
-    SQLiteOpenHelper dbHelper;
+    Button btnEnter, btnRead, btnReadF;
     EditText etName, etPass;
+    //Context context;
 
-    boolean databaseExists;
-    boolean datatablesFull;
+    SQLiteOpenHelper        dbHelper;
+    TPostData               pd;
+    TLoginForm              LoginFrag;
+    THomeActivity           HomeFrag;
 
-    TPostData pd;
 
+    ArrayList<String> operatorgroup = new ArrayList<String>();
+   // ContentValues cv;
+   // SQLiteDatabase db;
+
+    /** Called when the activity is first created. */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //получаем идентификаторы точки доступа и пароль
-        etName = (EditText) findViewById(R.id.epid);
-        etPass = (EditText) findViewById(R.id.epass);
+        LoginFrag = new TLoginForm();
+        HomeFrag = new THomeActivity();
 
-        databaseExists = checkDataBase();
-        datatablesFull = checkForTables();
+        getSupportFragmentManager().beginTransaction()
+            .add(R.id.frgmCont, LoginFrag)
+            .commit();
 
-
-        if (databaseExists && datatablesFull)
-        {
-            Intent intent = new Intent(this, MainListActivity.class);
-
-            intent.putExtra(EXTRA_MESSAGE, "true");
-            // запуск activity
-            startActivity(intent);
-        }
-        else
-        {
-            Log.d(LOG_TAG, "Does not exist database");
-        }
-
-        /*if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }*/
-
-
-    }
-
-    public  void sendMessage(View view){
-        SingIn(etName.getText().toString(), etPass.getText().toString());
+        dbHelper = new DatabaseHelper(this);
     }
 
 
@@ -86,110 +67,182 @@ public class MainActivity extends ActionBarActivity {
 
         try{
 
+            getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frgmCont, new TEmptyFrag())
+                .commit();
+
             TParseOperators parse = new TParseOperators();
             String responseStr = pd.execute().get();
 
-            //parse.GetXMLSettings(responseStr, dbHelper);
+            parse.GetXMLSettings(responseStr, dbHelper);
             Log.d(LOG_TAG,responseStr);
 
-            if (responseStr.length() > 0){
-                // Создаем объект Intent для вызова новой Activity
-                Intent intent = new Intent(this, MainListActivity.class);
-
-                intent.putExtra(EXTRA_MESSAGE, responseStr);
-                // запуск activity
-                startActivity(intent);
-                this.finish();
-            }
-            else
-            {
-                new AlertDialog.Builder(this)
-                    .setTitle("Ошибка авторизации")
-                    .setMessage("Внимание! Произошла ошибка авторизации на сервере ForwardMobile. Пожалуйста. проверьте наличие на вашем устройстве доступа к сети интернет и правильность вводимых данных.")
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .show();
-            }
         }
         catch(Exception e)
         {
-            Log.d(LOG_TAG,e.getMessage());
+            // Log.d(LOG_TAG,e.getMessage());
             e.printStackTrace();
         }
+
+
+        ListView listContent = (ListView)findViewById(R.id.listView);
+
+        GenerateListView("pg","name", listContent);
+
+        listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String name = (String) parent.getItemAtPosition(position);
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
+                c.moveToNext();
+                Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
+                OperatorsListView(c.getString(c.getColumnIndex("id")));//, oplistContent);
+            }
+        });
+
+        listContent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                String name = (String) parent.getItemAtPosition(position);
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
+                Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
+                OperatorsListView(c.getString(c.getColumnIndex("id")));//, oplistContent);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d(LOG_TAG, "itemSelect: nothing");
+            }
+        });
+
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.main_action_help) {
-            return true;
+        ListView listContent = (ListView)findViewById(R.id.listView);
+        if (item.getTitle().equals("Назад"))
+        {
+          GenerateListView("pg","name", listContent);
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View v) {
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
+        // подключаемся к БД
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
+        // закрываем подключение к БД
+        dbHelper.close();
     }
 
-    /**
-     * Check if the database exist
-     *
-     * @return true if it exists, false if it doesn't
-     */
-    private boolean checkDataBase() {
-        SQLiteDatabase checkDB = null;
 
-        try {
-            checkDB = SQLiteDatabase.openDatabase("/data/data/ru.forwardmobile.tforwardpayment/databases/forward", null,
-                    SQLiteDatabase.OPEN_READONLY);
-            checkDB.close();
-        } catch (SQLiteException e) {
-            // database doesn't exist yet.
-        }
-        return checkDB != null ? true : false;
-    }
 
-    public boolean checkForTables(){
-        boolean hasTables = false;
-
-        dbHelper = new DatabaseHelper(this);
+    public void GenerateListView(String table, String column, ListView listContent){
+        Log.d(LOG_TAG, "--- table: "+ table + " ---");
+        Log.d(LOG_TAG, "--- column: "+ column + " ---");
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM pg", null);
+        Log.d(LOG_TAG, "--- Got rows in pg table: ---");
+        // делаем запрос всех данных из таблицы mytable, получаем Cursor
+        operatorgroup.clear();
+        Cursor listpgc = db.query(table, null, null, null, null, null, null);
 
-        if(cursor.getCount() > 0){
-                hasTables=true;
-         }
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        if (listpgc.moveToFirst()) {
 
-            cursor.close();
-            return hasTables;
+            // определяем номера столбцов по имени в выборке
+            int nameColIndex = listpgc.getColumnIndex(column);
+
+
+
+
+            do {
+                // получаем значения по номерам столбцов и пишем все в лог
+                Log.d(LOG_TAG,  ", "+column+" = " + listpgc.getString(nameColIndex));
+                operatorgroup.add(listpgc.getString(nameColIndex));
+                // переход на следующую строку
+                // а если следующей нет (текущая - последняя), то false - выходим из цикла
+            } while (listpgc.moveToNext());
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, operatorgroup);
+            listContent.setAdapter(adapter);
+        } else
+            Log.d(LOG_TAG, "Got 0 rows");
+
+        listpgc.close();
+        dbHelper.close();
+
 
     }
 
+    public void OperatorsListView(String gid){//, ListView listContent){
+        Log.d(LOG_TAG, "Start OperatorsListView");
+        operatorgroup.clear();
+        ListView listContent = (ListView)findViewById(R.id.listView);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // делаем запрос всех данных из таблицы mytable, получаем Cursor
+        Cursor listpc = db.query("p", null, null, null, null, null, null);
+
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        if (listpc.moveToFirst()) {
+
+            // определяем номера столбцов по имени в выборке
+            do {
+                int gidColIndex = listpc.getColumnIndex("gid");
+                int nameColIndex = listpc.getColumnIndex("name");
+                Log.d(LOG_TAG, gid);
+                Log.d(LOG_TAG, listpc.getString(listpc.getColumnIndex("gid")));
+                Log.d(LOG_TAG, listpc.getString(listpc.getColumnIndex("name")));
+                // получаем значения по номерам столбцов и пишем все в лог
+                if (gid.equals(listpc.getString(listpc.getColumnIndex("gid"))))
+                {
+                 Log.d(LOG_TAG, listpc.getString(nameColIndex));
+                 operatorgroup.add(listpc.getString(nameColIndex));
+                }
+                // переход на следующую строку
+                // а если следующей нет (текущая - последняя), то false - выходим из цикла
+            } while (listpc.moveToNext());
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, operatorgroup);
+            listContent.setAdapter(adapter);
+            listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    String name = (String) parent.getItemAtPosition(position);
+                    SQLiteDatabase db = dbHelper.getReadableDatabase();
+                    Cursor cr = db.rawQuery("SELECT id FROM p WHERE TRIM(name) = '"+name.trim()+"'", null);
+                    cr.moveToNext();
+                    Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ cr.getString(cr.getColumnIndex("id")));
+
+                    PaymentActivity pa= new PaymentActivity();
+
+                    //pa.SetOperatorId(Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    //pa.operator_id = cr.getColumnIndex("id");
+                    //pa.ShowOperatorId();
+                    //
+                    //! Здесь будем передавать id
+                    //
+                    // cr.getString(cr.getColumnIndex("id"));
+                    Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
+                    intent.putExtra("psid",Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    startActivity(intent);
+                }
+            });
+
+        } else
+            Log.d(LOG_TAG, "Got 0 rows");
+        listpc.close();
+        dbHelper.close();
+
+    }
 }

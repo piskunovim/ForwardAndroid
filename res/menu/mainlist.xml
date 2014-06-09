@@ -1,23 +1,22 @@
-<?xml version="1.0" ecoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainListActivity" >
+    tools:context="com.example.testactivity.MainListActivity" >
 
-    <item android:id="@+id/mainlist_action_help"
+    <item android:id="@+id/action_help"
         android:title="@string/help"
         android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item android:id="@+id/mainlist_action_report"
+ />
+    <item android:id="@+id/action_report"
         android:title="@string/report"
         android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item android:id="@+id/mainlist_settings"
+/>
+    <item android:id="@+id/settings"
         android:title="@string/settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item android:id="@+id/mainlist_payment"
+        />
+    <item android:id="@+id/payment"
         android:title="@string/payment"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+         />
 </menu>
