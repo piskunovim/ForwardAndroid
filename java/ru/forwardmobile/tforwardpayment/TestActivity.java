@@ -43,8 +43,6 @@ public class TestActivity extends Activity {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
     }
 
 }

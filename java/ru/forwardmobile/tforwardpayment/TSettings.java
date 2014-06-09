@@ -15,6 +15,9 @@ public class TSettings extends Properties {
     public static final String SERVER_HOST              = "server-host";
     public static final String SERVER_PORT              = "server-port";
     public static final String CERTIFICATE_ACESS_ID     = "access-id";
+    public static final String MAXIMUM_START_TRY_COUNT  = "maxstarttryes";
+    public static final String QUEUE_ERROR_DELAY        = "queueerrdelay";
+    public static final String MAXIMUM_STORED_PAYMENTS  = "maxstoredsize";
     public static final char   CRLF                     = '\n';
     
     public static String getVersion() {
