@@ -28,7 +28,7 @@
             android:name="ru.forwardmobile.tforwardpayment.MainListActivity"
             android:label="@string/title_activity_main_list" >
         </activity>
-		<activity
+        <activity
             android:name="ru.forwardmobile.tforwardpayment.PaymentActivity"
             android:label="@string/data_entry_label" >
             <intent-filter>
@@ -40,6 +40,10 @@
         <activity
             android:name="ru.forwardmobile.tforwardpayment.OperatorsActivity"
             android:label="@string/title_activity_operators" >
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment...res.layout.ActivityBalance"
+            android:label="@string/title_activity_activity_balance" >
         </activity>
     </application>
 
