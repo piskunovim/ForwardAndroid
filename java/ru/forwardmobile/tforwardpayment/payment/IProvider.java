@@ -1,4 +1,4 @@
-package ru.forwardmobile.tforwardpayment.spp;
+package ru.forwardmobile.tforwardpayment.payment;
 
 import java.util.Collection;
 
