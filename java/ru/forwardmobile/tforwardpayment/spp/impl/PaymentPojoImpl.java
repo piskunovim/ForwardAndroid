@@ -24,6 +24,8 @@ public class PaymentPojoImpl implements IPayment {
     private Integer errorCode;
     private Date    finishDate;
     private Integer status;
+    private int     tryCount;
+    private String  errorDescription;
 
 
     public PaymentPojoImpl(Integer psid, Double value, Double fullValue) {
@@ -83,6 +85,16 @@ public class PaymentPojoImpl implements IPayment {
     }
 
     @Override
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    @Override
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
+
+    @Override
     public Date getStartDate() {
         return startDate;
     }
@@ -118,6 +130,98 @@ public class PaymentPojoImpl implements IPayment {
 
     @Override
     public void setStatus(Integer status) {
+
+        // Сбрасываем счетчик повторов при изменении статуса
+        if(this.status != status) {
+            tryCount = 0;
+        }
+
         this.status = status;
+
+        if ( ( this.status == IPayment.DONE ) ||
+             ( this.status == IPayment.CANCELLED ) ||
+             ( this.status == IPayment.FAILED ) ) {
+            this.setFinishDate(new java.util.Date());
+        } else
+        if ( this.status == IPayment.NEW ) {
+            this.setFinishDate(null);
+        }
+
+    }
+
+    @Override
+    public boolean isDelayed() {
+        return false;
+    }
+
+
+    @Override
+    public boolean isPreparedForCancelling() {
+        return false;
+    }
+
+    @Override
+    public void delay(int interval) {
+
+    }
+
+    @Override
+    public void errorDelay() {
+
+    }
+
+    @Override
+    public void setActive(boolean active) {
+
+    }
+
+    @Override
+    public boolean getActive() {
+        return false;
+    }
+
+    @Override
+    public void setSended(boolean sended) {
+
+    }
+
+    @Override
+    public boolean getSended() {
+        return false;
+    }
+
+    @Override
+    public void setDateOfProcess(Date dateOfProcess) {
+
+    }
+
+    @Override
+    public Date getDateOfProcess() {
+        return null;
+    }
+
+    @Override
+    public void incTryCount() {
+
+    }
+
+    @Override
+    public Integer getTryCount() {
+        return null;
+    }
+
+    @Override
+    public void incErrorRepeatCount() {
+
+    }
+
+    @Override
+    public int getErrorRepeatCount() {
+        return 0;
+    }
+
+    @Override
+    public String getStatusName() {
+        return null;
     }
 }

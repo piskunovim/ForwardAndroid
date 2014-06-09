@@ -32,9 +32,7 @@ public class PaymentDaoImpl implements IPaymentDao {
     }
 
     @Override
-    public void save(IPayment payment) {
-
-
+    public synchronized void save(IPayment payment) {
 
         // Набор полей
         StringBuilder payment_data = new StringBuilder();
@@ -78,8 +76,25 @@ public class PaymentDaoImpl implements IPaymentDao {
 
     }
 
+    public synchronized Collection<IPayment> getQueue() {
+
+        Collection<IPayment> payments = new HashSet<IPayment>();
+        Cursor cursor = db.rawQuery("select transactid, status, payment_data, started, finished, psid, value, error_code  from "
+                                + DatabaseHelper.PAYMENT_QUEUE_TABLE + " where status < ? ", new String[]{ String.valueOf(IPayment.DONE) });
+        try {
+
+            while (cursor.moveToNext())
+                payments.add(getPayment(cursor));
+
+        } finally {
+            cursor.close();
+        }
+
+        return payments;
+    }
+
     @Override
-    public IPayment find(Integer id) {
+    public synchronized IPayment find(Integer id) {
 
         Cursor cursor = db.rawQuery("select transactid, status, payment_data, started, finished, psid, value, error_code  from "
                 + DatabaseHelper.PAYMENT_QUEUE_TABLE + " where id = ?", new String[]{
@@ -88,16 +103,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
         try {
             if (cursor.moveToNext()) {
-
-                Collection<IFieldInfo> fields = parseFields(cursor.getString(2));
-                IPayment payment = PaymentFactory.getPayment(cursor.getInt(5), Double.valueOf(cursor.getInt(6) / 100), fields);
-                payment.setStartDate(new Date(Long.valueOf(cursor.getLong(3))));
-                payment.setFinishDate(cursor.getLong(4) > 0 ? new Date(cursor.getLong(4)) : null);
-                payment.setStatus(cursor.getInt(1));
-                payment.setErrorCode(cursor.getInt(7));
-                payment.setTransactionId(cursor.getInt(0));
-
-                return payment;
+                return getPayment(cursor);
             }
         }finally {
              cursor.close();
@@ -129,6 +135,18 @@ public class PaymentDaoImpl implements IPaymentDao {
         return fields;
     }
 
+
+    private IPayment getPayment(Cursor cursor) {
+        Collection<IFieldInfo> fields = parseFields(cursor.getString(2));
+        IPayment payment = PaymentFactory.getPayment(cursor.getInt(5), Double.valueOf(cursor.getInt(6) / 100), fields);
+        payment.setStartDate(new Date(Long.valueOf(cursor.getLong(3))));
+        payment.setFinishDate(cursor.getLong(4) > 0 ? new Date(cursor.getLong(4)) : null);
+        payment.setStatus(cursor.getInt(1));
+        payment.setErrorCode(cursor.getInt(7));
+        payment.setTransactionId(cursor.getInt(0));
+
+        return payment;
+    }
 
 
     private class FieldContentHandler implements ContentHandler {
