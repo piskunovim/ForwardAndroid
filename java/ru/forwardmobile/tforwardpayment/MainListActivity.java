@@ -20,6 +20,7 @@ import android.widget.ListView;
 
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.reports.TBalanceReportScreenImpl;
 
 import java.util.ArrayList;
 
@@ -136,14 +137,18 @@ public class MainListActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.action_report) {
-            CharSequence colors[] = new CharSequence[] {"Баланс", "Платежи", "Поиск платежа"};
+            CharSequence reports[] = new CharSequence[] {"Баланс", "Платежи", "Поиск платежа"};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Отчеты");
-            builder.setItems(colors, new DialogInterface.OnClickListener() {
+            builder.setTitle("Выберите отчет:");
+            builder.setItems(reports, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // the user clicked on colors[which]
+                    // the user clicked on reports[which]
+                   if (which == 0){
+                   Intent intent = new Intent(MainListActivity.this, TBalanceReportScreenImpl.class);
+                   MainListActivity.this.startActivity(intent);
+                   }
                 }
             });
             builder.show();

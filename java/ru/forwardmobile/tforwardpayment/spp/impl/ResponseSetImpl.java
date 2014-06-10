@@ -53,8 +53,8 @@ public class ResponseSetImpl implements IResponseSet {
         return new CommandResponseImpl(Converter.toUnicode(lines.get(index)));
     }
 
-    public Collection<ICommandResponse> getResponses() throws Exception {
-        Collection<ICommandResponse> responses = new ArrayList<ICommandResponse>();
+    public List<ICommandResponse> getResponses() throws Exception {
+        List<ICommandResponse> responses = new ArrayList<ICommandResponse>();
         for ( byte[] nextLine : lines  ) {
             String line = Converter.toUnicode(nextLine);
             responses.add(new CommandResponseImpl(line));

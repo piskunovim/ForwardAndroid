@@ -1,6 +1,7 @@
 package ru.forwardmobile.tforwardpayment.spp;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Vasiliy Vanin on 08.06.14.
@@ -14,7 +15,7 @@ public interface IResponseSet {
     public int getSize();
 
     public ICommandResponse             getResponse(int index) throws Exception;
-    public Collection<ICommandResponse> getResponses() throws Exception;
+    public List<ICommandResponse> getResponses() throws Exception;
 
     public void setSignature(byte[] signature);
     public byte[] getSignature();
