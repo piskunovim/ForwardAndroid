@@ -144,7 +144,7 @@ public class OperatorsActivity extends ActionBarActivity {
                     //
                     //! Здесь будем передавать id
                     //
-                    // cr.getString(cr.getColumnIndex("id"));
+                    //cr.getString(cr.getColumnIndex("id"));
                     //Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
                     //intent.putExtra("psid",Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
                     //startActivity(intent);
