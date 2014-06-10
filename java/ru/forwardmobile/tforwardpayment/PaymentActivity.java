@@ -47,8 +47,9 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         TSettings.set(TSettings.CERTIFICATE_ACESS_ID, "1882");        
         
         // Получаем ПС с полями
-        provider = ProviderFactory.getProvider(getIntent().getIntExtra("psid", 1), this);
+        provider = ProviderFactory.getProvider(getIntent().getIntExtra("psid", 453), this);
         //provider = ProviderFactory.mockProvider(this);
+        Log.d("TForwardPayment.PaymentActivity", provider.getName());
 
         layout = (ViewGroup) getLayoutInflater()
                 .inflate(R.layout.default_data_enity_layout, null);

@@ -15,6 +15,9 @@ public class TSettings extends Properties {
     public static final String SERVER_HOST              = "server-host";
     public static final String SERVER_PORT              = "server-port";
     public static final String CERTIFICATE_ACESS_ID     = "access-id";
+    public static final String MAXIMUM_START_TRY_COUNT  = "maxstarttryes";
+    public static final String QUEUE_ERROR_DELAY        = "queueerrdelay";
+    public static final String MAXIMUM_STORED_PAYMENTS  = "maxstoredsize";
     public static final char   CRLF                     = '\n';
     
     public static String getVersion() {
@@ -32,6 +35,11 @@ public class TSettings extends Properties {
     public static String get(String name ) {
         return instance.getProperty(name);
     }
+
+    public static String get(String name, String value) {
+        if(instance.containsKey(name)) return get(name);
+        else return value;
+    }
     
     /**
      * @param name
@@ -40,14 +48,27 @@ public class TSettings extends Properties {
     public static int getInt(String name) {
         return Integer.valueOf(get(name));
     }
-
+    public static int getInt(String name, int value) {
+        try {
+            return Integer.parseInt(get(name));
+        }catch(Exception ex) {
+            return value;
+        }
+    }
     /**
      * @param name
      * @return double or null
      */
     public static double getDouble(String name) {
         return Double.valueOf(get(name));
-    }    
+    }
+    public static double getDouble(String name, Double value) {
+        try {
+            return Double.parseDouble(get(name));
+        }catch(Exception ex){
+            return value;
+        }
+    }
     
     /**
      * @param name
