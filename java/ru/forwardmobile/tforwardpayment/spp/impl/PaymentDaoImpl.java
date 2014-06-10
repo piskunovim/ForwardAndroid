@@ -11,7 +11,6 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
@@ -32,7 +31,9 @@ public class PaymentDaoImpl implements IPaymentDao {
     }
 
     @Override
-    public synchronized void save(IPayment payment) {
+    public void save(IPayment payment) {
+
+
 
         // Набор полей
         StringBuilder payment_data = new StringBuilder();
@@ -40,7 +41,7 @@ public class PaymentDaoImpl implements IPaymentDao {
             payment_data.append("<f n=\"" + field.getName() + "\">" + field.getValue() + "</f>");
         }
 
-        if(payment.getId() == null) {
+       /* if(payment.getId() == null) {
             ContentValues cv = new ContentValues();
 
             cv.put("transactid", payment.getTransactionId());
@@ -72,42 +73,27 @@ public class PaymentDaoImpl implements IPaymentDao {
                     String.valueOf(payment.getFullValue() * 100),
                     String.valueOf(payment.getErrorCode())
             });
-        }
+        }*/
 
-    }
-
-    public synchronized Collection<IPayment> getQueue() {
-
-        Collection<IPayment> payments = new HashSet<IPayment>();
-        Cursor cursor = db.rawQuery("select transactid, status, payment_data, started, finished, psid, value, error_code  from "
-                                + DatabaseHelper.PAYMENT_QUEUE_TABLE + " where status < ? ", new String[]{ String.valueOf(IPayment.DONE) });
-        try {
-
-            while (cursor.moveToNext())
-                payments.add(getPayment(cursor));
-
-        } finally {
-            cursor.close();
-        }
-
-        return payments;
     }
 
     @Override
-    public synchronized IPayment find(Integer id) {
+    public IPayment find(Integer id) {
 
-        Cursor cursor = db.rawQuery("select transactid, status, payment_data, started, finished, psid, value, error_code  from "
-                + DatabaseHelper.PAYMENT_QUEUE_TABLE + " where id = ?", new String[]{
-                    String.valueOf(id)
+        /*Cursor cursor = db.rawQuery("select id, payment_data, value, psid from " + DatabaseHelper.PAYMENT_QUEUE_TABLE + " where id = ?", new String[]{
+                String.valueOf(id)
         });
 
         try {
             if (cursor.moveToNext()) {
-                return getPayment(cursor);
+
+                Collection<IFieldInfo> fields = parseFields(cursor.getString(1));
+                IPayment payment = PaymentFactory.getPayment(cursor.getInt(3), Double.valueOf(cursor.getInt(2) / 100), fields);
+                return payment;
             }
         }finally {
              cursor.close();
-        }
+        }*/
 
         return null;
     }
@@ -135,18 +121,6 @@ public class PaymentDaoImpl implements IPaymentDao {
         return fields;
     }
 
-
-    private IPayment getPayment(Cursor cursor) {
-        Collection<IFieldInfo> fields = parseFields(cursor.getString(2));
-        IPayment payment = PaymentFactory.getPayment(cursor.getInt(5), Double.valueOf(cursor.getInt(6) / 100), fields);
-        payment.setStartDate(new Date(Long.valueOf(cursor.getLong(3))));
-        payment.setFinishDate(cursor.getLong(4) > 0 ? new Date(cursor.getLong(4)) : null);
-        payment.setStatus(cursor.getInt(1));
-        payment.setErrorCode(cursor.getInt(7));
-        payment.setTransactionId(cursor.getInt(0));
-
-        return payment;
-    }
 
 
     private class FieldContentHandler implements ContentHandler {
