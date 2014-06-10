@@ -2,6 +2,8 @@ package ru.forwardmobile.tforwardpayment;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -134,6 +136,17 @@ public class MainListActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.action_report) {
+            CharSequence colors[] = new CharSequence[] {"Баланс", "Платежи", "Поиск платежа"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Отчеты");
+            builder.setItems(colors, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // the user clicked on colors[which]
+                }
+            });
+            builder.show();
             return true;
         }
         if (id == R.id.settings) {
