@@ -6,17 +6,17 @@
     <item android:id="@+id/action_help"
         android:title="@string/help"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+    />
     <item android:id="@+id/action_report"
         android:title="@string/report"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+     />
     <item android:id="@+id/settings"
         android:title="@string/settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+    />
     <item android:id="@+id/payment"
         android:title="@string/payment"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+     />
 </menu>

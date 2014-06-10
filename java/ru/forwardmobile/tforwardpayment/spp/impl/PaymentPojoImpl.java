@@ -154,6 +154,11 @@ public class PaymentPojoImpl implements IPayment {
         return false;
     }
 
+    @Override
+    public void setDelayed(boolean delayed) {
+
+    }
+
 
     @Override
     public boolean isPreparedForCancelling() {
@@ -208,6 +213,11 @@ public class PaymentPojoImpl implements IPayment {
     @Override
     public Integer getTryCount() {
         return null;
+    }
+
+    @Override
+    public void setTryCount(Integer count) {
+
     }
 
     @Override

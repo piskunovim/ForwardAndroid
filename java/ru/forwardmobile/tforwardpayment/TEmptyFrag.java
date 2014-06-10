@@ -18,7 +18,5 @@ public class TEmptyFrag extends Fragment {
         View rootView = inflater.inflate(R.layout.empty, container, false);
 
         return rootView;
-
-
     }
 }
