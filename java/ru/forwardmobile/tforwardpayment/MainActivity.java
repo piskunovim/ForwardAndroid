@@ -110,7 +110,8 @@ public class MainActivity extends ActionBarActivity {
             {
                 new AlertDialog.Builder(this)
                     .setTitle("Ошибка авторизации")
-                    .setMessage("Внимание! Произошла ошибка авторизации на сервере ForwardMobile. Пожалуйста. проверьте наличие на вашем устройстве доступа к сети интернет и правильность вводимых данных.")
+                    .setMessage("Внимание! Произошла ошибка авторизации на сервере ForwardMobile. Пожалуйста. " +
+                            "проверьте наличие на вашем устройстве доступа к сети интернет и правильность вводимых данных.")
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete

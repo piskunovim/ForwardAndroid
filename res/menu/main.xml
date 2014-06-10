@@ -6,5 +6,5 @@
     <item android:id="@+id/action_help"
         android:title="@string/help"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+   />
 </menu>
