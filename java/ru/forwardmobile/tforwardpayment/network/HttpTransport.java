@@ -129,8 +129,8 @@ public class HttpTransport
         IRequest request = ServerRequestFactory.getRequest("");
         request.setData( body.toString().getBytes() );
 
-        request.setHost(TSettings.get(TSettings.SERVER_HOST));
-        request.setPort(TSettings.getInt(TSettings.SERVER_PORT));
+        request.setHost(TSettings.get(TSettings.SERVER_HOST, "www.forwardmobile.ru"));
+        request.setPort(TSettings.getInt(TSettings.SERVER_PORT, 8193));
         request.setPath("/?v=" + TSettings.getVersion());
 
         Log.i("TFORWARD.HttpTransport", request.toString());

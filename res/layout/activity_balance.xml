@@ -8,10 +8,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
         android:text="Текущий баланс:"
-        android:id="@+id/textView"
-        android:layout_marginTop="33dp"
+        android:id="@+id/balView"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="27dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true" />
@@ -19,20 +19,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
         android:text="Кредитный лимит:"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
+        android:id="@+id/creditView"
+        android:layout_below="@+id/balView"
+        android:layout_alignLeft="@+id/balView"
         android:layout_marginTop="16dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
         android:text="Можно израсходовать:"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/textView2"
+        android:id="@+id/totalView"
+        android:layout_below="@+id/creditView"
+        android:layout_alignLeft="@+id/creditView"
         android:layout_marginTop="16dp" />
+
 </RelativeLayout>

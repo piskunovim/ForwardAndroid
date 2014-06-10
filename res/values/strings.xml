@@ -10,6 +10,7 @@
     <string name="report">Отчеты</string>
     <string name="payment">Платежи</string>
     <string name="title_activity_main_list">Меню</string>
+    <string name="title_balance">Остаток средств</string>
     <string name="back">Назад</string>
     <string name="data_entry_button_check_text">Проверка</string>
     <string name="data_entry_button_start_text">Провести</string>
