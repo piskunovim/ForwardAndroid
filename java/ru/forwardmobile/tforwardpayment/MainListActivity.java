@@ -1,5 +1,7 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.reports.TBalanceReportScreenImpl;
 
 public class MainListActivity extends ActionBarActivity {
 
@@ -134,6 +137,21 @@ public class MainListActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.action_report) {
+            CharSequence reports[] = new CharSequence[] {"Баланс", "Платежи", "Поиск платежа"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Выберите отчет:");
+            builder.setItems(reports, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // the user clicked on reports[which]
+                   if (which == 0){
+                   Intent intent = new Intent(MainListActivity.this, TBalanceReportScreenImpl.class);
+                   MainListActivity.this.startActivity(intent);
+                   }
+                }
+            });
+            builder.show();
             return true;
         }
         if (id == R.id.settings) {
