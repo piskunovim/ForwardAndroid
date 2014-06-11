@@ -40,11 +40,8 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         
         super.onCreate(savedInstanceState); 
-        
-        //  Debug
-        TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
-        TSettings.set(TSettings.SERVER_PORT, "8193");
-        TSettings.set(TSettings.CERTIFICATE_ACESS_ID, "1882");        
+
+        TSettings.set(TSettings.CERTIFICATE_ACESS_ID, "1882");
         
         // Получаем ПС с полями
         provider = ProviderFactory.getProvider(getIntent().getIntExtra("psid", 453), this);

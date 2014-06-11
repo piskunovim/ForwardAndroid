@@ -4,24 +4,22 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-
 import java.util.ArrayList;
+
+import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 
 public class OperatorsActivity extends ActionBarActivity {
 
@@ -144,10 +142,10 @@ public class OperatorsActivity extends ActionBarActivity {
                     //
                     //! Здесь будем передавать id
                     //
-                    // cr.getString(cr.getColumnIndex("id"));
-                    //Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
-                    //intent.putExtra("psid",Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
-                    //startActivity(intent);
+                    cr.getString(cr.getColumnIndex("id"));
+                    Intent intent = new Intent(OperatorsActivity.this, PaymentActivity.class);
+                    intent.putExtra("psid",Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    startActivity(intent);
                 }
             });
 

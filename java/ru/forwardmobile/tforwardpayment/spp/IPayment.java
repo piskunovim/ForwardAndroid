@@ -59,10 +59,6 @@ public interface IPayment {
     public Integer                  getStatus();
     public void                     setStatus(Integer status);
 
-    /** @return true, if payment delayed */
-    public boolean                  isDelayed();
-    public void                     setDelayed(boolean delayed);
-
     public boolean                  isPreparedForCancelling();
     public void                     delay(int interval);
     public void                     errorDelay();

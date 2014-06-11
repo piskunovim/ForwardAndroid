@@ -41,6 +41,8 @@
             android:name="ru.forwardmobile.tforwardpayment.OperatorsActivity"
             android:label="@string/title_activity_operators" >
         </activity>
+
+        <service android:name=".TPaymentService" />
     </application>
 
 </manifest>
