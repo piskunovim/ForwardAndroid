@@ -10,16 +10,11 @@
     <string name="report">Отчеты</string>
     <string name="payment">Платежи</string>
     <string name="title_activity_main_list">Меню</string>
-    <string name="title_balance">Остаток средств</string>
-    <string name="back">Назад</string>
+	<string name="back">Назад</string>
     <string name="data_entry_button_check_text">Проверка</string>
     <string name="data_entry_button_start_text">Провести</string>
     <string name="data_entry_amount_title">Сумма</string>
     <string name="data_entry_label">Провести платеж</string>
     <string name="title_activity_operators">Выбор оператора</string>
-    <string name="title_activity_activity_balance">ActivityBalance</string>
-    <string name="title_activity_paymen_list_screen">PaymenListScreen</string>
-    <string name="title_activity_payment_list_impl">PaymentListImpl</string>
-    <string name="title_activity_help">HelpActivity</string>
 
 </resources>

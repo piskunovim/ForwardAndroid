@@ -1,9 +1,5 @@
 package ru.forwardmobile.tforwardpayment;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,16 +14,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.reports.PaymentListImpl;
-import ru.forwardmobile.tforwardpayment.reports.TBalanceReportScreenImpl;
-
-import java.util.ArrayList;
 
 public class MainListActivity extends ActionBarActivity {
 
-    final static String LOG_TAG = "TTestActivity.MainListActivity";
+    final static String LOG_TAG = "TFORWARD.MainListActivity";
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
 
     SQLiteOpenHelper dbHelper;
@@ -47,9 +40,9 @@ public class MainListActivity extends ActionBarActivity {
 
         if (!message.equals("true"))
         {
-        //dbHelper = new DatabaseHelper(this);
-        TParseOperators parse = new TParseOperators();
-        parse.GetXMLSettings(message, dbHelper);
+            //dbHelper = new DatabaseHelper(this);
+            TParseOperators parse = new TParseOperators();
+            parse.GetXMLSettings(message, dbHelper);
 
         }
 
@@ -72,6 +65,9 @@ public class MainListActivity extends ActionBarActivity {
             }
 
         });
+
+        // Payment queue start
+        startPaymentQueue();
     }
 
     public void OpenOperatorActivity(String id){
@@ -103,7 +99,7 @@ public class MainListActivity extends ActionBarActivity {
 
             do {
                 // получаем значения по номерам столбцов и пишем все в лог
-                Log.d(LOG_TAG,  ", "+column+" = " + listpgc.getString(nameColIndex));
+                Log.v(LOG_TAG,  ", "+column+" = " + listpgc.getString(nameColIndex));
                 operatorgroup.add(listpgc.getString(nameColIndex));
                 // переход на следующую строку
                 // а если следующей нет (текущая - последняя), то false - выходим из цикла
@@ -135,35 +131,9 @@ public class MainListActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_help) {
-            Intent intent = new Intent(MainListActivity.this, TBalanceReportScreenImpl.class);
-            MainListActivity.this.startActivity(intent);
             return true;
         }
         if (id == R.id.action_report) {
-            CharSequence reports[] = new CharSequence[] {"Запрос остатка средств", "Текущие платежи", "Принятые платежи"};
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Выберите отчет:");
-            builder.setItems(reports, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // the user clicked on reports[which]
-                    Intent intent;
-                    switch (which){
-                    case 0:
-                           intent = new Intent(MainListActivity.this, TBalanceReportScreenImpl.class);
-                           MainListActivity.this.startActivity(intent);
-                           break;
-                    case 1:
-                           intent = new Intent(MainListActivity.this, PaymentListImpl.class);
-                           MainListActivity.this.startActivity(intent);
-                           break;
-                    default:
-                            break;
-                   }
-                }
-            });
-            builder.show();
             return true;
         }
         if (id == R.id.settings) {
@@ -175,7 +145,23 @@ public class MainListActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-  /*  public void OperatorsListView(String gid){//, ListView listContent){
+    private void startPaymentQueue() {
+        Log.i(LOG_TAG,"Starting payment queue...");
+        startService(new Intent(this, TPaymentService.class));
+    }
+
+    private void stopPaymentQueue() {
+        Log.i(LOG_TAG,"Deactivating payment queue...");
+        stopService(new Intent(this,TPaymentService.class));
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopPaymentQueue();
+        super.onDestroy();
+    }
+
+    /*  public void OperatorsListView(String gid){//, ListView listContent){
         Log.d(LOG_TAG, "Start OperatorsListView");
         operatorgroup.clear();
         ListView listContent = (ListView)findViewById(R.id.listView);

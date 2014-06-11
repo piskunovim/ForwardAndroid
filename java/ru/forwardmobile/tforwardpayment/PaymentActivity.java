@@ -1,13 +1,11 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,11 +40,8 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         
         super.onCreate(savedInstanceState); 
-        
-        //  Debug
-        TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
-        TSettings.set(TSettings.SERVER_PORT, "8193");
-        TSettings.set(TSettings.CERTIFICATE_ACESS_ID, "1882");        
+
+        TSettings.set(TSettings.CERTIFICATE_ACESS_ID, "1882");
         
         // Получаем ПС с полями
         provider = ProviderFactory.getProvider(getIntent().getIntExtra("psid", 453), this);
@@ -56,24 +51,6 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         layout = (ViewGroup) getLayoutInflater()
                 .inflate(R.layout.default_data_enity_layout, null);
         fields = (ViewGroup) layout.findViewById(R.id.data_entry_fields_container);
-
-
-        /*valueField = (EditText) findViewById(R.id.data_entry_value_field);
-
-        try{
-        valueField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (hasFocus) {
-                    imm.showSoftInput(valueField, InputMethodManager.SHOW_IMPLICIT);
-                } else {
-                    imm.hideSoftInputFromWindow(valueField.getWindowToken(), 0);
-                }
-            }
-        });
-        }
-        catch (Exception e){ e.printStackTrace();}*/
 
         // Список полей для сервера
         fieldsInfo = new HashSet<IFieldInfo>();
@@ -88,24 +65,17 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         // Actions
         checkButton = (Button) findViewById(R.id.data_entry_button_check);
         checkButton.setOnClickListener(this);
-
-
-
+        
         startButton = (Button) findViewById(R.id.data_entry_button_start);
         startButton.setOnClickListener(this);
-
-
     }
-
-
-
 
     public void onClick(View view) {
         
         if( view.getId() == R.id.data_entry_button_check ) {
             // CHECK
             Log.i(PaymentActivity.class.getName(), "CHECK");
-            checkButton.setEnabled(false);
+            
             valueField = (EditText) findViewById(R.id.data_entry_value_field);
             try {
                 IPayment payment = PaymentFactory.getPayment(provider.getId(), Double.valueOf(valueField.getText().toString()), fieldsInfo);
@@ -123,6 +93,5 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
             // START 
             Log.i(PaymentActivity.class.getName(), "START");
         }
-        checkButton.setEnabled(true);
     }
 }

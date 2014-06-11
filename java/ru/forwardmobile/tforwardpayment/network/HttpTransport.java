@@ -43,8 +43,8 @@ public class HttpTransport
  
         request.setData(requestBody.toString().getBytes());
         //  Отправка запроса
-        request.setHost(TSettings.get(TSettings.SERVER_HOST));
-        request.setPort(TSettings.getInt(TSettings.SERVER_PORT));
+        request.setHost(TSettings.get(TSettings.SERVER_HOST,"www.forwardmobile.ru"));
+        request.setPort(TSettings.getInt(TSettings.SERVER_PORT,8193));
         request.setPath("/?v=" + TSettings.getVersion());
 
         Log.i("TFORWARD.HttpTransport", request.toString());
@@ -129,8 +129,8 @@ public class HttpTransport
         IRequest request = ServerRequestFactory.getRequest("");
         request.setData( body.toString().getBytes() );
 
-        request.setHost(TSettings.get(TSettings.SERVER_HOST, "www.forwardmobile.ru"));
-        request.setPort(TSettings.getInt(TSettings.SERVER_PORT, 8193));
+        request.setHost(TSettings.get(TSettings.SERVER_HOST,"www.forwardmobile.ru"));
+        request.setPort(TSettings.getInt(TSettings.SERVER_PORT,8193));
         request.setPath("/?v=" + TSettings.getVersion());
 
         Log.i("TFORWARD.HttpTransport", request.toString());
@@ -156,7 +156,7 @@ public class HttpTransport
                     break;
                 case '\r' : break;
                 default: if(signatureStarted)   signature.write(i);
-                else                answer.write(i);
+                         else                   answer.write(i);
             };
 
             i = is.read();

@@ -11,7 +11,7 @@ import ru.forwardmobile.tforwardpayment.TSettings;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int        SQLITE_DATABASE_VERSION = 6;
+    public static final int        SQLITE_DATABASE_VERSION = 8;
     public static final String     SQLITE_DATABASE_NAME    = "forward";
     public static final String     SETTINGS_TABLE_NAME     = "settings2";
     public static final String     PG_TABLE_NAME           = "pg";

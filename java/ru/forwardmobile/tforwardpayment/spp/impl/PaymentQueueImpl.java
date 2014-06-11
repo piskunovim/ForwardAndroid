@@ -31,7 +31,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
     private static final String LOGGER_TAG     = "TFORWARD.QUEUE";
     private static final String PAYMENT_ABSENT = "Платежа нет в очереди!";
-    private static final int    QUEUE_SLEEP_MS = 1000;
+    private static final int    QUEUE_SLEEP_MS = 1000 * 5;
 
     List<IPayment> activePayments = new ArrayList<IPayment>();
     List<IPayment> storedPayments = new ArrayList<IPayment>();
@@ -87,13 +87,14 @@ public class PaymentQueueImpl implements IPaymentQueue {
     public void start() throws Exception {
         this.thread = new Thread(this);
         this.thread.start();
+        this.active = true;
     }
 
     @Override
     public void stop() {
 
         this.stop = true;
-
+        Log.v(LOGGER_TAG, "Stop signal received...");
         try {
             this.thread.join();
         }catch (InterruptedException ex){
@@ -104,6 +105,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
         this.active = false;
 
         databaseHelper.close();
+        Log.i(LOGGER_TAG, "Queue was stopped...");
     }
 
     @Override
@@ -235,6 +237,8 @@ public class PaymentQueueImpl implements IPaymentQueue {
             Thread.sleep(3000); // delayed start
 
             while ( !stop ) {
+
+
                 doPayments();
                 synchronized(this) {
                     try {
@@ -258,6 +262,8 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
     private void doPayments() {
 
+        Log.v(LOGGER_TAG, "Search for unprocessed payments.");
+
         try {
 
             ICommandRequest request = createRequest();
@@ -265,10 +271,12 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
                 if(request != null) {
 
+                    Log.d(LOGGER_TAG, "Sending " + request.getCommands().size() + " commands.");
                     IResponseSet responseSet = null;
                     try {
                         responseSet = transport.send( request );
                     } catch (Exception ex) {
+                        Log.w(LOGGER_TAG, "Sending error: " + ex.getMessage());
                         request.onError("Ошибка обработки: " + ex.getMessage());
                     }
 
@@ -278,6 +286,8 @@ public class PaymentQueueImpl implements IPaymentQueue {
                         }
                     }
 
+                } else {
+                    Log.v(LOGGER_TAG, "Request set is empty..");
                 }
 
             } finally {
@@ -331,6 +341,9 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
 
     private void parseResponseSet(ICommandRequest request, IResponseSet responseSet) {
+
+        Log.d(LOGGER_TAG, "Parsing response set ...");
+
         try {
             Collection<ICommand>         c = request.getCommands();
             Collection<ICommandResponse> r = responseSet.getResponses();
