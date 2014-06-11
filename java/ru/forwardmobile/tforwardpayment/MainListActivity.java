@@ -20,6 +20,7 @@ import android.widget.ListView;
 
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.reports.PaymentListImpl;
 import ru.forwardmobile.tforwardpayment.reports.TBalanceReportScreenImpl;
 
 import java.util.ArrayList;
@@ -134,10 +135,12 @@ public class MainListActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_help) {
+            Intent intent = new Intent(MainListActivity.this, TBalanceReportScreenImpl.class);
+            MainListActivity.this.startActivity(intent);
             return true;
         }
         if (id == R.id.action_report) {
-            CharSequence reports[] = new CharSequence[] {"Баланс", "Платежи", "Поиск платежа"};
+            CharSequence reports[] = new CharSequence[] {"Запрос остатка средств", "Текущие платежи", "Принятые платежи"};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Выберите отчет:");
@@ -145,9 +148,18 @@ public class MainListActivity extends ActionBarActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // the user clicked on reports[which]
-                   if (which == 0){
-                   Intent intent = new Intent(MainListActivity.this, TBalanceReportScreenImpl.class);
-                   MainListActivity.this.startActivity(intent);
+                    Intent intent;
+                    switch (which){
+                    case 0:
+                           intent = new Intent(MainListActivity.this, TBalanceReportScreenImpl.class);
+                           MainListActivity.this.startActivity(intent);
+                           break;
+                    case 1:
+                           intent = new Intent(MainListActivity.this, PaymentListImpl.class);
+                           MainListActivity.this.startActivity(intent);
+                           break;
+                    default:
+                            break;
                    }
                 }
             });
