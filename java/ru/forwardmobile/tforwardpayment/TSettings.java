@@ -15,9 +15,10 @@ public class TSettings extends Properties {
     public static final String SERVER_HOST              = "server-host";
     public static final String SERVER_PORT              = "server-port";
     public static final String CERTIFICATE_ACESS_ID     = "access-id";
-    public static final String MAXIMUM_START_TRY_COUNT  = "maxstarttryes";
-    public static final String QUEUE_ERROR_DELAY        = "queueerrdelay";
-    public static final String MAXIMUM_STORED_PAYMENTS  = "maxstoredsize";
+    public static final String MAXIMUM_START_TRY_COUNT  = "maxstarttryesx";
+    public static final String QUEUE_ERROR_DELAY        = "queueerrdelayx";
+    public static final String MAXIMUM_STORED_PAYMENTS  = "maxstoredsizex";
+    public static final String MAXIMUM_TRY_COUNT        = "maxtryesx";
     public static final char   CRLF                     = '\n';
 
 

@@ -1,9 +1,15 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
+import android.util.Log;
+
+import org.bouncycastle.asn1.cms.TimeStampTokenEvidence;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+
+import ru.forwardmobile.tforwardpayment.TSettings;
 import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
@@ -12,7 +18,7 @@ import ru.forwardmobile.tforwardpayment.spp.IPayment;
  * @author Vasiliy Vanin
  */
 public class PaymentPojoImpl implements IPayment {
-    
+    final String                    LOGGER_TAG = "TFORWARD.PAYMENTIMPL";
     final Double                    value;
     final Double                    fullValue;
     final Integer                   psId;
@@ -26,7 +32,6 @@ public class PaymentPojoImpl implements IPayment {
     private Integer status;
     private int     tryCount;
     private String  errorDescription;
-
 
     public PaymentPojoImpl(Integer psid, Double value, Double fullValue) {
         this.psId       = psid;
@@ -150,29 +155,26 @@ public class PaymentPojoImpl implements IPayment {
     }
 
     @Override
-    public boolean isDelayed() {
-        return false;
-    }
-
-    @Override
-    public void setDelayed(boolean delayed) {
-
-    }
-
-
-    @Override
     public boolean isPreparedForCancelling() {
         return false;
     }
 
     @Override
     public void delay(int interval) {
-
+        Log.d(LOGGER_TAG, "#" + getId().toString() + " delayed to " + interval + " sec., tryCount " + tryCount);
+        setDateOfProcess(new Date(System.currentTimeMillis() +  (long) interval * 1000));
     }
 
     @Override
     public void errorDelay() {
-
+        incTryCount();
+        if ( tryCount >= TSettings.getInt(TSettings.MAXIMUM_TRY_COUNT, 100)) {
+            Log.w(LOGGER_TAG, "#" + id.toString() + ": To many tries (" + tryCount + "). Processing finished.");
+            setStatus(IPayment.FAILED);
+            setErrorDescription("Состояние платежа не определено. " + getErrorDescription());
+        } else {
+            delay(TSettings.getInt(TSettings.QUEUE_ERROR_DELAY, 60));
+        }
     }
 
     @Override

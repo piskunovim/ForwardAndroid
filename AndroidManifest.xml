@@ -45,10 +45,8 @@
             android:name="ru.forwardmobile.tforwardpayment.OperatorsActivity"
             android:label="@string/title_activity_operators" >
         </activity>
-        <activity
-            android:name="ru.forwardmobile.tforwardpayment...res.layout.ActivityBalance"
-            android:label="@string/title_activity_activity_balance" >
-        </activity>
+
+        <service android:name=".TPaymentService" />
         <activity
             android:name="ru.forwardmobile.tforwardpayment...res.layout.PaymenListScreen"
             android:label="@string/title_activity_paymen_list_screen" >
