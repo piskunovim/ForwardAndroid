@@ -136,7 +136,7 @@ public class OperatorsActivity extends ActionBarActivity {
                     cr.moveToNext();
                     Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ cr.getString(cr.getColumnIndex("id")));
 
-                    //PaymentActivity pa= new PaymentActivity();
+                    PaymentActivity pa= new PaymentActivity();
 
                     //pa.SetOperatorId(Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
                     //pa.operator_id = cr.getColumnIndex("id");
@@ -144,10 +144,10 @@ public class OperatorsActivity extends ActionBarActivity {
                     //
                     //! Здесь будем передавать id
                     //
-                    //cr.getString(cr.getColumnIndex("id"));
-                    //Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
-                    //intent.putExtra("psid",Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
-                    //startActivity(intent);
+                    cr.getString(cr.getColumnIndex("id"));
+                    Intent intent = new Intent(OperatorsActivity.this, PaymentActivity.class);
+                    intent.putExtra("psid",Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    startActivity(intent);
                 }
             });
 
