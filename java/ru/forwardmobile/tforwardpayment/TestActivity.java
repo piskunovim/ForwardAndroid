@@ -4,8 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.Arrays;
+
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
+import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
+import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
+import ru.forwardmobile.tforwardpayment.spp.impl.BaseField;
 import ru.forwardmobile.tforwardpayment.spp.impl.PaymentDaoImpl;
 
 /**
@@ -13,27 +18,18 @@ import ru.forwardmobile.tforwardpayment.spp.impl.PaymentDaoImpl;
  */
 public class TestActivity extends Activity {
 
-   /* public void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
+    final static String LOGGER_TAG = "TFORWARD.PAYMENT";
+
+    public void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.empty);
 
-        try {
-            IPayment payment = PaymentFactory.getPayment(1, 500.00, Arrays.asList(BaseField.fieldInfo("target", "test")));
-                     payment.setStartDate(new Date());
+        IPayment payment = PaymentFactory.getPayment(1, 5.00, 5.00, Arrays.asList(BaseField.fieldInfo("target","9182074447")));
+        IPaymentDao dao = new PaymentDaoImpl(new DatabaseHelper(this).getWritableDatabase());
 
-            IPaymentDao paymentDao = new PaymentDaoImpl(new DatabaseHelper(this).getWritableDatabase());
+        dao.save(payment);
 
-            paymentDao.save(payment);
-            Log.i("TESTTFWD", "ID Is: " + payment.getId());*/
-
-           // IPayment payment = new PaymentDaoImpl(new DatabaseHelper(this).getWritableDatabase()).find(1);
-            //Log.i("TESTFWD", payment.getTarget().getValue());
-
-       /* }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
-    }*/
+    }
 
 }

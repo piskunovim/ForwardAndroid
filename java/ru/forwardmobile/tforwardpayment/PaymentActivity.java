@@ -19,6 +19,7 @@ import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
+import ru.forwardmobile.tforwardpayment.spp.PaymentQueueWrapper;
 import ru.forwardmobile.tforwardpayment.spp.ProviderFactory;
 
 
@@ -26,7 +27,9 @@ import ru.forwardmobile.tforwardpayment.spp.ProviderFactory;
  * @author Vasiliy Vanin
  */
 public class PaymentActivity  extends Activity implements View.OnClickListener {
-    
+
+    private final static String LOGGER_TAG = "TFORWARD.PAYMENTACT";
+
     Button      checkButton;
     Button      startButton;
     ViewGroup   layout; 
@@ -54,24 +57,6 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
                 .inflate(R.layout.default_data_enity_layout, null);
         fields = (ViewGroup) layout.findViewById(R.id.data_entry_fields_container);
 
-
-        /*valueField = (EditText) findViewById(R.id.data_entry_value_field);
-
-        try{
-        valueField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (hasFocus) {
-                    imm.showSoftInput(valueField, InputMethodManager.SHOW_IMPLICIT);
-                } else {
-                    imm.hideSoftInputFromWindow(valueField.getWindowToken(), 0);
-                }
-            }
-        });
-        }
-        catch (Exception e){ e.printStackTrace();}*/
-
         // Список полей для сервера
         fieldsInfo = new HashSet<IFieldInfo>();
         
@@ -91,26 +76,29 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         startButton = (Button) findViewById(R.id.data_entry_button_start);
         startButton.setOnClickListener(this);
 
-
+        valueField  = (EditText) findViewById(R.id.data_entry_value_field);
+        fullValueField = (EditText) findViewById(R.id.data_entry_full_value_field);
     }
 
 
 
 
     public void onClick(View view) {
-        
+
+        checkButton.setEnabled(false);
+        startButton.setEnabled(false);
+
         if( view.getId() == R.id.data_entry_button_check ) {
             // CHECK
             Log.i(PaymentActivity.class.getName(), "CHECK");
-            checkButton.setEnabled(false);
+
             valueField = (EditText) findViewById(R.id.data_entry_value_field);
             try {
-                IPayment payment = PaymentFactory.getPayment(provider.getId(), Double.valueOf(valueField.getText().toString()), fieldsInfo);
-
+                IPayment payment = PaymentFactory.getPayment(provider.getId(), Double.valueOf(valueField.getText().toString()), null, fieldsInfo);
                 AsyncTask task = new CheckTask(this, payment);
-                //task.execute(new Void[]{});
+                task.execute(new Void[]{});
             }catch(NumberFormatException ex) {
-                Toast.makeText(this, "Введите сумму нормально!", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Сумма платежа введена неверно!", Toast.LENGTH_SHORT)
                         .show();
             }            
             
@@ -119,7 +107,54 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         if( view.getId() == R.id.data_entry_button_start ) {
             // START 
             Log.i(PaymentActivity.class.getName(), "START");
+
+            // Дело мы имеем в основном с неадекватами,
+            // поэтому надо все проверять и все точно выводить
+            String err = null;
+            boolean hasError = false;
+            Double value = null;
+            Double fullValue = null;
+
+            try {
+               value =  Double.valueOf(valueField.getText().toString());
+            } catch (Exception ex){
+                Log.w(LOGGER_TAG, "Value err: " + ex.getMessage());
+                err = "Сумма к зачислению указана неверно.";
+                hasError = true;
+            }
+
+            try {
+                fullValue = Double.valueOf(fullValueField.getText().toString());
+            } catch(Exception ex) {
+                Log.w(LOGGER_TAG, "Full value err: " + ex.getMessage());
+                if(err != null) {
+                    err += "\nСумма с клиента указана неверно.";
+                } else {
+                    err = "Сумма с клиента указана неверно.";
+                }
+                hasError = true;
+            }
+
+            if(!hasError) {
+                IPayment payment = PaymentFactory.getPayment(provider.getId(),value, fullValue, fieldsInfo);
+                try {
+                    Log.d(LOGGER_TAG, "Adding payment to queue");
+                    PaymentQueueWrapper.getQueue().processPayment(payment);
+                    Toast.makeText(this, "Платеж создан!", Toast.LENGTH_SHORT)
+                            .show();
+                }catch (Exception ex) {
+                    Toast.makeText(this, "Ошибка создания платежа: " + ex.getMessage(), Toast.LENGTH_SHORT)
+                            .show();
+                }
+            } else {
+                Log.d(LOGGER_TAG, "Payment creation error...");
+                Toast.makeText(this, err, Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
+
         checkButton.setEnabled(true);
+        startButton.setEnabled(true);
     }
+
 }

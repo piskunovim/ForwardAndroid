@@ -17,6 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String     PG_TABLE_NAME           = "pg";
     public static final String     P_TABLE_NAME            = "p";
     public static final String     F_TABLE_NAME            = "f";
+    public static final String     PAYMENT_QUEUE_TABLE     = "payments";
 	
 
     public DatabaseHelper(Context context) {
@@ -81,7 +82,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	    //Operators data
         sqld.execSQL("CREATE TABLE " + F_TABLE_NAME	
-				+ "(provider integer, name text, prefix text, title text, mask text, required text, type text)");        
+				+ "(provider integer, name text, prefix text, title text, mask text, required text, type text)");
+
+        sqld.execSQL("CREATE TABLE  " + PAYMENT_QUEUE_TABLE +
+                "(" +
+                    " id integer primary key autoincrement, " +
+                    " psid integer, " +
+                    " transactid integer," +
+                    " fields text, " +
+                    " value integer, " +
+                    " fullValue integer, " +
+                    " errorCode integer, " +
+                    " errorDescription text, " +
+                    " startDate integer, " +
+                    " status integer, " +
+                    " processDate integer " +
+                ")"
+        );
     }
     
     
@@ -95,4 +112,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String.valueOf(id)
         });
     }
+
+
 }

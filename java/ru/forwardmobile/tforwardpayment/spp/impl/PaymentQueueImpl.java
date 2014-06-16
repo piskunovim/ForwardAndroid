@@ -7,6 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
             databaseHelper = new DatabaseHelper( ctx );
             paymentDao     = new PaymentDaoImpl( databaseHelper.getWritableDatabase());
-
+            router         = new RouterImpl();
         } catch (Exception ex) {
             Log.i( LOGGER_TAG, ex.toString() );
             ex.printStackTrace();
@@ -68,6 +69,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
         databaseHelper = helper;
         paymentDao = new PaymentDaoImpl( databaseHelper.getWritableDatabase() );
+        router         = new RouterImpl();
     }
 
     public PaymentQueueImpl() {
@@ -81,6 +83,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
     public void setDatabaseHelper(SQLiteOpenHelper helper) {
         this.databaseHelper = helper;
         paymentDao = new PaymentDaoImpl( databaseHelper.getWritableDatabase() );
+        router         = new RouterImpl();
     }
 
     @Override
@@ -116,7 +119,15 @@ public class PaymentQueueImpl implements IPaymentQueue {
     @Override
     public void processPayment(IPayment payment) throws Exception {
 
+        payment.setStartDate(new Date());
+        payment.setStatus(IPayment.NEW);
+        payment.setDateOfProcess(new Date());
+
         paymentDao.save(payment);
+
+        Log.i(LOGGER_TAG, "New payment started with id "
+                + payment.getId());
+
         synchronized ( activePayments ) {
             activePayments.add( payment );
         }
@@ -331,6 +342,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
             } catch (Exception ex) {
                 Log.e( LOGGER_TAG, "Request creation error: " + ex.getMessage() );
+                ex.printStackTrace();
                 return null;
             }
         }

@@ -39,7 +39,21 @@
             android:layout_height="wrap_content"
             android:id="@+id/data_entry_value_field"
         />
-        
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:text="@string/data_entry_full_amount_title"
+            />
+
+        <EditText
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:id="@+id/data_entry_full_value_field"
+            />
+
+
     </LinearLayout> 
     
     <LinearLayout
