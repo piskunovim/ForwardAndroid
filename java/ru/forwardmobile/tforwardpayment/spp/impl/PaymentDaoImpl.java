@@ -11,6 +11,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
@@ -33,67 +34,58 @@ public class PaymentDaoImpl implements IPaymentDao {
     @Override
     public void save(IPayment payment) {
 
-
-
         // Набор полей
         StringBuilder payment_data = new StringBuilder();
         for( IFieldInfo field: payment.getFields() ) {
             payment_data.append("<f n=\"" + field.getName() + "\">" + field.getValue() + "</f>");
         }
 
-       /* if(payment.getId() == null) {
-            ContentValues cv = new ContentValues();
+        ContentValues cv = new ContentValues();
 
-            cv.put("transactid", payment.getTransactionId());
-            cv.put("status", payment.getStatus());
-            cv.put("target", payment.getTarget().getValue());
-            cv.put("payment_data", "<data>" + payment_data.toString() + "</data>");
-            cv.put("started", payment.getStartDate().getTime());
-            cv.put("finished", payment.getFinishDate() != null ? payment.getFinishDate().getTime() : null );
-            cv.put("psid", payment.getPsid());
-            cv.put("value", payment.getValue() * 100);
-            cv.put("full_value", payment.getFullValue() * 100);
-            cv.put("error_code", payment.getErrorCode());
+        cv.put("transactid", payment.getTransactionId());
+        cv.put("psid", payment.getPsid());
+        cv.put("fields", "<data>" + payment_data.toString() + "</data>");
+        cv.put("value", payment.getValue() * 100);
+        cv.put("fullValue", payment.getFullValue());
+        cv.put("errorCode", payment.getErrorCode());
+        cv.put("errorDescription", payment.getErrorDescription());
+        cv.put("startDate", payment.getStartDate().getTime());
+        cv.put("status", payment.getStatus());
+        cv.put("processDate", payment.getDateOfProcess().getTime());
 
+        if(payment.getId() == null) {
             Long rowId = db.insert(DatabaseHelper.PAYMENT_QUEUE_TABLE, null, cv);
             payment.setId(rowId.intValue());
-
         } else {
-
-            db.execSQL("REPLACE into " + DatabaseHelper.PAYMENT_QUEUE_TABLE + " VALUES(?,?,?,?,?,?,?,?,?,?,?)", new String[]{
-                    String.valueOf(payment.getId()),
-                    String.valueOf(payment.getTransactionId()),
-                    String.valueOf(payment.getStatus()),
-                    payment.getTarget().getValue(),
-                    "<data>" + payment_data.toString() + "</data>",
-                    String.valueOf(payment.getStartDate().getTime()),
-                    String.valueOf(payment.getFinishDate() != null ? payment.getFinishDate().getTime() : null),
-                    String.valueOf(payment.getPsid()),
-                    String.valueOf(payment.getValue() * 100),
-                    String.valueOf(payment.getFullValue() * 100),
-                    String.valueOf(payment.getErrorCode())
-            });
-        }*/
-
+            db.update("payments", cv, " where id = ?", new String[]{
+                    String.valueOf(payment.getId())
+            } );
+        }
     }
 
     @Override
     public IPayment find(Integer id) {
 
-        /*Cursor cursor = db.rawQuery("select id, payment_data, value, psid from " + DatabaseHelper.PAYMENT_QUEUE_TABLE + " where id = ?", new String[]{
-                String.valueOf(id)
-        });
+        Cursor cursor = db.rawQuery("select psid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate " +
+                " from  payments where id = ?", new String[]{String.valueOf(id)});
 
         try {
-            if (cursor.moveToNext()) {
+
+            if(cursor.moveToNext()) {
 
                 Collection<IFieldInfo> fields = parseFields(cursor.getString(1));
-                IPayment payment = PaymentFactory.getPayment(cursor.getInt(3), Double.valueOf(cursor.getInt(2) / 100), fields);
+                IPayment payment = PaymentFactory.getPayment( cursor.getInt(0), (double) cursor.getInt(2)/100, (double) cursor.getInt(3)/100, fields );
+                payment.setErrorCode(cursor.getInt(4));
+                payment.setErrorDescription(cursor.getString(5));
+                payment.setStartDate(new Date(cursor.getInt(6)));
+                payment.setStatus(cursor.getInt(7));
+                payment.setDateOfProcess(new Date(cursor.getInt(8)));
+
                 return payment;
             }
-        }finally {
-             cursor.close();
-        }*/
+        } finally {
+            cursor.close();
+        }
 
         return null;
     }

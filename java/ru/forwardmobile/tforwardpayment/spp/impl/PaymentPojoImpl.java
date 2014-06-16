@@ -19,16 +19,17 @@ import ru.forwardmobile.tforwardpayment.spp.IPayment;
  */
 public class PaymentPojoImpl implements IPayment {
     final String                    LOGGER_TAG = "TFORWARD.PAYMENTIMPL";
-    final Double                    value;
-    final Double                    fullValue;
-    final Integer                   psId;
-    final Collection<IFieldInfo>    fields = new HashSet<IFieldInfo>();
+    private Double                    value;
+    private Double                    fullValue;
+    private Integer                   psId;
+    private Collection<IFieldInfo>    fields = new HashSet<IFieldInfo>();
 
     private Integer id;
     private Date    startDate;
     private Integer transactionId;
     private Integer errorCode;
     private Date    finishDate;
+    private Date    dateOfProcess;
     private Integer status;
     private int     tryCount;
     private String  errorDescription;
@@ -70,9 +71,18 @@ public class PaymentPojoImpl implements IPayment {
     public Integer getPsid() {
         return psId;
     }
+    public void    setPsid(Integer psId) {
+        this.psId = psId;
+    }
 
     public Double getValue() {
         return value;
+    }
+    public void   setValue(Double value) {
+        this.value = value;
+    }
+    public void   setValue(Integer value) {
+        setValue(value/100);
     }
 
     public Double getFullValue() {
@@ -178,6 +188,16 @@ public class PaymentPojoImpl implements IPayment {
     }
 
     @Override
+    public boolean isDelayed() {
+        return false;
+    }
+
+    @Override
+    public void setDelayed(boolean delayed) {
+
+    }
+
+    @Override
     public void setActive(boolean active) {
 
     }
@@ -199,12 +219,12 @@ public class PaymentPojoImpl implements IPayment {
 
     @Override
     public void setDateOfProcess(Date dateOfProcess) {
-
+        this.dateOfProcess = dateOfProcess;
     }
 
     @Override
     public Date getDateOfProcess() {
-        return null;
+        return dateOfProcess;
     }
 
     @Override

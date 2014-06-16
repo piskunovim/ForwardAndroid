@@ -50,8 +50,6 @@ public interface IPayment {
     public Date                     getFinishDate();
     public void                     setFinishDate(Date finishDate);
 
-
-
     /** @return IFieldInfo  Основное поле */
     public IFieldInfo               getTarget();
 
@@ -62,6 +60,8 @@ public interface IPayment {
     public boolean                  isPreparedForCancelling();
     public void                     delay(int interval);
     public void                     errorDelay();
+    public boolean                  isDelayed();
+    public void                     setDelayed(boolean delayed);
 
     public void                     setActive(boolean active);
     public boolean                  getActive();
