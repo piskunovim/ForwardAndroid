@@ -46,6 +46,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         
         super.onCreate(savedInstanceState); 
 
+
         TSettings.set(TSettings.CERTIFICATE_ACESS_ID, "1882");
         
         // Получаем ПС с полями
