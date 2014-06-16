@@ -108,7 +108,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
                 IPayment payment = PaymentFactory.getPayment(provider.getId(), Double.valueOf(valueField.getText().toString()), fieldsInfo);
 
                 AsyncTask task = new CheckTask(this, payment);
-                task.execute(new Void[]{});
+                //task.execute(new Void[]{});
             }catch(NumberFormatException ex) {
                 Toast.makeText(this, "Введите сумму нормально!", Toast.LENGTH_SHORT)
                         .show();
