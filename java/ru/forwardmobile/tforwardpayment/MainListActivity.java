@@ -45,15 +45,12 @@ public class MainListActivity extends ActionBarActivity {
         if (!message.equals("true"))
         {
             //dbHelper = new DatabaseHelper(this);
-            TParseOperators parse = new TParseOperators();
+            TParseOperators parse = new TParseOperators(this);
             parse.GetXMLSettings(message, dbHelper);
 
         }
 
         GenerateListView("pg", "name", listContent);
-
-
-
 
         listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -69,6 +66,11 @@ public class MainListActivity extends ActionBarActivity {
             }
 
         });
+
+        // Debug
+        for(Object key: TSettings.getKeys()) {
+            Log.v(LOG_TAG, "Set " + key + ": " + TSettings.get((String) key));
+        }
 
         // Payment queue start
         startPaymentQueue();
