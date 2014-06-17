@@ -73,28 +73,33 @@ public class PaymentListImpl extends ActionBarActivity {
         try{
         ArrayList<PaymentListItemsImpl> paymentList = new ArrayList<PaymentListItemsImpl>();
         paymentList.clear();
-        //String query = "SELECT * FROM PAYMENTS ";
 
-        //Cursor c1 = db.selectQuery(query);
-        //Cursor c1 = dbHelper.getReadableDatabase().rawQuery(query, null);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        // делаем запрос всех данных из таблицы mytable, получаем Cursor
-        Cursor c1 = db.query("payments", null, null, null, null, null, null);
+        String ps;
+        String query = "select pay.id, pay.psid, pay.fields, pay.value, pay.fullValue, pay.errorCode, pay.errorDescription, pay.startDate, pay.status, pay.processDate, p.name from payments pay left join p on p.id = pay.psid";
+        Cursor c1 = dbHelper.getReadableDatabase().rawQuery(query, null);
+
         if (c1 != null && c1.getCount() != 0) {
             if (c1.moveToFirst()) {
                 do {
                     PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
 
+
                     paymentListItems.setPsid(c1.getString(c1
-                            .getColumnIndex("psid")));
+                            .getColumnIndex("name")));
+                    //paymentListItems.setPsid(c1.getString(c1
+                    //        .getColumnIndex("psid")));
                     paymentListItems.setStatus(c1.getString(c1
                             .getColumnIndex("status")));
+                    paymentListItems.setStartDate(c1.getString(c1
+                            .getColumnIndex("startDate")));
                     paymentListItems.setValue(c1.getString(c1
                             .getColumnIndex("value")));
                     paymentList.add(paymentListItems);
 
+
                 } while (c1.moveToNext());
             }
+
         }
         c1.close();
 
@@ -107,52 +112,6 @@ public class PaymentListImpl extends ActionBarActivity {
             e.printStackTrace();
         }
     }
-
-
-    /*public void PayinfoListView(String gid){
-        Log.d(LOG_TAG, "Start PayinfoListView");
-        payinfo.clear();
-        ListView listContent = (ListView)findViewById(R.id.listView);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        // делаем запрос всех данных из таблицы mytable, получаем Cursor
-        Cursor listpc = db.query("payments", null, null, null, null, null, null);
-
-        // ставим позицию курсора на первую строку выборки
-        // если в выборке нет строк, вернется false
-        if (listpc.moveToFirst()) {
-
-            // определяем номера столбцов по имени в выборке
-            do {
-                int psidColIndex = listpc.getColumnIndex("psid");
-                int transactidColIndex = listpc.getColumnIndex("transactid");
-                int fieldsColIndex = listpc.getColumnIndex("fields");
-                int valueColIndex = listpc.getColumnIndex("value");
-                int fullvalColIndex = listpc.getColumnIndex("fullValue");
-                int errorCodeColIndex = listpc.getColumnIndex("errorCode");
-                int errorDescriptionColIndex = listpc.getColumnIndex("errorDescription");
-                int startDateColIndex = listpc.getColumnIndex("startDate");
-                int statusColIndex = listpc.getColumnIndex("status");
-                int processDateColIndex = listpc.getColumnIndex("processDate")
-                Log.d(LOG_TAG, listpc.getString(psidColIndex));
-                Log.d(LOG_TAG, listpc.getString(transactidColIndex));
-                // получаем значения по номерам столбцов и пишем все в лог
-                if (gid.equals(listpc.getString(listpc.getColumnIndex("gid"))))
-                {
-                    Log.d(LOG_TAG, listpc.getString(nameColIndex));
-                    payinfo.add(listpc.getString(nameColIndex));
-                }
-                // переход на следующую строку
-                // а если следующей нет (текущая - последняя), то false - выходим из цикла
-            } while (listpc.moveToNext());
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, operatorgroup);
-            listContent.setAdapter(adapter);
-        } else
-            Log.d(LOG_TAG, "Got 0 rows");
-        listpc.close();
-        dbHelper.close();
-
-    }*/
 
 
 }
