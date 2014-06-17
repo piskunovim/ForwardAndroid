@@ -46,8 +46,11 @@ public class TPostData extends AsyncTask<String, String, String> {
         protected String doInBackground(String... params) {
             // ???????? HttpClient ? PostHandler
             HttpClient httpclient = new DefaultHttpClient();
-            //HttpPost httppost = new HttpPost("http://192.168.1.253:8170");
-            HttpPost httppost = new HttpPost("http://www.forwardmobile.ru:8193");
+            HttpPost httppost = new HttpPost("http://"
+                    + TSettings.get(TSettings.SERVER_HOST,"www.forwardobile.ru"
+                    + ":"
+                    + TSettings.get(TSettings.SERVER_PORT,"8193")));
+
             Log.d(LOG_TAG, "pointid: " + pointID + " password: " + password);
 
 
@@ -76,10 +79,6 @@ public class TPostData extends AsyncTask<String, String, String> {
                 Log.d("ResponseContentLength", String.valueOf(response.getEntity().getContentLength()));
                 Log.d("ResponseLength", String.valueOf(counto));
 
-                //TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
-                //TSettings.set(TSettings.SERVER_PORT, "8170");
-                TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
-                TSettings.set(TSettings.SERVER_PORT, "8193");
                 StringBuilder builder = new StringBuilder();
                 builder.append("command=JT_EXPORT_CONFIGURATION")
                         .append("&pointid=" + pointID)

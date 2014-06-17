@@ -30,7 +30,6 @@ public class MainActivity extends ActionBarActivity {
 
     //инициализируем наши объекты формы
     //Button btnSingIn = (Button) findViewById(R.id.singin);
-    SQLiteOpenHelper dbHelper;
     EditText etName, etPass;
 
     boolean databaseExists;
@@ -43,6 +42,10 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Для тестового сервера
+        TSettings.set(TSettings.SERVER_HOST,"192.168.1.253");
+        TSettings.set(TSettings.SERVER_PORT, "8170");
+
         //получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
         etPass = (EditText) findViewById(R.id.epass);
@@ -53,12 +56,16 @@ public class MainActivity extends ActionBarActivity {
 
         if (databaseExists && datatablesFull)
         {
-        Intent intent = new Intent(this, MainListActivity.class);
+            // Чтение настроек
+            DatabaseHelper helper = new DatabaseHelper(this);
+            helper.readSettings();
+            helper.close();
 
-        intent.putExtra(EXTRA_MESSAGE, "true");
-        // запуск activity
-        startActivity(intent);
-        this.finish();
+            Intent intent = new Intent(this, MainListActivity.class);
+            intent.putExtra(EXTRA_MESSAGE, "true");
+            // запуск activity
+            startActivity(intent);
+            this.finish();
         }
         else
         {
@@ -86,23 +93,22 @@ public class MainActivity extends ActionBarActivity {
 
         try{
 
-            TParseOperators parse = new TParseOperators();
+            TParseOperators parse = new TParseOperators(this);
             String responseStr = pd.execute().get();
 
             //parse.GetXMLSettings(responseStr, dbHelper);
             Log.d(LOG_TAG,responseStr);
 
             if (responseStr.length() > 0){
-            // Создаем объект Intent для вызова новой Activity
-            Intent intent = new Intent(this, MainListActivity.class);
+                // Создаем объект Intent для вызова новой Activity
+                Intent intent = new Intent(this, MainListActivity.class);
 
-            intent.putExtra(EXTRA_MESSAGE, responseStr);
-            // запуск activity
-            startActivity(intent);
-            this.finish();
-            }
-            else
-            {
+                intent.putExtra(EXTRA_MESSAGE, responseStr);
+                // запуск activity
+                startActivity(intent);
+                this.finish();
+
+            } else {
                 new AlertDialog.Builder(this)
                     .setTitle("Ошибка авторизации")
                     .setMessage("Внимание! Произошла ошибка авторизации на сервере ForwardMobile. Пожалуйста. " +
@@ -178,6 +184,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public boolean checkForTables(){
+        SQLiteOpenHelper dbHelper;
         boolean hasTables = false;
 
         dbHelper = new DatabaseHelper(this);
@@ -188,9 +195,10 @@ public class MainActivity extends ActionBarActivity {
                 hasTables=true;
          }
 
-            cursor.close();
-            return hasTables;
+        cursor.close();
+        dbHelper.close();
 
+        return hasTables;
     }
 
     private void startPaymentService() {

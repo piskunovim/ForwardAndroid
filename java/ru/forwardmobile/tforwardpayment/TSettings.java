@@ -1,8 +1,8 @@
 package ru.forwardmobile.tforwardpayment;
 
 import java.io.ByteArrayInputStream;
-import java.util.Properties;
 import java.io.InputStream;
+import java.util.Properties;
 import java.util.Set;
 
 
@@ -11,14 +11,16 @@ import java.util.Set;
  * @author Vasiliy Vanin
  */
 public class TSettings extends Properties {
-    
-    public static final String SERVER_HOST              = "server-host";
-    public static final String SERVER_PORT              = "server-port";
+
+    private static final String LOGGER_TAG              = "TFORWARD.TSETTINGS";
+    public static final String SERVER_HOST              = "server_host";
+    public static final String SERVER_PORT              = "server_port";
     public static final String CERTIFICATE_ACESS_ID     = "access-id";
     public static final String MAXIMUM_START_TRY_COUNT  = "maxstarttryesx";
-    public static final String QUEUE_ERROR_DELAY        = "queueerrdelayx";
+    public static final String QUEUE_ERROR_DELAY        = "queue_error_delay";
+    public static final String QUEUE_STATUS_DELAY       = "queue_status_delay";
     public static final String MAXIMUM_STORED_PAYMENTS  = "maxstoredsizex";
-    public static final String MAXIMUM_TRY_COUNT        = "maxtryesx";
+    public static final String MAXIMUM_TRY_COUNT        = "maximum_try_count";
     public static final char   CRLF                     = '\n';
 
 
@@ -94,12 +96,10 @@ public class TSettings extends Properties {
     public static Set<Object> getKeys() {
         return instance.keySet();
     }
-    
+
+
     private TSettings(){}
     private static final TSettings instance
             = new TSettings();
 
-    static {
-        instance.setProperty(CERTIFICATE_ACESS_ID, "1882");
-    }
 }

@@ -8,8 +8,8 @@ import android.content.Context;
 public class KeyStorageFactory {
     
     public static IKeyStorage getKeyStorage(Context context) {
-     //   return new FileKeyStorageImpl(context);
-        return mockKeystorage();
+        return new FileKeyStorageImpl(context);
+        // return mockKeystorage();
     }
     
     public static IKeyStorage mockKeystorage() {

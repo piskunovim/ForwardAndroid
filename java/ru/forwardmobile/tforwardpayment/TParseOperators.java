@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
+import ru.forwardmobile.tforwardpayment.security.KeyStorageFactory;
 
 /**
  * Created by PiskunovI on 08.05.14.
@@ -23,14 +25,19 @@ public class TParseOperators {
 
     final String LOG_TAG = "ParserLog";
     Context context;
-
+    IKeyStorage keyStorage = null;
 
     String tmp = "";
 
-public TParseOperators(){
-
+public TParseOperators(Context context) {
+    this.context = context;
+    keyStorage   = KeyStorageFactory.getKeyStorage(context);
 }
 
+/**
+ * @deprecated Use constructor with context
+ */
+public TParseOperators(){}
 
 public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
 
@@ -57,6 +64,9 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
         db.execSQL("delete from " + DatabaseHelper.PG_TABLE_NAME);
         db.execSQL("delete from " + DatabaseHelper.F_TABLE_NAME);
 
+        boolean insideSettings      = false;
+        String  currentProperty     = new String();
+        String  buffer              = new String();
 
         XmlPullParser xpp = prepareXpp(xmlstring);
 
@@ -146,9 +156,15 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
                             }
                         }
                         db.insert("f", null, cv);
+                    } else
+                    // Start settings part
+                    if("s" . equals( tag_name )) {
+                        insideSettings = true;
+                    }else
+                    // Settings properties
+                    if("v" . equals( tag_name )) {
+                        currentProperty = xpp.getAttributeValue(0);
                     }
-
-
 
                     if (!TextUtils.isEmpty(tmp))
                         Log.d(LOG_TAG, "Attributes: " + tmp);
@@ -157,10 +173,31 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
                 case XmlPullParser.END_TAG:
 
                     cv.clear();
+                    if(buffer.length() > 0) {
+                        // Shared key
+                        if ("s-c".equals(xpp.getName())) {
+                            Log.d(LOG_TAG, "Adding shared key...");
+                            keyStorage.setKey(IKeyStorage.PUBLIC_KEY_TYPE, buffer.getBytes());
+                        } else
+                        // Private key
+                        if ("p-k".equals(xpp.getName())) {
+                            Log.d(LOG_TAG, "Adding private key...");
+                            keyStorage.setKey(IKeyStorage.SECRET_KEY_TYPE, buffer.getBytes());
+                        } else
+                        // Access ID
+                        if ("access-id".equals(xpp.getName())) {
+                            Log.d(LOG_TAG, "Saving acces id.");
+                            TSettings.set(TSettings.CERTIFICATE_ACESS_ID, buffer);
+                        } else
+                        if(insideSettings && "v" . equals(xpp.getName())) {
+                            TSettings.set(currentProperty, buffer);
+                        }
+                    }
+
                     break;
 
                 case XmlPullParser.TEXT:
-
+                    buffer = xpp.getText();
                     break;
 
                 default:
