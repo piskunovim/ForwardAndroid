@@ -1,59 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="5dip" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
 
     <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:id="@+id/pay_psid"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
         android:text="PSID"
-        android:textColor="#040404"
-        android:typeface="sans"
-        android:textSize="20dip"
-        android:textStyle="bold"/>
+        android:textColor="#000" />
 
     <TextView
-        android:id="@+id/status"
-        android:layout_width="fill_parent"
+        android:id="@+id/pay_status"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:textColor="#343434"
-        android:textSize="15dip"
-        android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:text="Status text" />
-
+        android:layout_marginLeft="10dp"
+        android:text="Статус"
+        android:textColor="#000" />
 
     <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
+        android:id="@+id/pay_date"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/title"
-        android:gravity="right"
-        android:text="16/06/2014 - 14:40"
-        android:layout_marginRight="5dip"
-        android:textSize="17dip"
-        android:textColor="#000000"
-        android:textStyle="bold"/>
+        android:layout_marginLeft="10dp"
+        android:text="Дата"
+        android:textColor="#000" />
 
     <TextView
-        android:id="@+id/sum"
-        android:layout_width="wrap_content"
+        android:id="@+id/pay_sum"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/title"
-        android:gravity="right"
-        android:text="Сумма: 100 рублей"
-        android:layout_marginRight="5dip"
-        android:layout_marginTop="22dip"
-        android:textSize="17dip"
-        android:textColor="#000000"
-        android:textStyle="bold"/>
+        android:layout_marginLeft="10dp"
+        android:text="Сумма"
+        android:textColor="#000" />
 
-</RelativeLayout>
+</LinearLayout>
