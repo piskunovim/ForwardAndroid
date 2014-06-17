@@ -10,6 +10,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -26,6 +27,7 @@ import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
 public class PaymentDaoImpl implements IPaymentDao {
 
     private final SQLiteDatabase db;
+    ArrayList<String> paymentgroup = new ArrayList<String>();
 
     public PaymentDaoImpl(SQLiteDatabase db) {
         this.db = db;
@@ -89,6 +91,13 @@ public class PaymentDaoImpl implements IPaymentDao {
 
         return null;
     }
+
+    /*@Override
+    public IPayment getAll(){
+        Cursor cursor = db.rawQuery("SELECT * FROM payments", null);
+       // paymentgroup
+
+    }*/
 
     @Override
     public IPayment findByTransaction(Integer transactid) {
