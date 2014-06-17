@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+
 import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.PaymentActivity;
@@ -31,6 +32,7 @@ public class PaymentListImpl extends ActionBarActivity {
 
     SQLiteOpenHelper dbHelper;
     ArrayList<String> payinfo = new ArrayList<String>();
+    ListView lvCustomList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,9 @@ public class PaymentListImpl extends ActionBarActivity {
         setContentView(R.layout.activity_paymentlist);
 
         dbHelper = new DatabaseHelper(this);
+        lvCustomList = (ListView) findViewById(R.id.listView);
 
+        showList();
 
     }
 
@@ -62,6 +66,48 @@ public class PaymentListImpl extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void showList() {
+
+        try{
+        ArrayList<PaymentListItemsImpl> paymentList = new ArrayList<PaymentListItemsImpl>();
+        paymentList.clear();
+        //String query = "SELECT * FROM PAYMENTS ";
+
+        //Cursor c1 = db.selectQuery(query);
+        //Cursor c1 = dbHelper.getReadableDatabase().rawQuery(query, null);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // делаем запрос всех данных из таблицы mytable, получаем Cursor
+        Cursor c1 = db.query("payments", null, null, null, null, null, null);
+        if (c1 != null && c1.getCount() != 0) {
+            if (c1.moveToFirst()) {
+                do {
+                    PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
+
+                    paymentListItems.setPsid(c1.getString(c1
+                            .getColumnIndex("psid")));
+                    paymentListItems.setStatus(c1.getString(c1
+                            .getColumnIndex("status")));
+                    paymentListItems.setValue(c1.getString(c1
+                            .getColumnIndex("value")));
+                    paymentList.add(paymentListItems);
+
+                } while (c1.moveToNext());
+            }
+        }
+        c1.close();
+
+        PaymentListAdapterImpl contactListAdapter = new PaymentListAdapterImpl(
+                PaymentListImpl.this, paymentList);
+        lvCustomList.setAdapter(contactListAdapter);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
     /*public void PayinfoListView(String gid){
         Log.d(LOG_TAG, "Start PayinfoListView");
