@@ -60,6 +60,8 @@ public class PaymentListAdapterImpl extends BaseAdapter {
         payPsid.setText(paymentListItems.getPsid());
         TextView payStatus = (TextView) convertView.findViewById(R.id.pay_status);
         payStatus.setText(paymentListItems.getStatus());
+        TextView payDate = (TextView) convertView.findViewById(R.id.pay_date);
+        payDate.setText(paymentListItems.getStartDate());
         TextView paySum = (TextView) convertView.findViewById(R.id.pay_sum);
         paySum.setText(paymentListItems.getValue());
 
