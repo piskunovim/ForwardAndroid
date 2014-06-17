@@ -1,49 +1,30 @@
 package ru.forwardmobile.tforwardpayment.reports;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-
-import java.util.ArrayList;
-
-import ru.forwardmobile.tforwardpayment.PaymentActivity;
 import ru.forwardmobile.tforwardpayment.R;
-import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 
 public class PaymentListImpl extends ActionBarActivity {
-
-    String LOG_TAG = "TForwardPayment.PaymentListImpl";
-
-    SQLiteOpenHelper dbHelper;
-    ArrayList<String> payinfo = new ArrayList<String>();
-    ListView lvCustomList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paymentlist);
 
-        dbHelper = new DatabaseHelper(this);
-        lvCustomList = (ListView) findViewById(R.id.listView);
-
-        showList();
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment())
+                    .commit();
+        }
     }
 
 
@@ -67,92 +48,20 @@ public class PaymentListImpl extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
 
-    private void showList() {
-
-        try{
-        ArrayList<PaymentListItemsImpl> paymentList = new ArrayList<PaymentListItemsImpl>();
-        paymentList.clear();
-        //String query = "SELECT * FROM PAYMENTS ";
-
-        //Cursor c1 = db.selectQuery(query);
-        //Cursor c1 = dbHelper.getReadableDatabase().rawQuery(query, null);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        // делаем запрос всех данных из таблицы mytable, получаем Cursor
-        Cursor c1 = db.query("payments", null, null, null, null, null, null);
-        if (c1 != null && c1.getCount() != 0) {
-            if (c1.moveToFirst()) {
-                do {
-                    PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
-
-                    paymentListItems.setPsid(c1.getString(c1
-                            .getColumnIndex("psid")));
-                    paymentListItems.setStatus(c1.getString(c1
-                            .getColumnIndex("status")));
-                    paymentListItems.setValue(c1.getString(c1
-                            .getColumnIndex("value")));
-                    paymentList.add(paymentListItems);
-
-                } while (c1.moveToNext());
-            }
+        public PlaceholderFragment() {
         }
-        c1.close();
 
-        PaymentListAdapterImpl contactListAdapter = new PaymentListAdapterImpl(
-                PaymentListImpl.this, paymentList);
-        lvCustomList.setAdapter(contactListAdapter);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_paymentlist, container, false);
+            return rootView;
         }
     }
-
-
-    /*public void PayinfoListView(String gid){
-        Log.d(LOG_TAG, "Start PayinfoListView");
-        payinfo.clear();
-        ListView listContent = (ListView)findViewById(R.id.listView);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        // делаем запрос всех данных из таблицы mytable, получаем Cursor
-        Cursor listpc = db.query("payments", null, null, null, null, null, null);
-
-        // ставим позицию курсора на первую строку выборки
-        // если в выборке нет строк, вернется false
-        if (listpc.moveToFirst()) {
-
-            // определяем номера столбцов по имени в выборке
-            do {
-                int psidColIndex = listpc.getColumnIndex("psid");
-                int transactidColIndex = listpc.getColumnIndex("transactid");
-                int fieldsColIndex = listpc.getColumnIndex("fields");
-                int valueColIndex = listpc.getColumnIndex("value");
-                int fullvalColIndex = listpc.getColumnIndex("fullValue");
-                int errorCodeColIndex = listpc.getColumnIndex("errorCode");
-                int errorDescriptionColIndex = listpc.getColumnIndex("errorDescription");
-                int startDateColIndex = listpc.getColumnIndex("startDate");
-                int statusColIndex = listpc.getColumnIndex("status");
-                int processDateColIndex = listpc.getColumnIndex("processDate")
-                Log.d(LOG_TAG, listpc.getString(psidColIndex));
-                Log.d(LOG_TAG, listpc.getString(transactidColIndex));
-                // получаем значения по номерам столбцов и пишем все в лог
-                if (gid.equals(listpc.getString(listpc.getColumnIndex("gid"))))
-                {
-                    Log.d(LOG_TAG, listpc.getString(nameColIndex));
-                    payinfo.add(listpc.getString(nameColIndex));
-                }
-                // переход на следующую строку
-                // а если следующей нет (текущая - последняя), то false - выходим из цикла
-            } while (listpc.moveToNext());
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, operatorgroup);
-            listContent.setAdapter(adapter);
-        } else
-            Log.d(LOG_TAG, "Got 0 rows");
-        listpc.close();
-        dbHelper.close();
-
-    }*/
-
 
 }

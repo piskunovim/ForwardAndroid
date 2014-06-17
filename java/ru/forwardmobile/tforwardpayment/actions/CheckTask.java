@@ -92,7 +92,7 @@ public class CheckTask extends AsyncTask<Void, Integer, Integer> {
     
     @Override
     protected void onPostExecute(Integer result) {
-        super.onPostExecute(result); //To change body of generated methods, choose Tools | Templates.
+        super.onPostExecute(result);
 
         String text = "Проверка прошла успешно!";
         if(result != 1) {
