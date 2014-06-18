@@ -51,6 +51,7 @@ public class PaymentListItemsImpl {
     }
 
     public void setFields(String fields) {
+        fields = fields.substring(20,fields.length()-11);
         this.fields = fields;
     }
 
@@ -61,7 +62,7 @@ public class PaymentListItemsImpl {
 
     public void setValue(String value) {
         value = value.substring(0,value.length()-2);
-        this.value = value;
+        this.value = value + " руб.";
     }
 
     //fullValue
@@ -70,7 +71,8 @@ public class PaymentListItemsImpl {
     }
 
     public void setFullValue(String fullValue) {
-        this.fullValue = fullValue;
+        //fullValue = fullValue.substring(0,fullValue.length()-2);
+        this.fullValue = fullValue + " руб.";
     }
 
     //errorCode
@@ -99,7 +101,7 @@ public class PaymentListItemsImpl {
     public void setStartDate(String startDate) {
         Date d = new Date(Long.parseLong(startDate));
         Dates sd = new Dates();
-        startDate = sd.Format(d, "yyyy-MM-dd HH:mm:ss");
+        startDate = sd.Format(d, "HH:mm dd/MM");
         this.startDate = startDate;
     }
 
@@ -126,6 +128,9 @@ public class PaymentListItemsImpl {
     }
 
     public void setProcessDate(String processDate) {
+        Date d = new Date(Long.parseLong(processDate));
+        Dates sd = new Dates();
+        processDate = sd.Format(d, "MM.dd HH:mm");
         this.processDate = processDate;
     }
 
