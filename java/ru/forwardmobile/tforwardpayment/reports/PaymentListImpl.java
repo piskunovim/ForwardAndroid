@@ -86,14 +86,18 @@ public class PaymentListImpl extends ActionBarActivity {
 
                     paymentListItems.setPsid(c1.getString(c1
                             .getColumnIndex("name")));
-                    //paymentListItems.setPsid(c1.getString(c1
-                    //        .getColumnIndex("psid")));
+                    paymentListItems.setFields(c1.getString(c1
+                            .getColumnIndex("fields")));
                     paymentListItems.setStatus(c1.getString(c1
                             .getColumnIndex("status")));
                     paymentListItems.setStartDate(c1.getString(c1
                             .getColumnIndex("startDate")));
+                    //paymentListItems.setProcessDate(c1.getString(c1
+                    //        .getColumnIndex("processDate")));
                     paymentListItems.setValue(c1.getString(c1
                             .getColumnIndex("value")));
+                    paymentListItems.setFullValue(c1.getString(c1
+                            .getColumnIndex("fullValue")));
                     paymentList.add(paymentListItems);
 
 
