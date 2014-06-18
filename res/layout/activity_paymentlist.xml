@@ -19,6 +19,8 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:divider="#808080"
+        android:dividerHeight="0.2px"
         android:id="@+id/listView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true" />
