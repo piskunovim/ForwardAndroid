@@ -1,18 +1,18 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import java.util.Collection;
 import java.util.HashSet;
+
 import ru.forwardmobile.tforwardpayment.actions.CheckTask;
 import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
@@ -46,9 +46,6 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         
         super.onCreate(savedInstanceState); 
 
-
-        TSettings.set(TSettings.CERTIFICATE_ACESS_ID, "1882");
-        
         // Получаем ПС с полями
         provider = ProviderFactory.getProvider(getIntent().getIntExtra("psid", 453), this);
         //provider = ProviderFactory.mockProvider(this);
@@ -72,13 +69,11 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         checkButton = (Button) findViewById(R.id.data_entry_button_check);
         checkButton.setOnClickListener(this);
 
-
-
         startButton = (Button) findViewById(R.id.data_entry_button_start);
         startButton.setOnClickListener(this);
 
-        valueField  = (EditText) findViewById(R.id.data_entry_value_field);
-        fullValueField = (EditText) findViewById(R.id.data_entry_full_value_field);
+        valueField      = (EditText) findViewById(R.id.data_entry_value_field);
+        fullValueField  = (EditText) findViewById(R.id.data_entry_full_value_field);
     }
 
 
@@ -97,7 +92,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
             try {
                 IPayment payment = PaymentFactory.getPayment(provider.getId(), Double.valueOf(valueField.getText().toString()), null, fieldsInfo);
                 AsyncTask task = new CheckTask(this, payment);
-                //task.execute(new Void[]{});
+                task.execute(new Void[]{});
             }catch(NumberFormatException ex) {
                 Toast.makeText(this, "Сумма платежа введена неверно!", Toast.LENGTH_SHORT)
                         .show();

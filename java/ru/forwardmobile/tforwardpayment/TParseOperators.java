@@ -186,7 +186,7 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
                         } else
                         // Access ID
                         if ("access-id".equals(xpp.getName())) {
-                            Log.d(LOG_TAG, "Saving acces id.");
+                            Log.d( LOG_TAG, "Saving acces id. " + buffer  );
                             TSettings.set(TSettings.CERTIFICATE_ACESS_ID, buffer);
                         } else
                         if(insideSettings && "v" . equals(xpp.getName())) {
@@ -232,6 +232,4 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
         xpp.setInput(new StringReader(xmlstring));
         return xpp;
     }
-
-
 }

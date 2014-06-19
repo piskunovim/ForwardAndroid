@@ -13,7 +13,7 @@ public interface IPayment {
     public static final int COMMITED  = 2;
     public static final int DONE      = 3;
     public static final int FAILED    = 4;
-    public static final int CANCELLED = 5;    
+    public static final int CANCELLED = 5;
 
     /** @return Integer Идентификатор записи */
     public Integer                  getId();

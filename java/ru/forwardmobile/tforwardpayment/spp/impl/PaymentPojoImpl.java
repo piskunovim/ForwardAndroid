@@ -2,8 +2,6 @@ package ru.forwardmobile.tforwardpayment.spp.impl;
 
 import android.util.Log;
 
-import org.bouncycastle.asn1.cms.TimeStampTokenEvidence;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -24,7 +22,7 @@ public class PaymentPojoImpl implements IPayment {
     private Integer                   psId;
     private Collection<IFieldInfo>    fields = new HashSet<IFieldInfo>();
 
-    private Integer id;
+    private Integer id = null;
     private Date    startDate;
     private Integer transactionId;
     private Integer errorCode;
