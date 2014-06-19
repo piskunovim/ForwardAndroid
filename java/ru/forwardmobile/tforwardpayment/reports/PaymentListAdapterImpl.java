@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import ru.forwardmobile.tforwardpayment.R;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +70,7 @@ public class PaymentListAdapterImpl extends BaseAdapter {
         paySum.setText(paymentListItems.getValue() + " / " + paymentListItems.getFullValue() );
         //TextView paySumEnr = (TextView) convertView.findViewById(R.id.pay_sum_enrolled);
         //paySumEnr.setText(paymentListItems.getFullValue());
-
+        //Log.d("TForwardPayment.PaymentListAdapterImpl", "Зачислено: " + paymentListItems.getValueSum() + " руб. ; Получено: " + paymentListItems.getFullValueSum() + " руб.");
         return convertView;
     }
 

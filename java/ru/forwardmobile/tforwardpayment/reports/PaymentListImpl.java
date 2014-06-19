@@ -18,10 +18,12 @@ import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
 
+import ru.forwardmobile.tforwardpayment.MainActivity;
 import ru.forwardmobile.tforwardpayment.PaymentActivity;
 import ru.forwardmobile.tforwardpayment.R;
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
@@ -33,15 +35,22 @@ public class PaymentListImpl extends ActionBarActivity {
     SQLiteOpenHelper dbHelper;
     ArrayList<String> payinfo = new ArrayList<String>();
     ListView lvCustomList;
+    TextView listAmount;
+    TextView listEmpty;
+    String ControlMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paymentlist);
 
+        Intent intent = getIntent();
+        ControlMessage = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
         dbHelper = new DatabaseHelper(this);
         lvCustomList = (ListView) findViewById(R.id.listView);
-
+        listAmount = (TextView) findViewById(R.id.pay_amount);
+        listEmpty = (TextView) findViewById(R.id.emptyList);
         showList();
 
     }
@@ -75,14 +84,20 @@ public class PaymentListImpl extends ActionBarActivity {
         paymentList.clear();
 
         String ps;
+        int valueSum, fullValueSum;
+            valueSum = 0;
+            fullValueSum = 0;
         String query = "select pay.id, pay.psid, pay.fields, pay.value, pay.fullValue, pay.errorCode, pay.errorDescription, pay.startDate, pay.status, pay.processDate, p.name from payments pay left join p on p.id = pay.psid";
+
         Cursor c1 = dbHelper.getReadableDatabase().rawQuery(query, null);
 
         if (c1 != null && c1.getCount() != 0) {
             if (c1.moveToFirst()) {
+
+                if (ControlMessage.equals("0") || c1.getString(c1.getColumnIndex("status")).equals("3"))
+                {
                 do {
                     PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
-
 
                     paymentListItems.setPsid(c1.getString(c1
                             .getColumnIndex("name")));
@@ -98,10 +113,22 @@ public class PaymentListImpl extends ActionBarActivity {
                             .getColumnIndex("value")));
                     paymentListItems.setFullValue(c1.getString(c1
                             .getColumnIndex("fullValue")));
+                    /*paymentListItems.setValueSum(c1.getString(c1
+                            .getColumnIndex("value")));
+                    paymentListItems.setFullValueSum(c1.getString(c1
+                            .getColumnIndex("fullValue")));*/
+                    valueSum += Integer.parseInt(c1.getString(c1.getColumnIndex("value")))/100;
+                    fullValueSum += Integer.parseInt(c1.getString(c1.getColumnIndex("fullValue")));
+
                     paymentList.add(paymentListItems);
 
 
                 } while (c1.moveToNext());
+                }
+                else{
+                     listEmpty.setVisibility(View.VISIBLE);
+                }
+                listAmount.setText("Зачислено: " + valueSum + " руб. ; Получено: " + fullValueSum + " руб.");
             }
 
         }

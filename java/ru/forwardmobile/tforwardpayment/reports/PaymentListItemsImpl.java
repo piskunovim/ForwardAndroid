@@ -26,8 +26,11 @@ public class PaymentListItemsImpl {
            status,
            processDate;
 
+    int valueSum, fullValueSum;
+
     SQLiteOpenHelper dbHelper;
 
+    public void onCreate(){ nullValueSum(); nullFullValueSum(); }
 
     //psid
     public String getPsid() {
@@ -133,5 +136,28 @@ public class PaymentListItemsImpl {
         processDate = sd.Format(d, "MM.dd HH:mm");
         this.processDate = processDate;
     }
+
+    //valueSum
+    public String getValueSum() { return Integer.toString(valueSum); }
+
+    public void setValueSum(String vs) {
+        valueSum = valueSum + Integer.parseInt(vs)/100;
+    }
+
+    public void nullValueSum(){
+        valueSum = 0;
+    }
+
+    //fullValueSum
+    public String getFullValueSum() { return Integer.toString(fullValueSum); }
+
+    public void setFullValueSum(String fvs) {
+        fullValueSum = fullValueSum + Integer.parseInt(fvs);
+    }
+
+    public void nullFullValueSum(){
+        fullValueSum = 0;
+    }
+
 
 }
