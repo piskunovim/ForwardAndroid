@@ -47,7 +47,7 @@ public class TPostData extends AsyncTask<String, String, String> {
             // ???????? HttpClient ? PostHandler
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost("http://"
-                    + TSettings.get(TSettings.SERVER_HOST,"www.forwardobile.ru"
+                    + TSettings.get(TSettings.SERVER_HOST,"www.forwardmobile.ru"
                     + ":"
                     + TSettings.get(TSettings.SERVER_PORT,"8193")));
 

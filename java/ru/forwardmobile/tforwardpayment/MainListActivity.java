@@ -158,6 +158,12 @@ public class MainListActivity extends ActionBarActivity {
                            break;
                     case 1:
                            intent = new Intent(MainListActivity.this, PaymentListImpl.class);
+                           intent.putExtra(EXTRA_MESSAGE, "0");
+                           MainListActivity.this.startActivity(intent);
+                           break;
+                    case 2:
+                           intent = new Intent(MainListActivity.this, PaymentListImpl.class);
+                           intent.putExtra(EXTRA_MESSAGE, "1");
                            MainListActivity.this.startActivity(intent);
                            break;
                     default:
