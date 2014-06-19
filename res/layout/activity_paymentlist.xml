@@ -1,25 +1,36 @@
-<RelativeLayout
+<LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Список пуст"
         android:id="@+id/emptyList"
         android:layout_marginLeft="35dp"
         android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:enabled="true"
-        android:visibility="invisible" />
+        android:visibility="gone"
+        android:layout_weight="10"/>
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:divider="#808080"
+        android:dividerHeight="0.2px"
         android:id="@+id/listView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
-</RelativeLayout>
+        android:layout_weight="10"
+        />
+    <TextView
+        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/pay_amount"
+        android:layout_weight="1"
+        android:text="LastText"/>
+
+</LinearLayout>
