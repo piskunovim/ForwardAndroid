@@ -50,6 +50,4 @@ public class EnumFieldImpl extends BaseField {
             return title;
         }
     }
-
-
 }

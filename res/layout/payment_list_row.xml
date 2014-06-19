@@ -1,148 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayout1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="#0065ac">
 
-    <LinearLayout
-        android:layout_height="fill_parent"
-        android:layout_width="120dp"
-        android:orientation="vertical"
-        android:background="@drawable/rounded_rectangle"
-        android:layout_marginTop="5dp">
-        <TextView
-            android:id="@+id/pay_fields"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Number"
-            android:background="@drawable/rounded_rectangle_white"
-            android:textColor="#000" />
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:orientation="horizontal">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1" android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/pay_psid"
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:text="PSID"
-            android:textSize="12sp"
-            android:textColor="#FFF"
-            android:shadowDx="0.5"
-            android:shadowDy="0.5"
-            android:shadowRadius="0.5"
-            android:shadowColor="#000"
-            />
-        <TextView
-                android:id="@+id/pay_psid"
-                android:layout_width="8dp"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="12sp"
-                android:textColor="#f1c40f" />
-        <TextView
-            android:id="@+id/pay_status"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="Статус"
-            android:textColor="#f1c40f"
-            android:shadowDx="0.5"
-            android:shadowDy="0.5"
-            android:shadowRadius="0.5"
-            android:shadowColor="#000"/>
-        </LinearLayout>
+            android:text="PSID"
+            android:textColor="#000" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_height="fill_parent"
-        android:layout_width="wrap_content"
-        android:orientation="horizontal"
-
-        android:background="#fff">
         <TextView
-            android:id="@+id/pay_sum"
-            android:layout_width="120dp"
+            android:id="@+id/pay_status"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="12dp"
-            android:text="Сумма принятая"
-            android:textColor="#000"
-            />
-      <!--  <TextView
+            android:layout_marginLeft="10dp"
+            android:text="Статус"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/pay_date"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Дата"
+            android:textColor="#000" />
+
+        <TextView
             android:id="@+id/pay_sum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:text="/"
+            android:layout_marginLeft="10dp"
+            android:text="Сумма"
             android:textColor="#000" />
-        <TextView
-            android:id="@+id/pay_sum_enrolled"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:text="Сумма к зачислению"
-            android:textColor="#000" /> -->
-    </LinearLayout>
-    <LinearLayout
-        android:layout_height="fill_parent"
-        android:layout_width="match_parent"
-        android:background="#fff">
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="3dp"
-        android:background="@drawable/drop_shadow_circle"
-     >
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:background="@drawable/rounded_coner"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="5dp"
-        android:orientation="vertical"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="5">
 
-        <TextView
-            android:id="@+id/pay_date_begin"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:text="Дата"
-            android:textColor="#FFF"
-            android:shadowDx="0.5"
-            android:shadowDy="0.5"
-            android:shadowRadius="0.5"
-            android:shadowColor="#000"/>
-    </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
-<TextView
-    android:id="@+id/pay_date_end"
-    android:layout_height="1px"
-    android:layout_width="1px"
-    android:text="Дата завершения"
-    android:visibility="gone"/>
-    <TextView
-        android:id="@+id/pay_error_code"
-        android:layout_height="1px"
-        android:layout_width="1px"
-        android:text="Код ошибки"
-        android:visibility="gone"/>
-    <TextView
-        android:id="@+id/pay_error_description"
-        android:layout_height="1px"
-        android:layout_width="1px"
-        android:text="Описание ошибки"
-        android:visibility="gone"/>
+
 </LinearLayout>

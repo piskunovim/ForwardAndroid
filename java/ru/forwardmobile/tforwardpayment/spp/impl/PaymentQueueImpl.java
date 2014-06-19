@@ -125,6 +125,10 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
         paymentDao.save(payment);
 
+        if(payment.getId() == null) {
+            throw new Exception("Платеж не создан!");
+        }
+
         Log.i(LOGGER_TAG, "New payment started with id "
                 + payment.getId());
 

@@ -43,8 +43,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // Для тестового сервера
-    //    TSettings.set(TSettings.SERVER_HOST,"192.168.1.253");
-    //    TSettings.set(TSettings.SERVER_PORT, "8170");
+        TSettings.set(TSettings.SERVER_HOST,"192.168.1.253");
+        TSettings.set(TSettings.SERVER_PORT, "8170");
 
         //получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);

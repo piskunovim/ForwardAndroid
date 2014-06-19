@@ -29,7 +29,7 @@ public class CommandStartImpl extends CommandImpl {
         StringBuilder xmlData = new StringBuilder();
         for(IFieldInfo field: payment.getFields()) {
             if("target" . equals( field.getName() )) {
-                request.append("target=" + URLEncoder.encode(field.getValue(),"UTF-8"));
+                request.append("&target=" + URLEncoder.encode(field.getValue(),"UTF-8"));
             } else {
                 xmlData.append("<f n=\"" + field.getName() + "\">" + field.getValue() + "</f>");
             }
