@@ -23,7 +23,7 @@ import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 public class MainActivity extends ActionBarActivity {
 
     //Инициализация строковой переменной логирования
-    final static String LOG_TAG = "TTestActivity.MainActivity";
+    final static String LOG_TAG = "TFORWARD.MainActivity";
     //Объект передачи сообщения
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
 
@@ -31,9 +31,6 @@ public class MainActivity extends ActionBarActivity {
     //инициализируем наши объекты формы
     //Button btnSingIn = (Button) findViewById(R.id.singin);
     EditText etName, etPass;
-
-    boolean databaseExists;
-    boolean datatablesFull;
 
     TPostData pd;
 
@@ -43,24 +40,18 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // Для тестового сервера
-    //    TSettings.set(TSettings.SERVER_HOST,"192.168.1.253");
-    //    TSettings.set(TSettings.SERVER_PORT, "8170");
+        TSettings.set(TSettings.SERVER_HOST,"192.168.1.253");
+        TSettings.set(TSettings.SERVER_PORT, "8170");
 
         //получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
         etPass = (EditText) findViewById(R.id.epass);
 
-        databaseExists = checkDataBase();
-        datatablesFull = checkForTables();
+        boolean databaseExists = checkDataBase();
+        boolean datatablesFull = checkForTables();
 
-
-        if (databaseExists && datatablesFull)
+        if (databaseExists && datatablesFull )
         {
-            // Чтение настроек
-            DatabaseHelper helper = new DatabaseHelper(this);
-            helper.readSettings();
-            helper.close();
-
             Intent intent = new Intent(this, MainListActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "true");
             // запуск activity
@@ -174,16 +165,19 @@ public class MainActivity extends ActionBarActivity {
         SQLiteDatabase checkDB = null;
 
         try {
-            checkDB = SQLiteDatabase.openDatabase("/data/data/ru.forwardmobile.tforwardpayment/databases/forward", null,
-                    SQLiteDatabase.OPEN_READONLY);
+            checkDB = SQLiteDatabase.openDatabase(
+                    getFilesDir().getParent() + "/databases/forward",
+                        null, SQLiteDatabase.OPEN_READONLY);
             checkDB.close();
         } catch (SQLiteException e) {
             // database doesn't exist yet.
         }
+
         return checkDB != null ? true : false;
     }
 
     public boolean checkForTables(){
+
         SQLiteOpenHelper dbHelper;
         boolean hasTables = false;
 
@@ -197,11 +191,7 @@ public class MainActivity extends ActionBarActivity {
 
         cursor.close();
         dbHelper.close();
-
         return hasTables;
     }
 
-    private void startPaymentService() {
-
-    }
 }

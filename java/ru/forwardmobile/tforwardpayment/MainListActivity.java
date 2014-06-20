@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -27,7 +26,7 @@ public class MainListActivity extends ActionBarActivity {
     final static String LOG_TAG = "TFORWARD.MainListActivity";
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
 
-    SQLiteOpenHelper dbHelper;
+    DatabaseHelper dbHelper;
     ArrayList<String> operatorgroup = new ArrayList<String>();
 
     @Override
@@ -48,6 +47,8 @@ public class MainListActivity extends ActionBarActivity {
             TParseOperators parse = new TParseOperators(this);
             parse.GetXMLSettings(message, dbHelper);
 
+        } else {
+            dbHelper.readSettings();
         }
 
         GenerateListView("pg", "name", listContent);

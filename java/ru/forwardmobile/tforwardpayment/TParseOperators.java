@@ -3,7 +3,6 @@ package ru.forwardmobile.tforwardpayment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -39,7 +38,7 @@ public TParseOperators(Context context) {
  */
 public TParseOperators(){}
 
-public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
+public void GetXMLSettings(String xmlstring, DatabaseHelper dbHelper){
 
     // создаем объект для данных
     ContentValues cv = new ContentValues();
@@ -206,6 +205,9 @@ public void GetXMLSettings(String xmlstring, SQLiteOpenHelper dbHelper){
             // следующий элемент
             xpp.next();
         }
+
+        // Сохраняем дополнительные настройки в базу
+        dbHelper.saveSettings();
 
         // Подтверждаем изменения
         db.setTransactionSuccessful();

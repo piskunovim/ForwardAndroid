@@ -4,12 +4,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import ru.forwardmobile.tforwardpayment.TSettings;
 
 /**
- * @author Vasiliy Vanin
+ * @author Vasiliy Vanin, Piskunov Igor'
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
+
+    private static final String    LOGGER_TAG              = "TFORWARD.DBH";
 
     public static final int        SQLITE_DATABASE_VERSION = 8;
     public static final String     SQLITE_DATABASE_NAME    = "forward";
@@ -49,19 +53,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Вызывается при запуске, чтобы заполнить объект настройками из базы
      */
     public void readSettings() {
-        
-        TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
-        TSettings.set(TSettings.SERVER_PORT, "8193");
-        
+
         Cursor c = getReadableDatabase().rawQuery("select `key`,`value` from " + SETTINGS_TABLE_NAME, new String[]{});
         while(c.moveToNext()) {
             TSettings.set(c.getString(0), c.getString(1));
+            Log.v(LOGGER_TAG, "Read " + c.getString(0) + " with " + c.getString(1));
         }
     }
     
     public void saveSettings() {
         for( Object key: TSettings.getKeys() ) {
             saveSettings(key.toString(), TSettings.get(key.toString()));
+            Log.v(LOGGER_TAG,"saving " + key + " with value " + TSettings.get(key.toString()));
         }        
     }
     

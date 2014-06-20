@@ -43,8 +43,8 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
     private HttpTransport       transport;
     private IRouter             router;
-    private SQLiteOpenHelper    databaseHelper;
     private IPaymentDao         paymentDao;
+    private Context             ctx;
 
     public PaymentQueueImpl(Context ctx) {
 
@@ -53,7 +53,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
             transport = new HttpTransport();
             transport.setCryptEngine( new CryptEngineImpl( ctx ) );
 
-            databaseHelper = new DatabaseHelper( ctx );
+            DatabaseHelper databaseHelper = new DatabaseHelper( ctx );
             paymentDao     = new PaymentDaoImpl( databaseHelper.getWritableDatabase());
             router         = new RouterImpl();
         } catch (Exception ex) {
@@ -67,7 +67,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
         transport = new HttpTransport();
         transport.setCryptEngine(cryptEngine);
 
-        databaseHelper = helper;
+        DatabaseHelper databaseHelper = helper;
         paymentDao = new PaymentDaoImpl( databaseHelper.getWritableDatabase() );
         router         = new RouterImpl();
     }
@@ -81,8 +81,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
     }
 
     public void setDatabaseHelper(SQLiteOpenHelper helper) {
-        this.databaseHelper = helper;
-        paymentDao = new PaymentDaoImpl( databaseHelper.getWritableDatabase() );
+        paymentDao = new PaymentDaoImpl( helper.getWritableDatabase() );
         router         = new RouterImpl();
     }
 
@@ -107,7 +106,6 @@ public class PaymentQueueImpl implements IPaymentQueue {
         this.thread = null;
         this.active = false;
 
-        databaseHelper.close();
         Log.i(LOGGER_TAG, "Queue was stopped...");
     }
 
@@ -186,7 +184,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
                         ( payment.isDelayed() ) ||
                         ( ( payment.getStatus() == IPayment.NEW ) && !payment.getSended() ) ) {
                     activePayments.remove(payment);
-                    // PaymentDAO.delete(payment);
+                    paymentDao.delete(payment);
                     // Application.getCounter().count(payment,IPaymentCounter.COUNT_REMOVE);
                     Log.i(LOGGER_TAG, "#" + payment.getId() + " Payment deleted.");
                 } else {
@@ -209,7 +207,8 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     payment.setTryCount(0);
                     payment.setFinishDate(null);
                     payment.setDateOfProcess(null);
-         //           PaymentDAO.store(payment);
+
+                    paymentDao.save(payment);
                     Log.i(LOGGER_TAG, "#" + payment.getId() + " Payment repeated.");
                 } else {
                     throw new Exception("Платеж со статусом отличным от \"Ошибочный\" и \"Отмененный\" (\"" + payment.getStatusName() + "\")!");
@@ -377,6 +376,8 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     command.processResponse(response);
 
                     IPayment payment = command.getPayment();
+                    // Вызов перенесен из CommandImpl
+                    paymentDao.save(payment);
 
                     String prefix = "#" + payment.getId() + ":";
                     Log.d(LOGGER_TAG,prefix + " new status: " + PaymentImpl.statusNameEng(payment.getStatus()));
@@ -416,10 +417,10 @@ public class PaymentQueueImpl implements IPaymentQueue {
         if ( storedPayments.size() >= TSettings.getInt(TSettings.MAXIMUM_STORED_PAYMENTS, 500) ) {
             IPayment deletedPayment = storedPayments.remove(0);
             storedPayments.remove(deletedPayment);
-            // PaymentDAO.delete(deletedPayment);
+            paymentDao.delete(deletedPayment);
         }
         storedPayments.add(payment);
-        // Log.trace("Payment (" + payment.getId() + ") is removed from queue.");
+        Log.i(LOGGER_TAG, "Payment (" + payment.getId() + ") is removed from queue.");
     }
 
 }
