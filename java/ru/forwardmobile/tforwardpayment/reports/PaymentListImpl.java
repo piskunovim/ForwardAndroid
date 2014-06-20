@@ -1,5 +1,7 @@
 package ru.forwardmobile.tforwardpayment.reports;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,8 +19,10 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -107,12 +111,16 @@ public class PaymentListImpl extends ActionBarActivity {
                             .getColumnIndex("status")));
                     paymentListItems.setStartDate(c1.getString(c1
                             .getColumnIndex("startDate")));
-                    //paymentListItems.setProcessDate(c1.getString(c1
-                    //        .getColumnIndex("processDate")));
+                    paymentListItems.setProcessDate(c1.getString(c1
+                            .getColumnIndex("processDate")));
                     paymentListItems.setValue(c1.getString(c1
                             .getColumnIndex("value")));
                     paymentListItems.setFullValue(c1.getString(c1
                             .getColumnIndex("fullValue")));
+                    paymentListItems.setErrorCode(c1.getString(c1
+                            .getColumnIndex("errorCode")));
+                    paymentListItems.setErrorDescription(c1.getString(c1
+                            .getColumnIndex("errorDescription")));
                     /*paymentListItems.setValueSum(c1.getString(c1
                             .getColumnIndex("value")));
                     paymentListItems.setFullValueSum(c1.getString(c1
@@ -137,6 +145,49 @@ public class PaymentListImpl extends ActionBarActivity {
         PaymentListAdapterImpl contactListAdapter = new PaymentListAdapterImpl(
                 PaymentListImpl.this, paymentList);
         lvCustomList.setAdapter(contactListAdapter);
+
+            lvCustomList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                    // When clicked, show a toast with the TextView text
+                    LinearLayout par = (LinearLayout) view;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PaymentListImpl.this);
+                    //Оператор
+                    TextView t = (TextView) par.findViewById(R.id.pay_psid);
+                    String operator = "Оператор: " + t.getText().toString();
+                    //Счет
+                    t = (TextView) par.findViewById(R.id.pay_fields);
+                    String num = "Счет: " + t.getText().toString();
+                    //Суммы
+                    t = (TextView) par.findViewById(R.id.pay_sum);
+                    String sum = "Принято/К зачислению: \n" + t.getText().toString();
+                    //Дата отправки платежа
+                    t = (TextView) par.findViewById(R.id.pay_date_begin);
+                    String dateBegin = "Отправлен: " + t.getText().toString();
+                    //Дата завершения платежа
+                    t = (TextView) par.findViewById(R.id.pay_date_end);
+                    String dateEnd = "Завершен: " + t.getText().toString();
+                    //Ошибка (в формате : "Код - Текст ошибки")
+                    t = (TextView) par.findViewById(R.id.pay_error_code);
+                    String errorText = "Ошибка: " + t.getText().toString();
+                    t = (TextView) par.findViewById(R.id.pay_error_description);
+                    errorText += " - " + t.getText().toString();
+                    t = (TextView) par.findViewById(R.id.pay_status);
+                    //Статус
+                    String stat = "Статус: " + t.getText().toString();
+                    String statCh = t.getText().toString();
+                    builder.setTitle("Подробная информация:");
+                    builder.setMessage(operator +"\n" + num + "\n" + sum + "\n" + dateBegin + "\n" + dateEnd + "\n" + errorText + "\n" + stat);
+                    if (!statCh.equals("Проведен")){
+                        builder.setPositiveButton("Отправить повторно", null);
+                        builder.setNegativeButton("Отменить",null);
+                    }
+
+                    builder.show();
+
+                   // Toast.makeText(getApplicationContext(), t.getText(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
         catch(Exception e)
         {
