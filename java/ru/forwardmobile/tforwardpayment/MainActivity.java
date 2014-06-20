@@ -174,7 +174,7 @@ public class MainActivity extends ActionBarActivity {
         SQLiteDatabase checkDB = null;
 
         try {
-            checkDB = SQLiteDatabase.openDatabase("/data/data/ru.forwardmobile.tforwardpayment/databases/forward", null,
+            checkDB = SQLiteDatabase.openDatabase(getFilesDir().getParent() + "/databases/forward", null,
                     SQLiteDatabase.OPEN_READONLY);
             checkDB.close();
         } catch (SQLiteException e) {
