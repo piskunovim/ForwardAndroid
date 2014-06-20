@@ -133,7 +133,7 @@ public class PaymentListItemsImpl {
     public void setProcessDate(String processDate) {
         Date d = new Date(Long.parseLong(processDate));
         Dates sd = new Dates();
-        processDate = sd.Format(d, "MM.dd HH:mm");
+        processDate = sd.Format(d, "HH:mm dd/MM");
         this.processDate = processDate;
     }
 
