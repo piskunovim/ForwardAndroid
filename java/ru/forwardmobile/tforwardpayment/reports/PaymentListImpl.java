@@ -117,7 +117,7 @@ public class PaymentListImpl extends ActionBarActivity {
                             .getColumnIndex("value")));
                     paymentListItems.setFullValue(c1.getString(c1
                             .getColumnIndex("fullValue")));
-                    paymentListItems.setErrorCode(c1.getString(c1
+                    paymentListItems.setErrorCode(c1.getInt(c1
                             .getColumnIndex("errorCode")));
                     paymentListItems.setErrorDescription(c1.getString(c1
                             .getColumnIndex("errorDescription")));
@@ -169,8 +169,8 @@ public class PaymentListImpl extends ActionBarActivity {
                     //Ошибка (в формате : "Код - Текст ошибки")
                     t = (TextView) par.findViewById(R.id.pay_error_code);
                     String errorText = "Ошибка: " + t.getText().toString();
-                    t = (TextView) par.findViewById(R.id.pay_error_description);
-                    errorText += " - " + t.getText().toString();
+                    //t = (TextView) par.findViewById(R.id.pay_error_description);
+                    //errorText += " - " + t.getText().toString();
                     t = (TextView) par.findViewById(R.id.pay_status);
                     //Статус
                     String stat = "Статус: " + t.getText().toString();
