@@ -99,6 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " processDate integer " +
                 ")"
         );
+
     }
     
     

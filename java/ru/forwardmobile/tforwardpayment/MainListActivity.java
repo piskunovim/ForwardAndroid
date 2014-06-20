@@ -195,7 +195,13 @@ public class MainListActivity extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
-        stopPaymentQueue();
+
+            stopPaymentQueue();
+
+            DatabaseHelper helper = new DatabaseHelper(this);
+            helper.saveSettings();
+            helper.close();
+
         super.onDestroy();
     }
 
