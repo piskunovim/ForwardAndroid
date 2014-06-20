@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import 	java.util.Date;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.spp.impl.PaymentImpl;
 import ru.forwardmobile.util.http.Dates;
 
 /**
@@ -83,7 +84,10 @@ public class PaymentListItemsImpl {
         return errorCode;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(int ec) {
+        PaymentImpl pi = new PaymentImpl();
+        String errorCode;
+        errorCode = pi.getErrorName(ec);
         this.errorCode = errorCode;
     }
 
@@ -133,7 +137,7 @@ public class PaymentListItemsImpl {
     public void setProcessDate(String processDate) {
         Date d = new Date(Long.parseLong(processDate));
         Dates sd = new Dates();
-        processDate = sd.Format(d, "MM.dd HH:mm");
+        processDate = sd.Format(d, "HH:mm dd/MM");
         this.processDate = processDate;
     }
 

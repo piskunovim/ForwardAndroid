@@ -66,8 +66,14 @@ public class PaymentListAdapterImpl extends BaseAdapter {
         payStatus.setText(paymentListItems.getStatus());
         TextView payDate = (TextView) convertView.findViewById(R.id.pay_date_begin);
         payDate.setText(paymentListItems.getStartDate());
+        TextView payDateEnd = (TextView) convertView.findViewById(R.id.pay_date_end);
+        payDateEnd.setText(paymentListItems.getProcessDate());
         TextView paySum = (TextView) convertView.findViewById(R.id.pay_sum);
         paySum.setText(paymentListItems.getValue() + " / " + paymentListItems.getFullValue() );
+        TextView payErrorCode = (TextView) convertView.findViewById(R.id.pay_error_code);
+        payErrorCode.setText(paymentListItems.getErrorCode());
+        TextView payErrorDesc = (TextView) convertView.findViewById(R.id.pay_error_description);
+        payErrorDesc.setText(paymentListItems.getErrorDescription());
         //TextView paySumEnr = (TextView) convertView.findViewById(R.id.pay_sum_enrolled);
         //paySumEnr.setText(paymentListItems.getFullValue());
         //Log.d("TForwardPayment.PaymentListAdapterImpl", "Зачислено: " + paymentListItems.getValueSum() + " руб. ; Получено: " + paymentListItems.getFullValueSum() + " руб.");

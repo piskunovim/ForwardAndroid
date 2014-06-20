@@ -127,5 +127,22 @@
     </LinearLayout>
     </LinearLayout>
 </LinearLayout>
-
+<TextView
+    android:id="@+id/pay_date_end"
+    android:layout_height="1px"
+    android:layout_width="1px"
+    android:text="Дата завершения"
+    android:visibility="gone"/>
+    <TextView
+        android:id="@+id/pay_error_code"
+        android:layout_height="1px"
+        android:layout_width="1px"
+        android:text="Код ошибки"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/pay_error_description"
+        android:layout_height="1px"
+        android:layout_width="1px"
+        android:text="Описание ошибки"
+        android:visibility="gone"/>
 </LinearLayout>
