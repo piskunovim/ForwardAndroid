@@ -25,7 +25,6 @@ public interface ICommandResponse {
     public void setErrorDescription(String errorDescription);
     public String getErrorDescription();
 
-
     public void setErrCode(String errCode);
     public Integer getErrCode();
 

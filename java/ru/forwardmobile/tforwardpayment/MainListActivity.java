@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -27,7 +26,7 @@ public class MainListActivity extends ActionBarActivity {
     final static String LOG_TAG = "TFORWARD.MainListActivity";
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
 
-    SQLiteOpenHelper dbHelper;
+    DatabaseHelper dbHelper;
     ArrayList<String> operatorgroup = new ArrayList<String>();
 
     @Override
@@ -48,6 +47,8 @@ public class MainListActivity extends ActionBarActivity {
             TParseOperators parse = new TParseOperators(this);
             parse.GetXMLSettings(message, dbHelper);
 
+        } else {
+            dbHelper.readSettings();
         }
 
         GenerateListView("pg", "name", listContent);
@@ -177,6 +178,9 @@ public class MainListActivity extends ActionBarActivity {
         if (id == R.id.settings) {
             return true;
         }
+        if (id == R.id.payment) {
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -202,6 +206,66 @@ public class MainListActivity extends ActionBarActivity {
         super.onDestroy();
     }
 
+    /*  public void OperatorsListView(String gid){//, ListView listContent){
+        Log.d(LOG_TAG, "Start OperatorsListView");
+        operatorgroup.clear();
+        ListView listContent = (ListView)findViewById(R.id.listView);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // делаем запрос всех данных из таблицы mytable, получаем Cursor
+        Cursor listpc = db.query("p", null, null, null, null, null, null);
 
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        if (listpc.moveToFirst()) {
+
+            // определяем номера столбцов по имени в выборке
+            do {
+                int gidColIndex = listpc.getColumnIndex("gid");
+                int nameColIndex = listpc.getColumnIndex("name");
+                Log.d(LOG_TAG, gid);
+                Log.d(LOG_TAG, listpc.getString(listpc.getColumnIndex("gid")));
+                Log.d(LOG_TAG, listpc.getString(listpc.getColumnIndex("name")));
+                // получаем значения по номерам столбцов и пишем все в лог
+                if (gid.equals(listpc.getString(listpc.getColumnIndex("gid"))))
+                {
+                    Log.d(LOG_TAG, listpc.getString(nameColIndex));
+                    operatorgroup.add(listpc.getString(nameColIndex));
+                }
+                // переход на следующую строку
+                // а если следующей нет (текущая - последняя), то false - выходим из цикла
+            } while (listpc.moveToNext());
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, operatorgroup);
+            listContent.setAdapter(adapter);
+            listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    String name = (String) parent.getItemAtPosition(position);
+                    SQLiteDatabase db = dbHelper.getReadableDatabase();
+                    Cursor cr = db.rawQuery("SELECT id FROM p WHERE TRIM(name) = '"+name.trim()+"'", null);
+                    cr.moveToNext();
+                    Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ cr.getString(cr.getColumnIndex("id")));
+
+                    //PaymentActivity pa= new PaymentActivity();
+
+                    //pa.SetOperatorId(Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    //pa.operator_id = cr.getColumnIndex("id");
+                    //pa.ShowOperatorId();
+                    //
+                    //! Здесь будем передавать id
+                    //
+                    // cr.getString(cr.getColumnIndex("id"));
+                    //Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
+                    //intent.putExtra("psid",Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    //startActivity(intent);
+                }
+            });
+
+        } else
+            Log.d(LOG_TAG, "Got 0 rows");
+        listpc.close();
+        dbHelper.close();
+
+    }*/
 
 }

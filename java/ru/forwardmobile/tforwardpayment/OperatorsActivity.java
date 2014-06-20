@@ -109,6 +109,9 @@ public class OperatorsActivity extends ActionBarActivity {
         if (id == R.id.settings) {
             return true;
         }
+        if (id == R.id.payment) {
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
