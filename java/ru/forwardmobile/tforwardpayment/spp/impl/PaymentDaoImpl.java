@@ -109,6 +109,11 @@ public class PaymentDaoImpl implements IPaymentDao {
         return null;
     }
 
+    @Override
+    public void delete(IPayment payment) {
+
+    }
+
     private Collection<IFieldInfo> parseFields(String data) {
 
         Collection<IFieldInfo> fields = new HashSet<IFieldInfo>();

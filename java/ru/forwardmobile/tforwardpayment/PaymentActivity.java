@@ -92,7 +92,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
             try {
                 IPayment payment = PaymentFactory.getPayment(provider.getId(), Double.valueOf(valueField.getText().toString()), null, fieldsInfo);
                 AsyncTask task = new CheckTask(this, payment);
-                task.execute(new Void[]{});
+                task.execute((Object[]) new Void[]{});
             }catch(NumberFormatException ex) {
                 Toast.makeText(this, "Сумма платежа введена неверно!", Toast.LENGTH_SHORT)
                         .show();

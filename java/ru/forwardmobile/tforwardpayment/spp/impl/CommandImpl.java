@@ -3,11 +3,13 @@ package ru.forwardmobile.tforwardpayment.spp.impl;
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
+import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
 
 public abstract class CommandImpl implements ICommand {
 
     private int type = -1;
     protected IPayment payment = null;
+    protected IPaymentDao paymentDao = null;
 
     public CommandImpl(int type, IPayment payment) {
         this.type = type;
@@ -35,6 +37,7 @@ public abstract class CommandImpl implements ICommand {
         } else {
             processResponseImpl(response);
         }
+        // Данный вызов вынесен в PaymentQueueImpl
         // PaymentDAO.store(payment);
     }
 
