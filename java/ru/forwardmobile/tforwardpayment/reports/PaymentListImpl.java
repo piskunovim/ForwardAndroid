@@ -98,7 +98,7 @@ public class PaymentListImpl extends ActionBarActivity {
         if (c1 != null && c1.getCount() != 0) {
             if (c1.moveToFirst()) {
 
-                if (ControlMessage.equals("0") && (!c1.getString(c1.getColumnIndex("status")).equals("3")))
+                if (ControlMessage.equals("0") && (!c1.getString(c1.getColumnIndex("status")).equals("3")) && (!c1.getString(c1.getColumnIndex("status")).equals("4")) && (!c1.getString(c1.getColumnIndex("status")).equals("5")))
                 {
                     do {
                         PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
@@ -133,7 +133,7 @@ public class PaymentListImpl extends ActionBarActivity {
 
                     } while (c1.moveToNext());
                 }
-                else if (ControlMessage.equals("1") && c1.getString(c1.getColumnIndex("status")).equals("3"))
+                else if (ControlMessage.equals("1") && c1.getString(c1.getColumnIndex("status")).equals("3") && c1.getString(c1.getColumnIndex("status")).equals("4") && c1.getString(c1.getColumnIndex("status")).equals("5"))
                 {
                     do {
                         PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
