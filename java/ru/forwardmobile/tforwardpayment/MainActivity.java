@@ -1,13 +1,11 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -35,8 +33,7 @@ public class MainActivity extends ActionBarActivity {
     EditText etName, etPass;
 
     TPostData pd;
-    ProgressDialog progress;
-    //ProgressBar progressBar;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +49,7 @@ public class MainActivity extends ActionBarActivity {
         etPass = (EditText) findViewById(R.id.epass);
 
         //для прогрессбара
-        //progressBar = (ProgressBar) findViewById(R.id.progressMain);
-        progress = new ProgressDialog(this);
-        progress.setMessage("Получение настроек ...");
-        progress.setCancelable(false);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
+        progressBar = (ProgressBar) findViewById(R.id.progressMain);
 
         boolean databaseExists = checkDataBase();
         boolean datatablesFull = checkForTables();
@@ -84,32 +76,12 @@ public class MainActivity extends ActionBarActivity {
 
 
     public  void sendMessage(View view){
-
-        new SingTask().execute(etName.getText().toString(), etPass.getText().toString());
-        //progressBar.setVisibility(View.VISIBLE);
-       /* progress.show();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run()
-            {
-                SingIn(etName.getText().toString(), etPass.getText().toString());
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        progress.dismiss();
-                    }
-                });
-            }
-        }).start();*/
+        progressBar.setVisibility(View.VISIBLE);
+        SingIn(etName.getText().toString(), etPass.getText().toString());
     }
 
 
     public void SingIn(String pointid, String password){
-
-        Log.d(LOG_TAG,"SingIn started ...");
 
         pd = new TPostData();
         pd.pointID = pointid;
@@ -128,7 +100,7 @@ public class MainActivity extends ActionBarActivity {
                 Intent intent = new Intent(this, MainAccessActivity.class);
 
                 intent.putExtra(EXTRA_MESSAGE, responseStr);
-                //progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
                 // запуск activity
                 startActivity(intent);
                 this.finish();
@@ -145,12 +117,12 @@ public class MainActivity extends ActionBarActivity {
                         }
                     })
                     .show();
-                //progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
         }
         catch(Exception e)
         {
-            //progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             Log.d(LOG_TAG,e.getMessage());
             e.printStackTrace();
         }
@@ -207,12 +179,7 @@ public class MainActivity extends ActionBarActivity {
                         null, SQLiteDatabase.OPEN_READONLY);
 
             return checkDB != null;
-        }
-        catch(Exception e)
-        {
-            return false;
-        }
-        finally {
+        } finally {
             if(checkDB != null) checkDB.close();
         }
     }
@@ -239,31 +206,6 @@ public class MainActivity extends ActionBarActivity {
         }finally {
             if(dbHelper != null)
                 dbHelper.close();
-        }
-    }
-
-    class SingTask extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progress.show();
-        }
-
-        @Override
-        protected Void doInBackground(String... et) {
-            try {
-                SingIn(et[0], et[1]);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            progress.dismiss();
         }
     }
 
