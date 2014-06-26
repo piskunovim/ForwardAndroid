@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 
@@ -32,6 +33,7 @@ public class MainActivity extends ActionBarActivity {
     EditText etName, etPass;
 
     TPostData pd;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +41,22 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // Для тестового сервера
-        TSettings.set(TSettings.SERVER_HOST,"192.168.1.253");
-        TSettings.set(TSettings.SERVER_PORT, "8170");
+        // TSettings.set(TSettings.SERVER_HOST,"forwardmobile.ru");
+        // TSettings.set(TSettings.SERVER_PORT, "8170");
 
         //получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
         etPass = (EditText) findViewById(R.id.epass);
+
+        //для прогрессбара
+        progressBar = (ProgressBar) findViewById(R.id.progressMain);
 
         boolean databaseExists = checkDataBase();
         boolean datatablesFull = checkForTables();
 
         if (databaseExists && datatablesFull )
         {
-            Intent intent = new Intent(this, MainListActivity.class);
+            Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "true");
             // запуск activity
             startActivity(intent);
@@ -71,6 +76,7 @@ public class MainActivity extends ActionBarActivity {
 
 
     public  void sendMessage(View view){
+        progressBar.setVisibility(View.VISIBLE);
         SingIn(etName.getText().toString(), etPass.getText().toString());
     }
 
@@ -91,9 +97,10 @@ public class MainActivity extends ActionBarActivity {
 
             if (responseStr.length() > 0){
                 // Создаем объект Intent для вызова новой Activity
-                Intent intent = new Intent(this, MainListActivity.class);
+                Intent intent = new Intent(this, MainAccessActivity.class);
 
                 intent.putExtra(EXTRA_MESSAGE, responseStr);
+                progressBar.setVisibility(View.GONE);
                 // запуск activity
                 startActivity(intent);
                 this.finish();
@@ -110,10 +117,12 @@ public class MainActivity extends ActionBarActivity {
                         }
                     })
                     .show();
+                progressBar.setVisibility(View.GONE);
             }
         }
         catch(Exception e)
         {
+            progressBar.setVisibility(View.GONE);
             Log.d(LOG_TAG,e.getMessage());
             e.printStackTrace();
         }

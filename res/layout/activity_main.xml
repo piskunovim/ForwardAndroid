@@ -80,6 +80,16 @@
             android:layout_marginTop="20dp"
             android:editable="true" />
 
+        <ProgressBar
+            android:id="@+id/progressMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            style="?android:attr/progressBarStyleInverse"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
+
         <Button
             android:layout_width="118dp"
             android:layout_height="wrap_content"
@@ -89,6 +99,7 @@
             android:layout_marginTop="20dp"
             android:textColor="#ffffff"
             android:onClick="sendMessage"  />
+
 
     </LinearLayout>
 </LinearLayout>
