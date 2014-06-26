@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -26,7 +27,7 @@ public class MainListActivity extends ActionBarActivity {
     final static String LOG_TAG = "TFORWARD.MainListActivity";
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
 
-    DatabaseHelper dbHelper;
+
     ArrayList<String> operatorgroup = new ArrayList<String>();
 
     @Override
@@ -38,24 +39,28 @@ public class MainListActivity extends ActionBarActivity {
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         ListView listContent = (ListView)findViewById(R.id.listView);
 
-        Log.d(LOG_TAG, message);
-        dbHelper = new DatabaseHelper(this);
+        Log.d(LOG_TAG, "message - " + message);
+
 
         if (!message.equals("true"))
         {
             //dbHelper = new DatabaseHelper(this);
             TParseOperators parse = new TParseOperators(this);
-            parse.GetXMLSettings(message, dbHelper);
-
-        } else {
-            dbHelper.readSettings();
+            parse.GetXMLSettings( message );
         }
+
+        Log.v(LOG_TAG, "Loading settings");
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        dbHelper.readSettings();
+        dbHelper.close();
 
         GenerateListView("pg", "name", listContent);
 
         listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+
+                SQLiteOpenHelper dbHelper = new DatabaseHelper( getApplicationContext() );
                 String name = (String) parent.getItemAtPosition(position);
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
                 Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
@@ -63,15 +68,8 @@ public class MainListActivity extends ActionBarActivity {
                 Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
 
                 OpenOperatorActivity(c.getString(c.getColumnIndex("id")));
-                //OperatorsListView(c.getString(c.getColumnIndex("id")));//, oplistContent);
             }
-
         });
-
-        // Debug
-        for(Object key: TSettings.getKeys()) {
-            Log.v(LOG_TAG, "Set " + key + ": " + TSettings.get((String) key));
-        }
 
         // Payment queue start
         startPaymentQueue();
@@ -86,41 +84,46 @@ public class MainListActivity extends ActionBarActivity {
     }
 
     public void GenerateListView(String table, String column, ListView listContent){
-        Log.d(LOG_TAG, "--- table: "+ table + " ---");
-        Log.d(LOG_TAG, "--- column: "+ column + " ---");
+
+        SQLiteOpenHelper dbHelper = new DatabaseHelper(this);
+        Log.v(LOG_TAG, "--- table: "+ table + " ---");
+        Log.v(LOG_TAG, "--- column: "+ column + " ---");
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Log.d(LOG_TAG, "--- Got rows in pg table: ---");
+        Log.v(LOG_TAG, "--- Got rows in pg table: ---");
         // делаем запрос всех данных из таблицы mytable, получаем Cursor
         operatorgroup.clear();
-        Cursor listpgc = db.query(table, null, null, null, null, null, null);
+        Cursor listpgc = null ;
 
-        // ставим позицию курсора на первую строку выборки
-        // если в выборке нет строк, вернется false
-        if (listpgc.moveToFirst()) {
+        try {
 
-            // определяем номера столбцов по имени в выборке
-            int nameColIndex = listpgc.getColumnIndex(column);
+            listpgc =  db.query(table, null, null, null, null, null, null);
 
+            // ставим позицию курсора на первую строку выборки
+            // если в выборке нет строк, вернется false
+            if (listpgc.moveToFirst()) {
 
+                // определяем номера столбцов по имени в выборке
+                int nameColIndex = listpgc.getColumnIndex(column);
+                do {
+                    // получаем значения по номерам столбцов и пишем все в лог
+                    Log.v(LOG_TAG, ", " + column + " = " + listpgc.getString(nameColIndex));
+                    operatorgroup.add(listpgc.getString(nameColIndex));
+                    // переход на следующую строку
+                    // а если следующей нет (текущая - последняя), то false - выходим из цикла
+                } while (listpgc.moveToNext());
 
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                        android.R.layout.simple_list_item_1, operatorgroup);
+                listContent.setAdapter(adapter);
 
-            do {
-                // получаем значения по номерам столбцов и пишем все в лог
-                Log.v(LOG_TAG,  ", "+column+" = " + listpgc.getString(nameColIndex));
-                operatorgroup.add(listpgc.getString(nameColIndex));
-                // переход на следующую строку
-                // а если следующей нет (текущая - последняя), то false - выходим из цикла
-            } while (listpgc.moveToNext());
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, operatorgroup);
-            listContent.setAdapter(adapter);
-        } else
-            Log.d(LOG_TAG, "Got 0 rows");
-
-        listpgc.close();
-        dbHelper.close();
-
-
+            } else {
+                Log.d(LOG_TAG, "Got 0 rows");
+            }
+        } finally {
+            listpgc.close();
+            db.close();
+            dbHelper.close();
+        }
     }
 
     @Override
@@ -175,6 +178,7 @@ public class MainListActivity extends ActionBarActivity {
             builder.show();
             return true;
         }
+
         if (id == R.id.settings) {
             return true;
         }
@@ -193,13 +197,10 @@ public class MainListActivity extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
-
-            stopPaymentQueue();
-
-            DatabaseHelper helper = new DatabaseHelper(this);
-            helper.saveSettings();
-            helper.close();
-
+        stopPaymentQueue();
+        DatabaseHelper helper = new DatabaseHelper(this);
+        helper.saveSettings();
+        helper.close();
         super.onDestroy();
     }
 
