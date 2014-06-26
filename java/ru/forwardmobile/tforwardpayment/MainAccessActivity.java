@@ -9,131 +9,122 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
-import ru.forwardmobile.tforwardpayment.security.FileKeyStorageImpl;
+import ru.forwardmobile.tforwardpayment.security.CryptEngineFactory;
+import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
 import ru.forwardmobile.tforwardpayment.security.KeySingleton;
-import ru.forwardmobile.tforwardpayment.security.XorImpl;
 import ru.forwardmobile.tforwardpayment.security.KeyStorageFactory;
+import ru.forwardmobile.tforwardpayment.security.XorImpl;
 
 /**
  * Created by PiskunovI on 23.06.14.
  */
-public class MainAccessActivity extends ActionBarActivity {
+public class MainAccessActivity extends ActionBarActivity implements  View.OnClickListener {
 
     final static String LOG_TAG = "TForwardPayment.MainActivityAccess";
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
 
-    //KeyStorageFactory KSF;
-    KeySingleton KS;
-    FileKeyStorageImpl FKSI;
-
     TextView commentary;
     EditText keyWord;
     Button button;
-    String text, dectext, enctext, message;
+    String message;
+    private boolean isFirstRun = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_access);
 
-        commentary = (TextView) findViewById(R.id.access_commentary);
-        button = (Button) findViewById(R.id.access_button);
-        keyWord =  (EditText) findViewById(R.id.access_pass);
-        Intent intent = getIntent();
-        message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        Log.d(LOG_TAG, message);
+        commentary      = (TextView)    findViewById(R.id.access_commentary);
+        button          = (Button)      findViewById(R.id.access_button);
+        keyWord         = (EditText)    findViewById(R.id.access_pass);
 
-        FKSI = new FileKeyStorageImpl(MainAccessActivity.this);
+        message         = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
+
+        Log.d(LOG_TAG, message);
 
         if (message.equals("true"))
         {
-
-            commentary.setText("*пароль доступа был введен вами при первом \n             при первом запуске приложения");
+            commentary.setText("*пароль доступа был введен вами при первом при первом запуске приложения");
             button.setText("Вперед");
-            //сюда добавить кнопку входа в приложение
-            button.setOnClickListener(new View.OnClickListener() {
-                	    @Override
-                        public void onClick(View view) {
-                          //  UserAuthentication(keyWord.getText().toString());
-                            SendMessage(message); // запуск activity
-                        }
-   	        });
-            //SendMessage(message); // запуск activity
-
         } else {
-
             commentary.setText("*в будущем этот пароль будет  \n запрашиваться приложением");
-
             button.setText("Подтвердить");
-            //сюда добавить кнопку сохранения/назначения пароля
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SavePass();
-                    SendMessage(message); // запуск activity
-                }
-            });
+            isFirstRun = true;
+        }
 
-            //SendMessage(message); // запуск activity
-
-         }
+        button.setOnClickListener(this);
 
         Log.d(LOG_TAG, "Activity access form started");
-        text = "";
     }
 
-    public byte[] UserAuthentication(String pass){
-        XorImpl xor = new XorImpl();
-        text = FKSI.getKey("tfpk").toString(); // tforwardpayment key (tfpk)
-        dectext = xor.decrypt(text.getBytes(),pass);
+    public void authenticate(String pass) throws Exception {
 
-        try{
-            new CryptEngineImpl(this);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        // Ключ хранится на диске, его шифрованную версию можно получить с помощью KeySingleton
+        // Используется контекст приложения, потому что он доступен во все время выполнения
+        byte[] encryptedKey = KeySingleton.getInstance( getApplicationContext() ).getEncKey();
 
-        return dectext.getBytes();
+        // Получаем либо ключ в BASE64 либо непонятное месево
+        String plainKey = new XorImpl().decrypt(encryptedKey, pass);
+
+        // Расшифрованная версия ключа записыватеся в IKeyStorage, чтобы она была доступна
+        KeyStorageFactory.getKeyStorage( getApplicationContext() )
+                .setKey(IKeyStorage.SECRET_KEY_TYPE, plainKey.getBytes());
+
+        // Пробуем проинициализировать модуль цифровых подписей, если ключ расшифровался неверно,
+        // получим исключение. При этом модуль безопасности не будет инициализирован, можно повторять
+        // операцию сколько угодно раз
+        CryptEngineFactory.getEngine( getApplicationContext() );
     }
 
-    public void SavePass()
+    /**
+     * Устанавливает пароль на вход в программу
+     *
+     * Важно понимать, что вход в данный метод происходит в двух случаях
+     * 1. Мы только что загрузили настройки, пользователь должен ввести пароль на вход
+     * 2. Пользователь захотел изменить пароль.
+     * В обоих случаях у нас в памяти есть нешифрованная версия закрытого ключа, поэтому действия во
+     * всех случаях одинаковые. Берем пароль, шифруем, пишем на диск.
+     * @param password
+     */
+    public void setPassword(String password)
     {
-       // XorImpl xor = new XorImpl();
-        SendMessage(message);
-        /*KS = new KeySingleton(this).getInstance(this);
+        // Если мы находимся в этом методе, значит у нас по-любому доступен расшифрованный закрытый ключ
+        // Шифруем этот ключ паролем, который ввел наш пользователь
+        byte[] encryptedKey = new XorImpl().encrypt(
+                    KeyStorageFactory.getKeyStorage( getApplicationContext() ).getKey(IKeyStorage.SECRET_KEY_TYPE),
+                    password
+               );
 
+        // Сохраняем шифрованный ключ на диск
+        KeySingleton.getInstance( getApplicationContext() )
+                .setEncKey( encryptedKey );
 
-        text = new String(KSF.mockKeystorage().getKey("secret"));
-        Log.d(LOG_TAG, "text: " + text);
+        // делаем вид, что мы авторизовались
+        onAuthenticationSuccess();
+    }
 
-        Log.d(LOG_TAG, "keyWord: " + keyWord);
+    // Вызывается в случае удачной авторизации
+    public void onAuthenticationSuccess() {
+        Intent intent = new Intent(this, MainListActivity.class);
+        startService(intent);
+    }
 
-        if (keyWord.getText().length() >= 4){
+    @Override
+    public void onClick(View view) {
+        if( !isFirstRun ) {
+            try {
+                // Если аутентификация не удалась, будет брошено исключение
+                authenticate(((TextView) findViewById(R.id.access_pass)).getText().toString());
 
-                enctext = new String (xor.encrypt(text, keyWord.getText().toString()));
-
-                Log.d(LOG_TAG, "encText: " + enctext);
-
-                FKSI.setKey("tfpk", enctext.getBytes());  //<==============
-
-                SendMessage(message); // запуск activity
+                // Если выполнение дошло до этой строки, все нормально
+                onAuthenticationSuccess();
+            } catch(Exception ex) {
+                // Что-то пошло не так. Может нет ключа, может пароль неверный
+                ex.printStackTrace();
+            }
+        } else {
+            setPassword( ((TextView) findViewById(R.id.access_pass)).getText().toString() );
         }
-        else {
-            commentary.setText("пароль не может содержать менее 4х символов");
-        }*/
-
     }
-
-    public void SendMessage(String message)
-    {
-        Intent newIntent = new Intent(this, MainListActivity.class);
-        newIntent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(newIntent);
-        this.finish();
-    }
-
-
 }
