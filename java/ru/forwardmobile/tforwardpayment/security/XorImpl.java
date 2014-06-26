@@ -5,14 +5,13 @@ package ru.forwardmobile.tforwardpayment.security;
  */
 public class XorImpl {
 
-    public byte[] encrypt(String text, String keyWord)
+    public byte[] encrypt(byte[] text, String keyWord)
     {
-        byte[] arr = text.getBytes();
         byte[] keyarr = keyWord.getBytes();
-        byte[] result = new byte[arr.length];
-        for(int i = 0; i< arr.length; i++)
+        byte[] result = new byte[text.length];
+        for(int i = 0; i< text.length; i++)
         {
-            result[i] = (byte) (arr[i] ^ keyarr[i % keyarr.length]);
+            result[i] = (byte) (text[i] ^ keyarr[i % keyarr.length]);
         }
         return result;
     }
