@@ -2,7 +2,6 @@ package ru.forwardmobile.tforwardpayment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.Arrays;
 
@@ -26,7 +25,7 @@ public class TestActivity extends Activity {
         setContentView(R.layout.empty);
 
         IPayment payment = PaymentFactory.getPayment(1, 5.00, 5.00, Arrays.asList(BaseField.fieldInfo("target","9182074447")));
-        IPaymentDao dao = new PaymentDaoImpl(new DatabaseHelper(this).getWritableDatabase());
+        IPaymentDao dao = new PaymentDaoImpl(new DatabaseHelper(this));
 
         dao.save(payment);
 

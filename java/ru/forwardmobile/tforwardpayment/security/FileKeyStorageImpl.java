@@ -46,7 +46,7 @@ public class FileKeyStorageImpl implements IKeyStorage {
     }
 
     public void setKey(String type, byte[] key) {
-
+        
         OutputStream os = null;
         InputStream  is = new ByteArrayInputStream(key);
         byte[] buffer = new byte[READ_WRITE_PART];

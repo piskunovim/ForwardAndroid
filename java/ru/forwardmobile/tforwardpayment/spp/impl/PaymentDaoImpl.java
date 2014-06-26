@@ -3,6 +3,8 @@ package ru.forwardmobile.tforwardpayment.spp.impl;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.util.Xml;
 
 import org.xml.sax.Attributes;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
@@ -26,11 +29,14 @@ import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
  */
 public class PaymentDaoImpl implements IPaymentDao {
 
+    private static final String LOGGER_TAG = "TFORWARD.DAO";
     private final SQLiteDatabase db;
-    ArrayList<String> paymentgroup = new ArrayList<String>();
+    private final SQLiteOpenHelper dbHelper;
 
-    public PaymentDaoImpl(SQLiteDatabase db) {
-        this.db = db;
+
+    public PaymentDaoImpl(SQLiteOpenHelper dbHelper)    {
+        this.dbHelper = dbHelper;
+        this.db = dbHelper.getWritableDatabase();
     }
 
     @Override
@@ -48,21 +54,26 @@ public class PaymentDaoImpl implements IPaymentDao {
         cv.put("psid", payment.getPsid());
         cv.put("fields", "<data>" + payment_data.toString() + "</data>");
         cv.put("value", payment.getValue() * 100);
-        cv.put("fullValue", payment.getFullValue());
+        cv.put("fullValue", payment.getFullValue() * 100);
         cv.put("errorCode", payment.getErrorCode());
         cv.put("errorDescription", payment.getErrorDescription());
-        cv.put("startDate", payment.getStartDate().getTime());
+        cv.put("startDate", safeTimestamp( payment.getStartDate()));
         cv.put("status", payment.getStatus());
-        cv.put("processDate", payment.getDateOfProcess().getTime());
+        cv.put("processDate", safeTimestamp(payment.getDateOfProcess()));
 
         if(payment.getId() == null) {
             Long rowId = db.insert(DatabaseHelper.PAYMENT_QUEUE_TABLE, null, cv);
             payment.setId(rowId.intValue());
         } else {
-            db.update("payments", cv, " where id = ?", new String[]{
+            db.update("payments", cv, " id = ? ", new String[]{
                     String.valueOf(payment.getId())
             } );
         }
+    }
+
+    private Long safeTimestamp(Date dt) {
+        if(dt == null) return null;
+        return dt.getTime();
     }
 
     @Override
@@ -79,9 +90,9 @@ public class PaymentDaoImpl implements IPaymentDao {
                 IPayment payment = PaymentFactory.getPayment( cursor.getInt(0), (double) cursor.getInt(2)/100, (double) cursor.getInt(3)/100, fields );
                 payment.setErrorCode(cursor.getInt(4));
                 payment.setErrorDescription(cursor.getString(5));
-                payment.setStartDate(new Date(cursor.getInt(6)));
+                payment.setStartDate(new Date(cursor.getLong(6)));
                 payment.setStatus(cursor.getInt(7));
-                payment.setDateOfProcess(new Date(cursor.getInt(8)));
+                payment.setDateOfProcess(new Date(cursor.getLong(8)));
 
                 return payment;
             }
@@ -92,12 +103,49 @@ public class PaymentDaoImpl implements IPaymentDao {
         return null;
     }
 
+    public void close() {
+        db.close();
+        dbHelper.close();
+    }
+
     /*@Override
     public IPayment getAll(){
         Cursor cursor = db.rawQuery("SELECT * FROM payments", null);
        // paymentgroup
 
     }*/
+
+    public synchronized Collection<IPayment> getUnprocessed() {
+
+        List<IPayment> collection = new ArrayList<IPayment>();
+        Cursor cursor = db.rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
+                + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where status not in(3,5) "
+                , new String[]{});
+
+        while(cursor.moveToNext()) {
+            Collection<IFieldInfo> fields = parseFields(cursor.getString(3));
+            IPayment payment = PaymentFactory.getPayment( cursor.getInt(2), (double) cursor.getInt(4)/100, (double) cursor.getInt(5)/100, fields );
+            payment.setErrorCode(cursor.getInt(6));
+            payment.setErrorDescription(cursor.getString(7));
+            payment.setStartDate(new Date(cursor.getLong(8)));
+            payment.setStatus(cursor.getInt(9));
+            payment.setDateOfProcess(new Date(cursor.getLong(10)));
+
+            payment.setId(cursor.getInt(0));
+            payment.setTransactionId(cursor.getInt(1));
+
+            Log.v(LOGGER_TAG, "Fetching payment id "
+                    + payment.getId()
+                    + ", StartDate " + payment.getStartDate()
+                    + ", psid " + payment.getPsid()
+                    + ", status " + payment.getStatus()
+                    + ", processDate " + payment.getDateOfProcess());
+
+            collection.add(payment);
+        }
+
+        return collection;
+    }
 
     @Override
     public IPayment findByTransaction(Integer transactid) {

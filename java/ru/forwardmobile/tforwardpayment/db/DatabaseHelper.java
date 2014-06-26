@@ -1,5 +1,6 @@
 package ru.forwardmobile.tforwardpayment.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 
         // Settings table
         sqld.execSQL("CREATE TABLE " + SETTINGS_TABLE_NAME 
-                + " (key text primary key, value blob not null)");
+                + " (property text primary key, value blob not null)");
 		
 	    initDatabaseV6(sqld);
     }
@@ -42,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqld, int i, int i1) {
         if(i > 5) {
             sqld.execSQL("CREATE TABLE " + SETTINGS_TABLE_NAME 
-                + " (key text primary key, value blob not null)");
+                + " (property text primary key, value blob not null)");
             
         } else if (i > 6 && i1 < 6) {
             initDatabaseV6(sqld);
@@ -54,23 +55,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public void readSettings() {
 
-        Cursor c = getReadableDatabase().rawQuery("select `key`,`value` from " + SETTINGS_TABLE_NAME, new String[]{});
-        while(c.moveToNext()) {
-            TSettings.set(c.getString(0), c.getString(1));
-            Log.v(LOGGER_TAG, "Read " + c.getString(0) + " with " + c.getString(1));
+        Cursor c = getWritableDatabase().rawQuery("select `property`,`value` from " + SETTINGS_TABLE_NAME, new String[]{});
+
+        if(c.moveToNext()) {
+
+            do {
+                TSettings.set(c.getString(0), c.getString(1));
+                Log.v(LOGGER_TAG, "Read " + c.getString(0) + " with " + c.getString(1));
+            } while(c.moveToNext());
+        } else {
+            Log.v(LOGGER_TAG, "Settings query returned an empty cursor.");
         }
     }
     
     public void saveSettings() {
         for( Object key: TSettings.getKeys() ) {
             saveSettings(key.toString(), TSettings.get(key.toString()));
-            Log.v(LOGGER_TAG,"saving " + key + " with value " + TSettings.get(key.toString()));
-        }        
+        }
     }
     
     public void saveSettings(String key, String value) {
-        getWritableDatabase().rawQuery("REPLACE into " + SETTINGS_TABLE_NAME + " VALUES(?,?)",
-                new String[]{ key, value });
+
+        Log.v(LOGGER_TAG,"saving " + key + " with value " + value);
+        ContentValues cv = new ContentValues();
+        cv.put("property", key);
+        cv.put("value", value);
+
+        getWritableDatabase().replace(SETTINGS_TABLE_NAME, null, cv);
     }
 
     
@@ -97,9 +108,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " fullValue integer, " +
                     " errorCode integer, " +
                     " errorDescription text, " +
-                    " startDate integer, " +
+                    " startDate text, " +
                     " status integer, " +
-                    " processDate integer " +
+                    " processDate text " +
                 ")"
         );
 

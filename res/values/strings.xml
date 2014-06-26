@@ -22,8 +22,5 @@
     <string name="title_activity_paymen_list_screen">PaymenListScreen</string>
     <string name="title_activity_payment_list_impl">PaymentListImpl</string>
     <string name="title_activity_help">HelpActivity</string>
-    <string name="title_access_activity">Авторизация</string>
-    <string name="yes">Да</string>
-    <string name="no">Нет</string>
 
 </resources>

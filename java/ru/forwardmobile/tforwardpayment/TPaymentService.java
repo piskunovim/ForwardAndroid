@@ -35,7 +35,6 @@ public class TPaymentService extends Service {
             try {
 
                 queue.setDatabaseHelper(new DatabaseHelper(this));
-
                 HttpTransport transport = new HttpTransport();
                 transport.setCryptEngine(new CryptEngineImpl(this));
 
