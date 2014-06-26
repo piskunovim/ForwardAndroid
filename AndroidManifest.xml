@@ -29,6 +29,10 @@
             android:label="@string/title_activity_main_list" >
         </activity>
         <activity
+            android:name="ru.forwardmobile.tforwardpayment.MainAccessActivity"
+            android:label="@string/title_access_activity" >
+        </activity>
+        <activity
             android:name="ru.forwardmobile.tforwardpayment.reports.TBalanceReportScreenImpl"
             android:label="@string/title_balance" >
         </activity>

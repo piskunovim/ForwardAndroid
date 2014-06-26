@@ -17,7 +17,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
         android:layout_alignRight="@+id/btnReadF">
-
+        <ProgressBar
+            android:id="@+id/progressMainList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            style="?android:attr/progressBarStyleInverse"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
