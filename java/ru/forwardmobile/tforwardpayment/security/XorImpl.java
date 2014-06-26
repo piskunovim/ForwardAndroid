@@ -3,7 +3,7 @@ package ru.forwardmobile.tforwardpayment.security;
 /**
  * Created by PiskunovI on 23.06.14.
  */
-public class IXorImpl {
+public class XorImpl {
 
     public byte[] encrypt(String text, String keyWord)
     {
