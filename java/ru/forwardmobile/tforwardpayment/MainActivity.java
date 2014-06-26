@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -172,36 +171,42 @@ public class MainActivity extends ActionBarActivity {
      * @return true if it exists, false if it doesn't
      */
     private boolean checkDataBase() {
-        SQLiteDatabase checkDB = null;
 
+        SQLiteDatabase checkDB = null;
         try {
             checkDB = SQLiteDatabase.openDatabase(
                     getFilesDir().getParent() + "/databases/forward",
                         null, SQLiteDatabase.OPEN_READONLY);
-            checkDB.close();
-        } catch (SQLiteException e) {
-            // database doesn't exist yet.
-        }
 
-        return checkDB != null ? true : false;
+            return checkDB != null;
+        } finally {
+            if(checkDB != null) checkDB.close();
+        }
     }
 
     public boolean checkForTables(){
 
-        SQLiteOpenHelper dbHelper;
-        boolean hasTables = false;
+        SQLiteOpenHelper dbHelper = null;
 
-        dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM pg", null);
+        try {
+            dbHelper = new DatabaseHelper(this);
+            SQLiteDatabase  db = null;
+            Cursor      cursor = null;
 
-        if(cursor.getCount() > 0){
-                hasTables=true;
-         }
+            try {
 
-        cursor.close();
-        dbHelper.close();
-        return hasTables;
+                db = dbHelper.getReadableDatabase();
+                cursor = db.rawQuery("SELECT * FROM pg LIMIT 1", null);
+                return cursor.moveToNext();
+            } finally {
+                if(cursor != null) cursor.close();
+                if(db != null) db.close();
+            }
+
+        }finally {
+            if(dbHelper != null)
+                dbHelper.close();
+        }
     }
 
 }

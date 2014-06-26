@@ -32,6 +32,12 @@ public class PaymentPojoImpl implements IPayment {
     private int     tryCount;
     private String  errorDescription;
 
+    private boolean delayed = false;
+    private boolean preparedForCancelling = false;
+    private boolean active = false;
+    private boolean sended = false;
+    private int errorRepeatCount = 0;
+
     public PaymentPojoImpl(Integer psid, Double value, Double fullValue) {
         this.psId       = psid;
         this.value      = value;
@@ -164,7 +170,7 @@ public class PaymentPojoImpl implements IPayment {
 
     @Override
     public boolean isPreparedForCancelling() {
-        return false;
+        return preparedForCancelling;
     }
 
     @Override
@@ -187,32 +193,32 @@ public class PaymentPojoImpl implements IPayment {
 
     @Override
     public boolean isDelayed() {
-        return false;
+        return delayed;
     }
 
     @Override
     public void setDelayed(boolean delayed) {
-
+        this.delayed = delayed;
     }
 
     @Override
     public void setActive(boolean active) {
-
+        this.active = active;
     }
 
     @Override
     public boolean getActive() {
-        return false;
+        return active;
     }
 
     @Override
     public void setSended(boolean sended) {
-
+        this.sended = sended;
     }
 
     @Override
     public boolean getSended() {
-        return false;
+        return sended;
     }
 
     @Override
@@ -227,31 +233,48 @@ public class PaymentPojoImpl implements IPayment {
 
     @Override
     public void incTryCount() {
-
+        this.tryCount += 1;
+        Log.i(LOGGER_TAG,"#" + id + " try count: " + this.tryCount);
     }
 
     @Override
     public Integer getTryCount() {
-        return null;
+        return tryCount;
     }
 
     @Override
     public void setTryCount(Integer count) {
-
+        this.tryCount = count;
     }
 
     @Override
     public void incErrorRepeatCount() {
-
+        this.errorRepeatCount++;
+        Log.i(LOGGER_TAG,"#" + id + " error repeat count: " + this.tryCount);
     }
 
     @Override
     public int getErrorRepeatCount() {
-        return 0;
+        return errorRepeatCount;
     }
 
     @Override
     public String getStatusName() {
-        return null;
+        switch(status) {
+            case NEW:
+                return isDelayed() ? "Отложен" : "В обработке (новый)";
+            case CHECKED:
+                return "В обработке (проверен)";
+            case COMMITED:
+                return "В обработке (отправлен)";
+            case DONE:
+                return "Проведен";
+            case FAILED:
+                return "Завершен ошибкой";
+            case CANCELLED:
+                return "Отменен";
+        }
+        return "Неизвестно";
     }
+
 }

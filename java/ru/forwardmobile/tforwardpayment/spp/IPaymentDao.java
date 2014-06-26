@@ -10,5 +10,7 @@ public interface IPaymentDao {
     public IPayment                 find(Integer id);
     public IPayment                 findByTransaction(Integer transactid);
     public Collection<IPayment>     getCollection();
+    public Collection<IPayment>     getUnprocessed();
     public void                     delete(IPayment payment);
+    public void                     close();
 }

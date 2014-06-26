@@ -1,6 +1,5 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -12,10 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.TSettings;
-import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
-import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
-import ru.forwardmobile.tforwardpayment.security.ICryptEngine;
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
@@ -44,45 +40,14 @@ public class PaymentQueueImpl implements IPaymentQueue {
     private HttpTransport       transport;
     private IRouter             router;
     private IPaymentDao         paymentDao;
-    private Context             ctx;
-
-    public PaymentQueueImpl(Context ctx) {
-
-        try {
-            // Транспорт
-            transport = new HttpTransport();
-            transport.setCryptEngine( new CryptEngineImpl( ctx ) );
-
-            DatabaseHelper databaseHelper = new DatabaseHelper( ctx );
-            paymentDao     = new PaymentDaoImpl( databaseHelper.getWritableDatabase());
-            router         = new RouterImpl();
-        } catch (Exception ex) {
-            Log.i( LOGGER_TAG, ex.toString() );
-            ex.printStackTrace();
-        }
-    }
-
-
-    public PaymentQueueImpl(ICryptEngine cryptEngine, DatabaseHelper helper) {
-        transport = new HttpTransport();
-        transport.setCryptEngine(cryptEngine);
-
-        DatabaseHelper databaseHelper = helper;
-        paymentDao = new PaymentDaoImpl( databaseHelper.getWritableDatabase() );
-        router         = new RouterImpl();
-    }
-
-    public PaymentQueueImpl() {
-        transport = new HttpTransport();
-    }
 
     public void setTransport(HttpTransport transport) {
         this.transport = transport;
     }
 
     public void setDatabaseHelper(SQLiteOpenHelper helper) {
-        paymentDao = new PaymentDaoImpl( helper.getWritableDatabase() );
-        router         = new RouterImpl();
+        paymentDao      = new PaymentDaoImpl( helper );
+        router          = new RouterImpl();
     }
 
     @Override
@@ -247,11 +212,18 @@ public class PaymentQueueImpl implements IPaymentQueue {
     @Override
     public void run() {
 
+        Log.v(LOGGER_TAG, "Loading unprocessed payments.");
+
+        activePayments.addAll(paymentDao.getUnprocessed());
+        Log.v(LOGGER_TAG, "Initial queue size: " + activePayments.size());
+
+        Log.v(LOGGER_TAG, "Queue daemon started...");
         try {
             Thread.sleep(3000); // delayed start
 
             while ( !stop ) {
 
+                Log.v(LOGGER_TAG, "Doing payments...");
 
                 doPayments();
                 synchronized(this) {
@@ -262,14 +234,20 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     }
                 }
             }
+
             synchronized(this) {
                 this.notifyAll();
             }
+
         } catch(InterruptedException e) {
             // nothing to do
+            e.printStackTrace();
         } finally {
             this.active = false;
+            this.paymentDao.close();
         }
+
+        Log.i(LOGGER_TAG, "Queue daemon stopped...");
     }
 
 
@@ -391,13 +369,14 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     }
 
                     /* Повторяем ошибочный платеж, если число попыток меньше заданного в настройках */
-                    if((payment.getStatus() == IPayment.FAILED || payment.getStatus() == IPayment.CANCELLED)) {
+                    if((payment.getStatus() == IPayment.FAILED )) {
                         payment.incErrorRepeatCount();
                         if(payment.getErrorRepeatCount() < TSettings.getInt(TSettings.MAXIMUM_START_TRY_COUNT, 10)) {
                             Log.d(LOGGER_TAG, "Repeating #" + payment.getId() + " - try " + payment.getErrorRepeatCount()
                                     + " of " + TSettings.getInt(TSettings.MAXIMUM_START_TRY_COUNT, 10) + "..");
                             repeatPayment(payment);
                             payment.delay(TSettings.getInt(TSettings.QUEUE_ERROR_DELAY, 600));
+                            paymentDao.save(payment);
                         }
                     }
                 } catch(Exception e) {
@@ -405,6 +384,8 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     command.getPayment().setErrorDescription(e.getMessage());
                     // Эта не ошибка сервера, поэтому не прекращаем обработку платежа
                     command.getPayment().errorDelay();
+
+                    e.printStackTrace();
                 }
             }
         } catch(Exception e) {

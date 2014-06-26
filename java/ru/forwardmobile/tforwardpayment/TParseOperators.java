@@ -38,13 +38,15 @@ public TParseOperators(Context context) {
  */
 public TParseOperators(){}
 
-public void GetXMLSettings(String xmlstring, DatabaseHelper dbHelper){
+public void GetXMLSettings(String xmlstring ) {
 
     // создаем объект для данных
     ContentValues cv = new ContentValues();
     ContentValues cv2 = new ContentValues();
     int gid = 0;
     int id = 0;
+
+    DatabaseHelper dbHelper = new DatabaseHelper(context);
 
     // подключаемся к БД
     SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -63,9 +65,9 @@ public void GetXMLSettings(String xmlstring, DatabaseHelper dbHelper){
         db.execSQL("delete from " + DatabaseHelper.PG_TABLE_NAME);
         db.execSQL("delete from " + DatabaseHelper.F_TABLE_NAME);
 
-        boolean insideSettings      = false;
-        String  currentProperty     = new String();
-        String  buffer              = new String();
+        boolean insideSettings = false;
+        String currentProperty = new String();
+        String buffer = new String();
 
         XmlPullParser xpp = prepareXpp(xmlstring);
 
@@ -81,89 +83,67 @@ public void GetXMLSettings(String xmlstring, DatabaseHelper dbHelper){
                     String tag_name = xpp.getName();
 
 
-                    if (tag_name.equals("p-g")){
-                        for (int i=0; i< xpp.getAttributeCount(); i++){
-                           gid++;
-                           cv.put("id",gid);
-                           if (xpp.getAttributeName(i).equals("n"))
-                           {
-                            cv.put("name",xpp.getAttributeValue(i));
-                           }
-                           db.insert("pg", null, cv);
-                        }
-                    }
-
-                    else if (tag_name.equals("p"))
-                    {
-                      for (int i = 0; i < xpp.getAttributeCount(); i++) {
-                        cv.put("gid",gid);
-                        if (xpp.getAttributeName(i).equals("i"))
-                        {
-                           id = Integer.parseInt(xpp.getAttributeValue(i)); //запомним идентификатор оператора
-
-                           cv.put("id", xpp.getAttributeValue(i));
-
-                            // вставляем запись и получаем ее ID
-                           // operators.add(xpp.getAttributeValue(i));
-                        }
-                        else if (xpp.getAttributeName(i).equals("n"))
-                        {
-                            cv.put("name", xpp.getAttributeValue(i));
-                        }
-                        else if (xpp.getAttributeName(i).equals("min"))
-                        {
-                           cv.put("min", xpp.getAttributeValue(i));
-                        }
-                        else if (xpp.getAttributeName(i).equals("max")){
-                            cv.put("max", xpp.getAttributeValue(i));
-
-                           long rowID = db.insert("p", null, cv);
-                        }
-                      }
-                    }
-                    else if (tag_name.equals("f")){
-                        cv.clear();
-                        cv.put("provider", id);
-                        for (int i = 0; i < xpp.getAttributeCount(); i++){
-
-                            if (xpp.getAttributeName(i).equals("n"))
-                            {
+                    if (tag_name.equals("p-g")) {
+                        for (int i = 0; i < xpp.getAttributeCount(); i++) {
+                            gid++;
+                            cv.put("id", gid);
+                            if (xpp.getAttributeName(i).equals("n")) {
                                 cv.put("name", xpp.getAttributeValue(i));
                             }
-                            else if (xpp.getAttributeName(i).equals("c"))
-                            {
-                                cv.put("title", xpp.getAttributeValue(i));
+                            db.insert("pg", null, cv);
+                        }
+                    } else if (tag_name.equals("p")) {
+                        for (int i = 0; i < xpp.getAttributeCount(); i++) {
+                            cv.put("gid", gid);
+                            if (xpp.getAttributeName(i).equals("i")) {
+                                id = Integer.parseInt(xpp.getAttributeValue(i)); //запомним идентификатор оператора
+
+                                cv.put("id", xpp.getAttributeValue(i));
+
+                                // вставляем запись и получаем ее ID
+                                // operators.add(xpp.getAttributeValue(i));
+                            } else if (xpp.getAttributeName(i).equals("n")) {
+                                cv.put("name", xpp.getAttributeValue(i));
+                            } else if (xpp.getAttributeName(i).equals("min")) {
+                                cv.put("min", xpp.getAttributeValue(i));
+                            } else if (xpp.getAttributeName(i).equals("max")) {
+                                cv.put("max", xpp.getAttributeValue(i));
+
+                                long rowID = db.insert("p", null, cv);
                             }
-                            else if (xpp.getAttributeName(i).equals("p"))
-                            {
+                        }
+                    } else if (tag_name.equals("f")) {
+                        cv.clear();
+                        cv.put("provider", id);
+                        for (int i = 0; i < xpp.getAttributeCount(); i++) {
+
+                            if (xpp.getAttributeName(i).equals("n")) {
+                                cv.put("name", xpp.getAttributeValue(i));
+                            } else if (xpp.getAttributeName(i).equals("c")) {
+                                cv.put("title", xpp.getAttributeValue(i));
+                            } else if (xpp.getAttributeName(i).equals("p")) {
                                 cv.put("prefix", xpp.getAttributeValue(i));
                                 //Log.d("TagFGot: ",xpp.getAttributeValue(i));
-                            }
-                            else if (xpp.getAttributeName(i).equals("m"))
-                            {
+                            } else if (xpp.getAttributeName(i).equals("m")) {
                                 cv.put("mask", xpp.getAttributeValue(i));
                                 //Log.d("TagFGot: ",xpp.getAttributeValue(i));
-                            }
-                            else if (xpp.getAttributeName(i).equals("r"))
-                            {
+                            } else if (xpp.getAttributeName(i).equals("r")) {
                                 cv.put("required", xpp.getAttributeValue(i));
-                            }
-                            else if (xpp.getAttributeName(i).equals("t"))
-                            {
+                            } else if (xpp.getAttributeName(i).equals("t")) {
                                 cv.put("type", xpp.getAttributeValue(i));
 
                             }
                         }
                         db.insert("f", null, cv);
                     } else
-                    // Start settings part
-                    if("s" . equals( tag_name )) {
-                        insideSettings = true;
-                    }else
-                    // Settings properties
-                    if("v" . equals( tag_name )) {
-                        currentProperty = xpp.getAttributeValue(0);
-                    }
+                        // Start settings part
+                        if ("s".equals(tag_name)) {
+                            insideSettings = true;
+                        } else
+                            // Settings properties
+                            if ("v".equals(tag_name)) {
+                                currentProperty = xpp.getAttributeValue(0);
+                            }
 
                     if (!TextUtils.isEmpty(tmp))
                         Log.d(LOG_TAG, "Attributes: " + tmp);
@@ -172,25 +152,24 @@ public void GetXMLSettings(String xmlstring, DatabaseHelper dbHelper){
                 case XmlPullParser.END_TAG:
 
                     cv.clear();
-                    if(buffer.length() > 0) {
+                    if (buffer.length() > 0) {
                         // Shared key
                         if ("s-c".equals(xpp.getName())) {
                             Log.d(LOG_TAG, "Adding shared key...");
                             keyStorage.setKey(IKeyStorage.PUBLIC_KEY_TYPE, buffer.getBytes());
                         } else
-                        // Private key
-                        if ("p-k".equals(xpp.getName())) {
-                            Log.d(LOG_TAG, "Adding private key...");
-                            keyStorage.setKey(IKeyStorage.SECRET_KEY_TYPE, buffer.getBytes());
-                        } else
-                        // Access ID
-                        if ("access-id".equals(xpp.getName())) {
-                            Log.d( LOG_TAG, "Saving acces id. " + buffer  );
-                            TSettings.set(TSettings.CERTIFICATE_ACESS_ID, buffer);
-                        } else
-                        if(insideSettings && "v" . equals(xpp.getName())) {
-                            TSettings.set(currentProperty, buffer);
-                        }
+                            // Private key
+                            if ("p-k".equals(xpp.getName())) {
+                                Log.d(LOG_TAG, "Adding private key...");
+                                keyStorage.setKey(IKeyStorage.SECRET_KEY_TYPE, buffer.getBytes());
+                            } else
+                                // Access ID
+                                if ("access-id".equals(xpp.getName())) {
+                                    Log.d(LOG_TAG, "Saving acces id. " + buffer);
+                                    TSettings.set(TSettings.CERTIFICATE_ACESS_ID, buffer);
+                                } else if (insideSettings && "v".equals(xpp.getName())) {
+                                    TSettings.set(currentProperty, buffer);
+                                }
                     }
 
                     break;
@@ -216,11 +195,13 @@ public void GetXMLSettings(String xmlstring, DatabaseHelper dbHelper){
         e.printStackTrace();
     } catch (IOException e) {
         e.printStackTrace();
+    } finally {
+        // завершаем транзакцию, если до этого вызова не было вызова setTransactionSuccessful(),
+        // все изменения, которые успели произойти, откатятся
+        db.endTransaction();
+        db.close();
+        dbHelper.close();
     }
-
-    // завершаем транзакцию, если до этого вызова не было вызова setTransactionSuccessful(),
-    // все изменения, которые успели произойти, откатятся
-    db.endTransaction();
    }
 
     XmlPullParser prepareXpp(String xmlstring) throws XmlPullParserException {
