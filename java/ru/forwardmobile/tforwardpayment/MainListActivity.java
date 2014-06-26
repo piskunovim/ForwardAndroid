@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -54,8 +53,6 @@ public class MainListActivity extends ActionBarActivity {
         //progressBar = (ProgressBar) findViewById(R.id.progressMainList);
         //progressBar.setVisibility(View.VISIBLE);
         Log.d(LOG_TAG, message);
-        dbHelper = new DatabaseHelper(this);
-
 
         if (!message.equals("true"))
         {
@@ -79,12 +76,18 @@ public class MainListActivity extends ActionBarActivity {
                 progress.show();
                 //progressBar.setVisibility(View.VISIBLE);
                 String name = (String) parent.getItemAtPosition(position);
+                SQLiteOpenHelper dbHelper = new DatabaseHelper(getApplicationContext());
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
                 Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
-                c.moveToNext();
-                Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ c.getString(c.getColumnIndex("id")));
-
-                OpenOperatorActivity(c.getString(c.getColumnIndex("id")));
+                try {
+                    c.moveToNext();
+                    Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = " + c.getString(c.getColumnIndex("id")));
+                    OpenOperatorActivity(c.getString(c.getColumnIndex("id")));
+                } finally {
+                    c.close();
+                    db.close();
+                    dbHelper.close();
+                }
             }
         });
 
@@ -205,7 +208,7 @@ public class MainListActivity extends ActionBarActivity {
     }
 
     private void startPaymentQueue() {
-        Log.i(LOG_TAG,"Starting payment queue...");
+        Log.i(LOG_TAG, "Starting payment queue...");
         startService(new Intent(this, TPaymentService.class));
     }
 
