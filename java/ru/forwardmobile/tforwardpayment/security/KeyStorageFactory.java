@@ -8,7 +8,7 @@ import android.content.Context;
 public class KeyStorageFactory {
     
     public static IKeyStorage getKeyStorage(Context context) {
-        return new FileKeyStorageImpl(context);
+        return KeySingleton.getInstance(context);
         // return mockKeystorage();
     }
     

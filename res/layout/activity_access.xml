@@ -25,11 +25,23 @@
             android:background="#ffffff"
          />
         </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp">
+        <Button
+            android:id="@+id/access_button"
+            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:text = "Button Text"
+            android:background="#ffffff"/>
+        </LinearLayout>
 
     <TextView
+        android:id="@+id/access_commentary"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="*пароль доступа был введен вами при первом \n             при первом запуске приложения"
+        android:text="*текст комментария отсутствует"
         android:textColor="#ffffff"/>
 </LinearLayout>

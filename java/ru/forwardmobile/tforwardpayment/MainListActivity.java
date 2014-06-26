@@ -1,6 +1,7 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -30,16 +32,29 @@ public class MainListActivity extends ActionBarActivity {
 
     ArrayList<String> operatorgroup = new ArrayList<String>();
 
+    ProgressDialog progress;
+    //ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainlist);
 
+
+
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         ListView listContent = (ListView)findViewById(R.id.listView);
 
-        Log.d(LOG_TAG, "message - " + message);
+        progress = new ProgressDialog(this);
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.show();
+
+        //progressBar = (ProgressBar) findViewById(R.id.progressMainList);
+        //progressBar.setVisibility(View.VISIBLE);
+        Log.d(LOG_TAG, message);
+        dbHelper = new DatabaseHelper(this);
 
 
         if (!message.equals("true"))
@@ -55,12 +70,14 @@ public class MainListActivity extends ActionBarActivity {
         dbHelper.close();
 
         GenerateListView("pg", "name", listContent);
+        progress.dismiss();
+       // progressBar.setVisibility(View.GONE);
 
         listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
-                SQLiteOpenHelper dbHelper = new DatabaseHelper( getApplicationContext() );
+                progress.show();
+                //progressBar.setVisibility(View.VISIBLE);
                 String name = (String) parent.getItemAtPosition(position);
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
                 Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
@@ -79,6 +96,8 @@ public class MainListActivity extends ActionBarActivity {
         Log.d(LOG_TAG, "OpenOperatorActivity id: " + id);
         Intent intent = new Intent(this, OperatorsActivity.class);
         intent.putExtra(EXTRA_MESSAGE, id);
+        progress.dismiss();
+        //progressBar.setVisibility(View.GONE);
         // запуск activity
         startActivity(intent);
     }
@@ -203,6 +222,7 @@ public class MainListActivity extends ActionBarActivity {
         helper.close();
         super.onDestroy();
     }
+
 
 
 
