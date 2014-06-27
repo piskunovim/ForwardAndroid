@@ -53,6 +53,6 @@ public class KeySingleton extends FileKeyStorageImpl {
     }
 
     public void setEncKey(byte[] key){
-         super.setKey(IKeyStorage.SECRET_KEY_TYPE,key);
+         super.setKey(IKeyStorage.SECRET_KEY_TYPE, key);
     }
 }

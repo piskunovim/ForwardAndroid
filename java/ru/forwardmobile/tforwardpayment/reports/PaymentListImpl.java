@@ -98,75 +98,40 @@ public class PaymentListImpl extends ActionBarActivity {
         if (c1 != null && c1.getCount() != 0) {
             if (c1.moveToFirst()) {
 
-                if (ControlMessage.equals("0") && (!c1.getString(c1.getColumnIndex("status")).equals("3")) && (!c1.getString(c1.getColumnIndex("status")).equals("4")) && (!c1.getString(c1.getColumnIndex("status")).equals("5")))
+                if (ControlMessage.equals("0") || c1.getString(c1.getColumnIndex("status")).equals("3"))
                 {
-                    do {
-                        PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
+                do {
+                    PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
 
-                        paymentListItems.setPsid(c1.getString(c1
-                                .getColumnIndex("name")));
-                        paymentListItems.setFields(c1.getString(c1
-                                .getColumnIndex("fields")));
-                        paymentListItems.setStatus(c1.getString(c1
-                                .getColumnIndex("status")));
-                        paymentListItems.setStartDate(c1.getString(c1
-                                .getColumnIndex("startDate")));
-                        paymentListItems.setProcessDate(c1.getString(c1
-                                .getColumnIndex("processDate")));
-                        paymentListItems.setValue(c1.getString(c1
-                                .getColumnIndex("value")));
-                        paymentListItems.setFullValue(c1.getString(c1
-                                .getColumnIndex("fullValue")));
-                        paymentListItems.setErrorCode(c1.getInt(c1
-                                .getColumnIndex("errorCode")));
-                        paymentListItems.setErrorDescription(c1.getString(c1
-                                .getColumnIndex("errorDescription")));
+                    paymentListItems.setPsid(c1.getString(c1
+                            .getColumnIndex("name")));
+                    paymentListItems.setFields(c1.getString(c1
+                            .getColumnIndex("fields")));
+                    paymentListItems.setStatus(c1.getString(c1
+                            .getColumnIndex("status")));
+                    paymentListItems.setStartDate(c1.getString(c1
+                            .getColumnIndex("startDate")));
+                    paymentListItems.setProcessDate(c1.getString(c1
+                            .getColumnIndex("processDate")));
+                    paymentListItems.setValue(c1.getString(c1
+                            .getColumnIndex("value")));
+                    paymentListItems.setFullValue(c1.getString(c1
+                            .getColumnIndex("fullValue")));
+                    paymentListItems.setErrorCode(c1.getInt(c1
+                            .getColumnIndex("errorCode")));
+                    paymentListItems.setErrorDescription(c1.getString(c1
+                            .getColumnIndex("errorDescription")));
                     /*paymentListItems.setValueSum(c1.getString(c1
                             .getColumnIndex("value")));
                     paymentListItems.setFullValueSum(c1.getString(c1
                             .getColumnIndex("fullValue")));*/
-                        valueSum += Integer.parseInt(c1.getString(c1.getColumnIndex("value")))/100;
-                        fullValueSum += Integer.parseInt(c1.getString(c1.getColumnIndex("fullValue")));
+                    valueSum += Integer.parseInt(c1.getString(c1.getColumnIndex("value")))/100;
+                    fullValueSum += Integer.parseInt(c1.getString(c1.getColumnIndex("fullValue")));
 
-                        paymentList.add(paymentListItems);
-
-
-                    } while (c1.moveToNext());
-                }
-                else if (ControlMessage.equals("1") && c1.getString(c1.getColumnIndex("status")).equals("3") && c1.getString(c1.getColumnIndex("status")).equals("4") && c1.getString(c1.getColumnIndex("status")).equals("5"))
-                {
-                    do {
-                        PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
-
-                        paymentListItems.setPsid(c1.getString(c1
-                                .getColumnIndex("name")));
-                        paymentListItems.setFields(c1.getString(c1
-                                .getColumnIndex("fields")));
-                        paymentListItems.setStatus(c1.getString(c1
-                                .getColumnIndex("status")));
-                        paymentListItems.setStartDate(c1.getString(c1
-                                .getColumnIndex("startDate")));
-                        paymentListItems.setProcessDate(c1.getString(c1
-                                .getColumnIndex("processDate")));
-                        paymentListItems.setValue(c1.getString(c1
-                                .getColumnIndex("value")));
-                        paymentListItems.setFullValue(c1.getString(c1
-                                .getColumnIndex("fullValue")));
-                        paymentListItems.setErrorCode(c1.getInt(c1
-                                .getColumnIndex("errorCode")));
-                        paymentListItems.setErrorDescription(c1.getString(c1
-                                .getColumnIndex("errorDescription")));
-                    /*paymentListItems.setValueSum(c1.getString(c1
-                            .getColumnIndex("value")));
-                    paymentListItems.setFullValueSum(c1.getString(c1
-                            .getColumnIndex("fullValue")));*/
-                        valueSum += Integer.parseInt(c1.getString(c1.getColumnIndex("value")))/100;
-                        fullValueSum += Integer.parseInt(c1.getString(c1.getColumnIndex("fullValue")));
-
-                        paymentList.add(paymentListItems);
+                    paymentList.add(paymentListItems);
 
 
-                    } while (c1.moveToNext());
+                } while (c1.moveToNext());
                 }
                 else{
                      listEmpty.setVisibility(View.VISIBLE);
