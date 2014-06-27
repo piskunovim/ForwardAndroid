@@ -55,6 +55,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
         this.thread = new Thread(this);
         this.thread.start();
         this.active = true;
+        this.stop   = false;
     }
 
     @Override
@@ -71,7 +72,18 @@ public class PaymentQueueImpl implements IPaymentQueue {
         this.thread = null;
         this.active = false;
 
+        this.paymentDao.close();
+        this.transport = null;
+        this.router = null;
+
+        this.activePayments.clear();
+        this.storedPayments.clear();
+
         Log.i(LOGGER_TAG, "Queue was stopped...");
+
+        synchronized (this) {
+            notifyAll();
+        }
     }
 
     @Override
@@ -375,7 +387,8 @@ public class PaymentQueueImpl implements IPaymentQueue {
                             Log.d(LOGGER_TAG, "Repeating #" + payment.getId() + " - try " + payment.getErrorRepeatCount()
                                     + " of " + TSettings.getInt(TSettings.MAXIMUM_START_TRY_COUNT, 10) + "..");
                             repeatPayment(payment);
-                            payment.delay(TSettings.getInt(TSettings.QUEUE_ERROR_DELAY, 600));
+                            // payment.delay(TSettings.getInt(TSettings.QUEUE_ERROR_DELAY, 600));
+                            payment.delay(10);
                             paymentDao.save(payment);
                         }
                     }

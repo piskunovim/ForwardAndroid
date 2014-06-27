@@ -4,12 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 >
-    <TextView 
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"        
-        android:id="@+id/data_entry_title"
-        android:text="Проведение платежа"
-    />
+
     
     <LinearLayout  
         android:orientation="vertical"

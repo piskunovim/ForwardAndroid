@@ -6,10 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+
 import ru.forwardmobile.tforwardpayment.R;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
-import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
@@ -69,12 +70,12 @@ public class TBalanceReportScreenImpl extends ActionBarActivity {
 
         // Показываем результат
         if(balance != 0)
-            balanceView.setText("Текущий баланс: " + String.valueOf(balance) );
+            balanceView.setText("Текущий баланс: " + String.valueOf(new BigDecimal(balance).setScale(2).doubleValue()) );
         if(limit != 0)
-            creditView.setText("Кредитный лимит: " + String.valueOf(limit) );
+            creditView.setText("Кредитный лимит: " + String.valueOf(new BigDecimal(limit).setScale(2).doubleValue()) );
         if(total != 0)
             if(total > 0)
-                totalView.setText("Можно израсходовать: " + String.valueOf(total));
+                totalView.setText("Можно израсходовать: " + String.valueOf(new BigDecimal(total).setScale(2).doubleValue()));
             else
                 totalView.setText("Прием платежей невозможен!");
 

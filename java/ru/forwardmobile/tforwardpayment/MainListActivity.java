@@ -1,7 +1,6 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -31,28 +30,29 @@ public class MainListActivity extends ActionBarActivity {
 
     ArrayList<String> operatorgroup = new ArrayList<String>();
 
-    ProgressDialog progress;
-    //ProgressBar progressBar;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.v(LOG_TAG, "Main list resumed");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainlist);
 
-
-
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        ListView listContent = (ListView)findViewById(R.id.listView);
 
-        progress = new ProgressDialog(this);
-        progress.setCancelable(false);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.show();
+        if(message != null) {
+            initialize(message);
+        }
+    }
 
-        //progressBar = (ProgressBar) findViewById(R.id.progressMainList);
-        //progressBar.setVisibility(View.VISIBLE);
+    private void initialize(String message) {
+
         Log.d(LOG_TAG, message);
+        ListView listContent = (ListView)findViewById(R.id.listView);
 
         if (!message.equals("true"))
         {
@@ -67,14 +67,10 @@ public class MainListActivity extends ActionBarActivity {
         dbHelper.close();
 
         GenerateListView("pg", "name", listContent);
-        progress.dismiss();
-       // progressBar.setVisibility(View.GONE);
 
         listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                progress.show();
-                //progressBar.setVisibility(View.VISIBLE);
                 String name = (String) parent.getItemAtPosition(position);
                 SQLiteOpenHelper dbHelper = new DatabaseHelper(getApplicationContext());
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -95,12 +91,12 @@ public class MainListActivity extends ActionBarActivity {
         startPaymentQueue();
     }
 
+
     public void OpenOperatorActivity(String id){
+
         Log.d(LOG_TAG, "OpenOperatorActivity id: " + id);
         Intent intent = new Intent(this, OperatorsActivity.class);
         intent.putExtra(EXTRA_MESSAGE, id);
-        progress.dismiss();
-        //progressBar.setVisibility(View.GONE);
         // запуск activity
         startActivity(intent);
     }
@@ -217,16 +213,37 @@ public class MainListActivity extends ActionBarActivity {
         stopService(new Intent(this,TPaymentService.class));
     }
 
+    private void onExit() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("EXIT", "true");
+        startActivity(intent);
+
+        this.finish();
+    }
+
     @Override
     protected void onDestroy() {
+        super.onDestroy();
+
         stopPaymentQueue();
         DatabaseHelper helper = new DatabaseHelper(this);
         helper.saveSettings();
         helper.close();
-        super.onDestroy();
     }
 
 
-
-
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+            .setTitle("Выйти из приложения?")
+            .setMessage("Вы действительно хотите выйти?")
+            .setNegativeButton(android.R.string.no, null)
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface arg0, int arg1) {
+                    onExit();
+                }
+            }).create().show();
+    }
 }

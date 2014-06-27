@@ -138,6 +138,8 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
                     PaymentQueueWrapper.getQueue().processPayment(payment);
                     Toast.makeText(this, "Платеж создан!", Toast.LENGTH_SHORT)
                             .show();
+
+                    super.onBackPressed();
                 }catch (Exception ex) {
                     Toast.makeText(this, "Ошибка создания платежа: " + ex.getMessage(), Toast.LENGTH_SHORT)
                             .show();

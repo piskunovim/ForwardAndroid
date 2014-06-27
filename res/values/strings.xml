@@ -18,10 +18,10 @@
     <string name="data_entry_full_amount_title">Сумма платежа</string>
     <string name="data_entry_label">Провести платеж</string>
     <string name="title_activity_operators">Выбор оператора</string>
-    <string name="title_activity_activity_balance">ActivityBalance</string>
-    <string name="title_activity_paymen_list_screen">PaymenListScreen</string>
-    <string name="title_activity_payment_list_impl">PaymentListImpl</string>
-    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_activity_balance">Остаток на счете</string>
+    <string name="title_activity_paymen_list_screen">Список платежей</string>
+    <string name="title_activity_payment_list_impl">Список платежей</string>
+    <string name="title_activity_help">Помощь</string>
     <string name="title_access_activity">Авторизация</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>

@@ -38,10 +38,23 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Если запросили выход
+        if("true" . equals( getIntent().getStringExtra("EXIT"))) {
+            super.onDestroy();
+            finish();
+            android.os.Process.killProcess(android.os.Process.myPid());
+
+        } else {
+            initialize();
+        }
+    }
+
+    private void initialize() {
         setContentView(R.layout.activity_main);
 
         // Для тестового сервера
-        TSettings.set(TSettings.SERVER_HOST, "http://192.168.1.253");
+        TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
         TSettings.set(TSettings.SERVER_PORT, "8170");
 
         //получаем идентификаторы точки доступа и пароль
@@ -67,7 +80,6 @@ public class MainActivity extends ActionBarActivity {
             Log.d(LOG_TAG, "Does not exist database");
 
         }
-
     }
 
 
@@ -88,8 +100,9 @@ public class MainActivity extends ActionBarActivity {
             TParseOperators parse = new TParseOperators(this);
             String responseStr = pd.execute().get();
 
-            //parse.GetXMLSettings(responseStr, dbHelper);
-            Log.d(LOG_TAG,responseStr);
+            parse.GetXMLSettings(responseStr);
+            Log.d(LOG_TAG, responseStr);
+
 
             if (responseStr.length() > 0){
                 // Создаем объект Intent для вызова новой Activity
@@ -172,9 +185,11 @@ public class MainActivity extends ActionBarActivity {
         try {
             checkDB = SQLiteDatabase.openDatabase(
                     getFilesDir().getParent() + "/databases/forward",
-                        null, SQLiteDatabase.OPEN_READONLY);
+                    null, SQLiteDatabase.OPEN_READONLY);
 
             return checkDB != null;
+        }catch(Exception ex) {
+            return false;
         } finally {
             if(checkDB != null) checkDB.close();
         }
@@ -199,7 +214,7 @@ public class MainActivity extends ActionBarActivity {
                 if(db != null) db.close();
             }
 
-        }finally {
+        } finally {
             if(dbHelper != null)
                 dbHelper.close();
         }

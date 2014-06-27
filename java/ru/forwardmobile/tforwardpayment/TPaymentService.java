@@ -57,7 +57,6 @@ public class TPaymentService extends Service {
 
     @Override
     public void onDestroy() {
-
         PaymentQueueWrapper.getQueue()
                 .stop();
 
