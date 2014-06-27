@@ -41,8 +41,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // Для тестового сервера
-        // TSettings.set(TSettings.SERVER_HOST,"forwardmobile.ru");
-        // TSettings.set(TSettings.SERVER_PORT, "8170");
+        TSettings.set(TSettings.SERVER_HOST, "http://192.168.1.253");
+        TSettings.set(TSettings.SERVER_PORT, "8170");
 
         //получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
@@ -65,13 +65,9 @@ public class MainActivity extends ActionBarActivity {
         else
         {
             Log.d(LOG_TAG, "Does not exist database");
+
         }
 
-        /*if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }*/
     }
 
 

@@ -158,18 +158,18 @@ public void GetXMLSettings(String xmlstring ) {
                             Log.d(LOG_TAG, "Adding shared key...");
                             keyStorage.setKey(IKeyStorage.PUBLIC_KEY_TYPE, buffer.getBytes());
                         } else
-                            // Private key
-                            if ("p-k".equals(xpp.getName())) {
-                                Log.d(LOG_TAG, "Adding private key...");
-                                keyStorage.setKey(IKeyStorage.SECRET_KEY_TYPE, buffer.getBytes());
-                            } else
-                                // Access ID
-                                if ("access-id".equals(xpp.getName())) {
-                                    Log.d(LOG_TAG, "Saving acces id. " + buffer);
-                                    TSettings.set(TSettings.CERTIFICATE_ACESS_ID, buffer);
-                                } else if (insideSettings && "v".equals(xpp.getName())) {
-                                    TSettings.set(currentProperty, buffer);
-                                }
+                        // Private key
+                        if ("p-k".equals(xpp.getName())) {
+                            Log.d(LOG_TAG, "Adding private key...");
+                            keyStorage.setKey(IKeyStorage.SECRET_KEY_TYPE, buffer.getBytes());
+                        } else
+                        // Access ID
+                        if ("access-id".equals(xpp.getName())) {
+                            Log.d(LOG_TAG, "Saving acces id. " + buffer);
+                            TSettings.set(TSettings.CERTIFICATE_ACESS_ID, buffer);
+                        } else if (insideSettings && "v".equals(xpp.getName())) {
+                            TSettings.set(currentProperty, buffer);
+                        }
                     }
 
                     break;

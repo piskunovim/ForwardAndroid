@@ -48,11 +48,11 @@ public class KeySingleton extends FileKeyStorageImpl {
         }
     }
 
-    public String getEncKey (){
-        return new String(super.getKey(IKeyStorage.SECRET_KEY_TYPE));
+    public byte[] getEncKey (){
+        return super.getKey(IKeyStorage.SECRET_KEY_TYPE);
     }
 
-    public void setEncKey(String key){
-         super.setKey(IKeyStorage.SECRET_KEY_TYPE,key.getBytes());
+    public void setEncKey(byte[] key){
+         super.setKey(IKeyStorage.SECRET_KEY_TYPE, key);
     }
 }
