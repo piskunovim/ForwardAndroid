@@ -2,7 +2,6 @@ package ru.forwardmobile.tforwardpayment.spp.impl;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.util.Xml;
@@ -30,13 +29,11 @@ import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
 public class PaymentDaoImpl implements IPaymentDao {
 
     private static final String LOGGER_TAG = "TFORWARD.DAO";
-    private final SQLiteDatabase db;
     private final SQLiteOpenHelper dbHelper;
 
 
     public PaymentDaoImpl(SQLiteOpenHelper dbHelper)    {
         this.dbHelper = dbHelper;
-        this.db = dbHelper.getWritableDatabase();
     }
 
     @Override
@@ -62,12 +59,12 @@ public class PaymentDaoImpl implements IPaymentDao {
         cv.put("processDate", safeTimestamp(payment.getDateOfProcess()));
 
         if(payment.getId() == null) {
-            Long rowId = db.insert(DatabaseHelper.PAYMENT_QUEUE_TABLE, null, cv);
+            Long rowId = dbHelper.getWritableDatabase().insert(DatabaseHelper.PAYMENT_QUEUE_TABLE, null, cv);
             payment.setId(rowId.intValue());
         } else {
-            db.update("payments", cv, " id = ? ", new String[]{
+            dbHelper.getWritableDatabase().update("payments", cv, " id = ? ", new String[]{
                     String.valueOf(payment.getId())
-            } );
+            });
         }
     }
 
@@ -79,7 +76,7 @@ public class PaymentDaoImpl implements IPaymentDao {
     @Override
     public IPayment find(Integer id) {
 
-        Cursor cursor = db.rawQuery("select psid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate " +
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("select psid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate " +
                 " from  payments where id = ?", new String[]{String.valueOf(id)});
 
         try {
@@ -104,7 +101,6 @@ public class PaymentDaoImpl implements IPaymentDao {
     }
 
     public void close() {
-        db.close();
         dbHelper.close();
     }
 
@@ -118,32 +114,34 @@ public class PaymentDaoImpl implements IPaymentDao {
     public synchronized Collection<IPayment> getUnprocessed() {
 
         List<IPayment> collection = new ArrayList<IPayment>();
-        Cursor cursor = db.rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
                 + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where status not in(3,5) "
                 , new String[]{});
+        try {
+            while (cursor.moveToNext()) {
+                Collection<IFieldInfo> fields = parseFields(cursor.getString(3));
+                IPayment payment = PaymentFactory.getPayment(cursor.getInt(2), (double) cursor.getInt(4) / 100, (double) cursor.getInt(5) / 100, fields);
+                payment.setErrorCode(cursor.getInt(6));
+                payment.setErrorDescription(cursor.getString(7));
+                payment.setStartDate(new Date(cursor.getLong(8)));
+                payment.setStatus(cursor.getInt(9));
+                payment.setDateOfProcess(new Date(cursor.getLong(10)));
 
-        while(cursor.moveToNext()) {
-            Collection<IFieldInfo> fields = parseFields(cursor.getString(3));
-            IPayment payment = PaymentFactory.getPayment( cursor.getInt(2), (double) cursor.getInt(4)/100, (double) cursor.getInt(5)/100, fields );
-            payment.setErrorCode(cursor.getInt(6));
-            payment.setErrorDescription(cursor.getString(7));
-            payment.setStartDate(new Date(cursor.getLong(8)));
-            payment.setStatus(cursor.getInt(9));
-            payment.setDateOfProcess(new Date(cursor.getLong(10)));
+                payment.setId(cursor.getInt(0));
+                payment.setTransactionId(cursor.getInt(1));
 
-            payment.setId(cursor.getInt(0));
-            payment.setTransactionId(cursor.getInt(1));
+                Log.v(LOGGER_TAG, "Fetching payment id "
+                        + payment.getId()
+                        + ", StartDate " + payment.getStartDate()
+                        + ", psid " + payment.getPsid()
+                        + ", status " + payment.getStatus()
+                        + ", processDate " + payment.getDateOfProcess());
 
-            Log.v(LOGGER_TAG, "Fetching payment id "
-                    + payment.getId()
-                    + ", StartDate " + payment.getStartDate()
-                    + ", psid " + payment.getPsid()
-                    + ", status " + payment.getStatus()
-                    + ", processDate " + payment.getDateOfProcess());
-
-            collection.add(payment);
+                collection.add(payment);
+            }
+        } finally {
+            cursor.close();
         }
-
         return collection;
     }
 

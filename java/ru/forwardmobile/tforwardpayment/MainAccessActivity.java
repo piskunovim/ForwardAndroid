@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ru.forwardmobile.tforwardpayment.security.CryptEngineFactory;
 import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
@@ -20,7 +21,7 @@ import ru.forwardmobile.tforwardpayment.security.XorImpl;
  */
 public class MainAccessActivity extends ActionBarActivity implements  View.OnClickListener {
 
-    final static String LOG_TAG = "TForwardPayment.MainActivityAccess";
+    final static String LOG_TAG = "TFORWARD.MainActivityAccess";
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
 
     TextView commentary;
@@ -106,12 +107,17 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
 
     // Вызывается в случае удачной авторизации
     public void onAuthenticationSuccess() {
+
         Intent intent = new Intent(this, MainListActivity.class);
-        startService(intent);
+        intent.putExtra(EXTRA_MESSAGE,"true");
+
+        startActivity(intent);
+        this.finish();
     }
 
     @Override
     public void onClick(View view) {
+        Log.v(LOG_TAG, "AccessClick.");
         if( !isFirstRun ) {
             try {
                 // Если аутентификация не удалась, будет брошено исключение
@@ -122,6 +128,8 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
             } catch(Exception ex) {
                 // Что-то пошло не так. Может нет ключа, может пароль неверный
                 ex.printStackTrace();
+                Toast.makeText(this,"Ошибка авторизации!", Toast.LENGTH_LONG)
+                        .show();
             }
         } else {
             setPassword( ((TextView) findViewById(R.id.access_pass)).getText().toString() );

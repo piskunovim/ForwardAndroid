@@ -2,15 +2,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
     android:orientation="vertical">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#0065ac"
-        android:layout_gravity="center_horizontal">
+        android:background="#fff"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,9 +19,6 @@
             android:text="Платежная система"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="94dp"
-            android:textColor="#ffffff"
-            android:textColorHighlight="#a9f0ff"
             android:editable="false"
             android:singleLine="true" />
 
@@ -34,7 +31,6 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="23dp"
             android:layout_marginBottom="5dp"
-            android:textColor="#ffffff"
             android:phoneNumber="true"
             android:layout_gravity="center_horizontal" />
 
@@ -42,11 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:textColor="#0065ac"
             android:ems="10"
             android:id="@+id/epid"
             android:editable="true"
-            android:background="#FFFFFF"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="6dp"
             android:enabled="true"
@@ -61,8 +55,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="-12dp"
-            android:textColor="#ffffff"
-            android:phoneNumber="true"
+             android:phoneNumber="true"
             android:layout_gravity="center_horizontal" />
 
         <EditText
@@ -74,7 +67,6 @@
             android:textColor="#0065ac"
             android:password="false"
             android:enabled="true"
-            android:background="#FFFFFF"
             android:clickable="false"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
@@ -97,7 +89,6 @@
             android:id="@+id/singin"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:textColor="#ffffff"
             android:onClick="sendMessage"  />
 
 
