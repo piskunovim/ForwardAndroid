@@ -44,7 +44,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="6dp"
             android:enabled="true"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:imeOptions="actionNext"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,7 +57,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="-12dp"
-             android:phoneNumber="true"
+            android:editable="false"
             android:layout_gravity="center_horizontal" />
 
         <EditText
@@ -70,17 +72,10 @@
             android:clickable="false"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:editable="true" />
+            android:editable="true"
+            android:imeOptions="actionDone"
+        />
 
-        <ProgressBar
-            android:id="@+id/progressMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            style="?android:attr/progressBarStyleInverse"
-            android:layout_alignParentRight="true"
-            android:visibility="gone"/>
 
         <Button
             android:layout_width="118dp"

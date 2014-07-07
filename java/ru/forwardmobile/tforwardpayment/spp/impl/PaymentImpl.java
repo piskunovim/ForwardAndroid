@@ -5,7 +5,7 @@ import ru.forwardmobile.tforwardpayment.spp.IPayment;
 /**
  * Created by Mindbreaker on 08.06.14.
  */
-public class PaymentImpl {
+public abstract class PaymentImpl implements IPayment {
 
     public static final String getErrorName(Integer errorCode) {
         if(errorCode == null) {
@@ -87,5 +87,24 @@ public class PaymentImpl {
                 return "CANCELLED";
         }
         return "UNKNOWN";
+    }
+
+    @Override
+    public String getStatusName() {
+        switch( getStatus() ) {
+            case NEW:
+                return isDelayed() ? "Отложен" : "В обработке (новый)";
+            case CHECKED:
+                return "В обработке (проверен)";
+            case COMMITED:
+                return "В обработке (отправлен)";
+            case DONE:
+                return "Проведен";
+            case FAILED:
+                return "Завершен ошибкой";
+            case CANCELLED:
+                return "Отменен";
+        }
+        return "Неизвестно";
     }
 }

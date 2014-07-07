@@ -10,8 +10,9 @@ import ru.forwardmobile.util.http.Dates;
 
 /**
  * Created by PiskunovI on 16.06.14.
+ * @deprecated
  */
-public class PaymentListItemsImpl {
+public class PaymentListItem {
 
     String psid,
            transactid,
@@ -82,10 +83,7 @@ public class PaymentListItemsImpl {
     }
 
     public void setErrorCode(int ec) {
-        PaymentImpl pi = new PaymentImpl();
-        String errorCode;
-        errorCode = pi.getErrorName(ec);
-        this.errorCode = errorCode;
+        this.errorCode = PaymentImpl.getErrorName(ec);
     }
 
     //errorDescription

@@ -160,7 +160,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
     }
 
-    private Collection<IFieldInfo> parseFields(String data) {
+    public static Collection<IFieldInfo> parseFields(String data) {
 
         Collection<IFieldInfo> fields = new HashSet<IFieldInfo>();
 
@@ -175,7 +175,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
 
 
-    private class FieldContentHandler implements ContentHandler {
+    private static class FieldContentHandler implements ContentHandler {
 
         private Locator locator = null;
         private StringBuffer buffer = new StringBuffer();

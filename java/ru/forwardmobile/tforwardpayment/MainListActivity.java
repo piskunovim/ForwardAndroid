@@ -19,8 +19,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.reports.PaymentListImpl;
-import ru.forwardmobile.tforwardpayment.reports.TBalanceReportScreenImpl;
+import ru.forwardmobile.tforwardpayment.reports.BalanceActivity;
+import ru.forwardmobile.tforwardpayment.reports.PaymentListActivity;
 
 public class MainListActivity extends ActionBarActivity {
 
@@ -53,13 +53,6 @@ public class MainListActivity extends ActionBarActivity {
 
         Log.d(LOG_TAG, message);
         ListView listContent = (ListView)findViewById(R.id.listView);
-
-        if (!message.equals("true"))
-        {
-            //dbHelper = new DatabaseHelper(this);
-            TParseOperators parse = new TParseOperators(this);
-            parse.GetXMLSettings( message );
-        }
 
         Log.v(LOG_TAG, "Loading settings");
         DatabaseHelper dbHelper = new DatabaseHelper(this);
@@ -159,7 +152,7 @@ public class MainListActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_help) {
-            Intent intent = new Intent(MainListActivity.this, TBalanceReportScreenImpl.class);
+            Intent intent = new Intent(MainListActivity.this, BalanceActivity.class);
             MainListActivity.this.startActivity(intent);
             return true;
         }
@@ -175,17 +168,17 @@ public class MainListActivity extends ActionBarActivity {
                     Intent intent;
                     switch (which){
                     case 0:
-                           intent = new Intent(MainListActivity.this, TBalanceReportScreenImpl.class);
+                           intent = new Intent(MainListActivity.this, BalanceActivity.class);
                            MainListActivity.this.startActivity(intent);
                            break;
                     case 1:
-                           intent = new Intent(MainListActivity.this, PaymentListImpl.class);
-                           intent.putExtra(EXTRA_MESSAGE, "0");
+                           intent = new Intent(MainListActivity.this, PaymentListActivity.class);
+                           intent.putExtra(PaymentListActivity.TYPE_EXTRA_PARAMETER, PaymentListActivity.LIST_UNPROCESSED);
                            MainListActivity.this.startActivity(intent);
                            break;
                     case 2:
-                           intent = new Intent(MainListActivity.this, PaymentListImpl.class);
-                           intent.putExtra(EXTRA_MESSAGE, "1");
+                           intent = new Intent(MainListActivity.this, PaymentListActivity.class);
+                           intent.putExtra(PaymentListActivity.TYPE_EXTRA_PARAMETER, PaymentListActivity.LIST_ALL);
                            MainListActivity.this.startActivity(intent);
                            break;
                     default:

@@ -1,29 +1,27 @@
 package ru.forwardmobile.tforwardpayment.reports;
 
-import java.util.ArrayList;
-
 import android.content.Context;
-import ru.forwardmobile.tforwardpayment.R;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 
+import ru.forwardmobile.tforwardpayment.R;
 
 
 /**
  * Created by PiskunovI on 17.06.14.
+ * @deprecated
  */
-public class PaymentListAdapterImpl extends BaseAdapter {
+public class PaymentAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<PaymentListItemsImpl> paymentList;
+    ArrayList<PaymentListItem> paymentList;
 
-    public PaymentListAdapterImpl(Context context, ArrayList<PaymentListItemsImpl> list) {
+    public PaymentAdapter(Context context, ArrayList<PaymentListItem> list) {
 
         this.context = context;
         paymentList = list;
@@ -31,29 +29,25 @@ public class PaymentListAdapterImpl extends BaseAdapter {
 
     @Override
     public int getCount() {
-
         return paymentList.size();
     }
 
     @Override
     public Object getItem(int position) {
-
         return paymentList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-
         return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup arg2) {
-        PaymentListItemsImpl paymentListItems = paymentList.get(position);
+        PaymentListItem paymentListItems = paymentList.get(position);
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater =  (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.payment_list_row, null);
 
         }
@@ -74,9 +68,7 @@ public class PaymentListAdapterImpl extends BaseAdapter {
         payErrorCode.setText(paymentListItems.getErrorCode());
         TextView payErrorDesc = (TextView) convertView.findViewById(R.id.pay_error_description);
         payErrorDesc.setText(paymentListItems.getErrorDescription());
-        //TextView paySumEnr = (TextView) convertView.findViewById(R.id.pay_sum_enrolled);
-        //paySumEnr.setText(paymentListItems.getFullValue());
-        //Log.d("TForwardPayment.PaymentListAdapterImpl", "Зачислено: " + paymentListItems.getValueSum() + " руб. ; Получено: " + paymentListItems.getFullValueSum() + " руб.");
+
         return convertView;
     }
 
