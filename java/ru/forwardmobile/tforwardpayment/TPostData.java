@@ -18,10 +18,11 @@ import ru.forwardmobile.util.http.IRequest;
  * Created by PiskunovI on 12.05.14.
  */
 public class TPostData extends AsyncTask<String, String, String> {
-
+        //private Context context;
     String pointID;
     String password;
     final String LOG_TAG = "TFORWARD.TPostData";
+        ProgressDialog progress;
 
     ProgressDialog dialog;
     TParseOperators parse;
