@@ -1,13 +1,10 @@
 package ru.forwardmobile.tforwardpayment.reports;
 
 
-import android.app.ExpandableListActivity;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import 	java.util.Date;
+import java.util.Date;
 
-import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.spp.impl.PaymentImpl;
 import ru.forwardmobile.util.http.Dates;
 
@@ -75,7 +72,7 @@ public class PaymentListItemsImpl {
     }
 
     public void setFullValue(String fullValue) {
-        //fullValue = fullValue.substring(0,fullValue.length()-2);
+        fullValue = fullValue.substring(0,fullValue.length()-2);
         this.fullValue = fullValue + " руб.";
     }
 
@@ -136,8 +133,7 @@ public class PaymentListItemsImpl {
 
     public void setProcessDate(String processDate) {
         Date d = new Date(Long.parseLong(processDate));
-        Dates sd = new Dates();
-        processDate = sd.Format(d, "HH:mm dd/MM");
+        processDate = Dates.Format(d, "HH:mm dd/MM");
         this.processDate = processDate;
     }
 
