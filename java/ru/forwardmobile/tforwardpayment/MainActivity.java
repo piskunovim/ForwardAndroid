@@ -53,10 +53,10 @@ public class MainActivity extends ActionBarActivity {
 
         //для прогрессбара
         //progressBar = (ProgressBar) findViewById(R.id.progressMain);
-        progress = new ProgressDialog(this);
+      /*  progress = new ProgressDialog(this);
         progress.setMessage("Получение настроек ...");
         progress.setCancelable(false);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);*/
 
 
         boolean databaseExists = checkDataBase();
@@ -85,7 +85,10 @@ public class MainActivity extends ActionBarActivity {
 
     public  void sendMessage(View view){
 
-        new SingTask().execute(etName.getText().toString(), etPass.getText().toString());
+        SingIn(etName.getText().toString(), etPass.getText().toString());
+
+
+
         //progressBar.setVisibility(View.VISIBLE);
        /* progress.show();
 
@@ -111,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
 
         Log.d(LOG_TAG,"SingIn started ...");
 
-        pd = new TPostData();
+        pd = new TPostData(this);
         pd.pointID = pointid;
         pd.password = password;
 
@@ -253,7 +256,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(String... et) {
             try {
-                SingIn(et[0], et[1]);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
