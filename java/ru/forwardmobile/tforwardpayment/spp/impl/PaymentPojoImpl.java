@@ -15,7 +15,7 @@ import ru.forwardmobile.tforwardpayment.spp.IPayment;
  * POJO реализация платежа
  * @author Vasiliy Vanin
  */
-public class PaymentPojoImpl implements IPayment {
+public class PaymentPojoImpl extends PaymentImpl {
     final String                    LOGGER_TAG = "TFORWARD.PAYMENTIMPL";
     private Double                    value;
     private Double                    fullValue;
@@ -257,24 +257,4 @@ public class PaymentPojoImpl implements IPayment {
     public int getErrorRepeatCount() {
         return errorRepeatCount;
     }
-
-    @Override
-    public String getStatusName() {
-        switch(status) {
-            case NEW:
-                return isDelayed() ? "Отложен" : "В обработке (новый)";
-            case CHECKED:
-                return "В обработке (проверен)";
-            case COMMITED:
-                return "В обработке (отправлен)";
-            case DONE:
-                return "Проведен";
-            case FAILED:
-                return "Завершен ошибкой";
-            case CANCELLED:
-                return "Отменен";
-        }
-        return "Неизвестно";
-    }
-
 }

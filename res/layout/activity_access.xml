@@ -3,47 +3,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal">
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Пожалуйста, введите пароль доступа* :"
-    />
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
-        >
+    android:gravity="center_horizontal"
+    android:paddingTop="20dp">
 
-        <EditText
-            android:id="@+id/access_pass"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content"
-            android:layout_width="150dp"
-            android:inputType="numberPassword"
-         />
-        </LinearLayout>
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="15dp">
-        <Button
-            android:id="@+id/access_button"
+
+
+        <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text = "Button Text"
+            android:layout_marginTop="30dp"
+            android:text="Пожалуйста, введите пароль доступа* :"
         />
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+        >
+
+            <EditText
+                android:id="@+id/access_pass"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:inputType="numberPassword"
+            />
         </LinearLayout>
 
-    <TextView
-        android:id="@+id/access_commentary"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="*текст комментария отсутствует"
-        android:textAlignment="gravity"
-        android:gravity="center"
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="15dp">
+            <Button
+                android:id="@+id/access_button"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text = "Button Text"
+            />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/access_commentary"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="*текст комментария отсутствует"
+            android:textAlignment="gravity"
+            android:gravity="center"
         />
 
 </LinearLayout>
