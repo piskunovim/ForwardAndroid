@@ -1,5 +1,7 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,18 +18,24 @@ import ru.forwardmobile.util.http.IRequest;
  * Created by PiskunovI on 12.05.14.
  */
 public class TPostData extends AsyncTask<String, String, String> {
-
+        //private Context context;
         String pointID;
         String password;
         final String LOG_TAG = "TFORWARD.TPostData";
+        ProgressDialog progress;
 
-        public TPostData() {
-
+        public TPostData(Context ctx) {
+            //context = ctx;
+            progress = new ProgressDialog(ctx);
+            progress.setMessage("Получение настроек ...");
+            progress.setCancelable(false);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progress.show();
             //
         }
 
@@ -59,7 +67,7 @@ public class TPostData extends AsyncTask<String, String, String> {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
+            progress.dismiss();
 //
         }
 
