@@ -22,8 +22,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.reports.PaymentListImpl;
-import ru.forwardmobile.tforwardpayment.reports.TBalanceReportScreenImpl;
+import ru.forwardmobile.tforwardpayment.reports.BalanceActivity;
+import ru.forwardmobile.tforwardpayment.reports.PaymentListActivity;
 
 public class OperatorsActivity extends ActionBarActivity {
 
@@ -69,7 +69,7 @@ public class OperatorsActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_help) {
-            Intent intent = new Intent(OperatorsActivity.this, TBalanceReportScreenImpl.class);
+            Intent intent = new Intent(OperatorsActivity.this, BalanceActivity.class);
             OperatorsActivity.this.startActivity(intent);
             return true;
         }
@@ -85,16 +85,16 @@ public class OperatorsActivity extends ActionBarActivity {
                     Intent intent;
                     switch (which){
                         case 0:
-                            intent = new Intent(OperatorsActivity.this, TBalanceReportScreenImpl.class);
+                            intent = new Intent(OperatorsActivity.this, BalanceActivity.class);
                             OperatorsActivity.this.startActivity(intent);
                             break;
                         case 1:
-                            intent = new Intent(OperatorsActivity.this, PaymentListImpl.class);
+                            intent = new Intent(OperatorsActivity.this, PaymentListActivity.class);
                             intent.putExtra(EXTRA_MESSAGE, "0");
                             OperatorsActivity.this.startActivity(intent);
                             break;
                         case 2:
-                            intent = new Intent(OperatorsActivity.this, PaymentListImpl.class);
+                            intent = new Intent(OperatorsActivity.this, PaymentListActivity.class);
                             intent.putExtra(EXTRA_MESSAGE, "1");
                             OperatorsActivity.this.startActivity(intent);
                             break;

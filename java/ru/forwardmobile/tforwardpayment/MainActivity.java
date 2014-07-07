@@ -12,17 +12,18 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
     //Инициализация строковой переменной логирования
     final static String LOG_TAG = "TFORWARD.MainActivity";
@@ -35,8 +36,6 @@ public class MainActivity extends ActionBarActivity {
     EditText etName, etPass;
 
     TPostData pd;
-    ProgressDialog progress;
-    //ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +56,15 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // Для тестового сервера
-        TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
-        TSettings.set(TSettings.SERVER_PORT, "8170");
+        //TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
+        //TSettings.set(TSettings.SERVER_PORT, "8170");
 
         //получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
         etPass = (EditText) findViewById(R.id.epass);
 
-        //для прогрессбара
-        //progressBar = (ProgressBar) findViewById(R.id.progressMain);
-      /*  progress = new ProgressDialog(this);
-        progress.setMessage("Получение настроек ...");
-        progress.setCancelable(false);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);*/
+        etName.setOnEditorActionListener(this);
+        etPass.setOnEditorActionListener(this);
 
 
         boolean databaseExists = checkDataBase();
@@ -92,7 +87,6 @@ public class MainActivity extends ActionBarActivity {
 
 
     public  void sendMessage(View view){
-
         SingIn(etName.getText().toString(), etPass.getText().toString());
 
 
@@ -120,34 +114,30 @@ public class MainActivity extends ActionBarActivity {
 
     public void SingIn(String pointid, String password){
 
-        Log.d(LOG_TAG,"SingIn started ...");
-
         pd = new TPostData(this);
         pd.pointID = pointid;
         pd.password = password;
+        pd.execute();
 
-        try{
-
-            TParseOperators parse = new TParseOperators(this);
-            String responseStr = pd.execute().get();
-
-            parse.GetXMLSettings(responseStr);
-            Log.d(LOG_TAG, responseStr);
+    }
 
 
-            if (responseStr.length() > 0){
-                // Создаем объект Intent для вызова новой Activity
-                Intent intent = new Intent(this, MainAccessActivity.class);
+    public void onSignIn(String responseStr)  {
 
-                intent.putExtra(EXTRA_MESSAGE, responseStr);
-                //progressBar.setVisibility(View.GONE);
-                // запуск activity
-                startActivity(intent);
-                this.finish();
+        Log.i(LOG_TAG, "Login result: " + responseStr);
 
-            } else {
 
-                new AlertDialog.Builder(this)
+        if (responseStr.length() > 0){
+            // Создаем объект Intent для вызова новой Activity
+            Intent intent = new Intent(this, MainAccessActivity.class);
+            intent.putExtra(EXTRA_MESSAGE, responseStr);
+
+            // запуск activity
+            startActivity(intent);
+            this.finish();
+
+        } else {
+            new AlertDialog.Builder(this)
                     .setTitle("Ошибка авторизации")
                     .setMessage("Внимание! Произошла ошибка авторизации на сервере ForwardMobile. Пожалуйста. " +
                             "проверьте наличие на вашем устройстве доступа к сети интернет и правильность вводимых данных.")
@@ -157,14 +147,7 @@ public class MainActivity extends ActionBarActivity {
                         }
                     })
                     .show();
-                //progressBar.setVisibility(View.GONE);
-            }
-        }
-        catch(Exception e)
-        {
-            //progressBar.setVisibility(View.GONE);
-            Log.d(LOG_TAG,e.getMessage());
-            e.printStackTrace();
+
         }
     }
 
@@ -186,6 +169,11 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        return false;
     }
 
 

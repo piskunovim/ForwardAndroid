@@ -38,7 +38,7 @@ public TParseOperators(Context context) {
  */
 public TParseOperators(){}
 
-public void GetXMLSettings(String xmlstring ) {
+public void GetXMLSettings(String xmlstring ) throws Exception {
 
     // создаем объект для данных
     ContentValues cv = new ContentValues();
@@ -193,8 +193,10 @@ public void GetXMLSettings(String xmlstring ) {
 
     } catch (XmlPullParserException e) {
         e.printStackTrace();
+        throw new Exception(e);
     } catch (IOException e) {
         e.printStackTrace();
+        throw new Exception(e);
     } finally {
         // завершаем транзакцию, если до этого вызова не было вызова setTransactionSuccessful(),
         // все изменения, которые успели произойти, откатятся
