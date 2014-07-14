@@ -84,7 +84,7 @@ public class PaymentListImpl extends ActionBarActivity {
     private void showList() {
 
         try{
-        ArrayList<PaymentListItemsImpl> paymentList = new ArrayList<PaymentListItemsImpl>();
+        ArrayList<PaymentListItem> paymentList = new ArrayList<PaymentListItem>();
         paymentList.clear();
 
         String ps;
@@ -101,7 +101,7 @@ public class PaymentListImpl extends ActionBarActivity {
                 if (ControlMessage.equals("0") && (!c1.getString(c1.getColumnIndex("status")).equals("3")) && (!c1.getString(c1.getColumnIndex("status")).equals("4")) && (!c1.getString(c1.getColumnIndex("status")).equals("5")))
                 {
                     do {
-                        PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
+                        PaymentListItem paymentListItems = new PaymentListItem();
 
                         paymentListItems.setPsid(c1.getString(c1
                                 .getColumnIndex("name")));
@@ -136,7 +136,7 @@ public class PaymentListImpl extends ActionBarActivity {
                 else if (ControlMessage.equals("1") && c1.getString(c1.getColumnIndex("status")).equals("3") && c1.getString(c1.getColumnIndex("status")).equals("4") && c1.getString(c1.getColumnIndex("status")).equals("5"))
                 {
                     do {
-                        PaymentListItemsImpl paymentListItems = new PaymentListItemsImpl();
+                        PaymentListItem paymentListItems = new PaymentListItem();
 
                         paymentListItems.setPsid(c1.getString(c1
                                 .getColumnIndex("name")));
@@ -177,8 +177,7 @@ public class PaymentListImpl extends ActionBarActivity {
         }
         c1.close();
 
-        PaymentListAdapterImpl contactListAdapter = new PaymentListAdapterImpl(
-                PaymentListImpl.this, paymentList);
+        PaymentAdapter contactListAdapter = new PaymentAdapter(PaymentListImpl.this, paymentList);
         lvCustomList.setAdapter(contactListAdapter);
 
             lvCustomList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

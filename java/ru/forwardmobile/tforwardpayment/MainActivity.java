@@ -1,13 +1,11 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -86,29 +84,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     }
 
 
-    public  void sendMessage(View view){
+    public void sendMessage(View view){
         SingIn(etName.getText().toString(), etPass.getText().toString());
-
-
-
-        //progressBar.setVisibility(View.VISIBLE);
-       /* progress.show();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run()
-            {
-                SingIn(etName.getText().toString(), etPass.getText().toString());
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        progress.dismiss();
-                    }
-                });
-            }
-        }).start();*/
     }
 
 
@@ -122,7 +99,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     }
 
 
-    public void onSignIn(String responseStr)  {
+    public void onSignIn(String responseStr) {
 
         Log.i(LOG_TAG, "Login result: " + responseStr);
 
@@ -153,7 +130,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -187,7 +164,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
@@ -207,13 +184,9 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
                     null, SQLiteDatabase.OPEN_READONLY);
 
             return checkDB != null;
-
-        }
-        catch(Exception e)
-        {
+        }catch(Exception ex) {
             return false;
-        }
-        finally {
+        } finally {
             if(checkDB != null) checkDB.close();
         }
     }
@@ -224,8 +197,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         try {
             dbHelper = new DatabaseHelper(this);
-            SQLiteDatabase  db = null;
-            Cursor      cursor = null;
+            SQLiteDatabase db = null;
+            Cursor cursor = null;
 
             try {
 
@@ -240,31 +213,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         } finally {
             if(dbHelper != null)
                 dbHelper.close();
-        }
-    }
-
-    class SingTask extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progress.show();
-        }
-
-        @Override
-        protected Void doInBackground(String... et) {
-            try {
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            progress.dismiss();
         }
     }
 
