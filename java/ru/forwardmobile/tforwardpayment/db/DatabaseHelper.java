@@ -19,9 +19,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final int        SQLITE_DATABASE_VERSION = 8;
     public static final String     SQLITE_DATABASE_NAME    = "forward";
     public static final String     SETTINGS_TABLE_NAME     = "settings2";
-    public static final String     PG_TABLE_NAME           = "pg";
-    public static final String     P_TABLE_NAME            = "p";
-    public static final String     F_TABLE_NAME            = "f";
+    public static final String     PG_TABLE_NAME           = "groups";
+    public static final String     P_TABLE_NAME            = "providers";
+    public static final String     F_TABLE_NAME            = "provider_fields";
     public static final String     PAYMENT_QUEUE_TABLE     = "payments";
 	
 
@@ -88,7 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void initDatabaseV6(SQLiteDatabase sqld) {
         //Operators group table 
 	    sqld.execSQL("CREATE TABLE " + PG_TABLE_NAME
-				+ "(id integer primary key, name text)");
+				+ "(id integer primary key, name text, parent integer)");
         
 	    //Operators list group
 	    sqld.execSQL("CREATE TABLE " + P_TABLE_NAME

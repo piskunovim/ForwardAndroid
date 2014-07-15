@@ -44,7 +44,6 @@ public class PaymentListAdapter extends BaseAdapter {
         }
 
 
-
         return null;
     }
 }
