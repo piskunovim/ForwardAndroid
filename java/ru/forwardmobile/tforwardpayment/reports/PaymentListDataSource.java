@@ -65,7 +65,7 @@ public class PaymentListDataSource {
                     "pay.processDate, " +
                     "p.name as psName" +
                 "from payments pay left join p on p.id = pay.psid " +
-                " where pay.status not in(3,5) ",
+                "where pay.status not in(3,5) ",
             new String[]{});
 
             while( cursor.moveToNext() )
