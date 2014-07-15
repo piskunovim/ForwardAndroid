@@ -59,7 +59,7 @@ public class MainListActivity extends ActionBarActivity {
         dbHelper.readSettings();
         dbHelper.close();
 
-        GenerateListView(DatabaseHelper.PG_TABLE_NAME, "name", listContent);
+        GenerateListView("pg", "name", listContent);
 
         listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -67,7 +67,7 @@ public class MainListActivity extends ActionBarActivity {
                 String name = (String) parent.getItemAtPosition(position);
                 SQLiteOpenHelper dbHelper = new DatabaseHelper(getApplicationContext());
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
-                Cursor c = db.rawQuery("SELECT id FROM " + DatabaseHelper.PG_TABLE_NAME + " WHERE TRIM(name) = '"+name.trim()+"'", null);
+                Cursor c = db.rawQuery("SELECT id FROM pg WHERE TRIM(name) = '"+name.trim()+"'", null);
                 try {
                     c.moveToNext();
                     Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = " + c.getString(c.getColumnIndex("id")));
@@ -88,12 +88,8 @@ public class MainListActivity extends ActionBarActivity {
     public void OpenOperatorActivity(String id){
 
         Log.d(LOG_TAG, "OpenOperatorActivity id: " + id);
-        //Intent intent = new Intent(this, OperatorsActivity.class);
-        //intent.putExtra(EXTRA_MESSAGE, id);
-
-        Intent intent = new Intent(this, OperatorsMenuActivity.class);
-        intent.putExtra("node", Integer.valueOf(id));
-
+        Intent intent = new Intent(this, OperatorsActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, id);
         // запуск activity
         startActivity(intent);
     }

@@ -50,11 +50,6 @@
             android:label="@string/title_activity_operators" >
         </activity>
 
-        <activity
-            android:name="ru.forwardmobile.tforwardpayment.OperatorsMenuActivity"
-            android:label="@string/title_activity_operators" >
-        </activity>
-
         <service android:name=".TPaymentService" />
 
         <activity

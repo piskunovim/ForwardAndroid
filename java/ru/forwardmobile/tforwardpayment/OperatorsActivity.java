@@ -25,9 +25,6 @@ import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.reports.BalanceActivity;
 import ru.forwardmobile.tforwardpayment.reports.PaymentListActivity;
 
-/**
- * @deprecated
- */
 public class OperatorsActivity extends ActionBarActivity {
 
     final static String LOG_TAG = "TTestActivity.OperatorsActivity";
@@ -159,9 +156,10 @@ public class OperatorsActivity extends ActionBarActivity {
                 // переход на следующую строку
                 // а если следующей нет (текущая - последняя), то false - выходим из цикла
             } while (listpc.moveToNext());
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, operatorgroup);
-                    listContent.setAdapter(adapter);
-                    listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, operatorgroup);
+            listContent.setAdapter(adapter);
+            listContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     String name = (String) parent.getItemAtPosition(position);
@@ -170,7 +168,14 @@ public class OperatorsActivity extends ActionBarActivity {
                     cr.moveToNext();
                     Log.d(LOG_TAG, "itemSelect: position = " + position + ", id = " + id + ", name = " + name + ", gid = "+ cr.getString(cr.getColumnIndex("id")));
 
+                    PaymentActivity pa= new PaymentActivity();
+
+                    //pa.SetOperatorId(Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));
+                    //pa.operator_id = cr.getColumnIndex("id");
+                    //pa.ShowOperatorId();
+                    //
                     //! Здесь будем передавать id
+                    //
                     cr.getString(cr.getColumnIndex("id"));
                     Intent intent = new Intent(OperatorsActivity.this, PaymentActivity.class);
                     intent.putExtra("psid",Integer.parseInt(cr.getString(cr.getColumnIndex("id"))));

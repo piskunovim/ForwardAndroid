@@ -54,9 +54,9 @@ public class PaymentListActivity extends ActionBarActivity implements AdapterVie
         listAmount = (TextView) findViewById(R.id.pay_amount);
         listEmpty = (TextView) findViewById(R.id.emptyList);
 
-        dataSource = new PaymentListDataSource(this);
-        createView( getPayments() );
-        //showList();
+        //dataSource = new PaymentListDataSource(this);
+        //createView( getPayments() );
+        showList();
     }
 
     @Override
@@ -81,8 +81,8 @@ public class PaymentListActivity extends ActionBarActivity implements AdapterVie
 
     private  void createView(List<PaymentInfo> items) {
 
-        lvCustomList.setAdapter( new PaymentListAdapter(items, this));
-        lvCustomList.setOnItemClickListener( this );
+
+
     }
 
     private List<PaymentInfo> getPayments() {

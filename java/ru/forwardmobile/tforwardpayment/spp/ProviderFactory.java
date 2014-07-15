@@ -79,8 +79,6 @@ public class ProviderFactory {
 
             public String getName(){ return "test";}
 
-            public boolean isGroup(){ return false;}
-
             public Collection<IField> getFields() {
                 return Arrays.asList(
                     (IField) new TextFieldImpl(ctx, "target", "Номер телефона")

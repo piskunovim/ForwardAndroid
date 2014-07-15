@@ -55,9 +55,7 @@ public class ProviderPojoImpl implements IProvider {
     public Collection<IField> getFields() {
         return Collections.unmodifiableCollection(fields);
     }
-
-    public boolean isGroup(){return false;}
-
+    
     @Override
     public String toString() {
         return name;

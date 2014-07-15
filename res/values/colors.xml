@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="greenf">#AEFF00</color>
+    <color name="bluef">#00BFFF</color>
+    <color name="greyf">#A8A8A8</color>
+    <color name="orangef">#E2AB5C</color>
+    <color name="redf">#FF0000</color>
+    <color name="purplef">#D000FF</color>
+    <color name="darkbluef">#3300FF</color>
+    <color name="pinkf">#CC0092</color>
+    <color name="migalka">#009DFF</color>
+</resources>

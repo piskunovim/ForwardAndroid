@@ -41,7 +41,7 @@ public TParseOperators(){}
 public void GetXMLSettings(String xmlstring ) throws Exception {
 
     // создаем объект для данных
-    ContentValues cv  = new ContentValues();
+    ContentValues cv = new ContentValues();
     ContentValues cv2 = new ContentValues();
     int gid = 0;
     int id = 0;
@@ -87,12 +87,10 @@ public void GetXMLSettings(String xmlstring ) throws Exception {
                         for (int i = 0; i < xpp.getAttributeCount(); i++) {
                             gid++;
                             cv.put("id", gid);
-                            cv.put("parent", 0);
                             if (xpp.getAttributeName(i).equals("n")) {
                                 cv.put("name", xpp.getAttributeValue(i));
                             }
-                            db.insert(DatabaseHelper.PG_TABLE_NAME, null, cv);
-                            cv.clear();
+                            db.insert("pg", null, cv);
                         }
                     } else if (tag_name.equals("p")) {
                         for (int i = 0; i < xpp.getAttributeCount(); i++) {
@@ -111,7 +109,7 @@ public void GetXMLSettings(String xmlstring ) throws Exception {
                             } else if (xpp.getAttributeName(i).equals("max")) {
                                 cv.put("max", xpp.getAttributeValue(i));
 
-                                long rowID = db.insert(DatabaseHelper.P_TABLE_NAME, null, cv);
+                                long rowID = db.insert("p", null, cv);
                             }
                         }
                     } else if (tag_name.equals("f")) {
@@ -136,7 +134,7 @@ public void GetXMLSettings(String xmlstring ) throws Exception {
 
                             }
                         }
-                        db.insert(DatabaseHelper.F_TABLE_NAME, null, cv);
+                        db.insert("f", null, cv);
                     } else
                         // Start settings part
                         if ("s".equals(tag_name)) {
