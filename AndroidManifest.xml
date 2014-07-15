@@ -33,6 +33,10 @@
             android:label="@string/title_access_activity" >
         </activity>
         <activity
+            android:name="ru.forwardmobile.tforwardpayment.MainActivityFlat"
+            android:label="@string/title_activity_main_list" >
+        </activity>
+        <activity
             android:name=".reports.BalanceActivity"
             android:label="@string/title_balance" >
         </activity>
