@@ -54,8 +54,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         setContentView(R.layout.activity_main);
 
         // Для тестового сервера
-        //TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
-        //TSettings.set(TSettings.SERVER_PORT, "8170");
+        TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
+        TSettings.set(TSettings.SERVER_PORT, "8170");
 
         //получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
@@ -203,7 +203,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             try {
 
                 db = dbHelper.getReadableDatabase();
-                cursor = db.rawQuery("SELECT * FROM pg LIMIT 1", null);
+                cursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.PG_TABLE_NAME + " LIMIT 1", null);
                 return cursor.moveToNext();
             } finally {
                 if(cursor != null) cursor.close();
