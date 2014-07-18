@@ -6,23 +6,49 @@
     android:layout_height="match_parent" android:isScrollContainer="true">
     <LinearLayout android:id="@+id/LinearLayoutMain" android:layout_height="wrap_content" android:layout_width="match_parent">
         <!-- Editext for Search -->
-        <EditText android:id="@+id/inputSearch"
+        <AutoCompleteTextView
+            android:id="@+id/inputSearch"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Поиск оператора..."
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:textSize="15dp"
+            android:text="Отмена"
+            android:visibility="gone"  />
+        <!--<EditText android:id="@+id/inputSearch"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="Поиск оператора..."
-            android:inputType="textVisiblePassword"/>
+            android:inputType="textVisiblePassword"/> -->
     </LinearLayout>
-    <LinearLayout android:id="@+id/LinearLayout02" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent">
+    <LinearLayout android:id="@+id/LinearLayoutListView" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent">
+        <ListView
+            android:id="@+id/listViewSearch"
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
+    <LinearLayout android:id="@+id/LinearLayout01" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent">
         <Button android:id="@+id/Button01" android:textSize="15dp" android:text="Мобильная связь" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:background="@drawable/button_selector" android:drawableTop="@drawable/mobile_network"></Button>
         <Button android:id="@+id/Button02" android:textSize="15dp" android:text="Телевидение" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:background="@drawable/button_selector" android:drawableTop="@drawable/television"></Button>
         <Button android:id="@+id/Button03" android:textSize="15dp" android:text="Стационарная связь" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:background="@drawable/button_selector" android:drawableTop="@drawable/landline"></Button>
     </LinearLayout>
-    <LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_width="match_parent">
+    <LinearLayout android:id="@+id/LinearLayout02" android:layout_height="wrap_content" android:layout_width="match_parent">
         <Button android:id="@+id/Button04" android:textSize="15dp" android:text="Интернет и IP телефония" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:background="@drawable/button_selector" android:drawableTop="@drawable/internet_n_ip" android:clickable="true"></Button>
         <Button android:id="@+id/Button05" android:textSize="15dp" android:text="Погашение кредитов" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:background="@drawable/button_selector" android:drawableTop="@drawable/kredits" android:clickable="true"></Button>
         <Button android:id="@+id/Button06" android:textSize="15dp" android:text="Платежи ЖКХ" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:background="@drawable/button_selector" android:drawableTop="@drawable/jkh" android:clickable="true"></Button>
     </LinearLayout>
-    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="match_parent">
+    <LinearLayout android:id="@+id/LinearLayout03" android:layout_height="wrap_content" android:layout_width="match_parent">
         <Button android:id="@+id/Button07" android:textSize="15dp" android:text="Игры и развлечения" android:layout_weight="1" android:layout_height="wrap_content" android:layout_width="0dp" android:background="@drawable/button_selector" android:drawableTop="@drawable/games"></Button>
         <Button android:id="@+id/Button08" android:textSize="15dp" android:text="Электронные кошельки и переводы" android:layout_weight="1" android:layout_height="wrap_content" android:layout_width="0dp" android:background="@drawable/button_selector" android:drawableTop="@drawable/pockets"></Button>
         <Button android:id="@+id/Button09" android:textSize="15dp" android:text="Косметика, Штрафы, Прочее" android:layout_weight="1" android:layout_height="wrap_content" android:layout_width="0dp" android:background="@drawable/button_selector" android:drawableTop="@drawable/fines"></Button>
