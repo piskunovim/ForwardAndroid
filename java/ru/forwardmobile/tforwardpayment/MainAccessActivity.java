@@ -108,8 +108,8 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
     // Вызывается в случае удачной авторизации
     public void onAuthenticationSuccess() {
 
-        //Intent intent = new Intent(this, MainActivityFlat.class);
-        Intent intent = new Intent(this, MainListActivity.class);
+        Intent intent = new Intent(this, MainActivityFlat.class);
+        //Intent intent = new Intent(this, MainListActivity.class);
         intent.putExtra(EXTRA_MESSAGE,"true");
 
         startActivity(intent);

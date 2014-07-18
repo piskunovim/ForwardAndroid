@@ -43,7 +43,8 @@ public class ProviderFactory {
                             field = new EnumFieldImpl(ctx, fieldCursor.getString(0), fieldCursor.getString(2), fieldCursor.getString(3));
                             break;
                         default:
-                            throw new UnsupportedOperationException("Unsupported field type " + fieldType);
+                            field = new TextFieldImpl(ctx, fieldCursor.getString(0), fieldCursor.getString(2));
+                            //throw new UnsupportedOperationException("Unsupported field type " + fieldType);
                     }
                     
                     provider.addField(field);
