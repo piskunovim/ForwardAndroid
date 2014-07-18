@@ -38,7 +38,7 @@ public class OperatorsMenuActivity extends ActionBarActivity implements AdapterV
         listView.setOnItemClickListener(this);
 
         dataSource = new OperatorsDataSource(this);
-        showNode(getIntent().getIntExtra("nodep",0));
+        showNode(getIntent().getIntExtra("node",0));
     }
 
     protected void showNode(Integer id) {
