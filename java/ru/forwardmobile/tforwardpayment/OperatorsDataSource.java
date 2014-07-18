@@ -21,7 +21,9 @@ public class OperatorsDataSource {
     public static final String PK_FIELD             = "id";
     public static final String GROUP_ID_FIELD       = "id";
     public static final String P_NAME_FIELD         = "name";
+    public static final String GROUP_NAME_FIELD     = "name";
     public static final String ITEM_TYPE_FIELD      = "type";
+    public static final String GROUP_PARENT_FIELD   = "parent";
     public static final String MIN_FIELD            = "min";
     public static final String MAX_FIELD            = "max";
 
@@ -72,7 +74,7 @@ public class OperatorsDataSource {
                     if(itemsCount > 0) {
                         item = new GroupMenuItem(
                                 cursor.getInt(cursor.getColumnIndex(GROUP_ID_FIELD)),
-                                cursor.getString(cursor.getColumnIndex(P_NAME_FIELD))
+                                cursor.getString(cursor.getColumnIndex(GROUP_NAME_FIELD))
                                         + " (" + itemsCount + ")"
                         );
                     } else {
