@@ -12,6 +12,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Stack;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
@@ -37,6 +38,100 @@ public TParseOperators(Context context) {
  * @deprecated Use constructor with context
  */
 public TParseOperators(){}
+
+public void loadSetting(String xmlString) throws Exception {
+
+    DatabaseHelper dbHelper = new DatabaseHelper(context);
+    SQLiteDatabase db       = dbHelper.getWritableDatabase();
+
+    db.beginTransaction();
+
+    try {
+
+        db.execSQL("delete from " + DatabaseHelper.P_TABLE_NAME);
+        db.execSQL("delete from " + DatabaseHelper.PG_TABLE_NAME);
+        db.execSQL("delete from " + DatabaseHelper.F_TABLE_NAME);
+
+        XmlPullParser xpp = prepareXpp(xmlString);
+
+        Integer currentGroup = 0;
+        Integer currentPs    = 0;
+        Stack<Integer> hierarchy = new Stack<Integer>();
+
+        while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
+
+            switch (xpp.getEventType()) {
+                case XmlPullParser.START_DOCUMENT:
+                    break;
+
+                case XmlPullParser.START_TAG:
+                    String startNodeName = xpp.getName();
+
+                    if("p-g".equals(startNodeName)) {
+
+                        Integer groupId = Integer.valueOf(xpp.getAttributeValue(null,"id"));
+
+                        ContentValues cv = new ContentValues();
+                        cv.put(OperatorsDataSource.GROUP_NAME_FIELD, xpp.getAttributeValue(null,"n"));
+                        cv.put(OperatorsDataSource.GROUP_ID_FIELD, groupId);
+                        cv.put(OperatorsDataSource.GROUP_PARENT_FIELD, currentGroup);
+
+                        db.insert(DatabaseHelper.PG_TABLE_NAME, null, cv);
+
+                        hierarchy.push(currentGroup);
+                        currentGroup = groupId;
+                    } else
+                    if("p" . equals(startNodeName)) {
+
+                        currentPs = Integer.valueOf(xpp.getAttributeValue(null, "i"));
+                        ContentValues cv = new ContentValues();
+                        cv.put(OperatorsDataSource.PK_FIELD, currentPs);
+                        cv.put(OperatorsDataSource.P_NAME_FIELD, xpp.getAttributeValue(null,"n"));
+                        cv.put(OperatorsDataSource.MIN_FIELD, xpp.getAttributeValue(null,"min"));
+                        cv.put(OperatorsDataSource.MAX_FIELD, xpp.getAttributeValue(null,"max"));
+                        
+
+                    }
+
+                    break;
+                case XmlPullParser.END_TAG:
+                    String endNodeName = xpp.getName();
+
+                    if("p-g".equals(endNodeName)) {
+                        currentGroup = hierarchy.empty() ? 0 : hierarchy.pop();
+                    }
+
+                    break;
+
+                default:
+                    // nothing to do
+                    break;
+            }
+
+        }
+
+        // Сохраняем дополнительные настройки в базу
+        dbHelper.saveSettings();
+
+        // Подтверждаем изменения
+        db.setTransactionSuccessful();
+
+    }catch (XmlPullParserException e) {
+        e.printStackTrace();
+        throw new Exception(e);
+    } catch (IOException e) {
+        e.printStackTrace();
+        throw new Exception(e);
+    } finally {
+        // завершаем транзакцию, если до этого вызова не было вызова setTransactionSuccessful(),
+        // все изменения, которые успели произойти, откатятся
+        db.endTransaction();
+        db.close();
+        dbHelper.close();
+    }
+
+}
+
 
 public void GetXMLSettings(String xmlstring ) throws Exception {
 
