@@ -22,6 +22,9 @@ import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.reports.BalanceActivity;
 import ru.forwardmobile.tforwardpayment.reports.PaymentListActivity;
 
+/**
+ * @deprecated
+ */
 public class MainListActivity extends ActionBarActivity {
 
     final static String LOG_TAG = "TFORWARD.MainListActivity";
