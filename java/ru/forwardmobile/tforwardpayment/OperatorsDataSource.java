@@ -47,8 +47,8 @@ public class OperatorsDataSource {
 
             cursor = database.rawQuery(
                 " select g.id, g.name, 'group' as type, sum(c.cnt) as items_count from " + DatabaseHelper.PG_TABLE_NAME
-                        + " as g left join ( "
-                        + "    select gid , count(*) cnt from " + DatabaseHelper.P_TABLE_NAME + " group by gid "
+                           + " as g left join ( "
+                           + "    select gid , count(*) cnt from " + DatabaseHelper.P_TABLE_NAME + " group by gid "
                            + " union all "
                            + " select parent,  count(*) cnt from " + DatabaseHelper.PG_TABLE_NAME + " group by parent "
                 + " ) as c on c.gid = g.id "
