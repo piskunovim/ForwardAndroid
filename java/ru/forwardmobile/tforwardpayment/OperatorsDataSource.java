@@ -26,6 +26,15 @@ public class OperatorsDataSource {
     public static final String GROUP_PARENT_FIELD   = "parent";
     public static final String MIN_FIELD            = "min";
     public static final String MAX_FIELD            = "max";
+    public static final String P_GROUP_FIELD        = "gid";
+
+    public static final String FLD_PROVIDER_FIELD   = "provider";
+    public static final String FLD_NAME_FIELD       = "name";
+    public static final String FLD_PREFIX_FIELD     = "prefix";
+    public static final String FLD_TITLE_FIELD      = "title";
+    public static final String FLD_MASK_FIELD       = "mask";
+    public static final String FLD_REQUIRED_FIELD   = "required";
+    public static final String FLD_TYPE_FIELD       = "type";
 
     private final SQLiteOpenHelper helper;
     private final SQLiteDatabase database;
