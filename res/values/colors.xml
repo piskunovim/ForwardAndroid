@@ -9,4 +9,6 @@
     <color name="darkbluef">#3300FF</color>
     <color name="pinkf">#CC0092</color>
     <color name="migalka">#009DFF</color>
+    <color name="greybg">#EDEEF0</color>
+    <color name="white">#FFFFFF</color>
 </resources>
