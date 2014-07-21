@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.R;
-import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.ReportBaseFilter;
 
 /**
  *
@@ -45,9 +45,14 @@ public class PaymentListActivity extends ActionBarActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paymentlist);
+        //setContentView(R.layout.activity_paymentlist);
 
+        setContentView(R.layout.paymentlist_with_filter);
 
+        LinearLayout layout = (LinearLayout) findViewById(R.id.filter_container);
+        ReportBaseFilter filter = new ReportBaseFilter(this, layout);
+
+/*
         dbHelper = new DatabaseHelper(this);
 
         lvCustomList = (ListView) findViewById(R.id.listView);
@@ -55,7 +60,7 @@ public class PaymentListActivity extends ActionBarActivity implements AdapterVie
         listEmpty = (TextView) findViewById(R.id.emptyList);
 
         dataSource = new PaymentListDataSource(this);
-        createView( getPayments() );
+        createView( getPayments() );*/
         //showList();
     }
 
