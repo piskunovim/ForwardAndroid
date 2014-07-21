@@ -65,8 +65,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         etPass.setOnEditorActionListener(this);
 
 
-        boolean databaseExists = checkDataBase();
-        boolean datatablesFull = checkForTables();
+        boolean databaseExists = false; //checkDataBase();
+        boolean datatablesFull = false; //checkForTables();
 
         if (databaseExists && datatablesFull )
         {

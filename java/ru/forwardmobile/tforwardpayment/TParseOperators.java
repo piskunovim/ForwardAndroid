@@ -39,7 +39,7 @@ public TParseOperators(Context context) {
  */
 public TParseOperators(){}
 
-public void loadSetting(String xmlString) throws Exception {
+public void loadSettings(String xmlString) throws Exception {
 
     DatabaseHelper dbHelper = new DatabaseHelper(context);
     SQLiteDatabase db       = dbHelper.getWritableDatabase();
@@ -52,11 +52,16 @@ public void loadSetting(String xmlString) throws Exception {
         db.execSQL("delete from " + DatabaseHelper.PG_TABLE_NAME);
         db.execSQL("delete from " + DatabaseHelper.F_TABLE_NAME);
 
+        Log.i("PARSER", "Loading settings from " + xmlString.substring(0,155));
         XmlPullParser xpp = prepareXpp(xmlString);
+        Log.i("PARSER", "Successfull init..");
 
         Integer currentGroup = 0;
         Integer currentPs    = 0;
         Stack<Integer> hierarchy = new Stack<Integer>();
+        String buffer = null;
+        boolean insideSettings = false;
+        String currentProperty = null;
 
         while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
 
@@ -80,6 +85,9 @@ public void loadSetting(String xmlString) throws Exception {
 
                         hierarchy.push(currentGroup);
                         currentGroup = groupId;
+
+                        Log.i("Parser", "Found group " + groupId);
+
                     } else
                     if("p" . equals(startNodeName)) {
 
@@ -89,8 +97,37 @@ public void loadSetting(String xmlString) throws Exception {
                         cv.put(OperatorsDataSource.P_NAME_FIELD, xpp.getAttributeValue(null,"n"));
                         cv.put(OperatorsDataSource.MIN_FIELD, xpp.getAttributeValue(null,"min"));
                         cv.put(OperatorsDataSource.MAX_FIELD, xpp.getAttributeValue(null,"max"));
-                        
+                        cv.put(OperatorsDataSource.P_GROUP_FIELD, currentGroup);
 
+                        db.replace(DatabaseHelper.P_TABLE_NAME, null, cv);
+
+                        Log.i("PARSER", "Found provider " + currentPs);
+
+                    }else
+                    if("f" . equals(startNodeName)) {
+
+                        // @TODO LOAD FIELDS
+                        ContentValues cv = new ContentValues();
+                        cv.put(OperatorsDataSource.FLD_NAME_FIELD, xpp.getAttributeValue(null,"n"));
+                        cv.put(OperatorsDataSource.FLD_TITLE_FIELD, xpp.getAttributeValue(null,"c"));
+                        cv.put(OperatorsDataSource.FLD_PREFIX_FIELD, xpp.getAttributeValue(null,"p"));
+                        cv.put(OperatorsDataSource.FLD_MASK_FIELD, xpp.getAttributeValue(null,"m"));
+                        cv.put(OperatorsDataSource.FLD_REQUIRED_FIELD, xpp.getAttributeValue(null,"r"));
+                        cv.put(OperatorsDataSource.FLD_TYPE_FIELD, xpp.getAttributeValue(null,"t"));
+                        cv.put(OperatorsDataSource.FLD_PROVIDER_FIELD, currentPs);
+
+                        db.insert(DatabaseHelper.F_TABLE_NAME, null, cv);
+
+                        Log.i("PARSER", "Found field " + cv.get(OperatorsDataSource.FLD_TITLE_FIELD));
+                    }else
+                    // Start settings part
+                    if ("s".equals(startNodeName)) {
+                        insideSettings = true;
+                    } else
+                    // Settings properties
+                    if ("v".equals(startNodeName)) {
+                        currentProperty = xpp.getAttributeValue(0);
+                        Log.i("PARSER", "Property " + currentProperty);
                     }
 
                     break;
@@ -101,6 +138,30 @@ public void loadSetting(String xmlString) throws Exception {
                         currentGroup = hierarchy.empty() ? 0 : hierarchy.pop();
                     }
 
+                    if (buffer.length() > 0) {
+                        // Shared key
+                        if ("s-c".equals(xpp.getName())) {
+                            Log.d(LOG_TAG, "Adding shared key...");
+                            keyStorage.setKey(IKeyStorage.PUBLIC_KEY_TYPE, buffer.getBytes());
+                        } else {
+                            // Private key
+                            if ("p-k".equals(xpp.getName())) {
+                                Log.d(LOG_TAG, "Adding private key...");
+                                keyStorage.setKey(IKeyStorage.SECRET_KEY_TYPE, buffer.getBytes());
+                            } else
+                            // Access ID
+                            if ("access-id".equals(xpp.getName())) {
+                                Log.d(LOG_TAG, "Saving acces id. " + buffer);
+                                TSettings.set(TSettings.CERTIFICATE_ACESS_ID, buffer);
+                            } else if (insideSettings && "v".equals(xpp.getName())) {
+                                TSettings.set(currentProperty, buffer);
+                            }
+                        }
+                    }
+
+                    break;
+                case XmlPullParser.TEXT:
+                    buffer = xpp.getText();
                     break;
 
                 default:
@@ -108,6 +169,7 @@ public void loadSetting(String xmlString) throws Exception {
                     break;
             }
 
+            xpp.next();
         }
 
         // Сохраняем дополнительные настройки в базу
@@ -116,10 +178,8 @@ public void loadSetting(String xmlString) throws Exception {
         // Подтверждаем изменения
         db.setTransactionSuccessful();
 
-    }catch (XmlPullParserException e) {
-        e.printStackTrace();
-        throw new Exception(e);
-    } catch (IOException e) {
+        Log.i("PARESER", "Transaction finished");
+    } catch (XmlPullParserException e) {
         e.printStackTrace();
         throw new Exception(e);
     } finally {
@@ -128,6 +188,8 @@ public void loadSetting(String xmlString) throws Exception {
         db.endTransaction();
         db.close();
         dbHelper.close();
+
+        Log.i("PARSER", "Parsing finished.");
     }
 
 }
