@@ -41,7 +41,7 @@ public class TPostData extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
 
-            dialog.show();
+           // dialog.show();
             super.onPreExecute();
         }
 
@@ -59,13 +59,14 @@ public class TPostData extends AsyncTask<String, String, String> {
                 HttpTransport transport = new HttpTransport();
 
                 byte[] resp = transport.send(request);
-                parse.GetXMLSettings( Converter.toUnicode(resp) );
+                parse.loadSettings(Converter.toUnicode(resp));
 
                 return "OK";
             } catch (ClientProtocolException e) {
                 Log.d("ClientProtocolException:", e.getMessage());
             } catch (IOException e) {
                 Log.d("IOException:", e.getMessage());
+                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -74,7 +75,7 @@ public class TPostData extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPostExecute(String result) {
-            dialog.dismiss();
+            //dialog.dismiss();
             ctx.onSignIn(result);
             super.onPostExecute(result);
         }
