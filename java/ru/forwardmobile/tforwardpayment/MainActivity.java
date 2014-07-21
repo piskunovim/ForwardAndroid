@@ -32,6 +32,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     //инициализируем наши объекты формы
     //Button btnSingIn = (Button) findViewById(R.id.singin);
     EditText etName, etPass;
+
     TPostData pd;
 
     @Override
@@ -78,6 +79,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         else
         {
             Log.d(LOG_TAG, "Does not exist database");
+
         }
     }
 
@@ -93,6 +95,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         pd.pointID = pointid;
         pd.password = password;
         pd.execute();
+
     }
 
 
