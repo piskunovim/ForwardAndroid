@@ -49,15 +49,15 @@ public class MainActivityFlat extends ActionBarActivity {
         super.onResume();
         Log.v(LOG_TAG, "MainActivityFlat resumed");
 
-      /*  String[] countries = getResources().
-                getStringArray(R.array.list_of_countries);
-        ArrayAdapter adapter = new ArrayAdapter
-                (this,android.R.layout.simple_list_item_1,countries);
+      /* String[] countries = getResources().
+getStringArray(R.array.list_of_countries);
+ArrayAdapter adapter = new ArrayAdapter
+(this,android.R.layout.simple_list_item_1,countries);
 
 
-        actv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView1);
+actv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView1);
 
-        actv.setAdapter(adapter);
+actv.setAdapter(adapter);
 */
 
     }
@@ -186,7 +186,6 @@ public class MainActivityFlat extends ActionBarActivity {
         });
 
         textSearch.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                 beforeTextChanged = textSearch.getText().toString();
@@ -201,7 +200,12 @@ public class MainActivityFlat extends ActionBarActivity {
             public void afterTextChanged(Editable editable) {
                 afterTextChanged = textSearch.getText().toString();
                 searchOperator(afterTextChanged);
-             }
+                //afterTextChanged = textSearch.getText().toString();
+                /*Toast.makeText(MainActivityFlat.this, "before: " + beforeTextChanged
++ '\n' + "on: " + onTextChanged
++ '\n' + "after: " + afterTextChanged
+, Toast.LENGTH_SHORT).show();*/
+            }
         });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -226,36 +230,41 @@ public class MainActivityFlat extends ActionBarActivity {
         Cursor cursor;
         operatorArray.clear();
 
+        /*SQLiteOpenHelper dbHelper = new DatabaseHelper(getApplicationContext());
+SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIKE '"+ operator +"'", null);
+*/
         cursor = initializeDB(0,operator);
 
         if (cursor.moveToFirst()) {
+            //Log.d(LOG_TAG, cursor.getString(cursor.getColumnIndex("name")));
 
             do{
-             operatorArray.add(cursor.getString(cursor.getColumnIndex("name")));
+                operatorArray.add(cursor.getString(cursor.getColumnIndex("name")));
             }while (cursor.moveToNext());
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, operatorArray);
-        searchListView.setAdapter(adapter);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, operatorArray);
+            searchListView.setAdapter(adapter);
 
-        searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView c = (TextView) view;
-                String text = c.getText().toString();
-                Cursor cursorID = initializeDB(1,text);
-                if (cursorID.moveToFirst()) {
+            searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    TextView c = (TextView) view;
+                    String text = c.getText().toString();
+                    Cursor cursorID = initializeDB(1,text);
+                    if (cursorID.moveToFirst()) {
 
-                   Log.i(LOG_TAG, "Starting payment to " + text);
-                   OperatorsMenuActivity operatorsMenuActivity = new OperatorsMenuActivity();
-                   operatorsMenuActivity.startPayment(Integer.parseInt(cursorID.getString(cursorID.getColumnIndex("id"))));
+                        Log.i(LOG_TAG, "Starting payment to " + text);
+                        startPayment(Integer.parseInt(cursorID.getString(cursorID.getColumnIndex("id"))));
 
+                    }
                 }
-            }
-        });
+            });
 
         } else {
-        Log.d(LOG_TAG, "Table got 0 rows");
+            Log.d(LOG_TAG, "Table got 0 rows");
         }
 
 
@@ -271,6 +280,12 @@ public class MainActivityFlat extends ActionBarActivity {
         else {
             return db.rawQuery("SELECT id FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIKE '" + searchString + "'", null);
         }
+    }
+
+    public void startPayment(Integer id){
+        Intent intent = new Intent(this, PaymentActivity.class);
+        intent.putExtra("psid", id);
+        startActivity(intent);
     }
 
     private void openGroup(Integer groupNumber){
