@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.testactivity.OperatorsActivity"
-    tools:ignore="MergeRootFrame"
-    android:padding="10dp">
+    tools:ignore="MergeRootFrame" >
 
     <ListView
         android:layout_width="match_parent"

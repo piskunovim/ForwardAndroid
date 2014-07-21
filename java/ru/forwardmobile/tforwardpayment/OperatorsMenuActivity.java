@@ -67,13 +67,8 @@ public class OperatorsMenuActivity extends ActionBarActivity implements AdapterV
     protected void startPayment(IProviderMenuItem item) {
 
         Log.i(LOGGER_TAG, "Starting payment to " + item.getName());
-        startPayment(item.getId());
-
-    }
-
-    protected void startPayment(Integer item) {
         Intent intent = new Intent(this, PaymentActivity.class);
-        intent.putExtra("psid", item);
+        intent.putExtra("psid", item.getId());
         startActivity(intent);
     }
 
