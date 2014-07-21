@@ -95,7 +95,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         pd.pointID = pointid;
         pd.password = password;
         pd.execute();
-
     }
 
 

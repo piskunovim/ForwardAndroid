@@ -38,11 +38,11 @@ public class OperatorsMenuActivity extends ActionBarActivity implements AdapterV
         listView.setOnItemClickListener(this);
 
         dataSource = new OperatorsDataSource(this);
-        showNode(getIntent().getIntExtra("node",0));
+        showNode(getIntent().getIntExtra("gid",0));
     }
 
     protected void showNode(Integer id) {
-        currentNode = 0;
+        currentNode = id;
         adapter     = new ArrayAdapter<IProviderMenuItem>(this, android.R.layout.simple_list_item_1, dataSource.getMenuItems(id));
         listView.setAdapter(adapter);
     }

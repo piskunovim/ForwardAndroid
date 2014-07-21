@@ -100,7 +100,9 @@ public void loadSettings(String xmlString) throws Exception {
                         cv.put(OperatorsDataSource.P_GROUP_FIELD, currentGroup);
 
                         db.replace(DatabaseHelper.P_TABLE_NAME, null, cv);
-
+                        db.delete(DatabaseHelper.F_TABLE_NAME, OperatorsDataSource.FLD_PROVIDER_FIELD + "= ?", new String[]{
+                                String.valueOf(currentPs)
+                        });
                         Log.i("PARSER", "Found provider " + currentPs);
 
                     }else
