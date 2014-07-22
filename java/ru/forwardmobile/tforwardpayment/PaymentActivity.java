@@ -131,6 +131,16 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
                 hasError = true;
             }
 
+            if(fullValue < value) {
+                if(err != null) {
+                    err += "\nСумма с клиента не может быть меньше суммы к зачислению";
+                } else {
+                    err = "Сумма с клиента не может быть меньше суммы к зачислению";
+                }
+
+                hasError = true;
+            }
+
             if(!hasError) {
                 IPayment payment = PaymentFactory.getPayment(provider.getId(),value, fullValue, fieldsInfo);
                 try {
