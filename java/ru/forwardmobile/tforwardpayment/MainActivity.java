@@ -32,7 +32,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     //инициализируем наши объекты формы
     //Button btnSingIn = (Button) findViewById(R.id.singin);
     EditText etName, etPass;
-
     TPostData pd;
 
     @Override
@@ -65,8 +64,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         etPass.setOnEditorActionListener(this);
 
 
-        boolean databaseExists = false; //checkDataBase();
-        boolean datatablesFull = false; //checkForTables();
+        boolean databaseExists = checkDataBase();
+        boolean datatablesFull = checkForTables();
 
         if (databaseExists && datatablesFull )
         {
@@ -79,7 +78,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         else
         {
             Log.d(LOG_TAG, "Does not exist database");
-
         }
     }
 
