@@ -68,7 +68,7 @@ public class ReportBaseFilter extends LinearLayout implements DatePickerDialog.O
                 calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         fastChoice  = new Button(getContext());
-        fastChoice.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 1f));
+        fastChoice.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 2f));
         fastChoice.setOnClickListener(this);
         fastChoice.setText("=//=");
         addView(fastChoice);
@@ -129,13 +129,16 @@ public class ReportBaseFilter extends LinearLayout implements DatePickerDialog.O
             month.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 1f));
             month.setText("Месяц");
             month.setOnClickListener(this);
+
+            addContentView(month, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 1f));
         }
 
         @Override
         public void show() {
-            addView(month);
             super.show();
         }
+
+
 
         @Override
         public void onPanelClosed(int featureId, Menu menu) {
