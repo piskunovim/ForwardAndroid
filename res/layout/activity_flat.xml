@@ -5,7 +5,7 @@
     android:background="@color/greybg"
     android:layout_width="match_parent"
     android:layout_height="match_parent" android:isScrollContainer="true">
-    <LinearLayout android:id="@+id/LinearLayoutMain"  android:paddingTop="5dp" android:paddingLeft="10dp" android:paddingRight="22dp" android:layout_height="wrap_content" android:layout_width="match_parent">
+    <LinearLayout android:background="@drawable/gradient" android:id="@+id/LinearLayoutMain"  android:paddingTop="5dp" android:paddingLeft="10dp" android:paddingRight="22dp" android:layout_height="wrap_content" android:layout_width="match_parent">
         <!-- Editext for Search -->
         <AutoCompleteTextView
             android:id="@+id/inputSearch"
@@ -31,7 +31,7 @@
             android:hint="Поиск оператора..."
             android:inputType="textVisiblePassword"/> -->
     </LinearLayout>
-    <LinearLayout android:id="@+id/LinearLayoutListView" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent">
+    <LinearLayout android:id="@+id/LinearLayoutListView" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent" >
         <ListView
             android:id="@+id/listViewSearch"
             android:visibility="gone"
@@ -41,7 +41,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
     </LinearLayout>
-    <LinearLayout android:id="@+id/LinearLayout01" android:paddingRight="20dp"   android:layout_height="wrap_content" android:layout_width="match_parent">
+    <LinearLayout android:id="@+id/LinearLayout01" android:paddingRight="20dp"   android:layout_height="wrap_content" android:layout_width="match_parent" android:background="@drawable/gradient">
         <Button android:id="@+id/Button01" android:padding="7dp" android:textSize="13dp" android:text="Мобильная связь" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:background="@drawable/button_selector" android:drawableTop="@drawable/mobile_network"></Button>
         <Button android:id="@+id/Button02" android:padding="5dp" android:textSize="13dp" android:text="Телевидение" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:background="@drawable/button_selector" android:drawableTop="@drawable/television"></Button>
         <Button android:id="@+id/Button03" android:padding="5dp" android:textSize="13dp" android:text="Стационарная связь" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:background="@drawable/button_selector" android:drawableTop="@drawable/landline"></Button>
