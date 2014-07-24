@@ -22,7 +22,7 @@ public class TPostData extends AsyncTask<String, String, String> {
     String pointID;
     String password;
     final String LOG_TAG = "TFORWARD.TPostData";
-    ProgressDialog progress;
+        ProgressDialog progress;
 
     ProgressDialog dialog;
     TParseOperators parse;
@@ -41,7 +41,7 @@ public class TPostData extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
 
-            dialog.show();
+           // dialog.show();
             super.onPreExecute();
         }
 
@@ -75,7 +75,7 @@ public class TPostData extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPostExecute(String result) {
-            dialog.dismiss();
+            //dialog.dismiss();
             ctx.onSignIn(result);
             super.onPostExecute(result);
         }

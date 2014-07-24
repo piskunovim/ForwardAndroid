@@ -3,7 +3,7 @@ package ru.forwardmobile.tforwardpayment.reports;
 import ru.forwardmobile.tforwardpayment.spp.impl.PaymentPojoImpl;
 
 /**
- * Created by Василий Ванин on 04.07.2014.
+ * Created by vaninv on 04.07.2014.
  */
 public class PaymentInfo extends PaymentPojoImpl {
 
@@ -32,6 +32,4 @@ public class PaymentInfo extends PaymentPojoImpl {
     public Integer getStatus() {
         return this.status;
     }
-
-
 }
