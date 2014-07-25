@@ -45,9 +45,9 @@ public class PaymentListActivity extends ActionBarActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_paymentlist);
+        setContentView(R.layout.activity_paymentlist);
 
-        setContentView(R.layout.paymentlist_with_filter);
+        //setContentView(R.layout.paymentlist_with_filter);
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.filter_container);
         ReportBaseFilter filter = new ReportBaseFilter(this, layout);

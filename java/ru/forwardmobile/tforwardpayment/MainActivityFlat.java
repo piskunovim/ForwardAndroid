@@ -7,12 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,13 +22,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.reports.BalanceActivity;
-import ru.forwardmobile.tforwardpayment.reports.PaymentListActivity;
 
 /**
  * Created by PiskunovI on 15.07.14.
  */
-public class MainActivityFlat extends ActionBarActivity {
+public class MainActivityFlat extends AbstractBaseActivity {
 
     final static String LOG_TAG = "TFORWARD.MainActivityFlat";
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
@@ -64,63 +59,6 @@ actv.setAdapter(adapter);
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.operators, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_help) {
-            Intent intent = new Intent(this, BalanceActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        if (id == R.id.action_report) {
-            CharSequence reports[] = new CharSequence[] {"Запрос остатка средств", "Текущие платежи", "Принятые платежи"};
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Выберите отчет:");
-            builder.setItems(reports, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // the user clicked on reports[which]
-                    Intent intent;
-                    switch (which){
-                        case 0:
-                            intent = new Intent(MainActivityFlat.this, BalanceActivity.class);
-                            startActivity(intent);
-                            break;
-                        case 1:
-                            intent = new Intent(MainActivityFlat.this, PaymentListActivity.class);
-                            intent.putExtra(EXTRA_MESSAGE, "0");
-                            startActivity(intent);
-                            break;
-                        case 2:
-                            intent = new Intent(MainActivityFlat.this, PaymentListActivity.class);
-                            intent.putExtra(EXTRA_MESSAGE, "1");
-                            startActivity(intent);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            });
-            builder.show();
-            return true;
-        }
-        if (id == R.id.settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +74,8 @@ actv.setAdapter(adapter);
         textSearchClick();
         menuGroupClick();
 
+        // Payment queue start
+        startPaymentQueue();
     }
 
     private void initialize(String message) {
@@ -262,9 +202,9 @@ actv.setAdapter(adapter);
                 searchOperator(afterTextChanged);
                 //afterTextChanged = textSearch.getText().toString();
                 /*Toast.makeText(MainActivityFlat.this, "before: " + beforeTextChanged
-+ '\n' + "on: " + onTextChanged
-+ '\n' + "after: " + afterTextChanged
-, Toast.LENGTH_SHORT).show();*/
+                    + '\n' + "on: " + onTextChanged
+                    + '\n' + "after: " + afterTextChanged
+                    , Toast.LENGTH_SHORT).show();*/
             }
         });
 
@@ -355,4 +295,46 @@ db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIK
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Выйти из приложения?")
+                .setMessage("Вы действительно хотите выйти?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        onExit();
+                    }
+                }).create().show();
+    }
+
+    private void onExit() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("EXIT", "true");
+        startActivity(intent);
+
+        this.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        stopPaymentQueue();
+        DatabaseHelper helper = new DatabaseHelper(this);
+        helper.saveSettings();
+        helper.close();
+    }
+
+    private void startPaymentQueue() {
+        Log.i(LOG_TAG, "Starting payment queue...");
+        startService(new Intent(this, TPaymentService.class));
+    }
+
+    private void stopPaymentQueue() {
+        Log.i(LOG_TAG,"Deactivating payment queue...");
+        stopService(new Intent(this,TPaymentService.class));
+    }
 }

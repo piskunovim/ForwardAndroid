@@ -62,7 +62,7 @@
         <service android:name=".TPaymentService" />
 
         <activity
-            android:name=".reports.PaymentListActivity"
+            android:name=".reports.SimplePaymentListActivity"
             android:label="@string/title_activity_payment_list_impl" >
         </activity>
         <activity

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,6 +41,39 @@ public class PaymentListDataSource {
         database = helper.getReadableDatabase();
     }
 
+    public List<PaymentInfo> getAll() {
+        List<PaymentInfo> items = new ArrayList<PaymentInfo>();
+        Cursor cursor = null;
+
+        try {
+
+            cursor = database.rawQuery(
+                    "select " +
+                            "pay.id, " +
+                            "pay.psid, " +
+                            "pay.fields, " +
+                            "pay.value, " +
+                            "pay.fullValue, " +
+                            "pay.errorCode, " +
+                            "pay.errorDescription, " +
+                            "pay.startDate, " +
+                            "pay.status, " +
+                            "pay.processDate, " +
+                            "p.name as psName " +
+                            " from payments pay left join " + DatabaseHelper.P_TABLE_NAME + " p on p.id = pay.psid ",
+                    new String[]{});
+
+            while( cursor.moveToNext() )
+                items.add(getItem(cursor));
+
+        } finally {
+            if(cursor != null)
+                cursor.close();
+        }
+
+        return items;
+    }
+
     /**
      * Список платежей, которые находятся в состоянии проведения
      * @return List<PaymentInfo> - Список платежей
@@ -63,9 +97,9 @@ public class PaymentListDataSource {
                     "pay.startDate, " +
                     "pay.status, " +
                     "pay.processDate, " +
-                    "p.name as psName" +
-                "from payments pay left join p on p.id = pay.psid " +
-                "where pay.status not in(3,5) ",
+                    "p.name as psName " +
+                " from payments pay left join " + DatabaseHelper.P_TABLE_NAME + " p on p.id = pay.psid " +
+                " where pay.status not in(3,5) ",
             new String[]{});
 
             while( cursor.moveToNext() )
@@ -81,6 +115,9 @@ public class PaymentListDataSource {
 
 
     private PaymentInfo getItem(Cursor cursor) {
+
+        Log.i("GETITEM", "PSID " + cursor.getInt( cursor.getColumnIndex(PS_ID_FIELD) ));
+        Log.i("GETITEM", "PSNAME " +  cursor.getString( cursor.getColumnIndex(PS_NAME_FIELD)));
 
         PaymentInfo item = new PaymentInfo(
             cursor.getInt( cursor.getColumnIndex(PS_ID_FIELD) ),
