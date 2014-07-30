@@ -1,11 +1,15 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -18,21 +22,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gcm.GCMRegistrar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.notifications.ConnectionDetector;
+import ru.forwardmobile.tforwardpayment.notifications.ServerUtilities;
+import ru.forwardmobile.tforwardpayment.notifications.WakeLocker;
+
+//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.DISPLAY_MESSAGE_ACTION;
+//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.EXTRA_MESSAGE;
+
+//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.DISPLAY_MESSAGE_ACTION;
+//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.SENDER_ID;
 
 public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
     //Инициализация строковой переменной логирования
     final static String LOG_TAG = "TFORWARD.MainActivity";
+    static final String DISPLAY_MESSAGE_ACTION =
+            "ru.forwardmobile.tforwardpayment.DISPLAY_MESSAGE";
+    static final String SENDER_ID = "421740259735";
     //Объект передачи сообщения
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
-
+    AsyncTask<Void, Void, Void> mRegisterTask;
 
     //инициализируем наши объекты формы
     //Button btnSingIn = (Button) findViewById(R.id.singin);
     EditText etName, etPass;
     TPostData pd;
+
+    //Для проверки соединения с сетью Интернет//СonnectionDetector cd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +104,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     public void sendMessage(View view){
+        RegDevice(etName.getText().toString());
         SingIn(etName.getText().toString(), etPass.getText().toString());
     }
 
@@ -212,5 +234,100 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
                 dbHelper.close();
         }
     }
+
+    public void RegDevice(final String pointid){
+       Log.d(LOG_TAG, "RegDevice started...");
+
+       Log.d(LOG_TAG, "pointid: "+ pointid);
+        /*cd = new ConnectionDetector(getApplicationContext());
+
+        // Проверяем доступен ли Интернет
+        if (!cd.isConnectingToInternet()) {
+            // Если интернет соединение недоступно
+            alert.showAlertDialog(MainActivity.this,
+                    "Internet Connection Error",
+                    "Please connect to working Internet connection", false);
+            // прерываем исполнение кода вызовом return
+            return;
+        }*/
+
+        //Убеждаемся, что устройство имеет соответствующие зависимости.
+        GCMRegistrar.checkDevice(this);
+
+        // Убеждаемся, что манифест был правильно настроен - закомментируйте эту строку
+        // при разработке приложения. Раскомментируйте ее, когда оно будет готово.
+        GCMRegistrar.checkManifest(this);
+
+        registerReceiver(mHandleMessageReceiver, new IntentFilter(
+                DISPLAY_MESSAGE_ACTION));
+
+        // Получить GCM регистрационный id
+        final String regId = GCMRegistrar.getRegistrationId(this);
+
+        Log.d(LOG_TAG,"regId = " + regId);
+
+        // Проверям был ли regid уже предоставлен ранее
+        if (regId.equals("")) {
+            // Регистрации ранее небыло, регистрируем сейчас на GCM
+            Log.d(LOG_TAG, "regId - new registration");
+            GCMRegistrar.register(this, SENDER_ID);
+        } else {
+            Log.d(LOG_TAG, "Устройство уже зарегистрированно на GCM");
+            // Устройство уже зарегистрированно на  GCM
+            if (GCMRegistrar.isRegisteredOnServer(this)) {
+                // Пропустить этап регистрации.
+                 Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
+            } else {
+                // Попробуем зарегистрироваться снова, но не в потоке пользовательского интерфейса.
+                // Это также необходимо для отмены потока OnDestroy (),
+                // следовательно используем AsyncTask вместо исходного потока.
+                final Context context = this;
+                mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        // Регистрируемся на нашем сервере
+                        // На сервере создается новый пользователь
+                        final String point = pointid;
+                        Log.d(LOG_TAG, "point = " + point);
+                        ServerUtilities.register(context, point, regId);
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        mRegisterTask = null;
+                    }
+
+                };
+                mRegisterTask.execute(null, null, null);
+            }
+        }
+    }
+
+    /**
+     * Получаем push-сообщения
+     * */
+    private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
+            // Пробуждаем телефон, если он находился в режиме сна
+            WakeLocker.acquire(getApplicationContext());
+
+            /**
+             * Необходимо предпринять дальнейшие действия над этим сообщением
+             * в зависимости от требований вашего приложения
+             * на данный момент мы просто отобразим его на экране
+             * */
+
+            // Показываем полученное сообщение
+           // lblMessage.append(newMessage + "\n");
+            Toast.makeText(getApplicationContext(), "Новое сообщение: " + newMessage, Toast.LENGTH_LONG).show();
+
+            // Освобождаем блокировку сна
+            WakeLocker.release();
+        }
+    };
 
 }
