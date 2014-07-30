@@ -10,6 +10,28 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <!-- Выводит телефон из состояния сна, когда  получено сообщение. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Создает пользовательское разерешение, чтобы только это приложение могло получить его сообщения. -->
+    <permission
+        android:name="ru.forwardmobile.tforwardpayment.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="ru.forwardmobile.tforwardpayment.permission.C2D_MESSAGE" />
+
+    <!-- Это приложение имеет разрешение на регистрацию и получение данных. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!-- Разрешение на проверку статуса соединения интернет-сетью -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Разрешение на вибрацию -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -69,6 +91,23 @@
             android:name="ru.forwardmobile.tforwardpayment.HelpActivity"
             android:label="@string/title_activity_help" >
         </activity>
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+
+                <!-- Получает сообщения. -->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <!-- Получает регистрационный id. -->
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="ru.forwardmobile.tforwardpayment" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".notifications.GCMIntentService" />
+
     </application>
 
 </manifest>
