@@ -1,18 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="ru.forwardmobile.tforwardpayment.OperatorsActivity" >
+    tools:context="ru.forwardmobile.tforwardpayment.AbstractBaseActivity" >
 
-    <item android:id="@+id/action_help"
+    <!--item android:id="@+id/action_help"
         android:title="@string/help"
         android:orderInCategory="100"
-     />
+     /-->
     <item android:id="@+id/action_report"
         android:title="@string/report"
         android:orderInCategory="100"
     />
-    <item android:id="@+id/settings"
+    <!--item android:id="@+id/settings"
         android:title="@string/settings"
         android:orderInCategory="100"
-     />
+     /-->
 </menu>
