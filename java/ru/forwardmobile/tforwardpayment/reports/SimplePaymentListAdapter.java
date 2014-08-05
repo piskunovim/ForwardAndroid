@@ -12,12 +12,12 @@ import java.util.List;
 import ru.forwardmobile.tforwardpayment.R;
 import ru.forwardmobile.util.http.Dates;
 
-public class PaymentListAdapter extends BaseAdapter {
+public class SimplePaymentListAdapter extends BaseAdapter {
 
     private final List<PaymentInfo> items;
     private final Context ctx;
 
-    public PaymentListAdapter(List<PaymentInfo> items, Context ctx) {
+    public SimplePaymentListAdapter(List<PaymentInfo> items, Context ctx) {
         this.items = items;
         this.ctx = ctx;
     }
@@ -48,12 +48,12 @@ public class PaymentListAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
 
-            holder.position = (TextView) view.findViewById(R.id.simple_row_number);
-            holder.target   = (TextView) view.findViewById(R.id.simple_row_target);
-            holder.value    = (TextView) view.findViewById(R.id.simple_row_value);
-            holder.startDate= (TextView) view.findViewById(R.id.simple_row_start_date);
-            holder.status   = (TextView) view.findViewById(R.id.simple_row_status);
-            holder.error    = (TextView) view.findViewById(R.id.simple_row_error);
+            holder.position     = (TextView) view.findViewById(R.id.simple_row_number);
+            holder.target       = (TextView) view.findViewById(R.id.simple_row_target);
+            holder.value        = (TextView) view.findViewById(R.id.simple_row_value);
+            holder.startDate    = (TextView) view.findViewById(R.id.simple_row_start_date);
+            holder.status       = (TextView) view.findViewById(R.id.simple_row_status);
+            holder.error        = (TextView) view.findViewById(R.id.simple_row_error);
 
             view.setTag(holder);
         }

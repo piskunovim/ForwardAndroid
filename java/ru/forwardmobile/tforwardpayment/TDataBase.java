@@ -4,11 +4,13 @@ package ru.forwardmobile.tforwardpayment;
  * Created by PiskunovI on 08.05.14.
  */
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * @deprecated
+ */
 public class TDataBase extends SQLiteOpenHelper {
 
     // Database Version

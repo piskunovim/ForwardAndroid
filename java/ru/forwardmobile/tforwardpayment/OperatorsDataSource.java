@@ -49,6 +49,33 @@ public class OperatorsDataSource {
         throw new UnsupportedOperationException();
     }
 
+    public List<IProviderMenuItem> getItemsByName(String name) {
+
+        Cursor cursor = null;
+        List<IProviderMenuItem> items = new ArrayList<IProviderMenuItem>();
+        try {
+
+            cursor = database.rawQuery(
+                " select id, name from " + DatabaseHelper.P_TABLE_NAME + " where name like '%" + name + "%'",
+                   null
+            );
+
+            while( cursor.moveToNext() ) {
+                items.add(MenuItem.getInstance(
+                    cursor.getInt(cursor.getColumnIndex(PK_FIELD)),
+                    cursor.getString(cursor.getColumnIndex(P_NAME_FIELD))
+                ));
+            }
+
+        } finally {
+            if(cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return items;
+    }
+
     public List<IProviderMenuItem> getMenuItems(int parent) {
 
         Cursor cursor = null;
@@ -106,6 +133,33 @@ public class OperatorsDataSource {
                 cursor.close();
             }
         }
+
+        return items;
+    }
+
+    public List<IProviderMenuItem> getFullList() {
+        Cursor cursor = null;
+        List<IProviderMenuItem> items = new ArrayList<IProviderMenuItem>();
+
+        try {
+
+            cursor = database.rawQuery(
+                    " select id, name from " + DatabaseHelper.P_TABLE_NAME + " order by " + P_NAME_FIELD + " asc ",
+                    null
+            );
+
+            while( cursor.moveToNext() ) {
+                items.add(MenuItem.getInstance(
+                        cursor.getInt(cursor.getColumnIndex(PK_FIELD)),
+                        cursor.getString(cursor.getColumnIndex(P_NAME_FIELD))
+                ));
+            }
+
+        } finally {
+            if(cursor != null)
+                cursor.close();
+        }
+
 
         return items;
     }

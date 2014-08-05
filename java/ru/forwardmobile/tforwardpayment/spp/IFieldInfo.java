@@ -7,4 +7,5 @@ package ru.forwardmobile.tforwardpayment.spp;
 public interface IFieldInfo {
     public String getName();
     public String getValue();
+    public String getLabel();
 }
