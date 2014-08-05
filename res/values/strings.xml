@@ -37,4 +37,23 @@
     <string name="main_menu_108_label">Кошельки</string>
     <string name="main_menu_109_label">Прочее</string>
 
+    <!-- PUSH NOTIFICATIONS -->
+    <string name="error_config">Пожалуйста установите %1$s константу и перекомпилируйте приложение.</string>
+    <string name="already_registered">Устройство уже зарегистрированно на сервере.</string>
+    <string name="gcm_registered">Сообщение GCM: устройство успешно зарегистрированно!</string>
+    <string name="gcm_unregistered">Сообщение GCM: успешно выполнена отмена регистрации устройства!</string>
+    <string name="gcm_message">Сообщение GCM: вы получили сообщение!</string>
+    <string name="gcm_error">Сообщение GCM: ошибка (%1$s).</string>
+    <string name="gcm_recoverable_error">Сообщение GCM: устранимая ошибка (%1$s).</string>
+    <string name="gcm_deleted">Сообщение GCM: сервер удалил %1$d отложенных сообщений!</string>
+    <string name="server_registering">Пытаюсь (попытка %1$d/%2$d) зарегистрировать устройсво на ForwardServer.</string>
+    <string name="server_registered">Сообщение ForwardServer: устройство было успешно добавлено!</string>
+    <string name="server_unregistered">Сообщение ForwardServer: устройство было успешно удалено!</string>
+    <string name="server_register_error">Невозможно зарегистрировать устройство на ForwardServer после %1$d попыток.</string>
+    <string name="server_unregister_error">Не могу отменить регистрацию устройства на ForwardServer (%1$s).</string>
+    <string name="options_register">Зарегистрировать</string>
+    <string name="options_unregister">Отменить регистрацию</string>
+    <string name="options_clear">Очистить</string>
+    <string name="options_exit">Выход</string>
+
 </resources>
