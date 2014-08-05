@@ -106,7 +106,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".notifications.GCMIntentService" />
+        <service android:name=".GCMIntentService" />
 
     </application>
 

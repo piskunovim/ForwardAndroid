@@ -1,11 +1,11 @@
-package ru.forwardmobile.tforwardpayment.notifications;
+package ru.forwardmobile.tforwardpayment;
 
 /**
  * Created by PiskunovI on 24.07.2014.
  */
-import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.SERVER_URL;
-import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.TAG;
-import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.displayMessage;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.SERVER_URL;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.TAG;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.displayMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,9 +25,7 @@ import com.google.android.gcm.GCMRegistrar;
 
 import ru.forwardmobile.tforwardpayment.R;
 
-/**
- * @deprecated
- */
+
 public final class ServerUtilities {
     private static final int MAX_ATTEMPTS = 5;
     private static final int BACKOFF_MILLI_SECONDS = 2000;

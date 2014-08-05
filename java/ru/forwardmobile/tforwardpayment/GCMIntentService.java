@@ -1,4 +1,4 @@
-package ru.forwardmobile.tforwardpayment.notifications;
+package ru.forwardmobile.tforwardpayment;
 
 /**
  * Created by PiskunovI on 24.07.2014.
@@ -15,11 +15,9 @@ import com.google.android.gcm.GCMBaseIntentService;
 import ru.forwardmobile.tforwardpayment.MainActivity;
 import ru.forwardmobile.tforwardpayment.R;
 
-import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.SENDER_ID;
-import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.displayMessage;
-/**
- * @deprecated
- */
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.SENDER_ID;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.displayMessage;
+
 public class GCMIntentService extends GCMBaseIntentService {
 
     private static final String TAG = "GCMIntentService";

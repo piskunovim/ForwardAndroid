@@ -1,10 +1,10 @@
-package ru.forwardmobile.tforwardpayment.notifications;
+package ru.forwardmobile.tforwardpayment;
 
 /**
  * Created by PiskunovI on 25.07.2014.
  */
-import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.SENDER_ID;
-import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.SERVER_URL;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.SENDER_ID;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.SERVER_URL;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import ru.forwardmobile.tforwardpayment.R;
-
-/**
- * @deprecated
- */
 
 public class RegisterActivity extends Activity {
     // alert dialog manager

@@ -1,11 +1,9 @@
-package ru.forwardmobile.tforwardpayment.notifications;
+package ru.forwardmobile.tforwardpayment;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-/**
- * @deprecated
- */
+
 public class ConnectionDetector {
 
     private Context _context;
