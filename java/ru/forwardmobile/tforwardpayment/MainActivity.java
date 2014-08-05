@@ -141,8 +141,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
             // запуск activity
-            //startActivity(intent);
-            //this.finish();
+            startActivity(intent);
+            this.finish();
 
         } else {
             new AlertDialog.Builder(this)
