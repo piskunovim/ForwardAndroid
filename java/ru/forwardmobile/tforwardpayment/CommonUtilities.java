@@ -10,7 +10,7 @@ public final class CommonUtilities {
 
     // указываем url сервера регистрации здесь
     //static final String SERVER_URL = "http://192.168.1.242/gcm_server_php/register.php";
-    static final String SERVER_URL = "http://sppr.forwardmobile.ru/gcm/";
+    static final String SERVER_URL = "http://sppr.forwardmobile.ru/gcm/register.php";
     // Google project id
     static final String SENDER_ID = "421740259735";
 
