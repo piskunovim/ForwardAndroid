@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/pay_fields"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Number"
+            android:textColor="#000" />
+        <TextView
+            android:id="@+id/pay_psid"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="PSID"
+            android:textSize="12sp"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/pay_status"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Статус"
+            android:textColor="#000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/pay_date_begin"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Дата"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/pay_date_end"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Дата"
+        android:textColor="#000" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/pay_sum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Сумма принятая"
+        android:textColor="#000" />
+    <TextView
+        android:id="@+id/pay_sum_enrolled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Сумма к зачислению"
+        android:textColor="#000" />
+    </LinearLayout>
+
+</LinearLayout>

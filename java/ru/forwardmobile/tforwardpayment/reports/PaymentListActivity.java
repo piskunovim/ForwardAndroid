@@ -52,16 +52,18 @@ public class PaymentListActivity extends ActionBarActivity implements AdapterVie
         LinearLayout layout = (LinearLayout) findViewById(R.id.filter_container);
         ReportBaseFilter filter = new ReportBaseFilter(this, layout);
 
-/*
-        dbHelper = new DatabaseHelper(this);
+        /*
+        dbHelper     = new DatabaseHelper(this);
 
         lvCustomList = (ListView) findViewById(R.id.listView);
-        listAmount = (TextView) findViewById(R.id.pay_amount);
-        listEmpty = (TextView) findViewById(R.id.emptyList);
+        listAmount   = (TextView) findViewById(R.id.pay_amount);
+        listEmpty    = (TextView) findViewById(R.id.emptyList);
 
-        dataSource = new PaymentListDataSource(this);
-        createView( getPayments() );*/
-        //showList();
+        dataSource   = new PaymentListDataSource(this);
+        createView( getPayments() );
+
+        showList();
+        */
     }
 
     @Override
@@ -86,7 +88,7 @@ public class PaymentListActivity extends ActionBarActivity implements AdapterVie
 
     private  void createView(List<PaymentInfo> items) {
 
-        lvCustomList.setAdapter( new PaymentListAdapter(items, this));
+        lvCustomList.setAdapter( new SimplePaymentListAdapter(items, this));
         lvCustomList.setOnItemClickListener( this );
     }
 
@@ -115,7 +117,8 @@ public class PaymentListActivity extends ActionBarActivity implements AdapterVie
             int valueSum, fullValueSum;
                 valueSum = 0;
                 fullValueSum = 0;
-            String query = "select pay.id, pay.psid, pay.fields, pay.value, pay.fullValue, pay.errorCode, pay.errorDescription, pay.startDate, pay.status, pay.processDate, p.name from payments pay left join p on p.id = pay.psid";
+            String query = "select pay.id, pay.psid, pay.fields, pay.value, pay.fullValue, pay.errorCode, pay.errorDescription," +
+                    " pay.startDate, pay.status, pay.processDate, p.name from payments pay left join p on p.id = pay.psid";
 
             Cursor c1 = dbHelper.getReadableDatabase().rawQuery(query, null);
 

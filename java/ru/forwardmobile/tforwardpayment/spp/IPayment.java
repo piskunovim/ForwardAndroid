@@ -66,8 +66,8 @@ public interface IPayment {
     public void                     setActive(boolean active);
     public boolean                  getActive();
 
-    public void                     setSended(boolean sended);
-    public boolean                  getSended();
+    public void                     setSent(boolean sent);
+    public boolean                  getSent();
 
     public void                     setDateOfProcess(Date dateOfProcess);
     public Date                     getDateOfProcess();
@@ -80,4 +80,7 @@ public interface IPayment {
     public int                      getErrorRepeatCount();
 
     public String                   getStatusName();
+    public void                     setPsid(Integer psid);
+    public void                     setFullValue(Double fullValue);
+    public void                     setFields(Collection<IFieldInfo> fields);
 }

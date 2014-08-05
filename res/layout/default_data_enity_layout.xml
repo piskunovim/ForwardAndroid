@@ -8,27 +8,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/data_entry_provider_layout">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/data_entry_provider_label"
-            />
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/date_entry_provider_select">
-
-            </Spinner>
-
-        </LinearLayout>
-
 
         <LinearLayout
             android:orientation="vertical"
@@ -83,7 +62,6 @@
         android:gravity="center|bottom"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_gravity="bottom"
         >
 
         <Button

@@ -19,7 +19,7 @@ public abstract class BaseField extends LinearLayout implements IField {
     
     final String name;
     final String label;
-    
+
     final TextView labelView;          
           
     public BaseField(Context context, String name, String label) {
@@ -37,6 +37,10 @@ public abstract class BaseField extends LinearLayout implements IField {
         this.setLayoutParams( DEFAULT_LAYOUT_PARAMS );
     }
 
+    public String getLabel() {
+        return label;
+    }
+
     public String getName() {
         return name;
     }
@@ -45,7 +49,7 @@ public abstract class BaseField extends LinearLayout implements IField {
         return this;
     }
     
-    public static IFieldInfo fieldInfo(final String name, final String value) {
+    public static IFieldInfo fieldInfo(final String name, final String value, final String label) {
         return new IFieldInfo() {
 
             public String getName() {
@@ -54,6 +58,10 @@ public abstract class BaseField extends LinearLayout implements IField {
 
             public String getValue() {
                 return value;
+            }
+
+            public String getLabel() {
+                return label;
             }
         };
     }

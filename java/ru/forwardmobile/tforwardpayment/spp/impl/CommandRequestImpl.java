@@ -118,7 +118,7 @@ public class CommandRequestImpl implements ICommandRequest {
 
     public void setSended() {
         for(ICommand command: commands)
-            command.getPayment().setSended(true);
+            command.getPayment().setSent(true);
     }
 
     public void setRequestSigned(boolean requestSigned) {

@@ -24,7 +24,7 @@ public class TestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.empty);
 
-        IPayment payment = PaymentFactory.getPayment(1, 5.00, 5.00, Arrays.asList(BaseField.fieldInfo("target","9182074447")));
+        IPayment payment = PaymentFactory.getPayment(1, 5.00, 5.00, Arrays.asList(BaseField.fieldInfo("target","9182074447","Телефон")));
         IPaymentDao dao = new PaymentDaoImpl(new DatabaseHelper(this));
 
         dao.save(payment);

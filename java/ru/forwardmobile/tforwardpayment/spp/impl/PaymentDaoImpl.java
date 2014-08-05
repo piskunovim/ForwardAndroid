@@ -42,7 +42,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         // Набор полей
         StringBuilder payment_data = new StringBuilder();
         for( IFieldInfo field: payment.getFields() ) {
-            payment_data.append("<f n=\"" + field.getName() + "\">" + field.getValue() + "</f>");
+            payment_data.append("<f n=\"" + field.getName() + "\" t=\"" +  field.getLabel() + "\">" + field.getValue() + "</f>");
         }
 
         ContentValues cv = new ContentValues();
@@ -103,13 +103,6 @@ public class PaymentDaoImpl implements IPaymentDao {
     public void close() {
         dbHelper.close();
     }
-
-    /*@Override
-    public IPayment getAll(){
-        Cursor cursor = db.rawQuery("SELECT * FROM payments", null);
-       // paymentgroup
-
-    }*/
 
     public synchronized Collection<IPayment> getUnprocessed() {
 
@@ -180,6 +173,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         private Locator locator = null;
         private StringBuffer buffer = new StringBuffer();
         private String currentField = null;
+        private String currentLabel = null;
         private final Collection<IFieldInfo> collection;
 
         public FieldContentHandler(Collection<IFieldInfo> collection) {
@@ -195,13 +189,14 @@ public class PaymentDaoImpl implements IPaymentDao {
         public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
             if("f" . equals(localName)) {
                 currentField = atts.getValue(0);
+                currentLabel = atts.getValue(1);
             }
         }
 
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
             if("f" . equals(localName)) {
-                collection.add(BaseField.fieldInfo(currentField, buffer.toString()));
+                collection.add(BaseField.fieldInfo(currentField, buffer.toString(), currentLabel));
                 currentField = null;
                 buffer = new StringBuffer();
             }

@@ -1,15 +1,11 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -22,48 +18,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gcm.GCMRegistrar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.notifications.AlertDialogManager;
-import ru.forwardmobile.tforwardpayment.notifications.ConnectionDetector;
-import ru.forwardmobile.tforwardpayment.notifications.ServerUtilities;
-import ru.forwardmobile.tforwardpayment.notifications.WakeLocker;
-
-//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.DISPLAY_MESSAGE_ACTION;
-//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.EXTRA_MESSAGE;
-
-//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.DISPLAY_MESSAGE_ACTION;
-//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.SENDER_ID;
 
 public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
     //Инициализация строковой переменной логирования
     final static String LOG_TAG = "TFORWARD.MainActivity";
-    static final String DISPLAY_MESSAGE_ACTION =
-            "ru.forwardmobile.tforwardpayment.DISPLAY_MESSAGE";
-    static final String SENDER_ID = "421740259735";
     //Объект передачи сообщения
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
-    AsyncTask<Void, Void, Void> mRegisterTask;
-    AsyncTask<Void, Void, Void> mSendTask;
-    TextView lblMessage;
-    AlertDialogManager alert = new AlertDialogManager();
-    ConnectionDetector cd;
+
 
     //инициализируем наши объекты формы
     //Button btnSingIn = (Button) findViewById(R.id.singin);
-
-    //определяем статическую переменную для точки
-    public static String point;
-
-
     EditText etName, etPass;
     TPostData pd;
-
-    //Для проверки соединения с сетью Интернет//СonnectionDetector cd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +53,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         setContentView(R.layout.activity_main);
 
         // Для тестового сервера
-        //TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
-        //TSettings.set(TSettings.SERVER_PORT, "8170");
+        TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
+        TSettings.set(TSettings.SERVER_PORT, "8170");
 
         //получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
@@ -114,7 +83,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     public void sendMessage(View view){
-
         SingIn(etName.getText().toString(), etPass.getText().toString());
     }
 
@@ -135,10 +103,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         if (responseStr.length() > 0){
             // Создаем объект Intent для вызова новой Activity
-            RegDevice(etName.getText().toString());
             Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, responseStr);
-
 
             // запуск activity
             startActivity(intent);
@@ -245,84 +211,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             if(dbHelper != null)
                 dbHelper.close();
         }
-    }
-
-    public void RegDevice(final String pointid){
-       Log.d(LOG_TAG, "RegDevice started...");
-
-
-       Log.d(LOG_TAG, "pointid: "+ pointid);
-        point = pointid;
-
-        //Убеждаемся, что устройство имеет соответствующие зависимости.
-        GCMRegistrar.checkDevice(this);
-
-        // Убеждаемся, что манифест был правильно настроен - закомментируйте эту строку
-        // при разработке приложения. Раскомментируйте ее, когда оно будет готово.
-        GCMRegistrar.checkManifest(this);
-
-        // Получить GCM регистрационный id
-        final String regId = GCMRegistrar.getRegistrationId(this);
-
-        Log.d(LOG_TAG,"regId = " + regId);
-
-        // Проверям был ли regid уже предоставлен ранее
-        if (regId.equals("")) {
-            // Регистрации ранее небыло, регистрируем сейчас на GCM
-            Log.d(LOG_TAG, "regId - new registration");
-            Log.d(LOG_TAG, SENDER_ID);
-
-            GCMRegistrar.register(this, SENDER_ID);
-
-        } else {
-            Log.d(LOG_TAG, "Устройство уже зарегистрированно на GCM");
-            // Устройство уже зарегистрированно на  GCM
-            if (GCMRegistrar.isRegisteredOnServer(this)) {
-                // Пропустить этап регистрации.
-                 Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
-            } else {
-                // Попробуем зарегистрироваться снова, но не в потоке пользовательского интерфейса.
-                // Это также необходимо для отмены потока OnDestroy (),
-                // следовательно используем AsyncTask вместо исходного потока.
-                final Context context = this;
-                mRegisterTask = new AsyncTask<Void, Void, Void>() {
-
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        // Регистрируемся на нашем сервере
-                        // На сервере создается новый пользователь
-
-                        Log.d(LOG_TAG, "point = " + point);
-                        ServerUtilities.register(context, point, regId);
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void result) {
-                        mRegisterTask = null;
-                    }
-
-                };
-                mRegisterTask.execute(null, null, null);
-            }
-        }
-    }
-    /**
-     * Получаем push-сообщения
-     * */
-
-    @Override
-    protected void onDestroy() {
-        if (mRegisterTask != null) {
-            mRegisterTask.cancel(true);
-        }
-        try {
-            GCMRegistrar.onDestroy(this);
-        } catch (Exception e) {
-            Log.e("UnRegister Receiver Error", "> " +
-                    e.getMessage());
-        }
-        super.onDestroy();
     }
 
 }

@@ -35,8 +35,11 @@ public class PaymentPojoImpl extends PaymentImpl {
     private boolean delayed = false;
     private boolean preparedForCancelling = false;
     private boolean active = false;
-    private boolean sended = false;
+    private boolean sent = false;
     private int errorRepeatCount = 0;
+
+
+    public PaymentPojoImpl() {}
 
     public PaymentPojoImpl(Integer psid, Double value, Double fullValue) {
         this.psId       = psid;
@@ -92,6 +95,20 @@ public class PaymentPojoImpl extends PaymentImpl {
     public Double getFullValue() {
         return fullValue;
     }
+    public void   setFullValue(Double fullValue) {
+        this.fullValue = fullValue;
+    }
+
+    public void   setFullValue(Integer value) {
+        setValue(value/100);
+    }
+
+    @Override
+    public void setFields(Collection<IFieldInfo> fields) {
+        this.fields = fields;
+    }
+
+
 
     @Override
     public Integer getErrorCode() {
@@ -211,14 +228,15 @@ public class PaymentPojoImpl extends PaymentImpl {
         return active;
     }
 
+
     @Override
-    public void setSended(boolean sended) {
-        this.sended = sended;
+    public void setSent(boolean sent) {
+        this.sent = sent;
     }
 
     @Override
-    public boolean getSended() {
-        return sended;
+    public boolean getSent() {
+        return sent;
     }
 
     @Override
