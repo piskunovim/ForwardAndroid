@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.notifications.AlertDialogManager;
 import ru.forwardmobile.tforwardpayment.notifications.ConnectionDetector;
 import ru.forwardmobile.tforwardpayment.notifications.ServerUtilities;
 import ru.forwardmobile.tforwardpayment.notifications.WakeLocker;
@@ -47,9 +48,18 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     //Объект передачи сообщения
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
     AsyncTask<Void, Void, Void> mRegisterTask;
+    AsyncTask<Void, Void, Void> mSendTask;
+    TextView lblMessage;
+    AlertDialogManager alert = new AlertDialogManager();
+    ConnectionDetector cd;
 
     //инициализируем наши объекты формы
     //Button btnSingIn = (Button) findViewById(R.id.singin);
+
+    //определяем статическую переменную для точки
+    public static String point;
+
+
     EditText etName, etPass;
     TPostData pd;
 
@@ -104,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     public void sendMessage(View view){
-        RegDevice(etName.getText().toString());
+
         SingIn(etName.getText().toString(), etPass.getText().toString());
     }
 
@@ -125,12 +135,14 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         if (responseStr.length() > 0){
             // Создаем объект Intent для вызова новой Activity
+            RegDevice(etName.getText().toString());
             Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, responseStr);
 
+
             // запуск activity
-            startActivity(intent);
-            this.finish();
+            //startActivity(intent);
+            //this.finish();
 
         } else {
             new AlertDialog.Builder(this)
@@ -238,18 +250,9 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     public void RegDevice(final String pointid){
        Log.d(LOG_TAG, "RegDevice started...");
 
-       Log.d(LOG_TAG, "pointid: "+ pointid);
-        /*cd = new ConnectionDetector(getApplicationContext());
 
-        // Проверяем доступен ли Интернет
-        if (!cd.isConnectingToInternet()) {
-            // Если интернет соединение недоступно
-            alert.showAlertDialog(MainActivity.this,
-                    "Internet Connection Error",
-                    "Please connect to working Internet connection", false);
-            // прерываем исполнение кода вызовом return
-            return;
-        }*/
+       Log.d(LOG_TAG, "pointid: "+ pointid);
+        point = pointid;
 
         //Убеждаемся, что устройство имеет соответствующие зависимости.
         GCMRegistrar.checkDevice(this);
@@ -257,9 +260,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         // Убеждаемся, что манифест был правильно настроен - закомментируйте эту строку
         // при разработке приложения. Раскомментируйте ее, когда оно будет готово.
         GCMRegistrar.checkManifest(this);
-
-        registerReceiver(mHandleMessageReceiver, new IntentFilter(
-                DISPLAY_MESSAGE_ACTION));
 
         // Получить GCM регистрационный id
         final String regId = GCMRegistrar.getRegistrationId(this);
@@ -270,7 +270,10 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         if (regId.equals("")) {
             // Регистрации ранее небыло, регистрируем сейчас на GCM
             Log.d(LOG_TAG, "regId - new registration");
+            Log.d(LOG_TAG, SENDER_ID);
+
             GCMRegistrar.register(this, SENDER_ID);
+
         } else {
             Log.d(LOG_TAG, "Устройство уже зарегистрированно на GCM");
             // Устройство уже зарегистрированно на  GCM
@@ -288,7 +291,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
                     protected Void doInBackground(Void... params) {
                         // Регистрируемся на нашем сервере
                         // На сервере создается новый пользователь
-                        final String point = pointid;
+
                         Log.d(LOG_TAG, "point = " + point);
                         ServerUtilities.register(context, point, regId);
                         return null;
@@ -304,30 +307,22 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             }
         }
     }
-
     /**
      * Получаем push-сообщения
      * */
-    private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
-            // Пробуждаем телефон, если он находился в режиме сна
-            WakeLocker.acquire(getApplicationContext());
 
-            /**
-             * Необходимо предпринять дальнейшие действия над этим сообщением
-             * в зависимости от требований вашего приложения
-             * на данный момент мы просто отобразим его на экране
-             * */
-
-            // Показываем полученное сообщение
-           // lblMessage.append(newMessage + "\n");
-            Toast.makeText(getApplicationContext(), "Новое сообщение: " + newMessage, Toast.LENGTH_LONG).show();
-
-            // Освобождаем блокировку сна
-            WakeLocker.release();
+    @Override
+    protected void onDestroy() {
+        if (mRegisterTask != null) {
+            mRegisterTask.cancel(true);
         }
-    };
+        try {
+            GCMRegistrar.onDestroy(this);
+        } catch (Exception e) {
+            Log.e("UnRegister Receiver Error", "> " +
+                    e.getMessage());
+        }
+        super.onDestroy();
+    }
 
 }

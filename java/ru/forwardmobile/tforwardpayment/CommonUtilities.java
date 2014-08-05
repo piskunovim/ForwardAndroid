@@ -1,18 +1,16 @@
-package ru.forwardmobile.tforwardpayment.notifications;
+package ru.forwardmobile.tforwardpayment;
 
 /**
  * Created by PiskunovI on 24.07.2014.
  */
 import android.content.Context;
 import android.content.Intent;
-/**
- * @deprecated
- */
+
 public final class CommonUtilities {
 
     // указываем url сервера регистрации здесь
-    static final String SERVER_URL = "http://192.168.1.242/gcm_server_php/register.php";
-
+    //static final String SERVER_URL = "http://192.168.1.242/gcm_server_php/register.php";
+    static final String SERVER_URL = "http://sppr.forwardmobile.ru/gcm/";
     // Google project id
     static final String SENDER_ID = "421740259735";
 

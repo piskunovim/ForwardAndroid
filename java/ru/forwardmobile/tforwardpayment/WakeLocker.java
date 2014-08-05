@@ -1,4 +1,4 @@
-package ru.forwardmobile.tforwardpayment.notifications;
+package ru.forwardmobile.tforwardpayment;
 
 /**
  * Created by PiskunovI on 25.07.2014.
@@ -6,9 +6,7 @@ package ru.forwardmobile.tforwardpayment.notifications;
 
   import android.content.Context;
   import android.os.PowerManager;
-/**
- * @deprecated
- */
+
 public abstract class WakeLocker {
     private static PowerManager.WakeLock wakeLock;
 

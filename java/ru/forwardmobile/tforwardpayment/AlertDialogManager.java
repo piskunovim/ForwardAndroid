@@ -1,4 +1,4 @@
-package ru.forwardmobile.tforwardpayment.notifications;
+package ru.forwardmobile.tforwardpayment;
 
 /**
  * Created by PiskunovI on 24.07.2014.
@@ -6,9 +6,7 @@ package ru.forwardmobile.tforwardpayment.notifications;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-/**
- * @deprecated
- */
+
 public class AlertDialogManager {
     /**
      * Функция вывода простейшего Alert Dialog
