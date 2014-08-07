@@ -5,11 +5,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import ru.forwardmobile.tforwardpayment.R;
+import ru.forwardmobile.tforwardpayment.ReportBaseFilter;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.PaymentQueueWrapper;
 import ru.forwardmobile.util.http.Dates;
@@ -23,9 +25,9 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
     public static final Integer ALL_PAYMENT_LIST_TYPE = 1;
     public static final String  LIST_TYPE   = "payment-list-type";
 
-
     ListView                listView = null;
     PaymentListDataSource dataSource = null;
+    ReportBaseFilter          filter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +35,12 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
 
         setContentView(R.layout.simple_payment_list);
 
+        filter      = new ReportBaseFilter(this, (ViewGroup) findViewById(R.id.payment_list_filter));
+
+
+
         listView    = (ListView) findViewById(R.id.payment_list_view);
         listView.setOnItemClickListener(this);
-
         dataSource  = new PaymentListDataSource(this);
 
         showPaymentList(getIntent().getIntExtra(LIST_TYPE, 0));

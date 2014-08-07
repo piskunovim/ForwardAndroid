@@ -1,11 +1,9 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -27,16 +25,6 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.notifications.AlertDialogManager;
-import ru.forwardmobile.tforwardpayment.notifications.ConnectionDetector;
-import ru.forwardmobile.tforwardpayment.notifications.ServerUtilities;
-import ru.forwardmobile.tforwardpayment.notifications.WakeLocker;
-
-//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.DISPLAY_MESSAGE_ACTION;
-//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.EXTRA_MESSAGE;
-
-//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.DISPLAY_MESSAGE_ACTION;
-//import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.SENDER_ID;
 
 public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
