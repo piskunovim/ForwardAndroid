@@ -47,10 +47,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.MainListActivity"
-            android:label="@string/title_activity_main_list" >
-        </activity>
-        <activity
             android:name="ru.forwardmobile.tforwardpayment.MainAccessActivity"
             android:label="@string/title_access_activity" >
         </activity>
@@ -79,10 +75,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="ru.forwardmobile.tforwardpayment.OperatorsActivity"
-            android:label="@string/title_activity_operators" >
         </activity>
 
         <activity
