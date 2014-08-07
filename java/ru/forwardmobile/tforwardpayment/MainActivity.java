@@ -27,10 +27,10 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.notifications.AlertDialogManager;
-import ru.forwardmobile.tforwardpayment.notifications.ConnectionDetector;
-import ru.forwardmobile.tforwardpayment.notifications.ServerUtilities;
-import ru.forwardmobile.tforwardpayment.notifications.WakeLocker;
+import ru.forwardmobile.tforwardpayment.AlertDialogManager;
+import ru.forwardmobile.tforwardpayment.ConnectionDetector;
+import ru.forwardmobile.tforwardpayment.ServerUtilities;
+import ru.forwardmobile.tforwardpayment.WakeLocker;
 
 //import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.DISPLAY_MESSAGE_ACTION;
 //import static ru.forwardmobile.tforwardpayment.notifications.CommonUtilities.EXTRA_MESSAGE;
