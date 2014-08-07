@@ -5,8 +5,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import ru.forwardmobile.tforwardpayment.spp.IField;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 
 /**
  *
@@ -14,12 +14,12 @@ import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
  */
 public abstract class BaseField extends LinearLayout implements IField {
 
-    final LayoutParams DEFAULT_LAYOUT_PARAMS =
+    public final LayoutParams DEFAULT_LAYOUT_PARAMS =
             new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     
     final String name;
     final String label;
-    
+
     final TextView labelView;          
           
     public BaseField(Context context, String name, String label) {
@@ -37,6 +37,10 @@ public abstract class BaseField extends LinearLayout implements IField {
         this.setLayoutParams( DEFAULT_LAYOUT_PARAMS );
     }
 
+    public String getLabel() {
+        return label;
+    }
+
     public String getName() {
         return name;
     }
@@ -45,8 +49,8 @@ public abstract class BaseField extends LinearLayout implements IField {
         return this;
     }
     
-    public static IFieldInfo fieldInfo(final String name, final String value) {
-        return new IFieldInfo() {
+    public static IField fieldInfo(final String name, final String value, final String label) {
+        return new IField() {
 
             public String getName() {
                 return name;
@@ -54,6 +58,20 @@ public abstract class BaseField extends LinearLayout implements IField {
 
             public String getValue() {
                 return value;
+            }
+
+            public String getLabel() {
+                return label;
+            }
+
+            @Override
+            public View getView() {
+                throw new UnsupportedOperationException("Use FieldFactory to create viewable fields.");
+            }
+
+            @Override
+            public void setValue(String value) {
+                throw new UnsupportedOperationException("Use FieldFactory to create editable fields.");
             }
         };
     }

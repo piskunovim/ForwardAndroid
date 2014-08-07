@@ -159,7 +159,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
                 if ( ( payment.getStatus() == IPayment.FAILED ) ||
                         ( payment.getStatus() == IPayment.CANCELLED ) ||
                         ( payment.isDelayed() ) ||
-                        ( ( payment.getStatus() == IPayment.NEW ) && !payment.getSended() ) ) {
+                        ( ( payment.getStatus() == IPayment.NEW ) && !payment.getSent() ) ) {
                     activePayments.remove(payment);
                     paymentDao.delete(payment);
                     // Application.getCounter().count(payment,IPaymentCounter.COUNT_REMOVE);
@@ -179,7 +179,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
             if ( activePayments.contains(payment) ) {
                 if ( ( payment.getStatus() == IPayment.FAILED ) || ( payment.getStatus() == IPayment.CANCELLED ) ) {
                     payment.setStatus(IPayment.NEW);
-                    payment.setSended(false);
+                    payment.setSent(false);
                     payment.setActive(false);
                     payment.setTryCount(0);
                     payment.setFinishDate(null);

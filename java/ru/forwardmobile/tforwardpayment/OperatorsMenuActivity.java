@@ -72,8 +72,8 @@ public class OperatorsMenuActivity extends ActionBarActivity implements AdapterV
     }
 
     protected void startPayment(Integer item) {
-        Intent intent = new Intent(this, PaymentActivity.class);
-        intent.putExtra("psid", item);
+        Intent intent = new Intent(this, DataEntryActivity.class);
+        intent.putExtra(DataEntryActivity.PS_PARAMETER, item);
         startActivity(intent);
     }
 

@@ -28,6 +28,16 @@ public abstract class MenuItem implements IProviderMenuItem {
             public String toString(){
                 return getName();
             }
+
+            @Override
+            public int hashCode() {
+                return id;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                return o != null && o.hashCode() == this.hashCode();
+            }
         };
     }
 

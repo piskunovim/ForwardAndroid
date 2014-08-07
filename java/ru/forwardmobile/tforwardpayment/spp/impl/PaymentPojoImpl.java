@@ -8,19 +8,19 @@ import java.util.Date;
 import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.TSettings;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 /**
  * POJO реализация платежа
  * @author Vasiliy Vanin
  */
-public class PaymentPojoImpl extends PaymentImpl {
+public class PaymentPojoImpl extends PaymentImpl  {
     final String                    LOGGER_TAG = "TFORWARD.PAYMENTIMPL";
     private Double                    value;
     private Double                    fullValue;
     private Integer                   psId;
-    private Collection<IFieldInfo>    fields = new HashSet<IFieldInfo>();
+    private Collection<IField>        fields = new HashSet<IField>();
 
     private Integer id = null;
     private Date    startDate;
@@ -35,8 +35,11 @@ public class PaymentPojoImpl extends PaymentImpl {
     private boolean delayed = false;
     private boolean preparedForCancelling = false;
     private boolean active = false;
-    private boolean sended = false;
+    private boolean sent = false;
     private int errorRepeatCount = 0;
+
+
+    public PaymentPojoImpl() {}
 
     public PaymentPojoImpl(Integer psid, Double value, Double fullValue) {
         this.psId       = psid;
@@ -44,7 +47,7 @@ public class PaymentPojoImpl extends PaymentImpl {
         this.fullValue  = fullValue;
     }    
 
-    public void addField(IFieldInfo field) {
+    public void addField(IField field) {
         fields.add(field);
     }
 
@@ -68,7 +71,7 @@ public class PaymentPojoImpl extends PaymentImpl {
         this.transactionId = transactionId;
     }
 
-    public Collection<IFieldInfo> getFields() {
+    public Collection<IField> getFields() {
         return Collections.unmodifiableCollection(fields);
     }
 
@@ -92,6 +95,31 @@ public class PaymentPojoImpl extends PaymentImpl {
     public Double getFullValue() {
         return fullValue;
     }
+    public void   setFullValue(Double fullValue) {
+        this.fullValue = fullValue;
+    }
+
+    public void   setFullValue(Integer value) {
+        setValue(value/100);
+    }
+
+    @Override
+    public void setFields(Collection<IField> fields) {
+        this.fields = fields;
+    }
+
+    @Override
+    public IField getField(String name) {
+
+        for(IField field: fields) {
+            if(name.equals(field.getName())) {
+                return field;
+            }
+        }
+
+        return null;
+    }
+
 
     @Override
     public Integer getErrorCode() {
@@ -132,9 +160,9 @@ public class PaymentPojoImpl extends PaymentImpl {
     }
 
     @Override
-    public IFieldInfo getTarget() {
+    public IField getTarget() {
 
-        for(IFieldInfo field: fields) {
+        for(IField field: fields) {
             if("target" . equals( field.getName() )) {
                 return field;
             }
@@ -211,14 +239,15 @@ public class PaymentPojoImpl extends PaymentImpl {
         return active;
     }
 
+
     @Override
-    public void setSended(boolean sended) {
-        this.sended = sended;
+    public void setSent(boolean sent) {
+        this.sent = sent;
     }
 
     @Override
-    public boolean getSended() {
-        return sended;
+    public boolean getSent() {
+        return sent;
     }
 
     @Override

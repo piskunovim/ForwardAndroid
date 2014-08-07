@@ -5,4 +5,21 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="DataEntry" >
+        <item name="android:background">#efefef</item>
+    </style>
+
+    <style name="DataEntry.Container">
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="DataEntry.Title">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/wet_asphalt</item>
+    </style>
+
+    <style name="DataEntry.fieldGroup">
+        <item name="android:padding">20dp</item>
+    </style>
+
 </resources>

@@ -15,7 +15,6 @@ import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.actions.CheckTask;
 import ru.forwardmobile.tforwardpayment.spp.IField;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
@@ -29,6 +28,8 @@ import ru.forwardmobile.tforwardpayment.spp.ProviderFactory;
 public class PaymentActivity  extends Activity implements View.OnClickListener {
 
     private final static String LOGGER_TAG = "TFORWARD.PAYMENTACT";
+    public  final static String PAYMENT_ID_PARAMETER = "payidx9";
+    public  final static String PS_ID_PARAMETER      = "psidx1";
 
     Button      checkButton;
     Button      startButton;
@@ -39,7 +40,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
     EditText    fullValueField;
     
     IProvider   provider;
-    Collection<IFieldInfo> fieldsInfo;
+    Collection<IField> fieldsInfo;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState); 
 
         // Получаем ПС с полями
-        provider = ProviderFactory.getProvider(getIntent().getIntExtra("psid", 453), this);
+        provider = ProviderFactory.getProvider(getIntent().getIntExtra(PS_ID_PARAMETER, 453), this);
         //provider = ProviderFactory.mockProvider(this);
         Log.d("TForwardPayment.PaymentActivity", provider.getName());
 
@@ -56,9 +57,9 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         fields = (ViewGroup) layout.findViewById(R.id.data_entry_fields_container);
 
         // Список полей для сервера
-        fieldsInfo = new HashSet<IFieldInfo>();
+        fieldsInfo = new HashSet<IField>();
         
-        for(IField field: provider.getFields()) {
+        for( IField field: provider.getFields() ) {
             fields.addView( field.getView() );
             fieldsInfo.add(field);
         }

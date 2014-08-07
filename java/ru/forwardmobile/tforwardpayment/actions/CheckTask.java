@@ -11,7 +11,7 @@ import java.util.Map;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.network.ServerRequestFactory;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.util.http.HttpUtils;
 import ru.forwardmobile.util.http.IRequest;
@@ -43,7 +43,7 @@ public class CheckTask extends AsyncTask<Void, Integer, Integer> {
         // DEBUG
         command.append("&value=10");
         
-        for(IFieldInfo field: payment.getFields()) {
+        for(IField field: payment.getFields()) {
             if("target" . equals(field.getName())) {
                 command.append("&target=" + field.getValue());
             } else {
