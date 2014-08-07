@@ -10,12 +10,12 @@ import android.widget.Spinner;
 public class EnumFieldImpl extends BaseField {
 
     private final Spinner spinner;
+    private ArrayAdapter<EnumItem> adapter;
 
     public EnumFieldImpl(Context ctx, String name, String label, String opts) {
         super(ctx, name, label);
         
-        ArrayAdapter<EnumItem> adapter =
-                new ArrayAdapter<EnumItem>(ctx, android.R.layout.simple_spinner_item);
+        adapter = new ArrayAdapter<EnumItem>(ctx, android.R.layout.simple_spinner_item);
         
         String[] items = opts.split("\\|");
         for(String pair: items) {
@@ -37,6 +37,14 @@ public class EnumFieldImpl extends BaseField {
         return item.value;
     }
 
+    @Override
+    public void setValue(String value) {
+        Integer index = adapter.getPosition(new EnumItem(new String[]{
+            value,""
+        }));
+        spinner.setSelection(index);
+    }
+
     static class EnumItem {
         private String value = null;
         private String title = null;
@@ -48,6 +56,13 @@ public class EnumFieldImpl extends BaseField {
         
         public String toString() {
             return title;
+        }
+        public boolean equals(Object o) {
+
+            if(o instanceof EnumItem) {
+                return o != null && o.toString().equals(this.toString());
+            }
+            return false;
         }
     }
 }

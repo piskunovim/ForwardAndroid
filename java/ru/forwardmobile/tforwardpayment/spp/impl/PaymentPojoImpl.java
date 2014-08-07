@@ -8,19 +8,19 @@ import java.util.Date;
 import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.TSettings;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 /**
  * POJO реализация платежа
  * @author Vasiliy Vanin
  */
-public class PaymentPojoImpl extends PaymentImpl {
+public class PaymentPojoImpl extends PaymentImpl  {
     final String                    LOGGER_TAG = "TFORWARD.PAYMENTIMPL";
     private Double                    value;
     private Double                    fullValue;
     private Integer                   psId;
-    private Collection<IFieldInfo>    fields = new HashSet<IFieldInfo>();
+    private Collection<IField>        fields = new HashSet<IField>();
 
     private Integer id = null;
     private Date    startDate;
@@ -47,7 +47,7 @@ public class PaymentPojoImpl extends PaymentImpl {
         this.fullValue  = fullValue;
     }    
 
-    public void addField(IFieldInfo field) {
+    public void addField(IField field) {
         fields.add(field);
     }
 
@@ -71,7 +71,7 @@ public class PaymentPojoImpl extends PaymentImpl {
         this.transactionId = transactionId;
     }
 
-    public Collection<IFieldInfo> getFields() {
+    public Collection<IField> getFields() {
         return Collections.unmodifiableCollection(fields);
     }
 
@@ -104,10 +104,21 @@ public class PaymentPojoImpl extends PaymentImpl {
     }
 
     @Override
-    public void setFields(Collection<IFieldInfo> fields) {
+    public void setFields(Collection<IField> fields) {
         this.fields = fields;
     }
 
+    @Override
+    public IField getField(String name) {
+
+        for(IField field: fields) {
+            if(name.equals(field.getName())) {
+                return field;
+            }
+        }
+
+        return null;
+    }
 
 
     @Override
@@ -149,9 +160,9 @@ public class PaymentPojoImpl extends PaymentImpl {
     }
 
     @Override
-    public IFieldInfo getTarget() {
+    public IField getTarget() {
 
-        for(IFieldInfo field: fields) {
+        for(IField field: fields) {
             if("target" . equals( field.getName() )) {
                 return field;
             }

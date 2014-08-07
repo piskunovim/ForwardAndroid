@@ -23,14 +23,15 @@ public interface IPayment {
     public Integer                  getTransactionId();
     public void                     setTransactionId(Integer transactionId);
 
-    /** @return Collection<IFieldInfo> Набор полей */
-    public Collection<IFieldInfo>   getFields();
+    /** @return Collection<IField> Набор полей */
+    public Collection<IField>       getFields();
 
     /** @return Integer Идентификатор платежной системы */
     public Integer                  getPsid();
 
     /** @return Double  Сумма платежа к зачислению в рублях с копейками */
     public Double                   getValue();
+    public void                     setValue(Double value);
 
     /** @return Double  Сумма платежа полная в рублях с копейками */
     public Double                   getFullValue();
@@ -50,8 +51,8 @@ public interface IPayment {
     public Date                     getFinishDate();
     public void                     setFinishDate(Date finishDate);
 
-    /** @return IFieldInfo  Основное поле */
-    public IFieldInfo               getTarget();
+    /** @return IField  Основное поле */
+    public IField                   getTarget();
 
     /** @return Integer Статус платежа, значения в IPayment */
     public Integer                  getStatus();
@@ -82,5 +83,6 @@ public interface IPayment {
     public String                   getStatusName();
     public void                     setPsid(Integer psid);
     public void                     setFullValue(Double fullValue);
-    public void                     setFields(Collection<IFieldInfo> fields);
+    public void                     setFields(Collection<IField> fields);
+    public IField                   getField(String name);
 }

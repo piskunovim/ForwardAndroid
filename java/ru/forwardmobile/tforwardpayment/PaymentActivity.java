@@ -15,7 +15,6 @@ import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.actions.CheckTask;
 import ru.forwardmobile.tforwardpayment.spp.IField;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
@@ -41,7 +40,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
     EditText    fullValueField;
     
     IProvider   provider;
-    Collection<IFieldInfo> fieldsInfo;
+    Collection<IField> fieldsInfo;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         fields = (ViewGroup) layout.findViewById(R.id.data_entry_fields_container);
 
         // Список полей для сервера
-        fieldsInfo = new HashSet<IFieldInfo>();
+        fieldsInfo = new HashSet<IField>();
         
         for( IField field: provider.getFields() ) {
             fields.addView( field.getView() );

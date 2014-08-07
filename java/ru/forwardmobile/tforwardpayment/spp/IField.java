@@ -12,4 +12,5 @@ public interface IField extends IFieldInfo {
     public static final int ENUMERATION_FIELD_TYPE = 2;
 
     public View   getView();
+    public void   setValue(String value);
 }

@@ -13,9 +13,9 @@ public class PaymentFactory {
         return new PaymentPojoImpl();
     }
     
-    public static IPayment getPayment(Integer psid, Double value, Double fullValue, Collection<IFieldInfo> fields) {
+    public static IPayment getPayment(Integer psid, Double value, Double fullValue, Collection<IField> fields) {
         PaymentPojoImpl payment = new PaymentPojoImpl(psid, value, fullValue);
-        for(IFieldInfo field: fields)
+        for(IField field: fields)
             payment.addField(field);
         
         return payment;
