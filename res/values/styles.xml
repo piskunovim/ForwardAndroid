@@ -18,4 +18,8 @@
         <item name="android:textColor">@color/wet_asphalt</item>
     </style>
 
+    <style name="DataEntry.fieldGroup">
+        <item name="android:padding">20dp</item>
+    </style>
+
 </resources>

@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            style="@style/DataEntry.fieldGroup"
             android:id="@+id/mde_fields_container">
 
         </LinearLayout>

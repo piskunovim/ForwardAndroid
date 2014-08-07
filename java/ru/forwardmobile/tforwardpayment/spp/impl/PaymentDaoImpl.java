@@ -1,6 +1,7 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -18,7 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
 import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
@@ -31,7 +32,9 @@ public class PaymentDaoImpl implements IPaymentDao {
     private static final String LOGGER_TAG = "TFORWARD.DAO";
     private final SQLiteOpenHelper dbHelper;
 
-
+    public PaymentDaoImpl(Context ctx) {
+        dbHelper = new DatabaseHelper(ctx);
+    }
     public PaymentDaoImpl(SQLiteOpenHelper dbHelper)    {
         this.dbHelper = dbHelper;
     }
@@ -41,7 +44,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
         // Набор полей
         StringBuilder payment_data = new StringBuilder();
-        for( IFieldInfo field: payment.getFields() ) {
+        for( IField field: payment.getFields() ) {
             payment_data.append("<f n=\"" + field.getName() + "\" t=\"" +  field.getLabel() + "\">" + field.getValue() + "</f>");
         }
 
@@ -83,7 +86,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
             if(cursor.moveToNext()) {
 
-                Collection<IFieldInfo> fields = parseFields(cursor.getString(1));
+                Collection<IField> fields = parseFields(cursor.getString(1));
                 IPayment payment = PaymentFactory.getPayment( cursor.getInt(0), (double) cursor.getInt(2)/100, (double) cursor.getInt(3)/100, fields );
                 payment.setErrorCode(cursor.getInt(4));
                 payment.setErrorDescription(cursor.getString(5));
@@ -112,7 +115,7 @@ public class PaymentDaoImpl implements IPaymentDao {
                 , new String[]{});
         try {
             while (cursor.moveToNext()) {
-                Collection<IFieldInfo> fields = parseFields(cursor.getString(3));
+                Collection<IField> fields = parseFields(cursor.getString(3));
                 IPayment payment = PaymentFactory.getPayment(cursor.getInt(2), (double) cursor.getInt(4) / 100, (double) cursor.getInt(5) / 100, fields);
                 payment.setErrorCode(cursor.getInt(6));
                 payment.setErrorDescription(cursor.getString(7));
@@ -153,9 +156,9 @@ public class PaymentDaoImpl implements IPaymentDao {
 
     }
 
-    public static Collection<IFieldInfo> parseFields(String data) {
+    public static Collection<IField> parseFields(String data) {
 
-        Collection<IFieldInfo> fields = new HashSet<IFieldInfo>();
+        Collection<IField> fields = new HashSet<IField>();
 
         try {
             Xml.parse(data, new FieldContentHandler(fields));
@@ -174,9 +177,9 @@ public class PaymentDaoImpl implements IPaymentDao {
         private StringBuffer buffer = new StringBuffer();
         private String currentField = null;
         private String currentLabel = null;
-        private final Collection<IFieldInfo> collection;
+        private final Collection<IField> collection;
 
-        public FieldContentHandler(Collection<IFieldInfo> collection) {
+        public FieldContentHandler(Collection<IField> collection) {
             this.collection = collection;
         }
 

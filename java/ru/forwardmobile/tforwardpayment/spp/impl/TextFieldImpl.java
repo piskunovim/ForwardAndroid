@@ -23,4 +23,10 @@ public class TextFieldImpl extends BaseField {
         return valueView.getText()
                 .toString();
     }
+
+
+    @Override
+    public void setValue(String value) {
+        valueView.setText(value);
+    }
 }
