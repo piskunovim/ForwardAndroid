@@ -59,4 +59,13 @@
     <string name="options_clear">Очистить</string>
     <string name="options_exit">Выход</string>
 
+    <string-array name="report_filter_types">
+        <item>Период</item>
+        <item>Сегодня</item>
+        <item>Вчера</item>
+        <item>День</item>
+        <item>Месяц</item>
+        <item>Год</item>
+    </string-array>
+
 </resources>

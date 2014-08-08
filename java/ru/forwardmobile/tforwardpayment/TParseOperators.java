@@ -52,7 +52,7 @@ public void loadSettings(String xmlString) throws Exception {
         db.execSQL("delete from " + DatabaseHelper.PG_TABLE_NAME);
         db.execSQL("delete from " + DatabaseHelper.F_TABLE_NAME);
 
-        Log.i("PARSER", "Loading settings from " + xmlString.substring(0,155));
+        //Log.i("PARSER", "Loading settings from " + xmlString.substring(0,155));
         XmlPullParser xpp = prepareXpp(xmlString);
         Log.i("PARSER", "Successfull init..");
 

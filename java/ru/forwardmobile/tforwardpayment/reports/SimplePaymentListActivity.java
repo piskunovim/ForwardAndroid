@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import ru.forwardmobile.tforwardpayment.R;
 import ru.forwardmobile.tforwardpayment.ReportBaseFilter;
+import ru.forwardmobile.tforwardpayment.ReportCommonFilter;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.PaymentQueueWrapper;
 import ru.forwardmobile.util.http.Dates;
@@ -28,6 +31,8 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
     ListView                listView = null;
     PaymentListDataSource dataSource = null;
     ReportBaseFilter          filter = null;
+    ReportCommonFilter        filterCommon = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,52 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
 
         setContentView(R.layout.simple_payment_list);
 
-        filter      = new ReportBaseFilter(this, (ViewGroup) findViewById(R.id.payment_list_filter));
+        Spinner spinner = (Spinner) findViewById(R.id.filterSpinner);
 
+        ArrayAdapter<?> adapter =
+                ArrayAdapter.createFromResource(this, R.array.report_filter_types, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+
+                if (selectedItemPosition == 0 )
+                {
+                 filterCommon.setVisibility(View.GONE);
+                 filter.setVisibility(View.VISIBLE);
+
+                }
+                else if (selectedItemPosition == 4 ){
+                    ((ViewGroup) findViewById(R.id.payment_list_filter)).removeView(filterCommon);
+                    filter.setVisibility(View.GONE);
+                    filterCommon= new ReportCommonFilter(SimplePaymentListActivity.this, (ViewGroup) findViewById(R.id.payment_list_filter),2);
+                }
+                else if (selectedItemPosition == 5 ){
+                    ((ViewGroup) findViewById(R.id.payment_list_filter)).removeView(filterCommon);
+                    filter.setVisibility(View.GONE);
+                    filterCommon= new ReportCommonFilter(SimplePaymentListActivity.this, (ViewGroup) findViewById(R.id.payment_list_filter),1);
+
+                }
+                else {
+                    ((ViewGroup) findViewById(R.id.payment_list_filter)).removeView(filterCommon);
+                    filter.setVisibility(View.GONE);
+                }
+                String[] choose = getResources().getStringArray(R.array.report_filter_types);
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Вами выбран фильтр: " + choose[selectedItemPosition], Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+        filter      = new ReportBaseFilter(this, (ViewGroup) findViewById(R.id.payment_list_filter));
+        filterCommon= new ReportCommonFilter(this, (ViewGroup) findViewById(R.id.payment_list_filter),1);
 
 
         listView    = (ListView) findViewById(R.id.payment_list_view);

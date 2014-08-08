@@ -1,0 +1,183 @@
+package ru.forwardmobile.tforwardpayment;
+
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.textservice.TextInfo;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import java.lang.reflect.Field;
+import java.util.Calendar;
+import java.util.Date;
+
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.widget.TextView;
+
+import ru.forwardmobile.tforwardpayment.reports.SimplePaymentListActivity;
+import ru.forwardmobile.util.http.Dates;
+
+
+/**
+ * Created by PiskunovI on 08.08.2014.
+ */
+public class ReportCommonFilter extends LinearLayout implements DatePickerDialog.OnDateSetListener, View.OnTouchListener, View.OnClickListener {
+
+    protected TextView          dateFromView        = null;
+    protected TextView          dateToView          = null;
+    protected DatePickerDialog  picker              = null;
+    protected Button fastChoice          = null;
+
+    private   TextView triggeredItem    = null;
+
+
+
+
+    public ReportCommonFilter(Context ctx, ViewGroup container, Integer state) {
+        this(ctx, container, new Date(), state);
+    }
+
+    public ReportCommonFilter(Context ctx, ViewGroup container, Date initDate, Integer state) {
+        super(ctx);
+
+        setLayoutParams(
+                new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT)
+        );
+
+        setOrientation(LinearLayout.HORIZONTAL);
+
+        dateFromView = new EditText(getContext());
+        dateFromView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 1f));
+        addView(dateFromView);
+        //dateFromView.setOnClickListener(this);
+        dateFromView.setOnTouchListener(this);
+        dateFromView.setText(Dates.Format(initDate, "dd.MM.yyyy"));
+
+        dateToView   = new EditText(getContext());
+        dateToView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 1f));
+        addView(dateToView);
+        //dateToView.setOnClickListener(this);
+        dateToView.setOnTouchListener(this);
+        dateToView.setText(Dates.Format(initDate, "dd.MM.yyyy"));
+        dateToView.setVisibility(GONE);
+
+        Calendar calendar = Calendar.getInstance();
+        picker   = new DatePickerDialog(getContext(), this, calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+//------------------------
+        if (state == 1){
+            picker.setTitle("Выберите год:");
+            try {
+                java.lang.reflect.Field[] datePickerDialogFields = picker.getClass().getDeclaredFields();
+                for (java.lang.reflect.Field datePickerDialogField : datePickerDialogFields) {
+                    if (datePickerDialogField.getName().equals("mDatePicker")) {
+                        datePickerDialogField.setAccessible(true);
+                        DatePicker datePicker = (DatePicker) datePickerDialogField.get(picker);
+                        datePicker.setCalendarViewShown(false);
+                        datePicker.setMaxDate(new Date().getTime());
+
+                        java.lang.reflect.Field[] datePickerFields = datePickerDialogField.getType().getDeclaredFields();
+                        for (java.lang.reflect.Field datePickerField : datePickerFields) {
+                            if ("mDaySpinner".equals(datePickerField.getName())) {
+                                datePickerField.setAccessible(true);
+                                Object dayPicker = new Object();
+                                dayPicker = datePickerField.get(datePicker);
+                                ((View) dayPicker).setVisibility(View.GONE);
+                            }
+                            if ("mMonthSpinner".equals(datePickerField.getName())) {
+                                datePickerField.setAccessible(true);
+                                Object dayPicker = new Object();
+                                dayPicker = datePickerField.get(datePicker);
+                                ((View) dayPicker).setVisibility(View.GONE);
+                            }
+                        }
+                    }
+
+                }
+            } catch (Exception ex) {
+            }
+        }
+        else if (state == 2) {
+            picker.setTitle("Выберите месяц:");
+           try {
+               java.lang.reflect.Field[] datePickerDialogFields = picker.getClass().getDeclaredFields();
+               for (java.lang.reflect.Field datePickerDialogField : datePickerDialogFields) {
+                   if (datePickerDialogField.getName().equals("mDatePicker")) {
+                       datePickerDialogField.setAccessible(true);
+                       DatePicker datePicker = (DatePicker) datePickerDialogField.get(picker);
+                       datePicker.setCalendarViewShown(false);
+                       datePicker.setMaxDate(new Date().getTime());
+
+                       java.lang.reflect.Field[] datePickerFields = datePickerDialogField.getType().getDeclaredFields();
+                       for (java.lang.reflect.Field datePickerField : datePickerFields) {
+                           if ("mDaySpinner".equals(datePickerField.getName())) {
+                               datePickerField.setAccessible(true);
+                               Object dayPicker = new Object();
+                               dayPicker = datePickerField.get(datePicker);
+                               ((View) dayPicker).setVisibility(View.GONE);
+                           }
+                       }
+                   }
+
+               }
+           } catch (Exception ex) {
+           }
+       }
+//--------------------------
+
+        fastChoice  = new Button(getContext());
+        fastChoice.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 2f));
+        fastChoice.setOnClickListener(this);
+        fastChoice.setText("=//=");
+        addView(fastChoice);
+
+
+        container.addView(this);
+    }
+
+    protected void setDateToView(TextView dateToView) {
+        this.dateToView = dateToView;
+        //this.dateToView.setOnClickListener(this);
+    }
+
+    protected void setDateFromView(TextView dateFromView) {
+        this.dateFromView = dateFromView;
+        //this.dateFromView.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        //Dialog fastDialog = new FastChoiceDialog(getContext());
+        //fastDialog.show();
+
+
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        picker.hide();
+        if(triggeredItem != null) {
+            triggeredItem.setText(
+                    String.valueOf(day) + "."
+                            + String.valueOf(month) + "."
+                            + String.valueOf(year)
+            );
+        }
+
+        triggeredItem = null;
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        triggeredItem = (TextView) view;
+        picker.show();
+        return false;
+    }
+}
+
