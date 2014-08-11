@@ -99,7 +99,7 @@ public class PaymentListDataSource {
                     "pay.processDate, " +
                     "p.name as psName " +
                 " from payments pay left join " + DatabaseHelper.P_TABLE_NAME + " p on p.id = pay.psid " +
-                " where pay.status not in(3,5) ",
+                " where pay.status not in(3,4,5) ",
             new String[]{});
 
             while( cursor.moveToNext() )
@@ -113,6 +113,44 @@ public class PaymentListDataSource {
         return items;
     }
 
+    /**
+     * Список проблемных платежей
+     * @return List<PaymentInfo> - Список платежей
+     */
+    public List<PaymentInfo> getProblematic() {
+
+        List<PaymentInfo> items = new ArrayList<PaymentInfo>();
+        Cursor cursor = null;
+
+        try {
+
+            cursor = database.rawQuery(
+                    "select " +
+                            "pay.id, " +
+                            "pay.psid, " +
+                            "pay.fields, " +
+                            "pay.value, " +
+                            "pay.fullValue, " +
+                            "pay.errorCode, " +
+                            "pay.errorDescription, " +
+                            "pay.startDate, " +
+                            "pay.status, " +
+                            "pay.processDate, " +
+                            "p.name as psName " +
+                            " from payments pay left join " + DatabaseHelper.P_TABLE_NAME + " p on p.id = pay.psid " +
+                            " where pay.status in(4) ",
+                    new String[]{});
+
+            while( cursor.moveToNext() )
+                items.add(getItem(cursor));
+
+        } finally {
+            if(cursor != null)
+                cursor.close();
+        }
+
+        return items;
+    }
 
     private PaymentInfo getItem(Cursor cursor) {
 

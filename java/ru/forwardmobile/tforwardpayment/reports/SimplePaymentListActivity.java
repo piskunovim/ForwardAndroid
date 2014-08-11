@@ -22,8 +22,9 @@ import ru.forwardmobile.util.http.Dates;
  */
 public class SimplePaymentListActivity extends Activity implements AdapterView.OnItemClickListener {
 
-    public static final Integer UNPROCESSED_PAYMENT_LIST_TYPE = 0;
-    public static final Integer ALL_PAYMENT_LIST_TYPE = 1;
+    public static final Integer UNPROCESSED_PAYMENT_LIST_TYPE   = 0;
+    public static final Integer ALL_PAYMENT_LIST_TYPE           = 1;
+    public static final Integer PROBLEMATIC_PAYMENT_LIST_TYPE   = 3;
     public static final String  LIST_TYPE   = "payment-list-type";
 
 
@@ -44,14 +45,18 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
         showPaymentList(getIntent().getIntExtra(LIST_TYPE, 0));
     }
 
-    private void showPaymentList(int intExtra) {
+    private void showPaymentList(int listType) {
 
-        if( intExtra == UNPROCESSED_PAYMENT_LIST_TYPE ) {
+        if( listType == UNPROCESSED_PAYMENT_LIST_TYPE ) {
             listView.setAdapter(PaymentAdapterFactory.getAdapter(dataSource.getUnprocessed(), this));
         } else
-        if( intExtra == ALL_PAYMENT_LIST_TYPE) {
+        if( listType == ALL_PAYMENT_LIST_TYPE) {
             listView.setAdapter(PaymentAdapterFactory.getAdapter(dataSource.getAll(), this));
+        } else
+        if( listType == PROBLEMATIC_PAYMENT_LIST_TYPE) {
+            listView.setAdapter(PaymentAdapterFactory.getAdapter(dataSource.getProblematic(), this));
         }
+
     }
 
     @Override
