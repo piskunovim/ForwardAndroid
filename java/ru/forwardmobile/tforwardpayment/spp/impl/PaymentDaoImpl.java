@@ -93,6 +93,7 @@ public class PaymentDaoImpl implements IPaymentDao {
                 payment.setStartDate(new Date(cursor.getLong(6)));
                 payment.setStatus(cursor.getInt(7));
                 payment.setDateOfProcess(new Date(cursor.getLong(8)));
+                payment.setId(id);
 
                 return payment;
             }

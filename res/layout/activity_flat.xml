@@ -64,6 +64,7 @@
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
+
         <Button
             android:layout_margin="0dp"
             android:id="@+id/Button01"
