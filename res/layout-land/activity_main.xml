@@ -29,20 +29,42 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:gravity="top">
 
                 <!-- Логотип -->
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageView"
-                    android:layout_gravity="center"
-                    android:src="@drawable/logo"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginBottom="60dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1.3">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView"
+                        android:layout_gravity="center"
+                        android:src="@drawable/logo"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginBottom="60dp"/>
+                </LinearLayout>
+
+                <!-- Разделитель -->
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20pt"
+                    android:layout_marginBottom="20pt"
+                    android:layout_marginLeft="5pt"
+                    android:layout_marginRight="5pt"
+                    android:background="#cccccc"></LinearLayout>
 
                 <!-- Логин -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -50,7 +72,7 @@
                     android:ems="10"
                     android:id="@+id/epid"
                     android:editable="true"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:enabled="true"
@@ -61,13 +83,13 @@
                     android:padding="5dp"
                     android:textColor="#cccccc"/>
 
-                <!-- Объединение Поля "Ввод пароля" и кнопки "Помощь"  -->
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp">
-                    <!-- Пароль -->
-                    <EditText
+                    <!-- Объединение Поля "Ввод пароля" и кнопки "Помощь"  -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp">
+                        <!-- Пароль -->
+                        <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="numberPassword"
@@ -78,42 +100,42 @@
                             android:enabled="true"
                             android:clickable="false"
                             android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
                             android:editable="true"
                             android:imeOptions="actionDone"
                             android:text="Ваш Пароль"
                             android:background="@drawable/main_btn_border"
                             android:padding="5dp"
-                        android:layout_marginTop="6dp" />
+                            android:layout_marginTop="6dp" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_alignWithParentIfMissing="false"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentStart="false"
-                        android:layout_alignParentRight="false"
-                        android:layout_alignParentLeft="false">
-                        <!-- Разделитель -->
                         <LinearLayout
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#ccc"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="5dp">
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_alignWithParentIfMissing="false"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentStart="false"
+                            android:layout_alignParentRight="false"
+                            android:layout_alignParentLeft="false">
+                            <!-- Разделитель -->
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#ccc"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="5dp">
+                            </LinearLayout>
+                            <Button
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:text="\?"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginRight="9dp"
+                                android:background="@drawable/clear_bg"/>
                         </LinearLayout>
-                        <Button
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:text="\?"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/clear_bg"/>
-                    </LinearLayout>
-                </RelativeLayout>
+                    </RelativeLayout>
 
                 <!-- Кнопка ВХОД -->
                 <Button
@@ -128,6 +150,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:onClick="sendMessage"  />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

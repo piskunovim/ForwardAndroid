@@ -2,112 +2,201 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@drawable/main_layout_gradient"
+    android:background="#CCC"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="1dp"
     android:isScrollContainer="true">
 
-    <LinearLayout android:id="@+id/LinearLayoutMain"
-        android:layout_height="wrap_content" android:layout_width="match_parent"
-        android:padding="10dp">
-        <!-- Editext for Search -->
-        <AutoCompleteTextView
-            android:id="@+id/inputSearch"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Поиск оператора..."
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            />
-        <Button
-            android:background="@color/white"
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="40dp"
-            android:textSize="15dp"
-            android:text="Отмена"
-            android:visibility="gone"  />
-        <!--<EditText android:id="@+id/inputSearch"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="Поиск оператора..."
-            android:inputType="textVisiblePassword"/> -->
-    </LinearLayout>
-    <LinearLayout android:id="@+id/LinearLayoutListView" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-        <ListView
-            android:id="@+id/listViewSearch"
-            android:visibility="gone"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        >
-
-
-    <LinearLayout android:id="@+id/LinearLayout01"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-        <Button
-            android:layout_margin="0dp"
-            android:id="@+id/Button01"
-            android:padding="7dp"
-            android:textSize="13dp"
-            android:text="@string/main_menu_101_label"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/button_selector"
-            android:drawableTop="@drawable/mobile_network"
-        ></Button>
-        <Button
-            android:layout_margin="0dp"
-            android:id="@+id/Button02"
-            android:padding="5dp"
-            android:textSize="13dp"
-            android:text="@string/main_menu_102_label"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_selector"
-            android:drawableTop="@drawable/television"></Button>
-        <Button android:id="@+id/Button03" android:layout_margin="0dp" android:padding="5dp" android:textSize="13dp" android:text="@string/main_menu_103_label" android:layout_width="match_parent" android:layout_weight="1" android:layout_height="match_parent" android:background="@drawable/button_selector" android:drawableTop="@drawable/landline"></Button>
-    </LinearLayout>
-    <LinearLayout android:id="@+id/LinearLayout02"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-        <Button android:id="@+id/Button04" android:layout_margin="0dp" android:padding="3dp" android:textSize="13dp" android:text="@string/main_menu_104_label" android:layout_width="match_parent" android:layout_weight="1" android:layout_height="match_parent" android:background="@drawable/button_selector" android:drawableTop="@drawable/internet_n_ip" android:clickable="true"></Button>
-        <Button android:id="@+id/Button05" android:layout_margin="0dp" android:padding="3dp" android:textSize="13dp" android:text="@string/main_menu_105_label" android:layout_width="match_parent" android:layout_weight="1" android:layout_height="match_parent" android:background="@drawable/button_selector" android:drawableTop="@drawable/kredits" android:clickable="true"></Button>
-        <Button android:id="@+id/Button06" android:layout_margin="0dp" android:padding="3dp" android:textSize="13dp" android:text="@string/main_menu_106_label" android:layout_width="match_parent" android:layout_weight="1" android:layout_height="match_parent" android:background="@drawable/button_selector" android:drawableTop="@drawable/jkh" android:clickable="true"></Button>
-    </LinearLayout>
-    <LinearLayout android:id="@+id/LinearLayout03"
-        android:layout_height="wrap_content" android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        >
-        <Button android:id="@+id/Button07" android:layout_margin="0dp" android:padding="3dp" android:textSize="13dp" android:text="@string/main_menu_107_label" android:layout_weight="1" android:layout_height="match_parent" android:layout_width="match_parent" android:background="@drawable/button_selector" android:drawableTop="@drawable/games"></Button>
-        <Button android:id="@+id/Button08" android:layout_margin="0dp" android:padding="3dp" android:textSize="13dp" android:text="@string/main_menu_108_label" android:layout_weight="1" android:layout_height="match_parent" android:layout_width="match_parent" android:background="@drawable/button_selector" android:drawableTop="@drawable/pockets"></Button>
-        <Button android:id="@+id/Button09" android:layout_margin="0dp" android:padding="3dp" android:textSize="13dp" android:text="@string/main_menu_109_label" android:layout_weight="1" android:layout_height="match_parent" android:layout_width="match_parent" android:background="@drawable/button_selector" android:drawableTop="@drawable/fines"></Button>
-    </LinearLayout>
-    </LinearLayout>
+            android:id="@+id/scrollView"
+            android:layout_gravity="center_vertical">
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:background="@drawable/main_border"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1pt"
+                android:layout_marginRight="1pt"
+                android:isScrollContainer="true"
+                android:longClickable="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:id="@+id/dealerInfo"
+                    android:background="#E5E5E5"
+                    android:clickable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient"
+                        android:layout_marginLeft="60dip"
+                        android:orientation="vertical"
+                        android:text="@string/dealer_info_name"></LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/LinearLayoutMain"
+                    android:layout_height="wrap_content" android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:visibility="gone">
+                    <!-- Editext for Search -->
+                    <AutoCompleteTextView
+                        android:id="@+id/inputSearch"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Поиск оператора..."
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        />
+                    <Button
+                        android:background="@color/white"
+                        android:id="@+id/cancelButton"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:textSize="15dp"
+                        android:text="Отмена"
+                        android:visibility="gone"  />
+                    <!--<EditText android:id="@+id/inputSearch"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Поиск оператора..."
+                        android:inputType="textVisiblePassword"/> -->
+                </LinearLayout>
+                <LinearLayout android:id="@+id/LinearLayoutListView" android:layout_marginTop="5dp" android:layout_height="wrap_content" android:layout_width="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+                    <ListView
+                        android:id="@+id/listViewSearch"
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+
+                    <!-- ` Мобильная связь -->
+                    <LinearLayout android:id="@+id/LinearLayout01"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="3pt"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_selector">
+                        <Button android:id="@+id/Button01" android:padding="1dp" android:textSize="14dp" android:text="@string/main_menu_101_label"
+                                android:layout_width="match_parent" android:layout_height="40dip" android:background="@color/white"
+                                android:drawableLeft="@drawable/mobile_network"
+                                android:focusable="false"></Button></LinearLayout>
+
+                    <!-- ` Телевидение -->
+                    <LinearLayout android:id="@+id/LinearLayout02"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="3pt"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_selector">
+                        <Button android:id="@+id/Button02" android:padding="1dp" android:textSize="13dp" android:text="@string/main_menu_102_label"
+                                android:layout_width="match_parent" android:layout_height="40dp" android:background="@color/white"
+                                android:drawableLeft="@drawable/television"></Button></LinearLayout>
+
+                    <!-- ` Стационарная связь -->
+                    <LinearLayout android:id="@+id/LinearLayout03"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="3pt"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_selector">
+                        <Button android:id="@+id/Button03" android:padding="1dp" android:textSize="13dp" android:text="@string/main_menu_103_label"
+                                android:layout_width="match_parent" android:layout_height="40dp" android:background="@color/white"
+                                android:drawableLeft="@drawable/landline"></Button></LinearLayout>
+
+                    <!-- ` Интернет и IP телефония -->
+                    <LinearLayout android:id="@+id/LinearLayout04"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="3pt"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_selector">
+                        <Button android:id="@+id/Button04" android:padding="1dp" android:textSize="13dp" android:text="@string/main_menu_104_label"
+                                android:layout_width="match_parent" android:layout_height="40dp" android:background="@color/white"
+                                android:drawableLeft="@drawable/internet_n_ip" android:clickable="true"></Button> </LinearLayout>
+
+                    <!-- ` Погашение кредитов -->
+                    <LinearLayout android:id="@+id/LinearLayout05"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="3pt"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_selector">
+                        <Button android:id="@+id/Button05" android:padding="1dp" android:textSize="13dp" android:text="@string/main_menu_105_label"
+                                android:layout_width="match_parent" android:layout_height="40dp" android:background="@color/white"
+                                android:drawableLeft="@drawable/kredits" android:clickable="true"></Button></LinearLayout>
+
+                    <!-- ` ЖКХ -->
+                    <LinearLayout android:id="@+id/LinearLayout06"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="3pt"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_selector">
+                        <Button android:id="@+id/Button06" android:padding="1dp" android:textSize="13dp" android:text="@string/main_menu_106_label"
+                                android:layout_width="match_parent" android:layout_height="40dp" android:background="@color/white"
+                                android:drawableLeft="@drawable/jkh" android:clickable="true"></Button></LinearLayout>
+
+                    <!-- ` Электронные кошельки -->
+                    <LinearLayout android:id="@+id/LinearLayout07"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="3pt"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_selector">
+                        <Button android:id="@+id/Button07" android:padding="1dp" android:textSize="13dp" android:text="@string/main_menu_107_label"
+                                android:layout_height="40dp" android:layout_width="match_parent" android:background="@color/white"
+                                android:drawableLeft="@drawable/games"></Button></LinearLayout>
+
+                    <!-- ` Прочее -->
+                    <LinearLayout android:id="@+id/LinearLayout08"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="3pt"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_selector">
+                        <Button android:id="@+id/Button08" android:padding="1dp" android:textSize="13dp" android:text="@string/main_menu_108_label"
+                                android:layout_height="40dp" android:layout_width="match_parent" android:background="@color/white"
+                                android:drawableLeft="@drawable/pockets"></Button></LinearLayout>
+
+                    <LinearLayout android:id="@+id/LinearLayout09"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="3pt"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_selector">
+                        <Button android:id="@+id/Button09" android:padding="1dp" android:textSize="13dp" android:text="@string/main_menu_109_label"
+                                android:layout_height="40dp" android:layout_width="match_parent" android:background="@color/white"
+                                android:drawableLeft="@drawable/fines"></Button></LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 </LinearLayout>
