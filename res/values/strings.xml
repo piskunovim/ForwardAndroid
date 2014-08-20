@@ -22,6 +22,7 @@
     <string name="data_entry_back_button">Назад</string>
     <string name="title_activity_operators">Выбор оператора</string>
     <string name="title_main_page_activity">Главная страница</string>
+    <string name="title_dealer_info_activity">Инофрмация дилера</string>
     <string name="title_activity_activity_balance">Остаток на счете</string>
     <string name="title_activity_paymen_list_screen">Список платежей</string>
     <string name="title_activity_payment_list_impl">Список платежей</string>
@@ -83,5 +84,11 @@
     <string name="monitoring_system">Мониторинг</string>
     <string name="notifications">Уведомления системы</string>
     <string name="setings">Настройки</string>
+
+    <!-- ` GorbovI 2014-08-20 Главная странца (activity_main_page.xml) \ Описание разделов центрального блока -->
+    <string name="ps_description">В данном разделе Вы можете проводить платежи на различных операторов.</string>
+    <string name="ms_description">В данном разделе Вы можете следить за состоянием терминалов.</string>
+    <string name="n_description">В данном разделе Вы можете просматривать информационные сообщения.</string>
+    <string name="s_description"></string>
 
 </resources>
