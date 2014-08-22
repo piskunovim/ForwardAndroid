@@ -131,10 +131,11 @@
     <!-- ` Обертка -->
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:background="@drawable/main_border"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/main_border"
+        android:gravity="center_vertical"
         android:layout_marginLeft="1pt"
         android:layout_marginRight="1pt"
         android:layout_weight="1">
@@ -142,16 +143,16 @@
         <!-- ` Центральный блок -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:padding="5dp">
 
              <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dp">
+                android:layout_weight="1">
 
                 <!-- ` Проведение платежей -->
                 <LinearLayout android:id="@+id/LinearLayout01"
@@ -159,9 +160,7 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:minHeight="80dp"
                     android:layout_marginBottom="5dp"
                     android:padding="3pt">
 
@@ -204,7 +203,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/ps_description"
-                                android:textSize="10sp"/>
+                                android:textSize="9sp"/>
 
                         </LinearLayout>
 
@@ -229,10 +228,7 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="10dp"
+                    android:minHeight="80dp"
                     android:padding="3pt">
 
                     <LinearLayout
@@ -274,7 +270,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/ms_description"
-                                android:textSize="10sp"/>
+                                android:textSize="9sp"/>
 
                         </LinearLayout>
 
@@ -299,16 +295,15 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_marginRight="5dp">
+                android:layout_marginLeft="5dp"
+                >
                 <!-- ` Уведомления системы -->
                 <LinearLayout android:id="@+id/LinearLayout03"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:minHeight="80dp"
                     android:layout_marginBottom="5dp"
                     android:padding="3pt">
 
@@ -351,7 +346,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/n_description"
-                                android:textSize="10sp"/>
+                                android:textSize="9sp"/>
 
                         </LinearLayout>
 
@@ -376,10 +371,7 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="10dp"
+                    android:minHeight="80dp"
                     android:padding="3pt">
 
                     <LinearLayout

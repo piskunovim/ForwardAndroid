@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="1dp"
-    android:id="@+id/activity_main_page_container">
+    android:id="@+id/activity_dealer_info">
 
     <!-- ` Обертка -->
     <LinearLayout
@@ -102,8 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="@drawable/main_page_btn_events"
-                android:clickable="true">
+                android:background="@drawable/main_page_btn_events">
 
                 <!-- Баланс -->
                 <LinearLayout

@@ -25,7 +25,8 @@ public class DealerInfoActivity extends ActionBarActivity {
 
         Log.d(LOG_TAG, "Initialize DealerInfoActivity");
 
-        //applyFonts(findViewById(R.id.activity_main_page_container), null);
+        applyFonts( findViewById(R.id.activity_dealer_info) ,null);
+        applyFonts( findViewById(R.id.activity_dealer_info_flat) ,null);
 
 
 
