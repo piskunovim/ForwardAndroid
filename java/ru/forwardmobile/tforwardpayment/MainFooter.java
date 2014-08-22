@@ -15,9 +15,12 @@ import android.widget.LinearLayout;
 /**
  * Created by PiskunovI on 22.08.2014.
  */
+/**
+ * @deprecated
+ */
 public class MainFooter  extends FragmentActivity {
 
-    static final String TAG = "myLogs";
+    /*static final String TAG = "myLogs";
     static final int PAGE_COUNT = 3;
 
     ViewPager pager;
@@ -103,5 +106,5 @@ public class MainFooter  extends FragmentActivity {
 
         t = (LinearLayout) findViewById(R.id.thirdDot);
         t.setBackgroundColor(Color.WHITE);
-    }
+    }*/
 }
