@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -45,6 +45,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment.MainPageActivity"
+            android:label="@string/title_activity_main_list" >
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment.DealerInfoActivity"
+            android:label="@string/title_dealer_info_activity" >
         </activity>
         <activity
             android:name="ru.forwardmobile.tforwardpayment.MainListActivity"

@@ -3,6 +3,7 @@ package ru.forwardmobile.tforwardpayment.reports;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,12 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import ru.forwardmobile.tforwardpayment.R;
+import ru.forwardmobile.tforwardpayment.DataEntryActivity;import ru.forwardmobile.tforwardpayment.R;
 import ru.forwardmobile.tforwardpayment.ReportBaseFilter;
 import ru.forwardmobile.tforwardpayment.ReportCommonFilter;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
@@ -29,8 +30,9 @@ import ru.forwardmobile.util.http.Dates;
  */
 public class SimplePaymentListActivity extends Activity implements AdapterView.OnItemClickListener {
 
-    public static final Integer UNPROCESSED_PAYMENT_LIST_TYPE = 0;
-    public static final Integer ALL_PAYMENT_LIST_TYPE = 1;
+    public static final Integer UNPROCESSED_PAYMENT_LIST_TYPE   = 0;
+    public static final Integer ALL_PAYMENT_LIST_TYPE           = 1;
+    public static final Integer PROBLEMATIC_PAYMENT_LIST_TYPE   = 3;
     public static final String  LIST_TYPE   = "payment-list-type";
 
     ListView                listView = null;
@@ -143,14 +145,18 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
         showPaymentList(getIntent().getIntExtra(LIST_TYPE, 0));
     }
 
-    private void showPaymentList(int intExtra) {
+    private void showPaymentList(int listType) {
 
-        if( intExtra == UNPROCESSED_PAYMENT_LIST_TYPE ) {
+        if( listType == UNPROCESSED_PAYMENT_LIST_TYPE ) {
             listView.setAdapter(PaymentAdapterFactory.getAdapter(dataSource.getUnprocessed(), this));
         } else
-        if( intExtra == ALL_PAYMENT_LIST_TYPE) {
+        if( listType == ALL_PAYMENT_LIST_TYPE) {
             listView.setAdapter(PaymentAdapterFactory.getAdapter(dataSource.getAll(), this));
+        } else
+        if( listType == PROBLEMATIC_PAYMENT_LIST_TYPE) {
+            listView.setAdapter(PaymentAdapterFactory.getAdapter(dataSource.getProblematic(), this));
         }
+
     }
 
     @Override
@@ -187,10 +193,43 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
         alert.setMessage(builder.toString());
 
         if( payment.getStatus() == IPayment.CANCELLED || payment.getStatus() == IPayment.FAILED ) {
-            alert.setNegativeButton("Отправить повторно", new DialogInterface.OnClickListener() {
+            alert.setNegativeButton("Операции", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+
+                    createPaymentManagementMenu(payment);
+
+
+                }
+            });
+        }
+
+        alert.setPositiveButton("Закрыть", null);
+        alert.show();
+    }
+
+
+    protected void createPaymentManagementMenu(final PaymentInfo payment) {
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,
+                new String[]{"Корректировать","Повторить отправку"});
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Операции с платежем");
+        alert.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(i == 0) {
+
+                    Intent intent = new Intent(SimplePaymentListActivity.this, DataEntryActivity.class);
+                           intent.putExtra(DataEntryActivity.PAYMENT_PARAMETER, payment.getId());
+
+                    startActivity(intent);
+                    SimplePaymentListActivity.this.finish();
+                } else
+                if(i == 1){
                     try {
+
                         PaymentQueueWrapper.getQueue().processPayment(payment);
                         Toast.makeText(SimplePaymentListActivity.this,"Платеж поставлен в очередь!", Toast.LENGTH_LONG)
                                 .show();
@@ -200,11 +239,17 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
                                 .show();
                     }
                 }
-            });
-        }
+            }
+        });
 
-        alert.setPositiveButton("Закрыть", null);
+        alert.setPositiveButton("Назад", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                showFullPaymentInfo(payment);
+            }
+        });
+
+        alert.setNegativeButton("Закрыть",null);
         alert.show();
     }
-
 }

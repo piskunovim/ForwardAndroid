@@ -17,8 +17,8 @@ import ru.forwardmobile.tforwardpayment.spp.IPayment;
  */
 public class PaymentPojoImpl extends PaymentImpl  {
     final String                    LOGGER_TAG = "TFORWARD.PAYMENTIMPL";
-    private Double                    value;
-    private Double                    fullValue;
+    private Double                    value     = 0d;
+    private Double                    fullValue = 0d;
     private Integer                   psId;
     private Collection<IField>        fields = new HashSet<IField>();
 
