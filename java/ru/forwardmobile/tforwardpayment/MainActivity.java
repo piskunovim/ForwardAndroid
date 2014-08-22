@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,13 +20,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.google.android.gcm.GCMRegistrar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-
 
 public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
@@ -72,6 +74,9 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     private void initialize() {
         setContentView(R.layout.activity_main);
 
+           applyFonts( findViewById(R.id.activity_main_container) ,null);
+        // applyBoldFonts( findViewById(R.id.activity_main_container_footer) ,null);
+
         // Для тестового сервера
         TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
         TSettings.set(TSettings.SERVER_PORT, "8170");
@@ -103,8 +108,10 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     public void sendMessage(View view){
-
-        SingIn(etName.getText().toString(), etPass.getText().toString());
+         //Intent intent = new Intent(this,MainPageActivity.class);
+        Intent intent = new Intent(this,MainPageActivity.class);
+        startActivity(intent);
+        //SingIn(etName.getText().toString(), etPass.getText().toString());
     }
 
 
@@ -123,9 +130,12 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
         if (responseStr.length() > 0){
-            // Создаем объект Intent для вызова новой Activity
-            //  RegDevice(etName.getText().toString());
-            Intent intent = new Intent(this, MainAccessActivity.class);
+            try {
+                // Создаем объект Intent для вызова новой Activity
+                RegDevice(etName.getText().toString());
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }           Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, responseStr);
 
 
@@ -236,7 +246,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         }
     }
 
-    public void RegDevice(final String pointid){
+    public void RegDevice(final String pointid) throws Exception {
        Log.d(LOG_TAG, "RegDevice started...");
 
 
@@ -312,6 +322,48 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
                     e.getMessage());
         }
         super.onDestroy();
+    }
+
+    protected  void applyFonts(final View v, Typeface fontToSet)
+    {
+        if(fontToSet == null)
+            fontToSet = Typeface.createFromAsset(getAssets(), "Magistral.TTF");
+
+        try {
+            if (v instanceof ViewGroup) {
+                ViewGroup vg = (ViewGroup) v;
+                for (int i = 0; i < vg.getChildCount(); i++) {
+                    View child = vg.getChildAt(i);
+                    applyFonts(child, fontToSet);
+                }
+            } else if (v instanceof TextView) {
+                ((TextView)v).setTypeface(fontToSet);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // ignore
+        }
+    }
+
+    protected  void applyBoldFonts(final View v, Typeface fontToSet)
+    {
+        if(fontToSet == null)
+            fontToSet = Typeface.createFromAsset(getAssets(), "MagistralBlackC.otf");
+
+        try {
+            if (v instanceof ViewGroup) {
+                ViewGroup vg = (ViewGroup) v;
+                for (int i = 0; i < vg.getChildCount(); i++) {
+                    View child = vg.getChildAt(i);
+                    applyFonts(child, fontToSet);
+                }
+            } else if (v instanceof TextView) {
+                ((TextView)v).setTypeface(fontToSet);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // ignore
+        }
     }
 
 }

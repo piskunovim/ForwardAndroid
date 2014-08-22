@@ -37,7 +37,7 @@ public abstract class AbstractBaseActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.action_report) {
-            CharSequence reports[] = new CharSequence[] {"Запрос остатка средств", "Текущие платежи", "Принятые платежи", "Проблемные платежи"};
+            CharSequence reports[] = new CharSequence[] {"Запрос остатка средств", "Текущие платежи", "Принятые платежи"};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Выберите отчет:");
@@ -59,11 +59,6 @@ public abstract class AbstractBaseActivity extends ActionBarActivity {
                         case 2:
                             intent = new Intent(AbstractBaseActivity.this, SimplePaymentListActivity.class);
                             intent.putExtra(SimplePaymentListActivity.LIST_TYPE, SimplePaymentListActivity.ALL_PAYMENT_LIST_TYPE);
-                            startActivity(intent);
-                            break;
-                        case 3:
-                            intent = new Intent(AbstractBaseActivity.this, SimplePaymentListActivity.class);
-                            intent.putExtra(SimplePaymentListActivity.LIST_TYPE, SimplePaymentListActivity.PROBLEMATIC_PAYMENT_LIST_TYPE);
                             startActivity(intent);
                             break;
                         default:
