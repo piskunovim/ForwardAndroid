@@ -3,6 +3,7 @@ package ru.forwardmobile.tforwardpayment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,6 +30,7 @@ import ru.forwardmobile.util.http.Dates;
  */
 public class ReportCommonFilter extends LinearLayout implements DatePickerDialog.OnDateSetListener, View.OnTouchListener, View.OnClickListener {
 
+    protected TextView          today        = null;
     protected TextView          dateFromView        = null;
     protected TextView          dateToView          = null;
     protected DatePickerDialog  picker              = null;
@@ -71,6 +75,8 @@ public class ReportCommonFilter extends LinearLayout implements DatePickerDialog
 
 //------------------------
         if (state == 1){
+           // Date beginDate, endDate;
+           // Calendar c;
             picker.setTitle("Выберите год:");
             try {
                 java.lang.reflect.Field[] datePickerDialogFields = picker.getClass().getDeclaredFields();
@@ -95,6 +101,56 @@ public class ReportCommonFilter extends LinearLayout implements DatePickerDialog
                                 dayPicker = datePickerField.get(datePicker);
                                 ((View) dayPicker).setVisibility(View.GONE);
                             }
+
+                            datePicker.init(datePicker.getYear(),datePicker.getMonth(),datePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
+
+                                @Override
+                                public void onDateChanged(DatePicker arg0, int arg1, int arg2, int arg3) {
+                                    Calendar c;
+                                    Date beginDate, endDate;
+
+                                    int day = checkDayOfYear(arg0.getYear());
+                                    c = Calendar.getInstance();
+                                    c.set(Calendar.YEAR, arg0.getYear());
+
+                                    c.set(Calendar.DAY_OF_MONTH,day);
+                                    c.get(Calendar.MONTH);
+                                    if (day == 31){
+                                        c.set(Calendar.DAY_OF_MONTH,31);
+                                        c.set(Calendar.MONTH, 12);
+                                        endDate = c.getTime(); //назначаем период нашей даты
+                                    }
+                                    endDate = c.getTime();
+
+                                    c.set(Calendar.MONTH, 0);
+                                    c.set(Calendar.DAY_OF_MONTH,1);
+                                    beginDate = c.getTime();
+
+                                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                                    Log.d("ReportCommonFilter beginDate:", df.format(beginDate));
+                                    Log.d("ReportCommonFilter endDate:", df.format(endDate));
+                                }
+                            });
+                            /*int day = checkDayOfYear(datePicker.getYear());
+                            c = Calendar.getInstance();
+                            c.set(Calendar.YEAR, datePicker.getYear());
+
+                            c.set(Calendar.DAY_OF_MONTH,day);
+                            c.get(Calendar.MONTH);
+                            if (day == 31){
+                                c.set(Calendar.DAY_OF_MONTH,31);
+                                c.set(Calendar.MONTH, 12);
+                                endDate = c.getTime(); //назначаем период нашей даты
+                            }
+                            endDate = c.getTime();
+
+                            c.set(Calendar.MONTH, 0);
+                            c.set(Calendar.DAY_OF_MONTH,1);
+                            beginDate = c.getTime();
+
+                            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            Log.d("ReportCommonFilter beginDate:", df.format(beginDate));
+                            Log.d("ReportCommonFilter endDate:", df.format(endDate));*/
                         }
                     }
 
@@ -121,6 +177,7 @@ public class ReportCommonFilter extends LinearLayout implements DatePickerDialog
                                dayPicker = datePickerField.get(datePicker);
                                ((View) dayPicker).setVisibility(View.GONE);
                            }
+
                        }
                    }
 
@@ -128,13 +185,35 @@ public class ReportCommonFilter extends LinearLayout implements DatePickerDialog
            } catch (Exception ex) {
            }
        }
+        else if (state == 3)
+        {
+            picker.setTitle("Выберите день");
+            try {
+                java.lang.reflect.Field[] datePickerDialogFields = picker.getClass().getDeclaredFields();
+                for (java.lang.reflect.Field datePickerDialogField : datePickerDialogFields) {
+                    DatePicker datePicker = (DatePicker) datePickerDialogField.get(picker);
+                    datePicker.setSpinnersShown(false);
+                    datePicker.setMaxDate(new Date().getTime());
+                }
+            }catch (Exception ex){
+
+            }
+        }
+        else if (state == 4)
+        {
+            today = new TextView(getContext());
+            today.setText(Dates.Format(initDate, "dd.MM.yyyy"));
+        }
+
+
 //--------------------------
 
-        fastChoice  = new Button(getContext());
-        fastChoice.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 2f));
-        fastChoice.setOnClickListener(this);
-        fastChoice.setText("=//=");
-        addView(fastChoice);
+
+        //fastChoice  = new Button(getContext());
+        //fastChoice.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 2f));
+        //fastChoice.setOnClickListener(this);
+        // fastChoice.setText("=//=");
+        //addView(fastChoice);
 
 
         container.addView(this);
@@ -156,6 +235,24 @@ public class ReportCommonFilter extends LinearLayout implements DatePickerDialog
         //Dialog fastDialog = new FastChoiceDialog(getContext());
         //fastDialog.show();
 
+
+    }
+
+    public int checkDayOfMonth(int month, int day){
+
+
+        return day;
+    }
+
+    public int checkDayOfYear(int year){
+        Calendar c;
+        c = Calendar.getInstance();
+        if ( year == c.get(Calendar.YEAR) )   // если год является текущим, то возвращаем текущий день месяца
+        {
+            Log.d("checkDayOfYear:", "equal");
+            return c.get(Calendar.DAY_OF_MONTH);
+        }
+        return 31; //если год не является текущим, значит год уже завершился
 
     }
 
