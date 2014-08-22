@@ -446,7 +446,53 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@drawable/gradient"
-        android:layout_weight="1"/>
+        android:layout_weight="1">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v4.view.ViewPager>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp" android:orientation="horizontal" android:gravity="center">
+
+
+
+                <LinearLayout
+                    android:id="@+id/firstDot"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="#000"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="0dp"/>
+
+                <LinearLayout
+                    android:id="@+id/secondDot"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#000"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:id="@+id/thirdDot"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#000"
+                    android:orientation="horizontal"/>
+
+
+            </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

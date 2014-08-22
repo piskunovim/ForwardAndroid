@@ -108,8 +108,9 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     public void sendMessage(View view){
-         Intent intent = new Intent(this,MainPageActivity.class);
-         startActivity(intent);
+         //Intent intent = new Intent(this,MainPageActivity.class);
+        Intent intent = new Intent(this,MainFooter.class);
+        startActivity(intent);
         //SingIn(etName.getText().toString(), etPass.getText().toString());
     }
 

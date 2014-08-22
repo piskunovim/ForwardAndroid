@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+         <LinearLayout
+             android:layout_width="100dp"
+             android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/fDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceLarge">
+                    </TextView>
+         </LinearLayout>
+         <LinearLayout
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#FFF"
+          />
+          <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                android:id="@+id/fDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceLarge">
+                </TextView>
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" android:orientation="horizontal">
+                    <RelativeLayout
+                        android:id="@+id/sliderPages"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:id="@+id/firstDot"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:background="#000"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="0dp"/>
+
+                        <LinearLayout
+                            android:id="@+id/secondDot"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="#000"
+                            android:orientation="horizontal"/>
+
+                        <LinearLayout
+                            android:id="@+id/thirdDot"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="40dp"
+                            android:background="#000"
+                            android:orientation="horizontal"/>
+
+                    </RelativeLayout>
+                </LinearLayout>-->
+           </LinearLayout>
+         </LinearLayout>
+
+    </LinearLayout>
