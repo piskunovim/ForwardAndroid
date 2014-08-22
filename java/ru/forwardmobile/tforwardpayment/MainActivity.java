@@ -124,7 +124,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         if (responseStr.length() > 0){
             // Создаем объект Intent для вызова новой Activity
-            RegDevice(etName.getText().toString());
+            //  RegDevice(etName.getText().toString());
             Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, responseStr);
 
