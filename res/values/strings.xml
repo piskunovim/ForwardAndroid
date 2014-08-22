@@ -61,8 +61,6 @@
     <string name="options_clear">Очистить</string>
     <string name="options_exit">Выход</string>
 
-
-
     <!-- ` GorbovI 2014-08-19 Форма авторизации(activity_main.xml) \  Информация внизу страницы -->
     <string name="info_title">Мобильная система приема платежей</string>
     <string name="version">Версия 1.0</string>
@@ -90,5 +88,14 @@
     <string name="ms_description">В данном разделе Вы можете следить за состоянием терминалов.</string>
     <string name="n_description">В данном разделе Вы можете просматривать информационные сообщения.</string>
     <string name="s_description"></string>
+
+ <string-array name="report_filter_types">
+        <item>Период</item>
+        <item>Сегодня</item>
+        <item>Вчера</item>
+        <item>День</item>
+        <item>Месяц</item>
+        <item>Год</item>
+    </string-array>
 
 </resources>
