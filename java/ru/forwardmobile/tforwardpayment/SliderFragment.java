@@ -77,20 +77,4 @@ public class SliderFragment extends Fragment {
 */
         return view;
     }
-
-    public View ClearDots(View view)
-    {
-        LinearLayout f,s,t;
-
-        f = (LinearLayout) view.findViewById(R.id.firstDot);
-        f.setBackgroundColor(Color.WHITE);
-
-        s = (LinearLayout) view.findViewById(R.id.secondDot);
-        s.setBackgroundColor(Color.WHITE);
-
-        t = (LinearLayout) view.findViewById(R.id.thirdDot);
-        t.setBackgroundColor(Color.WHITE);
-
-        return view;
-    }
 }
