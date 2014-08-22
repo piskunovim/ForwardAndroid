@@ -123,18 +123,18 @@ public class MainPageActivity extends FragmentActivity {
         if (page == 0){
             ClearDots();
             LinearLayout firstDot = (LinearLayout) findViewById(R.id.firstDot);
-            firstDot.setBackgroundColor(Color.parseColor("#3498db"));
+            firstDot.setBackgroundColor(Color.parseColor("#E2AB5C"));
         }
         else if(page == 1)
         {
             ClearDots();
             LinearLayout secondDot = (LinearLayout) findViewById(R.id.secondDot);
-            secondDot.setBackgroundColor(Color.parseColor("#3498db"));
+            secondDot.setBackgroundColor(Color.parseColor("#E2AB5C"));
         }
         else{
             ClearDots();
             LinearLayout thirdDot = (LinearLayout) findViewById(R.id.thirdDot);
-            thirdDot.setBackgroundColor(Color.parseColor("#3498db"));
+            thirdDot.setBackgroundColor(Color.parseColor("#E2AB5C"));
         }
 
     }
@@ -144,13 +144,13 @@ public class MainPageActivity extends FragmentActivity {
         LinearLayout f,s,t;
 
         f = (LinearLayout) findViewById(R.id.firstDot);
-        f.setBackgroundColor(Color.WHITE);
+        f.setBackgroundColor(Color.parseColor("#cccccc"));
 
         s = (LinearLayout) findViewById(R.id.secondDot);
-        s.setBackgroundColor(Color.WHITE);
+        s.setBackgroundColor(Color.parseColor("#cccccc"));
 
         t = (LinearLayout) findViewById(R.id.thirdDot);
-        t.setBackgroundColor(Color.WHITE);
+        t.setBackgroundColor(Color.parseColor("#cccccc"));
     }
 
     protected  void applyFonts(final View v, Typeface fontToSet)

@@ -83,13 +83,13 @@ public class SliderFragment extends Fragment {
         LinearLayout f,s,t;
 
         f = (LinearLayout) view.findViewById(R.id.firstDot);
-        f.setBackgroundColor(Color.WHITE);
+        f.setBackgroundColor(Color.parseColor("#cccccc"));
 
         s = (LinearLayout) view.findViewById(R.id.secondDot);
-        s.setBackgroundColor(Color.WHITE);
+        s.setBackgroundColor(Color.parseColor("#cccccc"));
 
         t = (LinearLayout) view.findViewById(R.id.thirdDot);
-        t.setBackgroundColor(Color.WHITE);
+        t.setBackgroundColor(Color.parseColor("#cccccc"));
 
         return view;
     }
