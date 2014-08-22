@@ -45,10 +45,14 @@ public class SliderFragment extends Fragment {
         TextView fDescription = (TextView) view.findViewById(R.id.fDescription);
 
         fDate.setText("Дата " + pageNumber);
-        fDate.setBackgroundColor(backColor);
+        fDate.setTextColor(Color.parseColor("#000000"));
+        fDate.setTextSize(11);
+        //fDate.setBackgroundColor(backColor);
 
         fDescription.setText("Уважаемые агенты! Вашему вниманию предоставляется слайдер, в котором размещено информационное сообщение под номером  " + pageNumber);
-        fDescription.setBackgroundColor(backColor);
+        fDescription.setTextColor(Color.parseColor("#000000"));
+        fDescription.setTextSize(11);
+        //fDescription.setBackgroundColor(backColor);
 
         /*
         RelativeLayout sliderPages = (RelativeLayout) view.findViewById(R.id.sliderPages);
