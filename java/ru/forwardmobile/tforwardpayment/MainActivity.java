@@ -74,8 +74,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     private void initialize() {
         setContentView(R.layout.activity_main);
 
-        applyFonts( findViewById(R.id.activity_main_container) ,null);
-       // applyBoldFonts( findViewById(R.id.activity_main_container_footer) ,null);
+           applyFonts( findViewById(R.id.activity_main_container) ,null);
+        // applyBoldFonts( findViewById(R.id.activity_main_container_footer) ,null);
 
         // Для тестового сервера
         TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");

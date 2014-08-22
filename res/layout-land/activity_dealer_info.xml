@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="1dp"
-    android:id="@+id/activity_main_page_container">
+    android:id="@+id/activity_dealer_info_flat">
 
     <!-- ` Обертка -->
     <LinearLayout
@@ -24,40 +24,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_selector"
             android:orientation="horizontal"
-            android:padding="3pt"
-            android:layout_weight="0.1"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center">
+                android:gravity="center_vertical">
                 <!-- ` Дилер \ Номер точки -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/button_selector"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:padding="3pt"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="1dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="1dp"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="3dp"
-                        android:minHeight="95dp"
                         android:gravity="center">
 
                         <!-- Контейнер для текста 'Дилер' -->
@@ -108,15 +102,14 @@
                 <!-- Блок 'Ваш менеджер' -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/button_selector"
                     android:orientation="vertical"
                     android:layout_weight="1"
                     android:padding="3pt"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="1dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="1dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -222,17 +215,15 @@
             android:orientation="horizontal"
             android:background="@drawable/button_selector"
             android:padding="3pt"
-            android:layout_weight="1"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginRight="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@drawable/main_page_btn_events"
-                android:clickable="true">
+                android:padding="3dp">
 
                 <!-- Контейнер для групп 'Баланс, Кредитный лимит, Деньги в пути' -->
                 <LinearLayout
@@ -294,7 +285,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginLeft="6dp">
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginBottom="2dp">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -387,7 +379,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginLeft="6dp">
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginBottom="2dp">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
