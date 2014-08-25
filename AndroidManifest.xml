@@ -35,8 +35,9 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" 
-        android:theme="@style/AppTheme" >
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Base.AppCompat.Light.DarkActionBar" >"
+         >
         <activity
             android:name="ru.forwardmobile.tforwardpayment.MainActivity"
             android:label="@string/app_name" >
@@ -45,6 +46,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment.MainPageActivity"
+            android:label="@string/title_activity_main_list" >
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment.MainFooter"
+            android:label="Footer" >
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment.DealerInfoActivity"
+            android:label="@string/title_dealer_info_activity" >
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment.MainListActivity"
+            android:label="@string/title_activity_main_list" >
         </activity>
         <activity
             android:name="ru.forwardmobile.tforwardpayment.MainAccessActivity"
@@ -75,6 +92,10 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment.OperatorsActivity"
+            android:label="@string/title_activity_operators" >
         </activity>
 
         <activity

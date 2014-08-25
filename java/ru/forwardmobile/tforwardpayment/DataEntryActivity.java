@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -141,9 +140,6 @@ public class DataEntryActivity extends Activity implements View.OnClickListener 
 
             ((Button) findViewById(R.id.mde_button_back)).setOnClickListener(this);
             ((Button) findViewById(R.id.mde_button_start)).setOnClickListener(this);
-
-            ((EditText) findViewById(R.id.mde_value_value)).setText(String.valueOf(payment.getValue()));
-            ((EditText) findViewById(R.id.mde_full_value_value)).setText(String.valueOf(payment.getFullValue()));
 
             IProviderMenuItem item = (IProviderMenuItem) selector.getSelectedItem();
 

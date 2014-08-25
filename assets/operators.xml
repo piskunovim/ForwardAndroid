@@ -46,7 +46,8 @@
 					<url>http://www.forwardmobile.ru:8190/1.status</url>
 				</status>
 			</processor>
-			<name_for_cheque>8-800-333-0890</name_for_cheque><dog>2/ПЦ1/04.06 от 14.04.2006 г</dog><comission><part value="0"/></comission></operator>
+			<name_for_cheque>8-800-333-0890</name_for_cheque><dog>2/ПЦ1/04.06 от 14.04.2006 г</dog><comission><part value="0"/></comission>
+        </operator>
 		<operator id="2" ps="forward">
 			<name>БиЛайн</name>
 			<image>mob_beeline.gif</image>
@@ -244,7 +245,8 @@
 					<url>http://pay.forwardmobile.ru:8190/24.status</url>
 				</status>
 			</processor>
-			<name_for_cheque>611</name_for_cheque><dog>ОПП 12/1, ОПП 12/2, ОПП 12/3, ОПП 12/4, ОПП 12/5, ОПП 12/6, ОПП 12/7, ОПП 12/8, ОПП 12/9, ОПП 12/10, ОПП 12/11, ОПП 12/12, ОПП 12/13, ОПП 12/14, ОПП 12/15, ОПП 12/16, ОПП 12/17, ОПП 12/18, ОПП 12/19, ОПП 12/20, ОПП 12/21, ОПП 12/22, ОПП 12/23, ОПП 12/24,</dog><comission><part value="0"/></comission></operator>
+			<name_for_cheque>611</name_for_cheque><dog>ОПП 12/1, ОПП 12/2, ОПП 12/3, ОПП 12/4, ОПП 12/5, ОПП 12/6, ОПП 12/7, ОПП 12/8, ОПП 12/9, ОПП 12/10, ОПП 12/11, ОПП 12/12, ОПП 12/13, ОПП 12/14, ОПП 12/15, ОПП 12/16, ОПП 12/17, ОПП 12/18, ОПП 12/19, ОПП 12/20, ОПП 12/21, ОПП 12/22, ОПП 12/23, ОПП 12/24,</dog><comission><part value="0"/></comission>
+        </operator>
 		<operator id="18">
 			<name>Смартс Пенза</name>
 			<comment>Код 908</comment>
@@ -1051,7 +1053,7 @@
 					<mask>*******</mask>
 				</field>
 			</fields>
-			<processor type="Cyberplat" offline="1">
+			<processor type="Cyberplat" offline="0">
 				<check amount-value="10">
 					<url>http://pay.forwardmobile.ru:8190/479.check</url>
 					<request-property name="NUMBER" field-id="100"/>
@@ -1082,7 +1084,7 @@
 					<name>ЛОГИН АБОНЕНТА или ПИН КОД карты</name>
 				</field>
 			</fields>
-			<processor type="Cyberplat" offline="1">
+			<processor type="Cyberplat" offline="0">
 				<check amount-value="10">
 					<url>http://pay.forwardmobile.ru:8190/479.check</url>
 					<request-property name="NUMBER" field-id="100"/>
@@ -2917,7 +2919,7 @@
 					<name>Номер счета</name>
 				</field>
 			</fields>
-			<processor type="Cyberplat" offline="1">
+			<processor type="Cyberplat" offline="0">
 				<check amount-value="1">
 					<url>http://www.forwardmobile.ru:8190/337.check</url>
 					<request-property name="NUMBER" field-id="100"/>
@@ -5227,7 +5229,7 @@
 					<comment>Укажите Аккаунт. Внимание! Поставщик услуг Xsolla. Стоимость игровой валюты вы можете уточнить по телефону горячей линии 88002002729 (звонок бесплатный). Может быть удержана дополнительная комиссия.</comment>
 				</field>
 			</fields>
-			<processor type="Cyberplat" offline="1" showAddInfo="1">
+			<processor type="Cyberplat" offline="0" showAddInfo="1">
 				<check amount-value="10">
 					<url>http://pay.forwardmobile.ru:8190/311.check</url>
 					<request-property name="NUMBER" field-id="100"/>
@@ -7829,7 +7831,8 @@
 			<fields>
 				<field id="100" maxlength="10" minlength="1" type="integer">
 					<name>Номер лицевого счета клиента</name>
-					<comment>Оплата производится посредством заключения  договора (публичная оферта) с Банком (Открытое акционерное общество "Краснодарский краевой инвестиционный банк")  об осуществлении перечисления денежных средств  с предоплаченной карты Банка в пользу получателей</comment>
+					<comment>Оплата производится посредством заключения  договора (публичная оферта) с Банком (Открытое акционерное общество "Краснодарский краевой инвестиционный банк")
+                    об осуществлении перечисления денежных средств  с предоплаченной карты Банка в пользу получателей</comment>
 				</field>
 			</fields>
 			<processor offline="0" showAddInfo="1" type="Cyberplat">
@@ -8200,7 +8203,7 @@
 					<mask>**********</mask>
 				</field>
 			</fields>
-			<processor type="Cyberplat" offline="1">
+			<processor type="Cyberplat" offline="0">
 				<check amount-value="10">
 					<url>http://pay.forwardmobile.ru:8190/479.check</url>
 					<request-property name="NUMBER" field-id="100"/>
@@ -19072,10 +19075,10 @@
 					<url>http://www.forwardmobile.ru:8190/619.status</url>
 				</status>
 			</processor>
-			<name_for_cheque>8-918-446-22-88</name_for_cheque><dog>02/14 от 25.02.2014 г.</dog><comission><part value="5%"/></comission>
+			<name_for_cheque>8-918-356-63-33</name_for_cheque><dog>02/14 от 25.02.2014 г.</dog><comission><part value="5%"/></comission>
 		</operator>
 		<operator id="2061" ps="forward">
-			<name>Такси Легион 24</name>
+			<name>Легион 24</name>
 			<image>ohr_taxi_legion.gif</image>
 			<inn_for_cheque>245722874953</inn_for_cheque>
 			<limit min="10" max="14999"/>
@@ -19257,6 +19260,86 @@
 			</processor>
 			<name_for_cheque>+7 988 888 03 93</name_for_cheque>
 			<dog>18/04 от 18.04.2014 г.</dog>
+			<comission>
+				<part value="5%"/>
+			</comission>
+		</operator>
+		<operator id="2069" ps="forward">
+			<name>ПараПа: Город Танцев</name>
+			<image>xsl_253.gif</image>
+			<inn_for_cheque>5902834229</inn_for_cheque>
+			<rootmenuimage>1.jpg</rootmenuimage>
+			<cheque filename="2pay.chq"/>
+			<limit min="1" max="5000"/>
+			<fields>
+				<field id="100" type="text">
+					<name>Id</name>
+					<comment>Введите Id</comment>
+				</field>
+			</fields>
+			<processor type="Cyberplat" offline="0" showAddInfo="1">
+				<check amount-value="10">
+					<url>http://pay.forwardmobile.ru:8190/311.check</url>
+					<request-property name="NUMBER" field-id="100"/>
+					<request-property name="ACCOUNT">
+						<fixed-text id="project:253"/>
+					</request-property>
+					<receive-property name="ADDINFO" description="Информация о абоненте"/>
+					<show-property name="_ADDINFO" description="Информация о абоненте" rule="[#~ADDINFO/^(.*)/#]"/>
+				</check>
+				<payment with-check="0">
+					<url>http://pay.forwardmobile.ru:8190/311.commit</url>
+					<request-property name="NUMBER" field-id="100"/>
+					<request-property name="ACCOUNT">
+						<fixed-text id="project:253"/>
+					</request-property>
+				</payment>
+				<status>
+					<url>http://pay.forwardmobile.ru:8190/311.status</url>
+				</status>
+			</processor>
+			<name_for_cheque>8-800-200-27-29</name_for_cheque>
+			<dog>25-10 от 01.09.2010</dog>
+			<comission>
+				<part value="5%"/>
+			</comission>
+		</operator>
+		<operator id="2070" ps="forward">
+			<name>UFO</name>
+			<image>xsl_2999.gif</image>
+			<inn_for_cheque>5902834229</inn_for_cheque>
+			<rootmenuimage>1.jpg</rootmenuimage>
+			<cheque filename="2pay.chq"/>
+			<limit min="1" max="5000"/>
+			<fields>
+				<field id="100" type="text">
+					<name>Id</name>
+					<comment>Введите Id</comment>
+				</field>
+			</fields>
+			<processor type="Cyberplat" offline="0" showAddInfo="1">
+				<check amount-value="10">
+					<url>http://pay.forwardmobile.ru:8190/311.check</url>
+					<request-property name="NUMBER" field-id="100"/>
+					<request-property name="ACCOUNT">
+						<fixed-text id="project:2999"/>
+					</request-property>
+					<receive-property name="ADDINFO" description="Информация о абоненте"/>
+					<show-property name="_ADDINFO" description="Информация о абоненте" rule="[#~ADDINFO/^(.*)/#]"/>
+				</check>
+				<payment with-check="0">
+					<url>http://pay.forwardmobile.ru:8190/311.commit</url>
+					<request-property name="NUMBER" field-id="100"/>
+					<request-property name="ACCOUNT">
+						<fixed-text id="project:2999"/>
+					</request-property>
+				</payment>
+				<status>
+					<url>http://pay.forwardmobile.ru:8190/311.status</url>
+				</status>
+			</processor>
+			<name_for_cheque>8-800-200-27-29</name_for_cheque>
+			<dog>25-10 от 01.09.2010</dog>
 			<comission>
 				<part value="5%"/>
 			</comission>
@@ -19676,6 +19759,8 @@
 				<operator_id id="2056"/>
 				<operator_id id="2057"/>
 				<operator_id id="2058"/>
+				<operator_id id="2069"/>
+				<operator_id id="2070"/>
 			</group>
 			<group columns="4" id="221" image="nik_gamexp.gif" title="GameXP" titleimage="">
 				<operator_id id="765"/>
@@ -19736,7 +19821,6 @@
 				<operator_id id="2014"/>
 				<operator_id id="2059"/>
 				<operator_id id="2060"/>
-				<operator_id id="2061"/>
 				<operator_id id="2064"/>
 			</group>
 			<group columns="2" id="223" image="ohr_kosm.gif" title="Косметика" titleimage="main_internet_utk.gif">
@@ -19786,6 +19870,7 @@
 			<operator_id id="131328"/>
 			<operator_id id="1097"/>
 			<operator_id id="1098"/>
+			<operator_id id="2061"/>
 		</group>
 	</menu>
 </root>

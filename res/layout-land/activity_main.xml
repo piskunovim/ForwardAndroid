@@ -1,0 +1,180 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/activity_main_container"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#CCC"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:weightSum="1">
+
+        <!-- Обертка -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/main_border"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <!-- Отцентрированное содержимое -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="top">
+
+                <!-- Логотип -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1.3">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView"
+                        android:layout_gravity="center"
+                        android:src="@drawable/logo"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginBottom="60dp"/>
+                </LinearLayout>
+
+                <!-- Разделитель -->
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20pt"
+                    android:layout_marginBottom="20pt"
+                    android:layout_marginLeft="5pt"
+                    android:layout_marginRight="5pt"
+                    android:background="#cccccc"></LinearLayout>
+
+                <!-- Логин -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/epid"
+                    android:editable="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:enabled="true"
+                    android:textIsSelectable="true"
+                    android:imeOptions="actionNext"
+                    android:text="Ваш Логин"
+                    android:background="@drawable/main_btn_border"
+                    android:padding="5dp"
+                    android:textColor="#cccccc"/>
+
+                    <!-- Объединение Поля "Ввод пароля" и кнопки "Помощь"  -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp">
+                        <!-- Пароль -->
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberPassword"
+                            android:ems="10"
+                            android:id="@+id/epass"
+                            android:textColor="#cccccc"
+                            android:password="false"
+                            android:enabled="true"
+                            android:clickable="false"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:editable="true"
+                            android:imeOptions="actionDone"
+                            android:text="Ваш Пароль"
+                            android:background="@drawable/main_btn_border"
+                            android:padding="5dp"
+                            android:layout_marginTop="6dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_alignWithParentIfMissing="false"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentStart="false"
+                            android:layout_alignParentRight="false"
+                            android:layout_alignParentLeft="false">
+                            <!-- Разделитель -->
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#ccc"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="5dp">
+                            </LinearLayout>
+                            <Button
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:text="\?"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginRight="9dp"
+                                android:background="@drawable/clear_bg"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                <!-- Кнопка ВХОД -->
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:textSize="18dp"
+                    android:background="@drawable/gardient_login_form_button"
+                    android:text="Вход"
+                    android:id="@+id/singin"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:onClick="sendMessage"  />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Версия -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="top|center"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/info_title"
+                    android:textSize="15dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/version"
+                    android:textSize="13dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
