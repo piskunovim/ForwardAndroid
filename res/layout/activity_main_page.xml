@@ -86,6 +86,7 @@
 
                 <!-- ` Контейнер для строки 'Можно израсходовать' -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -119,7 +120,9 @@
                         android:layout_height="wrap_content"
                         android:text="10 000 р."
                         android:textSize="12sp"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="0dp"
+                        />
                 </LinearLayout>
 
             </LinearLayout>
@@ -180,6 +183,7 @@
                         android:layout_gravity="center_vertical">
                         <ImageView
                             android:layout_width="match_parent"
+                            android:contentDescription="@string/payments_systems"
                             android:layout_height="match_parent"
                             android:src="@drawable/dot_icon"/>
                     </LinearLayout>
@@ -203,7 +207,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/ps_description"
-                            android:textSize="9sp"/>
+                            android:textSize="12sp"/>
 
                     </LinearLayout>
 
@@ -214,10 +218,7 @@
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/arrow"/>
+                        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/arrow"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -274,7 +275,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/ms_description"
-                            android:textSize="9sp"/>
+                            android:textSize="12sp"/>
 
                     </LinearLayout>
 
@@ -345,7 +346,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/n_description"
-                            android:textSize="9sp"/>
+                            android:textSize="12sp"/>
 
                     </LinearLayout>
 
@@ -464,35 +465,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="20dp" android:orientation="horizontal" android:gravity="center">
 
-
-
+                <!-- Первый индикатор -->
                 <LinearLayout
                     android:id="@+id/firstDot"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:background="#000"
+                    android:background="@color/forward_black"
                     android:orientation="horizontal"
                     android:layout_marginLeft="0dp"/>
 
+                <!-- Второй индикатор -->
                 <LinearLayout
                     android:id="@+id/secondDot"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_marginLeft="10dp"
-                    android:background="#000"
+                    android:background="@color/forward_black"
                     android:orientation="horizontal"/>
 
+                <!-- Третий индикатор -->
                 <LinearLayout
                     android:id="@+id/thirdDot"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_marginLeft="10dp"
-                    android:background="#000"
+                    android:background="@color/forward_black"
                     android:orientation="horizontal"/>
 
-
             </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

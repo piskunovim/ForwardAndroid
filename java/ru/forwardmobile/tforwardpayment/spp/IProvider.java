@@ -5,6 +5,7 @@ import java.util.Collection;
 /**
  *
  * @author Vasiliy Vanin
+ * @deprecated
  */
 public interface IProvider extends IProviderMenuItem {
     public Double               getMaxSumm();
