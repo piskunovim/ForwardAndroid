@@ -11,7 +11,6 @@
     <color name="migalka">#009DFF</color>
     <color name="greybg">#EDEEF0</color>
     <color name="white">#FFFFFF</color>
-
     <color name="lightgray">#aeaeae</color>
     <color name="turquoise">#1abc9c</color>
     <color name="emerald">#2ecc71</color>
@@ -35,6 +34,8 @@
     <color name="asbestos">#7f8c8d</color>
     <color name="border_color">#BABBBF</color>
     <color name="btn_out_bg">#F7F7F7</color>
+
     <color name="forward_orange">#E2AB5C</color>
-    <color name="forward_grey">#ccc</color>
+    <color name="forward_grey">#cccccc</color>
+    <color name="forward_black">#000000</color>
 </resources>
