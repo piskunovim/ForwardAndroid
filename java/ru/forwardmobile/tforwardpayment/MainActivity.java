@@ -20,10 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.google.android.gcm.GCMRegistrar;
 
@@ -135,7 +133,9 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
                 RegDevice(etName.getText().toString());
             }catch (Exception ex) {
                 ex.printStackTrace();
-            }           Intent intent = new Intent(this, MainAccessActivity.class);
+            }
+
+            Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, responseStr);
 
 
