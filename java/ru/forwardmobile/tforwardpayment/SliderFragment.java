@@ -56,12 +56,11 @@ public class SliderFragment extends Fragment {
 
         fDate.setText(dateFormat.format(date));
         fDate.setTextColor(Color.parseColor("#000000"));
-        fDate.setTextSize(11);
         //fDate.setBackgroundColor(backColor);
 
         fDescription.setText("Уважаемые Агенты! Предлагаем приобрести карту расширения SmartStickCard (SSC) для купюроприемников CashCode SM. Купюроприемник с установленной картой больше не требует регулярного обновления прошивок. Последние, актуальные версии прошивок загружаются удаленно на терминал системой «Форвард Мобайл» и записываются в купюроприемник автоматически. Данная карта, обладая большим объемом памяти (в 10 раз больше) и высокой производительностью, значительно повышает уровень защиты от фальшивых купюр и «рыбалки». Карточка должна постоянно находиться в купюроприемнике. Стоимость карты: до 100 шт. - 850 руб./1 шт., от 101 шт. - 750 руб./шт. Уточнить подробности, а также сделать предварительный заказ, Вы можете по тел. (918) 641-09-04" + pageNumber);
         fDescription.setTextColor(Color.parseColor("#000000"));
-        fDescription.setTextSize(10);
+
         //fDescription.setBackgroundColor(backColor);
 
         /*

@@ -17,6 +17,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:textSize="10sp"
                     android:textAppearance="?android:attr/textAppearanceLarge">
                     </TextView>
          </LinearLayout>
@@ -33,6 +34,7 @@
                 android:id="@+id/fDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="12sp"
                 android:gravity="left|center_vertical"
                 android:layout_marginLeft="10dp"
                 android:textAppearance="?android:attr/textAppearanceLarge">

@@ -86,7 +86,7 @@
                             android:padding="5dp"
                         android:layout_marginTop="6dp" />
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0dp"
@@ -96,8 +96,8 @@
                         android:layout_alignParentStart="false"
                         android:layout_alignParentRight="false"
                         android:layout_alignParentLeft="false">
-                        <!-- Разделитель -->
-                        <LinearLayout
+                        <!- Разделитель-->
+                        <!--<LinearLayout
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
                             android:background="#ccc"
@@ -111,7 +111,7 @@
                             android:layout_marginTop="7dp"
                             android:layout_marginRight="5dp"
                             android:background="@drawable/clear_bg"/>
-                    </LinearLayout>
+                    </LinearLayout>-->
                 </RelativeLayout>
 
                 <!-- Кнопка ВХОД -->
