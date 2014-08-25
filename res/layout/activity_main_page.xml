@@ -141,7 +141,6 @@
         android:layout_marginLeft="1pt"
         android:layout_marginRight="1pt"
         android:isScrollContainer="true"
-        android:longClickable="false"
         android:layout_weight="1">
 
 
@@ -162,10 +161,10 @@
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
 
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -231,10 +230,10 @@
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
 
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -302,10 +301,10 @@
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
 
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -446,30 +445,33 @@
     <!-- Слайдер -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:orientation="vertical"
         android:background="@drawable/gradient"
         android:layout_weight="1">
 
-
+            <!-- Выводим содержимое слайдера -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="60dp"
+                android:orientation="horizontal">
                 <android.support.v4.view.ViewPager
                     android:id="@+id/pager"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
                 </android.support.v4.view.ViewPager>
             </LinearLayout>
+
+            <!-- Индикаторы -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="20dp" android:orientation="horizontal" android:gravity="center">
+                android:layout_height="15dp" android:orientation="horizontal" android:gravity="center">
 
                 <!-- Первый индикатор -->
                 <LinearLayout
                     android:id="@+id/firstDot"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
                     android:background="@color/forward_black"
                     android:orientation="horizontal"
                     android:layout_marginLeft="0dp"/>
@@ -477,18 +479,18 @@
                 <!-- Второй индикатор -->
                 <LinearLayout
                     android:id="@+id/secondDot"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginLeft="3dp"
                     android:background="@color/forward_black"
                     android:orientation="horizontal"/>
 
                 <!-- Третий индикатор -->
                 <LinearLayout
                     android:id="@+id/thirdDot"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginLeft="3dp"
                     android:background="@color/forward_black"
                     android:orientation="horizontal"/>
 
