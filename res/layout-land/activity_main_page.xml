@@ -22,18 +22,22 @@
 
         <!-- ` Иконка -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="left|center">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/dealer_icon"/>
         </LinearLayout>
         <!-- ` Данные дилера -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient">
+            android:background="@drawable/gradient"
+            android:gravity="center_vertical"
+            android:layout_weight="0.3">
 
             <!-- ` Контейнер для текста -->
             <LinearLayout
@@ -55,13 +59,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_name"
-                        android:textSize="12sp"/>
+                        android:textSize="13sp"/>
                     <TextView
                         android:id="@+id/dealerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Иванов Иван Иванович"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -74,13 +78,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_balance"
-                        android:textSize="12sp"/>
+                        android:textSize="13sp"/>
                     <TextView
                         android:id="@+id/dealerBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="100 000 р."
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -93,13 +97,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_money_real"
-                        android:textSize="12sp"/>
+                        android:textSize="13sp"/>
                     <TextView
                         android:id="@+id/dealerRealMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="213 560.55 р. "
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -112,13 +116,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_kredit"
-                        android:textSize="12sp"/>
+                        android:textSize="13sp"/>
                     <TextView
                         android:id="@+id/dealerKredit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10 000 р."
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -143,9 +147,10 @@
         <!-- ` Центральный блок -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:layout_weight="1"
             android:padding="5dp">
 
              <LinearLayout
@@ -156,80 +161,89 @@
 
                 <!-- ` Проведение платежей -->
                 <LinearLayout android:id="@+id/LinearLayout01"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
                     android:minHeight="80dp"
                     android:layout_marginBottom="5dp"
-                    android:padding="3pt">
+                    android:padding="3pt"
+                    android:layout_weight="1">
 
                     <LinearLayout
+                        android:id="@+id/payments_button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:background="@drawable/main_page_btn_events"
                         android:clickable="true">
 
-                        <!-- ` Иконка -->
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_weight="0.3"
-                            android:layout_gravity="center_vertical">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/dot_icon"/>
-                        </LinearLayout>
-
-                        <!-- Текст -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="6"
-                            android:layout_margin="6dp">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/payments_systems"
-                                android:textSize="15sp"
-                                android:textColor="@color/forward_orange"
-                                android:layout_marginBottom="1dp"
-                                />
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/ps_description"
-                                android:textSize="9sp"/>
-
-                        </LinearLayout>
-
-                        <!-- Стрелка перехода -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
                             android:gravity="center_vertical">
-                            <ImageView
+
+                            <!-- ` Иконка -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_weight="0.3"
+                                android:layout_gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/dot_icon"/>
+                            </LinearLayout>
+
+                            <!-- Текст -->
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/arrow"/>
+                                android:orientation="vertical"
+                                android:layout_weight="6"
+                                android:layout_margin="6dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/payments_systems"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/forward_orange"
+                                    android:layout_marginBottom="1dp"
+                                    />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/ps_description"
+                                    android:textSize="11sp"/>
+
+                            </LinearLayout>
+
+                            <!-- Стрелка перехода -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/arrow"/>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
                 <!-- ` Мониторинг -->
                 <LinearLayout android:id="@+id/LinearLayout02"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
                     android:minHeight="80dp"
-                    android:padding="3pt">
+                    android:padding="3pt"
+                    android:layout_weight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -238,53 +252,59 @@
                         android:background="@drawable/main_page_btn_events"
                         android:clickable="true">
 
-                        <!-- ` Иконка -->
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_weight="0.3"
-                            android:layout_gravity="center_vertical">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/dot_icon"/>
-                        </LinearLayout>
-
-                        <!-- Текст -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="6"
-                            android:layout_margin="6dp">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/monitoring_system"
-                                android:textSize="15sp"
-                                android:textColor="@color/forward_orange"
-                                android:layout_marginBottom="1dp"
-                                />
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/ms_description"
-                                android:textSize="9sp"/>
-
-                        </LinearLayout>
-
-                        <!-- Стрелка перехода -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
                             android:gravity="center_vertical">
-                            <ImageView
+
+                            <!-- ` Иконка -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_weight="0.3"
+                                android:layout_gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/dot_icon"/>
+                            </LinearLayout>
+
+                            <!-- Текст -->
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/arrow"/>
+                                android:orientation="vertical"
+                                android:layout_weight="6"
+                                android:layout_margin="6dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/monitoring_system"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/forward_orange"
+                                    android:layout_marginBottom="1dp"
+                                    />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/ms_description"
+                                    android:textSize="11sp"/>
+
+                            </LinearLayout>
+
+                            <!-- Стрелка перехода -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/arrow"/>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -299,13 +319,14 @@
                 >
                 <!-- ` Уведомления системы -->
                 <LinearLayout android:id="@+id/LinearLayout03"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
                     android:minHeight="80dp"
                     android:layout_marginBottom="5dp"
-                    android:padding="3pt">
+                    android:padding="3pt"
+                    android:layout_weight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -314,53 +335,59 @@
                         android:background="@drawable/main_page_btn_events"
                         android:clickable="true">
 
-                        <!-- ` Иконка -->
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:layout_weight="0.3"
-                            android:layout_gravity="center_vertical">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/dot_icon"/>
-                        </LinearLayout>
-
-                        <!-- Текст -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="6"
-                            android:layout_margin="6dp">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/notifications"
-                                android:textSize="15sp"
-                                android:textColor="@color/forward_orange"
-                                android:layout_marginBottom="1dp"
-                                />
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/n_description"
-                                android:textSize="9sp"/>
-
-                        </LinearLayout>
-
-                        <!-- Стрелка перехода -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
                             android:gravity="center_vertical">
-                            <ImageView
+
+                            <!-- ` Иконка -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_weight="0.3"
+                                android:layout_gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/dot_icon"/>
+                            </LinearLayout>
+
+                            <!-- Текст -->
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/arrow"/>
+                                android:orientation="vertical"
+                                android:layout_weight="6"
+                                android:layout_margin="6dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/notifications"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/forward_orange"
+                                    android:layout_marginBottom="1dp"
+                                    />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/n_description"
+                                    android:textSize="11sp"/>
+
+                            </LinearLayout>
+
+                            <!-- Стрелка перехода -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/arrow"/>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -372,7 +399,8 @@
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
                     android:minHeight="80dp"
-                    android:padding="3pt">
+                    android:padding="3pt"
+                    android:layout_weight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -409,7 +437,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/settings"
-                                android:textSize="15sp"
+                                android:textSize="16sp"
                                 android:textColor="@color/forward_orange"
                                 android:layout_marginBottom="1dp"/>
 
@@ -444,10 +472,10 @@
     <!-- Слайдер -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/gradient"
-        android:layout_weight="1">
+        android:layout_weight="0.1">
 
         <!-- Выводим содержимое слайдера -->
         <LinearLayout

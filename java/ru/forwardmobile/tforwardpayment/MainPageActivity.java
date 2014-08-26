@@ -1,5 +1,7 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -100,6 +102,12 @@ public class MainPageActivity extends FragmentActivity {
          startActivity(intent);
     }
 
+    public void enterPayments(View view)
+    {
+      Intent intent = new Intent(this,MainActivityFlat.class);
+        startActivity(intent);
+    }
+
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
         public MyFragmentPagerAdapter(FragmentManager fm) {
@@ -172,6 +180,30 @@ public class MainPageActivity extends FragmentActivity {
             e.printStackTrace();
             // ignore
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Выйти из приложения?")
+                .setMessage("Вы действительно хотите выйти?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        onExit();
+                    }
+                }).create().show();
+    }
+
+    private void onExit() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("EXIT", "true");
+        startActivity(intent);
+
+        this.finish();
     }
 
 }

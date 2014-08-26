@@ -71,11 +71,11 @@ actv.setAdapter(adapter);
             initialize(message);
         }
 
-        textSearchClick();
-        menuGroupClick();
+        //textSearchClick();
+//        menuGroupClick();
 
         // Payment queue start
-        startPaymentQueue();
+        //startPaymentQueue();
     }
 
     private void initialize(String message) {
@@ -89,7 +89,7 @@ actv.setAdapter(adapter);
 
     public void menuGroupClick(){
         Button button01,button02,button03, button04, button05, button06, button07, button08, button09;
-        button01 = (Button) findViewById(R.id.Button01);
+/*        button01 = (Button) findViewById(R.id.Button01);
         button02 = (Button) findViewById(R.id.Button02);
         button03 = (Button) findViewById(R.id.Button03);
         button04 = (Button) findViewById(R.id.Button04);
@@ -160,7 +160,7 @@ actv.setAdapter(adapter);
             public void onClick(View view) {
                 openGroup(109);
             }
-        });
+        });*/
     }
 
     public void textSearchClick(){
@@ -295,7 +295,7 @@ db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIK
         startActivity(intent);
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setTitle("Выйти из приложения?")
@@ -316,7 +316,7 @@ db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIK
         startActivity(intent);
 
         this.finish();
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
