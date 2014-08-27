@@ -10,13 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
          <LinearLayout
-             android:layout_width="100dp"
+             android:layout_width="80dp"
              android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/fDate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:textSize="@dimen/slider_date_text"
                     android:textAppearance="?android:attr/textAppearanceLarge">
                     </TextView>
          </LinearLayout>
@@ -30,47 +31,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                android:id="@+id/fDescription"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceLarge">
-                </TextView>
-                <!--<LinearLayout
+                    android:id="@+id/fDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp" android:orientation="horizontal">
-                    <RelativeLayout
-                        android:id="@+id/sliderPages"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
-
-                        <LinearLayout
-                            android:id="@+id/firstDot"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:background="#000"
-                            android:orientation="horizontal"
-                            android:layout_marginLeft="0dp"/>
-
-                        <LinearLayout
-                            android:id="@+id/secondDot"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:layout_marginLeft="20dp"
-                            android:background="#000"
-                            android:orientation="horizontal"/>
-
-                        <LinearLayout
-                            android:id="@+id/thirdDot"
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:layout_marginLeft="40dp"
-                            android:background="#000"
-                            android:orientation="horizontal"/>
-
-                    </RelativeLayout>
-                </LinearLayout>-->
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/slider_text"
+                    android:gravity="left|center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:padding="5dp">
+                </TextView>
            </LinearLayout>
          </LinearLayout>
 

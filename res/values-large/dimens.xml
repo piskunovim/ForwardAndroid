@@ -7,29 +7,31 @@
 <!-- ` GorbovI 2014-08-27   Size Settings  -->
 
     <!-- ` Размер заголовков меню  на главной ( оранжевые )  -->
-        <dimen name="main_page_orangeHeader">15sp</dimen>
+        <dimen name="main_page_orangeHeader">20sp</dimen>
     <!-- ` Размер описания блоков меню  на главной  -->
         <dimen name="main_page_block_descriptions">10sp</dimen>
 
 
     <!-- ` Размер заголовков в разделе " Информация о дилере " ( оранжевые )  -->
-    <dimen name="dealer_info_orangeHeader">15sp</dimen>
-
-
+        <dimen name="dealer_info_orangeHeader">20sp</dimen>
     <!-- ` Размер значений в разделе " Информация о дилере "  -->
-        <dimen name="dealer_info_descriptions">12sp</dimen>
-    <!-- ` Размер текста информации о дилере  -->
-        <dimen name="dealer_info_header">11sp</dimen>
+        <dimen name="dealer_info_descriptions">17sp</dimen>
+
+
+
+    <!-- ` Размер текста информации о дилере в информационном блоке  -->
+    <dimen name="dealer_info_header">15sp</dimen>
+
 
 
     <!-- ` Размер даты в слайдере  -->
         <dimen name="slider_date_text">12sp</dimen>
     <!-- ` Размер текста в слайдере  -->
-        <dimen name="slider_text">9sp</dimen>
+        <dimen name="slider_text">10sp</dimen>
 
 
     <!-- ` Размер заголовков групп  -->
-    <dimen name="groupe_header">17sp</dimen>
+    <dimen name="groupe_header">20sp</dimen>
 
 
 

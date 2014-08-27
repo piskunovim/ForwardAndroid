@@ -64,10 +64,10 @@ public class PaymentAdapter extends BaseAdapter {
         payDateEnd.setText(paymentListItems.getProcessDate());
         TextView paySum = (TextView) convertView.findViewById(R.id.pay_sum);
         paySum.setText(paymentListItems.getValue() + " / " + paymentListItems.getFullValue() );
-        TextView payErrorCode = (TextView) convertView.findViewById(R.id.pay_error_code);
-        payErrorCode.setText(paymentListItems.getErrorCode());
-        TextView payErrorDesc = (TextView) convertView.findViewById(R.id.pay_error_description);
-        payErrorDesc.setText(paymentListItems.getErrorDescription());
+        //TextView payErrorCode = (TextView) convertView.findViewById(R.id.pay_error_code);
+        //payErrorCode.setText(paymentListItems.getErrorCode());
+        //TextView payErrorDesc = (TextView) convertView.findViewById(R.id.pay_error_description);
+        //payErrorDesc.setText(paymentListItems.getErrorDescription());
 
         return convertView;
     }

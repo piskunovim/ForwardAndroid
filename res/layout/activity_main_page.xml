@@ -2,10 +2,10 @@
 <!-- ` Фон приложения -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@color/forward_grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/forward_grey"
     android:padding="1dp"
     android:id="@+id/activity_main_page_container">
 
@@ -13,27 +13,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:id="@+id/dealerInfo"
         android:background="#E5E5E5"
-        android:clickable="true"
         android:layout_margin="2dp"
-        android:layout_weight="0.1"
+        android:layout_weight="0.5"
+        android:clickable="true"
         android:onClick="enterDealerInfo">
 
         <!-- ` Иконка -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/dealer_icon"/>
         </LinearLayout>
-        <!-- ` Данные дилера -->
+
+        <!-- ` Контейнер данных дилера -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gradient">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@drawable/gradient"
+            android:gravity="center_vertical"
+            android:layout_weight="1">
 
             <!-- ` Контейнер для текста -->
             <LinearLayout
@@ -42,9 +48,9 @@
                 android:orientation="vertical"
 
                 android:paddingTop="3dp"
-                android:paddingLeft="15dp"
+                android:paddingLeft="20dp"
                 android:paddingRight="3dp"
-                android:paddingBottom="7dp">
+                android:paddingBottom="3dp">
 
                 <!-- ` Контейнер для строки 'Дилер' -->
                 <LinearLayout
@@ -55,13 +61,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_name"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Иванов Иван Иванович"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -74,13 +80,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_balance"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="100 000 р."
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -94,13 +100,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_money_real"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerRealMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="213 560.55 р. "
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -113,13 +119,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_kredit"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerKredit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10 000 р."
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="0dp"
                         />
@@ -131,304 +137,322 @@
 
     </LinearLayout>
 
-    <!-- ` Обертка -->
+    <!-- ` Обертка центрального блока ( - С белым абрисом - ) -->
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:background="@drawable/main_border"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/main_border"
         android:layout_marginLeft="1pt"
         android:layout_marginRight="1pt"
-        android:isScrollContainer="true"
-        android:longClickable="false"
-        android:layout_weight="1">
-
-
+        android:layout_weight="2">
 
         <!-- ` Центральный блок -->
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:padding="10dp"
+            >
 
-            <!-- ` Проведение платежей -->
+            <!-- ` ПРОВЕДЕНИЕ ПЛАТЕЖЕЙ. Обертка с серым абрисом -->
             <LinearLayout android:id="@+id/LinearLayout01"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
+                android:layout_weight="1"
 
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp">
 
+                <!-- Блок вертикальной отцентровки. Белая заливка -->
                 <LinearLayout
+                    android:id="@+id/payments_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
-                    android:clickable="true">
+                    android:clickable="true"
+                    android:onClick="enterPayments">
 
-                    <!-- ` Иконка -->
+                    <!-- Содержимое -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="0.3"
-                        android:layout_gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:contentDescription="@string/payments_systems"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/dot_icon"/>
-                    </LinearLayout>
-
-                    <!-- Текст -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="6"
-                        android:layout_margin="6dp">
-                        <TextView
+                        android:orientation="horizontal">
+
+                        <!-- ` Иконка -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:contentDescription="@string/payments_systems"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/dot_icon"/>
+                        </LinearLayout>
+
+                        <!-- Текст -->
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/payments_systems"
-                            android:textSize="15sp"
-                            android:textColor="@color/forward_orange"
-                            android:layout_marginBottom="1dp"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ps_description"
-                            android:textSize="12sp"/>
+                            android:orientation="vertical"
+                            android:layout_weight="6"
+                            android:layout_margin="2dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/payments_systems"
+                                android:textSize="@dimen/main_page_orangeHeader"
+                                android:textColor="@color/forward_orange"
+                                android:layout_marginBottom="1dp"
+                                />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ps_description"
+                                android:textSize="@dimen/main_page_block_descriptions"/>
 
-                    </LinearLayout>
+                        </LinearLayout>
 
-                    <!-- Стрелка перехода -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-                        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/arrow"/>
+                        <!-- Стрелка перехода -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical">
+                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/arrow"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- ` Мониторинг -->
+            <!-- ` МОНИТОРИНГ. Обертка с серым абрисом -->
             <LinearLayout android:id="@+id/LinearLayout02"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
+                android:layout_weight="1"
 
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp">
 
+                <!-- Блок вертикальной отцентровки. Белая заливка -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
                     android:clickable="true">
 
-                    <!-- ` Иконка -->
+                    <!-- Содержимое -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="0.3"
-                        android:layout_gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <!-- ` Иконка -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/dot_icon"/>
-                    </LinearLayout>
+                            android:orientation="horizontal"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/dot_icon"/>
+                        </LinearLayout>
 
-                    <!-- Текст -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="6"
-                        android:layout_margin="6dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/monitoring_system"
-                            android:textSize="15sp"
-                            android:textColor="@color/forward_orange"
-                            android:layout_marginBottom="1dp"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ms_description"
-                            android:textSize="12sp"/>
-
-                    </LinearLayout>
-
-                    <!-- Стрелка перехода -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-                        <ImageView
+                        <!-- Текст -->
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/arrow"/>
+                            android:orientation="vertical"
+                            android:layout_weight="6"
+                            android:layout_margin="2dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/monitoring_system"
+                                android:textSize="@dimen/main_page_orangeHeader"
+                                android:textColor="@color/forward_orange"
+                                android:layout_marginBottom="1dp"
+                                />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ms_description"
+                                android:textSize="@dimen/main_page_block_descriptions"/>
+
+                        </LinearLayout>
+
+                        <!-- Стрелка перехода -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/arrow"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- ` Уведомления системы -->
+            <!-- ` УВЕДОМЛЕНИЯ СИСТЕМЫ. Обертка с серым абрисом -->
             <LinearLayout android:id="@+id/LinearLayout03"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
-
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:layout_marginBottom="10dp">
 
+                <!-- Блок вертикальной отцентровки. Белая заливка -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
                     android:clickable="true">
 
-                    <!-- ` Иконка -->
+                    <!-- Содержимое -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="0.3"
-                        android:layout_gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/dot_icon"/>
-                    </LinearLayout>
-
-                    <!-- Текст -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="6"
-                        android:layout_margin="6dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/notifications"
-                            android:textSize="15sp"
-                            android:textColor="@color/forward_orange"
-                            android:layout_marginBottom="1dp"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/n_description"
-                            android:textSize="12sp"/>
+                        android:orientation="horizontal">
 
-                    </LinearLayout>
+                        <!-- ` Иконка -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_weight="0.5"
+                            android:layout_gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/dot_icon"/>
+                        </LinearLayout>
 
-                    <!-- Стрелка перехода -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-                        <ImageView
+                        <!-- Текст -->
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/arrow"/>
+                            android:orientation="vertical"
+                            android:layout_weight="6"
+                            android:layout_margin="2dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/notifications"
+                                android:textSize="@dimen/main_page_orangeHeader"
+                                android:textColor="@color/forward_orange"
+                                android:layout_marginBottom="1dp"
+                                />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/n_description"
+                                android:textSize="@dimen/main_page_block_descriptions"/>
+
+                        </LinearLayout>
+
+                        <!-- Стрелка перехода -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/arrow"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- ` Настройки -->
+            <!-- ` НАСТРОЙКИ. Обертка с серым абрисом -->
             <LinearLayout android:id="@+id/LinearLayout04"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:background="@drawable/button_selector"
-                android:padding="3pt"
+                android:padding="3pt">
 
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp">
-
+                <!-- Блок вертикальной отцентровки. Белая заливка -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:background="@drawable/main_page_btn_events"
-                    android:clickable="true">
+                    android:clickable="true"
+                    android:gravity="center_vertical">
 
-                    <!-- ` Иконка -->
+                    <!-- Содержимое -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="0.3"
-                        android:layout_gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <!-- ` Иконка -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/dot_icon"/>
-                    </LinearLayout>
+                            android:orientation="horizontal"
+                            android:layout_weight="0.4"
+                            android:layout_gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/dot_icon"/>
+                        </LinearLayout>
 
-                    <!-- Текст -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="6"
-                        android:layout_margin="6dp"
-                        android:gravity="center_vertical"
-                        android:minHeight="40dp"
-                        android:minWidth="350dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings"
-                            android:textSize="15sp"
-                            android:textColor="@color/forward_orange"
-                            android:layout_marginBottom="1dp"/>
-
-                    </LinearLayout>
-
-                    <!-- Стрелка перехода -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
-                        <ImageView
+                        <!-- Текст -->
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/arrow"/>
+                            android:orientation="vertical"
+                            android:layout_weight="6"
+                            android:layout_margin="2dp"
+                            android:gravity="center_vertical"
+                            android:minHeight="40dp"
+                            android:minWidth="350dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/settings"
+                                android:textSize="@dimen/main_page_orangeHeader"
+                                android:textColor="@color/forward_orange"
+                                android:layout_marginBottom="1dp"/>
+
+                        </LinearLayout>
+
+                        <!-- Стрелка перехода -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/arrow"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -446,30 +470,34 @@
     <!-- Слайдер -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:gravity="center_vertical"
         android:background="@drawable/gradient"
-        android:layout_weight="1">
+        android:layout_weight="0.5">
 
-
+            <!-- Содержимое слайдера -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="45dp"
+                android:orientation="horizontal">
                 <android.support.v4.view.ViewPager
                     android:id="@+id/pager"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
                 </android.support.v4.view.ViewPager>
             </LinearLayout>
+
+            <!-- Индикаторы -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="20dp" android:orientation="horizontal" android:gravity="center">
+                android:layout_height="15dp" android:orientation="horizontal" android:gravity="center">
 
                 <!-- Первый индикатор -->
                 <LinearLayout
                     android:id="@+id/firstDot"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
                     android:background="@color/forward_black"
                     android:orientation="horizontal"
                     android:layout_marginLeft="0dp"/>
@@ -477,18 +505,18 @@
                 <!-- Второй индикатор -->
                 <LinearLayout
                     android:id="@+id/secondDot"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginLeft="3dp"
                     android:background="@color/forward_black"
                     android:orientation="horizontal"/>
 
                 <!-- Третий индикатор -->
                 <LinearLayout
                     android:id="@+id/thirdDot"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginLeft="3dp"
                     android:background="@color/forward_black"
                     android:orientation="horizontal"/>
 

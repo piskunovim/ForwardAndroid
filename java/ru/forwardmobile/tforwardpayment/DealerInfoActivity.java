@@ -25,8 +25,8 @@ public class DealerInfoActivity extends ActionBarActivity {
 
         Log.d(LOG_TAG, "Initialize DealerInfoActivity");
 
-        applyFonts( findViewById(R.id.activity_dealer_info) ,null);
-        applyFonts( findViewById(R.id.activity_dealer_info_flat) ,null);
+        //applyFonts( findViewById(R.id.activity_dealer_info) ,null);
+        //applyFonts( findViewById(R.id.activity_dealer_info_flat) ,null);
 
 
 
@@ -35,7 +35,7 @@ public class DealerInfoActivity extends ActionBarActivity {
     protected  void applyFonts(final View v, Typeface fontToSet)
     {
         if(fontToSet == null)
-            fontToSet = Typeface.createFromAsset(getAssets(), "Magistral.TTF");
+            fontToSet = Typeface.createFromAsset(getAssets(), "meVe0se2.ttf");
 
         try {
             if (v instanceof ViewGroup) {

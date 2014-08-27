@@ -4,30 +4,36 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent" android:isScrollContainer="true">
+
     <!-- ` Информация о дилере -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0.53in"
         android:id="@+id/dealerInfo"
         android:background="#E5E5E5"
         android:clickable="true"
         android:layout_margin="2dp"
+        android:layout_weight="0.1"
         android:onClick="enterDealerInfo">
 
         <!-- ` Иконка -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
                 android:src="@drawable/dealer_icon"/>
         </LinearLayout>
         <!-- ` Данные дилера -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient">
+            android:background="@drawable/gradient"
+            android:gravity="center_vertical"
+            android:layout_weight="0.27">
 
             <!-- ` Контейнер для текста -->
             <LinearLayout
@@ -38,7 +44,8 @@
                 android:paddingTop="3dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="3dp"
-                android:paddingBottom="7dp">
+                android:paddingBottom="7dp"
+                >
 
                 <!-- ` Контейнер для строки 'Дилер' -->
                 <LinearLayout
@@ -49,13 +56,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_name"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Иванов Иван Иванович"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -68,13 +75,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_balance"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="100 000 р."
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -87,13 +94,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_money_real"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerRealMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="213 560.55 р. "
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -106,13 +113,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_kredit"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerKredit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10 000 р."
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -160,7 +167,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="2">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -65,13 +65,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/dealer_info_name"
-                                android:textSize="14sp"/>
+                                android:textSize="@dimen/dealer_info_orangeHeader"/>
                             <TextView
                                 android:id="@+id/dealerName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Иванов Иван Иванович"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/dealer_info_orangeHeader"
                                 android:layout_marginLeft="5dp"/>
                         </LinearLayout>
 
@@ -86,13 +86,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/dealer_info_point_num"
-                                android:textSize="14sp"/>
+                                android:textSize="@dimen/dealer_info_orangeHeader"/>
                             <TextView
                                 android:id="@+id/pointNum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="9999"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/dealer_info_orangeHeader"
                                 android:layout_marginLeft="5dp"/>
                         </LinearLayout>
 
@@ -143,14 +143,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/dealer_info_manager"
-                                    android:textSize="15sp"
+                                    android:textSize="@dimen/dealer_info_orangeHeader"
                                     android:textColor="@color/forward_orange"
                                     android:layout_marginBottom="1dp"/>
                                 <TextView android:id="@+id/managerFio"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Ерошкина Оксана"
-                                    android:textSize="12sp"/>
+                                    android:textSize="@dimen/dealer_info_descriptions"/>
                             </LinearLayout>
 
                             <!-- Контакты -->
@@ -164,7 +164,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/dealer_info_manager_contacts"
-                                    android:textSize="15sp"
+                                    android:textSize="@dimen/dealer_info_orangeHeader"
                                     android:textColor="@color/forward_orange"
                                     android:layout_marginBottom="1dp"/>
 
@@ -177,12 +177,12 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="тел.:"
-                                        android:textSize="12sp"/>
+                                        android:textSize="@dimen/dealer_info_descriptions"/>
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="8 (918) 111-11-11"
-                                        android:textSize="12sp"/>
+                                        android:textSize="@dimen/dealer_info_descriptions"/>
                                 </LinearLayout>
 
                                 <!-- Почтовый ящик -->
@@ -194,12 +194,12 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="e-mail:"
-                                        android:textSize="12sp"/>
+                                        android:textSize="@dimen/dealer_info_descriptions"/>
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="test@forwardmobile.ru"
-                                        android:textSize="12sp"/>
+                                        android:textSize="@dimen/dealer_info_descriptions"/>
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -241,7 +241,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/dealer_info_balance"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/dealer_info_orangeHeader"
                             android:textColor="@color/forward_orange"
                             android:layout_marginBottom="1dp"/>
 
@@ -249,7 +249,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="100 000 р."
-                            android:textSize="12sp"/>
+                            android:textSize="@dimen/dealer_info_descriptions"/>
 
                     </LinearLayout>
 
@@ -266,7 +266,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/dealer_info_kredit"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/dealer_info_orangeHeader"
                             android:textColor="@color/forward_orange"
                             android:layout_marginBottom="1dp"/>
 
@@ -274,7 +274,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="10 000 р."
-                            android:textSize="12sp"/>
+                            android:textSize="@dimen/dealer_info_descriptions"/>
 
                     </LinearLayout>
                     <!-- Разделительная полоса -->
@@ -291,7 +291,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/dealer_info_money_go"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/dealer_info_orangeHeader"
                             android:textColor="@color/forward_orange"
                             android:layout_marginBottom="1dp"/>
 
@@ -299,7 +299,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="0 р."
-                            android:textSize="12sp"/>
+                            android:textSize="@dimen/dealer_info_descriptions"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -330,7 +330,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/dealer_info_money_real"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/dealer_info_orangeHeader"
                             android:textColor="@color/forward_orange"
                             android:layout_marginBottom="1dp"/>
 
@@ -338,7 +338,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="213 560.55 р."
-                            android:textSize="12sp"/>
+                            android:textSize="@dimen/dealer_info_descriptions"/>
 
                     </LinearLayout>
 
@@ -359,7 +359,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/dealer_info_fee"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/dealer_info_orangeHeader"
                             android:textColor="@color/forward_orange"
                             android:layout_marginBottom="1dp"/>
 
@@ -367,7 +367,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="11.43 р."
-                            android:textSize="12sp"/>
+                            android:textSize="@dimen/dealer_info_descriptions"/>
 
                     </LinearLayout>
 
@@ -385,7 +385,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/dealer_info_blocked_money"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/dealer_info_orangeHeader"
                             android:textColor="@color/forward_orange"
                             android:layout_marginBottom="1dp"/>
 
@@ -393,7 +393,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="0.00 р."
-                            android:textSize="12sp"/>
+                            android:textSize="@dimen/dealer_info_descriptions"/>
 
                     </LinearLayout>
                 </LinearLayout>
