@@ -30,6 +30,10 @@
         <dimen name="slider_text">10sp</dimen>
 
 
+    <!-- ` Размер заголовков групп  -->
+    <dimen name="groupe_header">20sp</dimen>
+
+
 
 
 

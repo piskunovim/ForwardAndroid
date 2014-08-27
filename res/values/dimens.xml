@@ -28,6 +28,10 @@
         <dimen name="slider_text">9sp</dimen>
 
 
+    <!-- ` Размер заголовков групп  -->
+    <dimen name="groupe_header">17sp</dimen>
+
+
 
 
 

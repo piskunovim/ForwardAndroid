@@ -17,7 +17,7 @@
         android:id="@+id/dealerInfo"
         android:background="#E5E5E5"
         android:layout_margin="2dp"
-        android:layout_weight="0.5"
+        android:layout_weight="0.7"
         android:clickable="true"
         android:onClick="enterDealerInfo">
 
@@ -25,7 +25,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="7">
+            android:layout_weight="10">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

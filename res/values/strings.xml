@@ -86,7 +86,7 @@
     <!-- ` GorbovI 2014-08-20 Главная странца (activity_main_page.xml) \ Описание разделов центрального блока -->
     <string name="ps_description">В данном разделе Вы можете проводить платежи на различных операторов.</string>
     <string name="ms_description">В данном разделе Вы можете следить за состоянием терминалов.</string>
-    <string name="n_description">В данном разделе Вы можете просматривать информационные сообщения.</string>
+    <string name="n_description">В данном разделе Вы можете просматривать уведомления.</string>
     <string name="s_description"></string>
 
  <string-array name="report_filter_types">

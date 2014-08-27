@@ -201,7 +201,7 @@ public class PaymentListImpl extends ActionBarActivity {
                     t = (TextView) par.findViewById(R.id.pay_date_end);
                     String dateEnd = "Завершен: " + t.getText().toString();
                     //Ошибка (в формате : "Код - Текст ошибки")
-                    t = (TextView) par.findViewById(R.id.pay_error_code);
+                    //t = (TextView) par.findViewById(R.id.pay_error_code);
                     String errorText = "Ошибка: " + t.getText().toString();
                     //t = (TextView) par.findViewById(R.id.pay_error_description);
                     //errorText += " - " + t.getText().toString();
