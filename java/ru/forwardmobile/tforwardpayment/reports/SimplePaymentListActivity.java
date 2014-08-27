@@ -45,8 +45,8 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.simple_payment_list);
-
+        //setContentView(R.layout.simple_payment_list);
+        setContentView(R.layout.payment_list_row);
         Spinner spinner = (Spinner) findViewById(R.id.filterSpinner);
 
         ArrayAdapter<?> adapter =

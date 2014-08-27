@@ -216,7 +216,7 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
-                    android:background="@color/redf">
+                    android:background="#dbdb214c">
 
                     <!-- Контейнер для полей "Статус" и "Дата платежа"  -->
                     <LinearLayout
