@@ -5,8 +5,7 @@
     android:background="#CCC"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="1dp"
-    android:isScrollContainer="true">
+    android:padding="1dp">
 
     <!-- ` Информация о дилере -->
     <LinearLayout
@@ -16,22 +15,26 @@
         android:background="#E5E5E5"
         android:clickable="true"
         android:layout_margin="2dp"
+        android:layout_weight="0.1"
         android:onClick="enterDealerInfo">
 
         <!-- ` Иконка -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/dealer_icon"/>
         </LinearLayout>
         <!-- ` Данные дилера -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/gradient">
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient"
+            android:gravity="center_vertical"
+            android:layout_weight="0.5">
 
             <!-- ` Контейнер для текста -->
             <LinearLayout
@@ -53,13 +56,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_name"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Иванов Иван Иванович"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -72,18 +75,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_balance"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="100 000 р."
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
                 <!-- ` Контейнер для строки 'Можно израсходовать' -->
                 <LinearLayout
+                    android:baselineAligned="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -91,13 +95,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_money_real"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerRealMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="213 560.55 р. "
-                        android:textSize="12sp"
+                        android:textSize="@dimen/dealer_info_header"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
@@ -110,14 +114,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/dealer_info_kredit"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/dealer_info_header"/>
                     <TextView
                         android:id="@+id/dealerKredit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10 000 р."
-                        android:textSize="12sp"
-                        android:layout_marginLeft="5dp"/>
+                        android:textSize="@dimen/dealer_info_header"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="0dp"
+                        />
                 </LinearLayout>
 
             </LinearLayout>
@@ -129,17 +135,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:layout_weight="2">
+
+        <!-- Обертка -->
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
-            android:background="@drawable/main_border"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/main_border"
+
             android:layout_marginLeft="1pt"
-            android:layout_marginRight="1pt"
-            android:isScrollContainer="true"
-            android:longClickable="false">
+            android:layout_marginRight="1pt">
+
             <LinearLayout android:id="@+id/LinearLayoutMain"
                 android:layout_height="wrap_content" android:layout_width="match_parent"
                 android:padding="10dp"
@@ -187,12 +196,11 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:orientation="vertical">
 
                 <!-- ` Мобильная связь -->
                 <LinearLayout android:id="@+id/Button01"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
@@ -234,7 +242,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/main_menu_101_label"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
+
                                 android:layout_marginBottom="1dp"
                                 />
                         </LinearLayout>
@@ -256,7 +265,7 @@
 
                 <!-- ` Телевидение -->
                 <LinearLayout android:id="@+id/Button02"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
@@ -298,7 +307,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/main_menu_102_label"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
                                 android:layout_marginBottom="1dp"
                                 />
                         </LinearLayout>
@@ -320,7 +329,7 @@
 
                 <!-- ` Стационарная связь -->
                 <LinearLayout android:id="@+id/Button03"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
@@ -362,7 +371,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/main_menu_103_label"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
                                 android:layout_marginBottom="1dp"
                                 />
                         </LinearLayout>
@@ -384,7 +393,7 @@
 
                 <!-- ` Интернет и IP-телефония -->
                 <LinearLayout android:id="@+id/Button04"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
@@ -426,7 +435,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/main_menu_104_label"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
                                 android:layout_marginBottom="1dp"
                                 />
                         </LinearLayout>
@@ -448,7 +457,7 @@
 
                 <!-- ` Погашение кредитов -->
                 <LinearLayout android:id="@+id/Button05"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
@@ -490,7 +499,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/main_menu_105_label"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
                                 android:layout_marginBottom="1dp"
                                 />
                         </LinearLayout>
@@ -512,7 +521,7 @@
 
                 <!-- ` ЖКХ -->
                 <LinearLayout android:id="@+id/Button06"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
@@ -554,7 +563,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/main_menu_106_label"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
                                 android:layout_marginBottom="1dp"
                                 />
                         </LinearLayout>
@@ -576,7 +585,7 @@
 
                 <!-- ` Игры -->
                 <LinearLayout android:id="@+id/Button07"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
@@ -618,7 +627,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/main_menu_107_label"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
                                 android:layout_marginBottom="1dp"
                                 />
                         </LinearLayout>
@@ -640,7 +649,7 @@
 
                 <!-- ` Кошельки -->
                 <LinearLayout android:id="@+id/Button08"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
@@ -682,7 +691,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/main_menu_108_label"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
                                 android:layout_marginBottom="1dp"
                                 />
                         </LinearLayout>
@@ -746,7 +755,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/main_menu_109_label"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
                                 android:layout_marginBottom="1dp"
                                 />
                         </LinearLayout>

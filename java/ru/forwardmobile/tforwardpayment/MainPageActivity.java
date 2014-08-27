@@ -75,7 +75,7 @@ public class MainPageActivity extends FragmentActivity {
                 }
             });
 
-            applyFonts(findViewById(R.id.activity_main_page_container), null);
+           // applyFonts(findViewById(R.id.activity_main_page_container), null);
 
            /* LinearLayout DealerInfo = (LinearLayout) findViewById(R.id.dealerInfo);
             DealerInfo.OnClickListener(new View.OnClickListener() {

@@ -87,6 +87,12 @@ actv.setAdapter(adapter);
         dbHelper.close();
     }
 
+    public void enterDealerInfo(View view)
+    {
+        Intent intent = new Intent(this,DealerInfoActivity.class);
+        startActivity(intent);
+    }
+
     public void menuGroupClick(){
         Button button01,button02,button03, button04, button05, button06, button07, button08, button09;
 /*        button01 = (Button) findViewById(R.id.Button01);
