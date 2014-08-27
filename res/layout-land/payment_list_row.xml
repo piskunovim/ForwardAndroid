@@ -216,7 +216,7 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
-                    android:background="@color/redf">
+                    android:background="@color/forward_payment_error">
 
                     <!-- Контейнер для полей "Статус" и "Дата платежа"  -->
                     <LinearLayout
@@ -392,7 +392,7 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
-                    android:background="@color/amethyst">
+                    android:background="@color/forward_payment_commited">
 
                     <!-- Контейнер для полей "Статус" и "Дата платежа"  -->
                     <LinearLayout
