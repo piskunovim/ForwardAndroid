@@ -37,8 +37,10 @@
             android:layout_marginTop="15dp">
             <Button
                 android:id="@+id/access_button"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_width="150dp"
+                android:background="@drawable/gardient_login_form_button"
+                android:clickable="true"
                 android:text = "Button Text"
             />
         </LinearLayout>
