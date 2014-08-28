@@ -252,7 +252,8 @@
                     android:orientation="vertical"
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
-                    android:clickable="true">
+                    android:clickable="true"
+                    android:onClick="enterMonitoring">
 
                     <!-- Содержимое -->
                     <LinearLayout
@@ -330,7 +331,8 @@
                     android:orientation="vertical"
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
-                    android:clickable="true">
+                    android:clickable="true"
+                    android:onClick="enterNotifications">
 
                     <!-- Содержимое -->
                     <LinearLayout
@@ -406,6 +408,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/main_page_btn_events"
                     android:clickable="true"
+                    android:onClick="enterSettings"
                     android:gravity="center_vertical">
 
                     <!-- Содержимое -->

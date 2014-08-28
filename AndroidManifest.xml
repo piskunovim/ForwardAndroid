@@ -52,6 +52,18 @@
             android:label="@string/title_activity_main_list" >
         </activity>
         <activity
+            android:name="ru.forwardmobile.tforwardpayment.PageMonitoring"
+            android:label="Monitoring Page" >
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment.PageNotifications"
+            android:label="Notifications Page" >
+        </activity>
+        <activity
+            android:name="ru.forwardmobile.tforwardpayment.PageSettings"
+            android:label="Settings Page" >
+        </activity>
+        <activity
             android:name="ru.forwardmobile.tforwardpayment.MainFooter"
             android:label="Footer" >
         </activity>

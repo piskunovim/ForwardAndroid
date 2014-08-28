@@ -108,6 +108,25 @@ public class MainPageActivity extends FragmentActivity {
         startActivity(intent);
     }
 
+    public void enterMonitoring(View view)
+    {
+        Intent intent = new Intent(this,PageMonitoring.class);
+        startActivity(intent);
+    }
+
+    public void enterNotifications(View view)
+    {
+        Intent intent = new Intent(this,PageNotifications.class);
+        startActivity(intent);
+    }
+
+    public void enterSettings(View view)
+    {
+        Intent intent = new Intent(this,PageSettings.class);
+        startActivity(intent);
+    }
+
+
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
         public MyFragmentPagerAdapter(FragmentManager fm) {
