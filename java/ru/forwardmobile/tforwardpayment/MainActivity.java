@@ -1,6 +1,7 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.AlertDialog;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.TextKeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +55,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
     EditText etName, etPass;
     TPostData pd;
-
+    InputMethodManager imm;
     //Для проверки соединения с сетью Интернет//СonnectionDetector cd;
 
     @Override
@@ -72,7 +76,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     private void initialize() {
         setContentView(R.layout.activity_main);
 
-           applyFonts( findViewById(R.id.activity_main_container) ,null);
+        applyFonts(findViewById(R.id.activity_main_container), null);
         // applyBoldFonts( findViewById(R.id.activity_main_container_footer) ,null);
 
         // Для тестового сервера
@@ -90,26 +94,72 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         boolean databaseExists = checkDataBase();
         boolean datatablesFull = checkForTables();
 
-        if (databaseExists && datatablesFull )
-        {
+        if (databaseExists && datatablesFull) {
             Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "true");
             // запуск activity
             startActivity(intent);
             this.finish();
-        }
-        else
-        {
+        } else {
             Log.d(LOG_TAG, "Does not exist database");
         }
+
+        //keyboard
+        imm = (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(etName.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(etPass.getWindowToken(), 0);
+
+        /*etName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // Always use a TextKeyListener when clearing a TextView to prevent android
+                    // warnings in the log
+                    clearLogin(v);
+                }
+            }
+
+        });*/
+
+        etPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // Always use a TextKeyListener when clearing a TextView to prevent android
+                    // warnings in the log
+                    clearPass(v);
+
+                }
+            }
+
+        });
     }
 
 
     public void sendMessage(View view){
          //Intent intent = new Intent(this,MainPageActivity.class);
-        Intent intent = new Intent(this,MainPageActivity.class);
-        startActivity(intent);
-        //SingIn(etName.getText().toString(), etPass.getText().toString());
+        //Intent intent = new Intent(this,MainPageActivity.class);
+        //startActivity(intent);
+        SingIn(etName.getText().toString(), etPass.getText().toString());
+    }
+
+    public void clearLogin(View view){
+        if (etName.getText().toString().equals("Ваш Логин")){
+            TextKeyListener.clear((etName).getText());
+            //imm.showSoftInput(etName, 0);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        }
+    }
+
+    public void clearPass(View view){
+        if(etPass.getText().toString().equals("Ваш Пароль")){
+            TextKeyListener.clear((etPass).getText());
+            etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+            //imm.showSoftInput(etPass, 0);
+        }
     }
 
 
