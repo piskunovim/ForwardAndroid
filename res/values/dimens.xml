@@ -6,7 +6,7 @@
 <!-- ` GorbovI 2014-08-27   Size Settings  -->
 
     <!-- ` ИНФОРМАЦИОННЫЙ БЛОК ДИЛЕРА -->
-    <dimen name="dealer_info_header_max_height">80dp</dimen>    <!-- ` Максимальная высота блока "Информация о дилере"  -->
+    <dimen name="dealer_info_header_max_height">70dp</dimen>    <!-- ` Максимальная высота блока "Информация о дилере"  -->
     <dimen name="dealer_info_header">11sp</dimen>               <!-- ` Размер текста информации о дилере  -->
 
 
@@ -21,7 +21,7 @@
 
 
     <!-- ` СЛАЙДЕР -->
-    <dimen name="slider_max_height">60dp</dimen>                <!-- ` Максимальная высота СЛАЙДЕРА  -->
+    <dimen name="slider_max_height">70dp</dimen>                <!-- ` Максимальная высота СЛАЙДЕРА  -->
     <dimen name="slider_date_text">12sp</dimen>                 <!-- ` Размер даты в слайдере  -->
     <dimen name="slider_text">9sp</dimen>                       <!-- ` Размер текста в слайдере  -->
 

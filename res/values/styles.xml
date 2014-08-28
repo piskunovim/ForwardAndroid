@@ -6,7 +6,7 @@
     </style>
 
     <style name="DataEntry" >
-        <item name="android:background">#efefef</item>
+        <item name="android:background">#ffffff</item>
     </style>
 
     <style name="DataEntry.Container">
