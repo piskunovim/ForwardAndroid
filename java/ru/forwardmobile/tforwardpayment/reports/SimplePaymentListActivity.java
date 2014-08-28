@@ -45,8 +45,8 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setContentView(R.layout.simple_payment_list);
-        setContentView(R.layout.payment_list_row);
+        setContentView(R.layout.simple_payment_list);
+
         Spinner spinner = (Spinner) findViewById(R.id.filterSpinner);
 
         ArrayAdapter<?> adapter =
@@ -137,12 +137,12 @@ public class SimplePaymentListActivity extends Activity implements AdapterView.O
         filter      = new ReportBaseFilter(this, (ViewGroup) findViewById(R.id.payment_list_filter));
         filterCommon= new ReportCommonFilter(this, (ViewGroup) findViewById(R.id.payment_list_filter),1);
 
+        //Закомментированно 27.08.2014
+        //listView    = (ListView) findViewById(R.id.payment_list_view);
+        //listView.setOnItemClickListener(this);
+        //dataSource  = new PaymentListDataSource(this);
 
-        listView    = (ListView) findViewById(R.id.payment_list_view);
-        listView.setOnItemClickListener(this);
-        dataSource  = new PaymentListDataSource(this);
-
-        showPaymentList(getIntent().getIntExtra(LIST_TYPE, 0));
+        //showPaymentList(getIntent().getIntExtra(LIST_TYPE, 0));
     }
 
     private void showPaymentList(int listType) {
