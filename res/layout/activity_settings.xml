@@ -1,13 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
 
-    <TextView
+    <!-- ` СТАДИЯ РАЗРАБОТКИ. Обертка с серым абрисом -->
+    <LinearLayout android:id="@+id/LinearLayout01"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="В скором времени здесь будет раздел \''Настройки\''"/>
+        android:background="@drawable/button_selector"
+        android:padding="3pt">
+
+        <!-- Блок вертикальной отцентровки. Белая заливка -->
+        <LinearLayout
+            android:id="@+id/payments_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/main_page_btn_events">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="50dp"
+                android:paddingBottom="50dp"
+                android:gravity="center_vertical|center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Уважаемый агент!"
+                    android:textColor="@color/forward_orange"
+                    android:textSize="@dimen/main_page_orangeHeader"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Данный раздел находится в стадии разработки."/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Приносим свои извинения!"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 
 </LinearLayout>
