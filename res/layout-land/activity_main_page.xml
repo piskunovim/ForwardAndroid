@@ -12,20 +12,19 @@
     <!-- ` Информация о дилере -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dealer_info_header_max_height"
         android:orientation="horizontal"
         android:id="@+id/dealerInfo"
         android:background="#E5E5E5"
         android:layout_margin="2dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0"
         android:clickable="true"
         android:onClick="enterDealerInfo">
 
         <!-- ` Иконка -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="10">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -155,8 +154,8 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_weight="2"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:layout_weight="1">
 
              <LinearLayout
                 android:layout_width="match_parent"
@@ -478,11 +477,11 @@
     <!-- Слайдер -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/slider_max_height"
         android:orientation="vertical"
         android:gravity="center_vertical"
         android:background="@drawable/gradient"
-        android:layout_weight="0.5">
+        android:layout_weight="0">
 
         <!-- Содержимое слайдера -->
         <LinearLayout

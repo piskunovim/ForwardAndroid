@@ -3,38 +3,30 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- ` GorbovI 2014-08-27   Size Settings  -->
 
-<!-- ` GorbovI 2014-08-27   Size Settings  -->
-
-    <!-- ` Размер заголовков меню  на главной ( оранжевые )  -->
-        <dimen name="main_page_orangeHeader">20sp</dimen>
-    <!-- ` Размер описания блоков меню  на главной  -->
-        <dimen name="main_page_block_descriptions">10sp</dimen>
+    <!-- ` ИНФОРМАЦИОННЫЙ БЛОК ДИЛЕРА -->
+    <dimen name="dealer_info_header_max_height">120dp</dimen>   <!-- ` Максимальная высота блока "Информация о дилере"  -->
+    <dimen name="dealer_info_header">15sp</dimen>               <!-- ` Размер текста информации о дилере  -->
 
 
-    <!-- ` Размер заголовков в разделе " Информация о дилере " ( оранжевые )  -->
-        <dimen name="dealer_info_orangeHeader">20sp</dimen>
-    <!-- ` Размер значений в разделе " Информация о дилере "  -->
-        <dimen name="dealer_info_descriptions">17sp</dimen>
+    <!-- ` ГЛАВНАЯ СТРАНИЦА -->
+    <dimen name="main_page_orangeHeader">22sp</dimen>           <!-- ` Размер заголовков меню  на главной ( оранжевые )  -->
+    <dimen name="main_page_block_descriptions">18sp</dimen>     <!-- ` Размер описания блоков меню  на главной  -->
 
 
-
-    <!-- ` Размер текста информации о дилере в информационном блоке  -->
-    <dimen name="dealer_info_header">15sp</dimen>
-
-
-
-    <!-- ` Размер даты в слайдере  -->
-        <dimen name="slider_date_text">12sp</dimen>
-    <!-- ` Размер текста в слайдере  -->
-        <dimen name="slider_text">10sp</dimen>
+    <!-- РАЗДЕЛ ИНФОРМАЦИЯ О ДИЛЕРЕ -->
+    <dimen name="dealer_info_orangeHeader">20sp</dimen>         <!-- ` Размер заголовков в разделе " Информация о дилере " ( оранжевые )  -->
+    <dimen name="dealer_info_descriptions">18sp</dimen>         <!-- ` Размер значений в разделе " Информация о дилере "  -->
 
 
-    <!-- ` Размер заголовков групп  -->
-    <dimen name="groupe_header">20sp</dimen>
+    <!-- ` СЛАЙДЕР -->
+    <dimen name="slider_max_height">90dp</dimen>                <!-- ` Максимальная высота СЛАЙДЕРА  -->
+    <dimen name="slider_date_text">14sp</dimen>                 <!-- ` Размер даты в слайдере  -->
+    <dimen name="slider_text">14sp</dimen>                      <!-- ` Размер текста в слайдере  -->
 
 
-
-
+    <!-- ` ГРУППЫ ОПЕРАТОРОВ -->
+    <dimen name="groupe_header">23sp</dimen>                    <!-- ` Размер заголовков групп  -->
 
 </resources>
