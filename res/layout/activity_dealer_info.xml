@@ -264,6 +264,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp">
             <LinearLayout
+                android:id="@+id/callManager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -335,6 +336,7 @@
                                         android:text="тел.:"
                                         android:textSize="@dimen/dealer_info_descriptions"/>
                                     <TextView
+                                        android:id="@+id/managerCallNumber"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="8 (918) 111-11-11"
