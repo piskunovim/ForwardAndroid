@@ -1,12 +1,15 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -17,6 +20,9 @@ public class DealerInfoActivity extends ActionBarActivity {
 
     final static String LOG_TAG = "TFORWARD.DealerInfoActivity";
 
+    LinearLayout call;
+    TextView number;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +31,19 @@ public class DealerInfoActivity extends ActionBarActivity {
 
         Log.d(LOG_TAG, "Initialize DealerInfoActivity");
 
-        //applyFonts( findViewById(R.id.activity_dealer_info) ,null);
+        //initialize call/number objects
+        call = (LinearLayout) findViewById(R.id.callManager);
+        number = (TextView) findViewById(R.id.managerCallNumber);
+
+        //if user push "callManager" layout
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeCall(view, number.getText().toString());
+            }
+        });
+
+       //applyFonts( findViewById(R.id.activity_dealer_info) ,null);
         //applyFonts( findViewById(R.id.activity_dealer_info_flat) ,null);
 
 
@@ -51,6 +69,12 @@ public class DealerInfoActivity extends ActionBarActivity {
             e.printStackTrace();
             // ignore
         }
+    }
+
+    private void makeCall(View view, String num){
+        Intent callNumber = new Intent(Intent.ACTION_CALL);
+        callNumber.setData(Uri.parse("tel:"+num));
+        startActivity(callNumber);
     }
 
 }

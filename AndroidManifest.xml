@@ -10,6 +10,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Разрешаем приложению совершать звонки. -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <!-- Выводит телефон из состояния сна, когда  получено сообщение. -->
