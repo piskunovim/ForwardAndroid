@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ` Фон приложения -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/forward_grey"
+    android:padding="1dp"
+    android:id="@+id/activity_main_page_container">
+
+
+
+    <!-- ` Обертка центрального блока ( - С белым абрисом - ) -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/main_border"
+        android:layout_marginLeft="1pt"
+        android:layout_marginRight="1pt"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- ` Центральный блок -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:padding="10dp">
+
+                <!-- ` МТС. Обертка с серым абрисом -->
+                <LinearLayout android:id="@+id/LinearLayout01"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/button_selector"
+                    android:padding="3pt"
+                    android:layout_weight="1"
+
+                    android:layout_marginBottom="10dp">
+
+                    <!-- Блок вертикальной отцентровки. Белая заливка -->
+                    <LinearLayout
+                        android:id="@+id/payments_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/main_page_btn_events"
+                        android:clickable="true"
+                        android:onClick="enterPayments">
+
+                        <!-- Содержимое -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="true"
+                            android:orientation="horizontal">
+
+                            <!-- Текст -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="6"
+                                android:layout_margin="2dp"
+                                android:padding="4dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="МТС"
+                                    android:textSize="@dimen/main_page_orangeHeader"
+                                    android:layout_marginBottom="1dp"
+                                    />
+                            </LinearLayout>
+
+                            <!-- Стрелка перехода -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="0"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/arrow"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- ` БИЛАЙН. Обертка с серым абрисом -->
+                <LinearLayout android:id="@+id/LinearLayout02"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/button_selector"
+                    android:padding="3pt"
+                    android:layout_weight="1"
+
+                    android:layout_marginBottom="10dp">
+
+                    <!-- Блок вертикальной отцентровки. Белая заливка -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/main_page_btn_events"
+                        android:clickable="true"
+                        android:onClick="enterMonitoring">
+
+                        <!-- Содержимое -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="true">
+
+                            <!-- Текст -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="6"
+                                android:layout_margin="2dp"
+                                android:padding="4dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Билайн"
+                                    android:textSize="@dimen/main_page_orangeHeader"
+                                    android:layout_marginBottom="1dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <!-- Стрелка перехода -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="0"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/arrow"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- ` МЕГАФОН. Обертка с серым абрисом -->
+                <LinearLayout android:id="@+id/LinearLayout03"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:background="@drawable/button_selector"
+                    android:padding="3pt"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp">
+
+                    <!-- Блок вертикальной отцентровки. Белая заливка -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/main_page_btn_events"
+                        android:clickable="true"
+                        android:onClick="enterNotifications">
+
+                        <!-- Содержимое -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                            <!-- Текст -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="6"
+                                android:layout_margin="2dp"
+                                android:padding="4dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Мегафон"
+                                    android:textSize="@dimen/main_page_orangeHeader"
+                                    android:layout_marginBottom="1dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <!-- Стрелка перехода -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_weight="0"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/arrow"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- ` ТЕЛЕ2. Обертка с серым абрисом -->
+                <LinearLayout
+                    android:id="@+id/LinearLayout04"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:background="@drawable/button_selector"
+                    android:padding="3pt"
+                    android:layout_weight="1">
+
+                    <!-- Блок вертикальной отцентровки. Белая заливка -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/main_page_btn_events"
+                        android:clickable="true"
+                        android:onClick="enterNotifications">
+
+                        <!-- Содержимое -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                            <!-- Текст -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="6"
+                                android:layout_margin="2dp"
+                                android:padding="4dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Теле2"
+                                    android:textSize="@dimen/main_page_orangeHeader"
+                                    android:layout_marginBottom="1dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <!-- Стрелка перехода -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:baselineAligned="false"
+                                android:orientation="vertical"
+                                android:layout_weight="0"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/arrow"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

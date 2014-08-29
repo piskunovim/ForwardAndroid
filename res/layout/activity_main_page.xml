@@ -50,13 +50,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:baselineAligned="true"
+                android:baselineAligned="false"
                 android:orientation="vertical">
 
                 <!-- ` Контейнер для строки 'Дилер' -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -157,6 +158,7 @@
             <LinearLayout android:id="@+id/LinearLayout01"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:baselineAligned="false"
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
                 android:layout_weight="1"
@@ -168,6 +170,7 @@
                     android:id="@+id/payments_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:baselineAligned="false"
                     android:orientation="vertical"
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
@@ -240,6 +243,7 @@
             <LinearLayout android:id="@+id/LinearLayout02"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:baselineAligned="false"
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
                 android:layout_weight="1"
@@ -250,6 +254,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:baselineAligned="false"
                     android:orientation="vertical"
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
@@ -321,6 +326,7 @@
             <LinearLayout android:id="@+id/LinearLayout03"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
@@ -331,6 +337,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:baselineAligned="false"
                     android:orientation="vertical"
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
@@ -404,6 +411,7 @@
                 android:id="@+id/LinearLayout04"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:background="@drawable/button_selector"
                 android:padding="3pt"
@@ -413,6 +421,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:baselineAligned="false"
                     android:orientation="vertical"
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
