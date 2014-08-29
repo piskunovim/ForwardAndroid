@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:background="@drawable/button_selector"
-        android:padding="3pt">
+        android:padding="3pt"
+        android:layout_margin="10dp">
 
         <!-- Блок вертикальной отцентровки. Белая заливка -->
         <LinearLayout
@@ -21,13 +22,33 @@
             android:orientation="horizontal"
             android:background="@drawable/main_page_btn_events">
 
+            <!-- ` Контейннер для иконки -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_weight="3">
+                <!-- Иконка -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/pay_attention"/>
+            </LinearLayout>
+
+            <!-- Контейнер для текста -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="50dp"
-                android:paddingBottom="50dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal">
+                <!-- Заголовок -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -35,13 +56,14 @@
                     android:text="Уважаемый агент!"
                     android:textColor="@color/forward_orange"
                     android:textSize="@dimen/main_page_orangeHeader"/>
-
+                <!-- Тест уведомления -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Данный раздел находится в стадии разработки."/>
 
+                <!-- Извинения -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -50,6 +72,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-
 </LinearLayout>

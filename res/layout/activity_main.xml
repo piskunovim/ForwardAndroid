@@ -33,11 +33,13 @@
 
                 <!-- Логотип -->
                <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView"
                     android:layout_gravity="center"
                     android:src="@drawable/logo"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
                     android:layout_marginTop="60dp"
                     android:layout_marginBottom="60dp"
                     />
