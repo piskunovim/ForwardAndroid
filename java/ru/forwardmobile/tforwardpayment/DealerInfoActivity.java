@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
+
 /**
  * Created by gorbovi on 20.08.2014.
  */
@@ -35,9 +37,11 @@ public class DealerInfoActivity extends AbstractBaseActivity {
         Log.d(LOG_TAG, "Initialize DealerInfoActivity");
 
         //заполняем блоки данными
-        setDealerInfoBlock("Иванов Иван Иванович", "9999");
-        setDealerFinanceBlock("100000","10000", "0", "213560.55", "11.43", "0.00");
-        setManagerBlock("Ерошкина Оксана", "8 (918) 111-11-11", "test@forwardmobile.ru");
+        ViewGroup view = (ViewGroup) findViewById(R.id.activity_dealer_info);
+        DealerInfo dealerInfo = new DealerInfo(view);
+        dealerInfo.setDealerInfoBlock("Иванов Иван Иванович", "9999");
+        dealerInfo.setDealerFinanceBlock("100000","10000", "0", "213560.55", "11.43", "0.00");
+        dealerInfo.setManagerBlock("Ерошкина Оксана", "8 (918) 111-11-11", "test@forwardmobile.ru");
 
         //initialize call/number objects
         call = (LinearLayout) findViewById(R.id.callManager);
@@ -53,90 +57,6 @@ public class DealerInfoActivity extends AbstractBaseActivity {
 
        //applyFonts( findViewById(R.id.activity_dealer_info) ,null);
        //applyFonts( findViewById(R.id.activity_dealer_info_flat) ,null);
-    }
-
-    // = Заполняем информационный блок дилера = //
-    public void setDealerInfoBlock(String dealerName, String dealerPoint)
-    {
-     setDealerName(dealerName);
-     setDealerPoint(dealerPoint);
-    }
-
-    public void setDealerName(String name){
-        TextView dealerName = (TextView) findViewById(R.id.dealerName);
-        dealerName.setText(name);
-    }
-
-    public void setDealerPoint(String pointNum)
-    {
-        TextView dealerPoint = (TextView) findViewById(R.id.pointNum);
-        dealerPoint.setText(pointNum);
-    }
-
-    // = Заполняем блок дилера = //
-    public void setDealerFinanceBlock(String balance, String credit, String moneyGo, String realMoney, String fee, String blockedMoney){
-      setDealerBalance(balance);
-      setDealerCredit(credit);
-      setDealerMoneyGo(moneyGo);
-      setDealerRealMoney(realMoney);
-      setDealerFee(fee);
-      setDealerBlockedMoney(blockedMoney);
-    }
-
-    public void setDealerBalance(String text){
-        TextView dealerBalance = (TextView) findViewById(R.id.dealerBalance);
-        dealerBalance.setText(text + " р.");
-    }
-
-    public void setDealerCredit(String text){
-        TextView dealerCredit = (TextView) findViewById(R.id.dealerKredit);
-        dealerCredit.setText(text + " р.");
-    }
-
-    public void setDealerMoneyGo(String text){
-        TextView dealerMoneyGo = (TextView) findViewById(R.id.dealerMoneyGo);
-        dealerMoneyGo.setText(text + " р.");
-    }
-
-    public void setDealerRealMoney(String text){
-        TextView dealerRealMoney = (TextView) findViewById(R.id.dealerRealMoney);
-        dealerRealMoney.setText(text + " р.");
-    }
-
-    public void setDealerFee(String text){
-        TextView dealerFee = (TextView) findViewById(R.id.dealerFee);
-        dealerFee.setText(text + " р.");
-    }
-
-    public void setDealerBlockedMoney(String text){
-        TextView dealerBlockedMoney = (TextView) findViewById(R.id.dealerBlockedMoney);
-        dealerBlockedMoney.setText(text + " р.");
-    }
-
-    // = Заполняем блок менеджера = //
-    public void setManagerBlock(String managerName, String managerNumber, String managerEmail)
-    {
-        setManagerName(managerName);
-        setManagerNumber(managerNumber);
-        setManagerEmail(managerEmail);
-    }
-
-    public void  setManagerName(String name)
-    {
-        TextView managerName = (TextView) findViewById(R.id.managerFio);
-        managerName.setText(name);
-    }
-
-    public void setManagerNumber(String number)
-    {
-        TextView managerNumber = (TextView) findViewById(R.id.managerCallNumber);
-        managerNumber.setText(number);
-    }
-
-    public void setManagerEmail(String email)
-    {
-        TextView managerEmail = (TextView) findViewById(R.id.managerEmail);
-        managerEmail.setText(email);
     }
 
     // = Диалоговое окно "Позвонить менеджеру?" = //

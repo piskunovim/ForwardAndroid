@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
+
 /**
  * Created by gorbovi on 19.08.2014.
  */
@@ -50,6 +52,11 @@ public class MainPageActivity extends AbstractBaseActivity{
 
             Log.d(LOG_TAG, "Initialize MainPageActivity");
 
+
+            ViewGroup view = (ViewGroup) findViewById(R.id.activity_main_page_container);
+            DealerInfo dealerInfo = new DealerInfo(view);
+            dealerInfo.setDealerName("Иванов Иван Иванович");
+            dealerInfo.setDealerShotBlock("Иванов Иван Иванович","100000","213560.55","10000");
 
 
             pager = (ViewPager) findViewById(R.id.pager);
