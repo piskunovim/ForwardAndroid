@@ -346,6 +346,7 @@
                                         android:text="e-mail:"
                                         android:textSize="@dimen/dealer_info_descriptions"/>
                                     <TextView
+                                        android:id="@+id/managerEmail"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="test@forwardmobile.ru"

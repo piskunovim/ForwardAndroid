@@ -23,8 +23,8 @@ public class DealerInfoActivity extends AbstractBaseActivity {
     final static String LOG_TAG = "TFORWARD.DealerInfoActivity";
 
     LinearLayout call; //блок информации о менеджере(необходим для обработки нажатия)
-    TextView number;  //телефон менеджера
-    String n;        //
+    TextView number;  //поле телефона менеджера
+    String n;        //телефон менеджера
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,10 @@ public class DealerInfoActivity extends AbstractBaseActivity {
 
         Log.d(LOG_TAG, "Initialize DealerInfoActivity");
 
-        setDealerBlock("100000","10000", "0", "213560.55", "11.43", "0.00");
+        //заполняем блоки данными
+        setDealerInfoBlock("Иванов Иван Иванович", "9999");
+        setDealerFinanceBlock("100000","10000", "0", "213560.55", "11.43", "0.00");
+        setManagerBlock("Ерошкина Оксана", "8 (918) 111-11-11", "test@forwardmobile.ru");
 
         //initialize call/number objects
         call = (LinearLayout) findViewById(R.id.callManager);
@@ -52,28 +55,26 @@ public class DealerInfoActivity extends AbstractBaseActivity {
        //applyFonts( findViewById(R.id.activity_dealer_info_flat) ,null);
     }
 
-    protected  void applyFonts(final View v, Typeface fontToSet)
+    // = Заполняем информационный блок дилера = //
+    public void setDealerInfoBlock(String dealerName, String dealerPoint)
     {
-        if(fontToSet == null)
-            fontToSet = Typeface.createFromAsset(getAssets(), "meVe0se2.ttf");
-
-        try {
-            if (v instanceof ViewGroup) {
-                ViewGroup vg = (ViewGroup) v;
-                for (int i = 0; i < vg.getChildCount(); i++) {
-                    View child = vg.getChildAt(i);
-                    applyFonts(child, fontToSet);
-                }
-            } else if (v instanceof TextView) {
-                ((TextView)v).setTypeface(fontToSet);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // ignore
-        }
+     setDealerName(dealerName);
+     setDealerPoint(dealerPoint);
     }
 
-    public void setDealerBlock(String balance, String credit, String moneyGo, String realMoney, String fee, String blockedMoney){
+    public void setDealerName(String name){
+        TextView dealerName = (TextView) findViewById(R.id.dealerName);
+        dealerName.setText(name);
+    }
+
+    public void setDealerPoint(String pointNum)
+    {
+        TextView dealerPoint = (TextView) findViewById(R.id.pointNum);
+        dealerPoint.setText(pointNum);
+    }
+
+    // = Заполняем блок дилера = //
+    public void setDealerFinanceBlock(String balance, String credit, String moneyGo, String realMoney, String fee, String blockedMoney){
       setDealerBalance(balance);
       setDealerCredit(credit);
       setDealerMoneyGo(moneyGo);
@@ -112,6 +113,31 @@ public class DealerInfoActivity extends AbstractBaseActivity {
         dealerBlockedMoney.setText(text + " р.");
     }
 
+    // = Заполняем блок менеджера = //
+    public void setManagerBlock(String managerName, String managerNumber, String managerEmail)
+    {
+        setManagerName(managerName);
+        setManagerNumber(managerNumber);
+        setManagerEmail(managerEmail);
+    }
+
+    public void  setManagerName(String name)
+    {
+        TextView managerName = (TextView) findViewById(R.id.managerFio);
+        managerName.setText(name);
+    }
+
+    public void setManagerNumber(String number)
+    {
+        TextView managerNumber = (TextView) findViewById(R.id.managerCallNumber);
+        managerNumber.setText(number);
+    }
+
+    public void setManagerEmail(String email)
+    {
+        TextView managerEmail = (TextView) findViewById(R.id.managerEmail);
+        managerEmail.setText(email);
+    }
 
     // = Диалоговое окно "Позвонить менеджеру?" = //
     public void onCallManagerPressed(String num) {
