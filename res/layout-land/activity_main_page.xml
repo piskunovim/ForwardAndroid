@@ -42,7 +42,8 @@
             android:orientation="horizontal"
             android:background="@drawable/gradient"
             android:gravity="center"
-            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:layout_weight="1">
 
             <!-- ` Контейнер для текста -->
@@ -149,7 +150,7 @@
         <!-- ` Центральный блок -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:baselineAligned="false"
             android:orientation="horizontal"
             android:gravity="center_vertical"

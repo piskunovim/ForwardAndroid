@@ -60,7 +60,7 @@
                             android:layout_height="wrap_content"
                             android:text="Статус"
                             android:textColor="@color/forward_orange"
-                            android:textSize="11sp"
+                            android:textSize="@dimen/payment_list_text"
                             android:textStyle="bold"
                             android:minWidth="50dp"/>
                         <TextView
@@ -68,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Проведен"
-                            android:textSize="11sp"
+                            android:textSize="@dimen/payment_list_text"
                             android:layout_marginLeft="10dp"/>
                     </LinearLayout>
 
@@ -81,14 +81,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Начало:"
-                            android:textSize="11sp"
+                            android:textSize="@dimen/payment_list_text"
                             android:minWidth="50dp"/>
                         <TextView
                             android:id="@+id/pay_date_begin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2014-08-24 10:00:01"
-                            android:textSize="11sp"
+                            android:textSize="@dimen/payment_list_text"
                             android:layout_marginLeft="10dp"/>
                     </LinearLayout>
 
@@ -100,17 +100,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Конец:"
-                            android:textSize="11sp"
+                            android:textSize="@dimen/payment_list_text"
                             android:minWidth="50dp"/>
                         <TextView
                             android:id="@+id/pay_date_end"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
                             android:visibility="visible"
-
                             android:text="2014-08-24 12:00:05"
-                            android:textSize="11sp"
+                            android:textSize="@dimen/payment_list_text"
                             android:layout_marginLeft="10dp"/>
 
                     </LinearLayout>
@@ -143,7 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+7 9189182747"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/payment_list_number"
                         android:textColor="@color/forward_orange"
                         android:textStyle="bold"/>
 
@@ -152,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="МТС"
-                        android:textSize="11sp"/>
+                        android:textSize="@dimen/payment_list_text"/>
 
 
                 </LinearLayout>
@@ -177,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1500.00 р."
-                        android:textSize="14sp"/>
+                        android:textSize="@dimen/payment_list_sum"/>
 
                 </LinearLayout>
 
