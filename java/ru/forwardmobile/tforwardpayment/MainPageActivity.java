@@ -22,7 +22,7 @@ import android.widget.TextView;
 /**
  * Created by gorbovi on 19.08.2014.
  */
-public class MainPageActivity extends FragmentActivity {
+public class MainPageActivity extends AbstractBaseActivity{
 
         final static String LOG_TAG = "TFORWARD.MainPageActivity";
         public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
@@ -180,26 +180,6 @@ public class MainPageActivity extends FragmentActivity {
         t.setBackgroundColor(Color.parseColor("#cccccc"));
     }
 
-    protected  void applyFonts(final View v, Typeface fontToSet)
-    {
-        if(fontToSet == null)
-            fontToSet = Typeface.createFromAsset(getAssets(), "Magistral.TTF");
-
-        try {
-            if (v instanceof ViewGroup) {
-                ViewGroup vg = (ViewGroup) v;
-                for (int i = 0; i < vg.getChildCount(); i++) {
-                    View child = vg.getChildAt(i);
-                    applyFonts(child, fontToSet);
-                }
-            } else if (v instanceof TextView) {
-                ((TextView)v).setTypeface(fontToSet);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // ignore
-        }
-    }
 
 
     @Override

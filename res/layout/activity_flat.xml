@@ -229,6 +229,7 @@
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
+                                android:onClick="enterMobileNetworks"
                                 android:gravity="center_vertical">
 
                                 <!-- Содержимое -->

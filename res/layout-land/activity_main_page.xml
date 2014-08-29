@@ -11,10 +11,11 @@
 
     <!-- ` Информация о дилере -->
     <LinearLayout
+        android:id="@+id/dealerInfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dealer_info_header_max_height"
+        android:baselineAligned="false"
         android:orientation="horizontal"
-        android:id="@+id/dealerInfo"
         android:background="#E5E5E5"
         android:layout_margin="2dp"
         android:layout_weight="0"
@@ -25,32 +26,32 @@
         <LinearLayout
             android:layout_width="80dp"
             android:layout_height="match_parent"
+            android:baselineAligned="true"
             android:gravity="center">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/dealer_info_name"
                 android:src="@drawable/dealer_icon"/>
         </LinearLayout>
 
         <!-- ` Контейнер данных дилера -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="@drawable/gradient"
-            android:gravity="center_vertical"
+            android:gravity="center"
+            android:padding="10dp"
             android:layout_weight="1">
 
             <!-- ` Контейнер для текста -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="true"
                 android:orientation="vertical"
-
-                android:paddingTop="3dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="3dp"
-                android:paddingBottom="3dp">
+                android:padding="0.1dp">
 
                 <!-- ` Контейнер для строки 'Дилер' -->
                 <LinearLayout
@@ -66,9 +67,8 @@
                         android:id="@+id/dealerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Иванов Иван Иванович"
-                        android:textSize="@dimen/dealer_info_header"
-                        android:layout_marginLeft="5dp"/>
+                        android:text=" Иванов Иван Иванович"
+                        android:textSize="@dimen/dealer_info_header"/>
                 </LinearLayout>
 
                 <!-- ` Контейнер для строки 'Баланс' -->
@@ -85,9 +85,8 @@
                         android:id="@+id/dealerBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="100 000 р."
-                        android:textSize="@dimen/dealer_info_header"
-                        android:layout_marginLeft="5dp"/>
+                        android:text=" 100 000 р."
+                        android:textSize="@dimen/dealer_info_header"/>
                 </LinearLayout>
 
                 <!-- ` Контейнер для строки 'Можно израсходовать' -->
@@ -105,9 +104,8 @@
                         android:id="@+id/dealerRealMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="213 560.55 р. "
-                        android:textSize="@dimen/dealer_info_header"
-                        android:layout_marginLeft="5dp"/>
+                        android:text=" 213 560.55 р. "
+                        android:textSize="@dimen/dealer_info_header"/>
                 </LinearLayout>
 
                 <!-- ` Контейнер для строки 'Кредитный лимит' -->
@@ -124,10 +122,8 @@
                         android:id="@+id/dealerKredit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10 000 р."
+                        android:text=" 10 000 р."
                         android:textSize="@dimen/dealer_info_header"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="0dp"
                         />
                 </LinearLayout>
 
@@ -142,6 +138,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="vertical"
         android:background="@drawable/main_border"
         android:gravity="center_vertical"
@@ -152,25 +149,29 @@
         <!-- ` Центральный блок -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp"
             android:layout_weight="1">
 
-             <LinearLayout
+            <!-- Контейнер слева -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                 android:baselineAligned="false"
                 android:orientation="vertical"
+                android:padding="2dp"
                 android:layout_weight="1">
 
                 <!-- ` Проведение платежей -->
                 <LinearLayout android:id="@+id/LinearLayout01"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
-                    android:minHeight="80dp"
                     android:layout_marginBottom="5dp"
                     android:padding="3pt"
                     android:layout_weight="1">
@@ -179,6 +180,7 @@
                         android:id="@+id/payments_button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:baselineAligned="false"
                         android:orientation="horizontal"
                         android:background="@drawable/main_page_btn_events"
                         android:clickable="true"
@@ -187,18 +189,22 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:baselineAligned="false"
+                            android:background="@color/white"
                             android:gravity="center_vertical">
 
                             <!-- ` Иконка -->
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:baselineAligned="false"
                                 android:orientation="horizontal"
                                 android:layout_weight="0.5"
                                 android:layout_gravity="center_vertical">
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:contentDescription="@string/payments_systems"
                                     android:src="@drawable/dot_icon"/>
                             </LinearLayout>
 
@@ -206,6 +212,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:baselineAligned="false"
                                 android:orientation="vertical"
                                 android:layout_weight="6"
                                 android:layout_margin="2dp">
@@ -229,12 +236,14 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:baselineAligned="false"
                                 android:orientation="vertical"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical">
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/payments_systems"
                                     android:src="@drawable/arrow"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -245,9 +254,9 @@
                 <LinearLayout android:id="@+id/LinearLayout02"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
-                    android:minHeight="80dp"
                     android:padding="3pt"
                     android:layout_weight="1">
 
@@ -262,6 +271,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:baselineAligned="false"
+                            android:background="@color/white"
                             android:gravity="center_vertical">
 
                             <!-- ` Иконка -->
@@ -274,6 +285,7 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:contentDescription="@string/monitoring_system"
                                     android:src="@drawable/dot_icon"/>
                             </LinearLayout>
 
@@ -281,6 +293,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:baselineAligned="false"
                                 android:orientation="vertical"
                                 android:layout_weight="6"
                                 android:layout_margin="2dp">
@@ -310,6 +323,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/monitoring_system"
                                     android:src="@drawable/arrow"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -321,17 +335,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:baselineAligned="false"
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_marginLeft="5dp">
+                android:padding="2dp">
 
                 <!-- ` Уведомления системы -->
                 <LinearLayout android:id="@+id/LinearLayout03"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
-                    android:minHeight="80dp"
                     android:layout_marginBottom="5dp"
                     android:padding="3pt"
                     android:layout_weight="1">
@@ -339,6 +354,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:baselineAligned="false"
                         android:orientation="horizontal"
                         android:background="@drawable/main_page_btn_events"
                         android:clickable="true"
@@ -347,18 +363,22 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:baselineAligned="false"
+                            android:background="@color/white"
                             android:gravity="center_vertical">
 
                             <!-- ` Иконка -->
                             <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
                                 android:orientation="horizontal"
                                 android:layout_weight="0.5"
                                 android:layout_gravity="center_vertical">
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:contentDescription="@string/notifications"
                                     android:src="@drawable/dot_icon"/>
                             </LinearLayout>
 
@@ -366,6 +386,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:baselineAligned="false"
                                 android:orientation="vertical"
                                 android:layout_weight="6"
                                 android:layout_margin="2dp">
@@ -395,6 +416,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/notifications"
                                     android:src="@drawable/arrow"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -405,9 +427,9 @@
                 <LinearLayout android:id="@+id/LinearLayout04"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
                     android:background="@drawable/button_selector"
-                    android:minHeight="80dp"
                     android:padding="3pt"
                     android:layout_weight="1">
 
@@ -422,6 +444,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:baselineAligned="false"
+                            android:background="@color/white"
                             android:gravity="center_vertical">
 
                             <!-- ` Иконка -->
@@ -434,6 +458,7 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:contentDescription="@string/setings"
                                     android:src="@drawable/dot_icon"/>
                             </LinearLayout>
 
@@ -441,6 +466,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:baselineAligned="false"
                                 android:orientation="vertical"
                                 android:layout_weight="6"
                                 android:layout_margin="2dp">
@@ -470,6 +496,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:contentDescription="@string/setings"
                                     android:src="@drawable/arrow"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -516,16 +543,16 @@
                 android:id="@+id/firstDot"
                 android:layout_width="5dp"
                 android:layout_height="5dp"
+                android:layout_margin="2dp"
                 android:background="@color/forward_black"
-                android:orientation="horizontal"
-                android:layout_marginLeft="0dp"/>
+                android:orientation="horizontal"/>
 
             <!-- Второй индикатор -->
             <LinearLayout
                 android:id="@+id/secondDot"
                 android:layout_width="5dp"
                 android:layout_height="5dp"
-                android:layout_marginLeft="3dp"
+                android:layout_margin="2dp"
                 android:background="@color/forward_black"
                 android:orientation="horizontal"/>
 
@@ -534,7 +561,7 @@
                 android:id="@+id/thirdDot"
                 android:layout_width="5dp"
                 android:layout_height="5dp"
-                android:layout_marginLeft="3dp"
+                android:layout_margin="2dp"
                 android:background="@color/forward_black"
                 android:orientation="horizontal"/>
 

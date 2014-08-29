@@ -50,8 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="true"
-                android:orientation="vertical"
-                android:padding="0.1dp">
+                android:orientation="vertical">
 
                 <!-- ` Контейнер для строки 'Дилер' -->
                 <LinearLayout
@@ -67,9 +66,8 @@
                         android:id="@+id/dealerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Иванов Иван Иванович"
-                        android:textSize="@dimen/dealer_info_header"
-                        android:layout_marginLeft="5dp"/>
+                        android:text=" Иванов Иван Иванович"
+                        android:textSize="@dimen/dealer_info_header"/>
                 </LinearLayout>
 
                 <!-- ` Контейнер для строки 'Баланс' -->
@@ -86,9 +84,8 @@
                         android:id="@+id/dealerBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="100 000 р."
-                        android:textSize="@dimen/dealer_info_header"
-                        android:layout_marginLeft="5dp"/>
+                        android:text=" 100 000 р."
+                        android:textSize="@dimen/dealer_info_header"/>
                 </LinearLayout>
 
                 <!-- ` Контейнер для строки 'Можно израсходовать' -->
@@ -106,9 +103,8 @@
                         android:id="@+id/dealerRealMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="213 560.55 р. "
-                        android:textSize="@dimen/dealer_info_header"
-                        android:layout_marginLeft="5dp"/>
+                        android:text=" 213 560.55 р. "
+                        android:textSize="@dimen/dealer_info_header"/>
                 </LinearLayout>
 
                 <!-- ` Контейнер для строки 'Кредитный лимит' -->
@@ -125,10 +121,8 @@
                         android:id="@+id/dealerKredit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10 000 р."
+                        android:text=" 10 000 р."
                         android:textSize="@dimen/dealer_info_header"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="0dp"
                         />
                 </LinearLayout>
 
@@ -231,7 +225,11 @@
                             android:orientation="vertical"
                             android:layout_weight="0"
                             android:gravity="center_vertical">
-                            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/arrow"/>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/payments_systems"
+                                android:src="@drawable/arrow"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -260,7 +258,8 @@
                     <!-- Содержимое -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="true">
 
                         <!-- ` Иконка -->
                         <LinearLayout
@@ -272,6 +271,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/monitoring_system"
                                 android:src="@drawable/dot_icon"/>
                         </LinearLayout>
 
@@ -309,6 +309,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:contentDescription="@string/monitoring_system"
                                 android:src="@drawable/arrow"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -339,6 +340,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:baselineAligned="false"
                         android:orientation="horizontal">
 
                         <!-- ` Иконка -->
@@ -351,6 +353,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/notifications"
                                 android:src="@drawable/dot_icon"/>
                         </LinearLayout>
 
@@ -388,6 +391,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:contentDescription="@string/notifications"
                                 android:src="@drawable/arrow"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -418,6 +422,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:baselineAligned="false"
                         android:orientation="horizontal">
 
                         <!-- ` Иконка -->
@@ -430,6 +435,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="@string/setings"
                                 android:src="@drawable/dot_icon"/>
                         </LinearLayout>
 
@@ -467,6 +473,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:contentDescription="@string/setings"
                                 android:src="@drawable/arrow"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -514,14 +521,14 @@
                     android:layout_height="5dp"
                     android:background="@color/forward_black"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="0dp"/>
+                    android:layout_margin="2dp"/>
 
                 <!-- Второй индикатор -->
                 <LinearLayout
                     android:id="@+id/secondDot"
                     android:layout_width="5dp"
                     android:layout_height="5dp"
-                    android:layout_marginLeft="3dp"
+                    android:layout_margin="2dp"
                     android:background="@color/forward_black"
                     android:orientation="horizontal"/>
 
@@ -530,7 +537,7 @@
                     android:id="@+id/thirdDot"
                     android:layout_width="5dp"
                     android:layout_height="5dp"
-                    android:layout_marginLeft="3dp"
+                    android:layout_margin="2dp"
                     android:background="@color/forward_black"
                     android:orientation="horizontal"/>
 

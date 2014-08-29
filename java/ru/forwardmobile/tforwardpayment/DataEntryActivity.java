@@ -1,6 +1,7 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import ru.forwardmobile.tforwardpayment.spp.impl.MenuItem;
 /**
  * Created by Василий Ванин on 31.07.2014.
  */
-public class DataEntryActivity extends Activity implements View.OnClickListener {
+public class DataEntryActivity extends AbstractBaseActivity implements View.OnClickListener {
 
     public static final String PAYMENT_PARAMETER    = "paydx17";
     public static final String PS_PARAMETER         = "psidx3";
@@ -73,7 +74,11 @@ public class DataEntryActivity extends Activity implements View.OnClickListener 
         moveToFieldsView(providerId);
         onProviderSelected(providerId);
         loaded = true;
+
+
     }
+
+
 
     private void moveToFieldsView(Integer providerId) {
 
@@ -210,4 +215,6 @@ public class DataEntryActivity extends Activity implements View.OnClickListener 
             container.addView(value);
         }
     }
+
+
 }

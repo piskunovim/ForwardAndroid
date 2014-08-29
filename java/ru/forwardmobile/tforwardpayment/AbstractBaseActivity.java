@@ -3,9 +3,13 @@ package ru.forwardmobile.tforwardpayment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import ru.forwardmobile.tforwardpayment.reports.BalanceActivity;
 import ru.forwardmobile.tforwardpayment.reports.SimplePaymentListActivity;
@@ -74,4 +78,26 @@ public abstract class AbstractBaseActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    protected  void applyFonts(final View v, Typeface fontToSet)
+    {
+        if(fontToSet == null)
+            fontToSet = Typeface.createFromAsset(getAssets(), "meVe0se2.ttf");
+
+        try {
+            if (v instanceof ViewGroup) {
+                ViewGroup vg = (ViewGroup) v;
+                for (int i = 0; i < vg.getChildCount(); i++) {
+                    View child = vg.getChildAt(i);
+                    applyFonts(child, fontToSet);
+                }
+            } else if (v instanceof TextView) {
+                ((TextView)v).setTypeface(fontToSet);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // ignore
+        }
+    }
+
 }

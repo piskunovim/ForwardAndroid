@@ -1,6 +1,7 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Collection;
@@ -25,7 +27,7 @@ import ru.forwardmobile.tforwardpayment.spp.ProviderFactory;
 /**
  * @author Vasiliy Vanin
  */
-public class PaymentActivity  extends Activity implements View.OnClickListener {
+public class PaymentActivity  extends AbstractBaseActivity implements View.OnClickListener {
 
     private final static String LOGGER_TAG = "TFORWARD.PAYMENTACT";
     public  final static String PAYMENT_ID_PARAMETER = "payidx9";
@@ -47,7 +49,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         
         super.onCreate(savedInstanceState); 
 
-        // Получаем ПС с полями
+       /* // Получаем ПС с полями
         provider = ProviderFactory.getProvider(getIntent().getIntExtra(PS_ID_PARAMETER, 453), this);
         //provider = ProviderFactory.mockProvider(this);
         Log.d("TForwardPayment.PaymentActivity", provider.getName());
@@ -63,11 +65,13 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
             fields.addView( field.getView() );
             fieldsInfo.add(field);
         }
-        
-        setContentView(layout);
+        */
+        setContentView(R.layout.data_entry_payment);
 
+
+        applyFonts(findViewById(R.id.activity_main_page_container), null);
         // Actions
-        checkButton = (Button) findViewById(R.id.data_entry_button_check);
+        /*checkButton = (Button) findViewById(R.id.data_entry_button_check);
         checkButton.setOnClickListener(this);
 
         startButton = (Button) findViewById(R.id.data_entry_button_start);
@@ -75,6 +79,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
 
         valueField      = (EditText) findViewById(R.id.data_entry_value_field);
         fullValueField  = (EditText) findViewById(R.id.data_entry_full_value_field);
+*/
     }
 
 
@@ -165,5 +170,6 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         checkButton.setEnabled(true);
         startButton.setEnabled(true);
     }
+
 
 }

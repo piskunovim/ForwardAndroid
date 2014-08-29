@@ -16,7 +16,7 @@ import android.widget.TextView;
  * Created by gorbovi on 20.08.2014.
  */
 
-public class DealerInfoActivity extends ActionBarActivity {
+public class DealerInfoActivity extends AbstractBaseActivity {
 
     final static String LOG_TAG = "TFORWARD.DealerInfoActivity";
 

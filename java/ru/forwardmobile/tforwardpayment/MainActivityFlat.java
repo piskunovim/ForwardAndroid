@@ -22,6 +22,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.reports.PaymentAdapter;
 
 /**
  * Created by PiskunovI on 15.07.14.
@@ -90,6 +91,11 @@ actv.setAdapter(adapter);
     public void enterDealerInfo(View view)
     {
         Intent intent = new Intent(this,DealerInfoActivity.class);
+        startActivity(intent);
+    }
+
+    public void enterMobileNetworks(View view){
+        Intent intent = new Intent(this, PaymentActivity.class);
         startActivity(intent);
     }
 
