@@ -29,4 +29,9 @@
     <!-- ` ГРУППЫ ОПЕРАТОРОВ -->
     <dimen name="groupe_header">25sp</dimen>                    <!-- ` Размер заголовков групп  -->
 
+    <!-- ЛИСТ ПЛАТЕЖЕЙ -->
+    <dimen name="payment_list_text">18sp</dimen>                <!-- ` Размер текста в списке платежей  -->
+    <dimen name="payment_list_number">20sp</dimen>              <!-- ` Размер поля " Номер Телефона " в списке платежей  -->
+    <dimen name="payment_list_sum">20sp</dimen>                 <!-- ` Размер поля " Сумма " в списке платежей  -->
+
 </resources>
