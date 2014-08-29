@@ -80,14 +80,14 @@
     <!-- ` GorbovI 2014-08-19 Главная странца (activity_main_page.xml) \  Разделы центрального блока -->
     <string name="payments_systems">Проведение платежей</string>
     <string name="monitoring_system">Мониторинг</string>
-    <string name="notifications">Уведомления системы</string>
+    <string name="notifications">Уведомления</string>
     <string name="setings">Настройки</string>
 
     <!-- ` GorbovI 2014-08-20 Главная странца (activity_main_page.xml) \ Описание разделов центрального блока -->
     <string name="ps_description">В данном разделе Вы можете проводить платежи на различных операторов.</string>
     <string name="ms_description">В данном разделе Вы можете следить за состоянием терминалов.</string>
     <string name="n_description">В данном разделе Вы можете просматривать уведомления.</string>
-    <string name="s_description"></string>
+    <string name="s_description">В данном разделе находятся настройки приложения.</string>
 
  <string-array name="report_filter_types">
         <item>Период</item>

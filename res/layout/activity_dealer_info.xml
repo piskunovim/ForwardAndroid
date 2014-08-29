@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:background="@drawable/main_border"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginLeft="1pt"
         android:layout_marginRight="1pt"
         android:isScrollContainer="true"
@@ -32,22 +32,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            >
+            android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="8dp">
 
                 <!-- Контейнер для текста 'Дилер' -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp">
+                    android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -59,16 +56,14 @@
                         android:layout_height="wrap_content"
                         android:text="Иванов Иван Иванович"
                         android:textSize="@dimen/dealer_info_descriptions"
-                        android:layout_marginLeft="5dp"/>
+                        android:padding="4dp"/>
                 </LinearLayout>
 
                 <!-- Контейнер для текста 'Номер точки' -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp">
+                    android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -80,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:text="9999"
                         android:textSize="@dimen/dealer_info_descriptions"
-                        android:layout_marginLeft="5dp"/>
+                        android:padding="4dp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -102,14 +97,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="@drawable/main_page_btn_events">
+                android:background="@drawable/main_page_btn_events"
+                android:padding="8dp">
 
                 <!-- Баланс -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="6dp">
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -133,8 +128,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="6dp">
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -157,8 +151,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="6dp">
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -182,8 +175,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="6dp">
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -207,8 +199,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="6dp">
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -232,8 +223,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="6dp">
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -295,7 +285,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingLeft="6dp">
+                            android:paddingLeft="6dp"
+                            android:paddingRight="6dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -316,6 +307,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:paddingLeft="6dp"
+                            android:paddingRight="6dp"
                             android:layout_marginTop="3dp">
                             <TextView
                                 android:layout_width="wrap_content"
