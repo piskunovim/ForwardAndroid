@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -67,7 +69,7 @@ actv.setAdapter(adapter);
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        if(message != null) {
+        if (message != null) {
             initialize(message);
         }
 
@@ -92,6 +94,14 @@ actv.setAdapter(adapter);
         Intent intent = new Intent(this,DealerInfoActivity.class);
         startActivity(intent);
     }
+
+    public void enterMobileNetworks(View view)
+    {
+        Intent intent = new Intent(this, PaymentActivity.class);
+        startActivity(intent);
+    }
+
+
 
     public void menuGroupClick(){
         Button button01,button02,button03, button04, button05, button06, button07, button08, button09;
@@ -343,4 +353,47 @@ db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIK
         Log.i(LOG_TAG,"Deactivating payment queue...");
         stopService(new Intent(this,TPaymentService.class));
     }
+
+
+    // = Блок информации дилера = //
+    public void setDealerBlock(String balance, String credit, String moneyGo, String realMoney, String fee, String blockedMoney){
+        setDealerBalance(balance);
+        setDealerCredit(credit);
+        setDealerMoneyGo(moneyGo);
+        setDealerRealMoney(realMoney);
+        setDealerFee(fee);
+        setDealerBlockedMoney(blockedMoney);
+    }
+
+    public void setDealerBalance(String text){
+        TextView dealerBalance = (TextView) findViewById(R.id.dealerBalance);
+        dealerBalance.setText(text + " р.");
+    }
+
+    public void setDealerCredit(String text){
+        TextView dealerCredit = (TextView) findViewById(R.id.dealerKredit);
+        dealerCredit.setText(text + " р.");
+    }
+
+    public void setDealerMoneyGo(String text){
+        TextView dealerMoneyGo = (TextView) findViewById(R.id.dealerMoneyGo);
+        dealerMoneyGo.setText(text + " р.");
+    }
+
+    public void setDealerRealMoney(String text){
+        TextView dealerRealMoney = (TextView) findViewById(R.id.dealerRealMoney);
+        dealerRealMoney.setText(text + " р.");
+    }
+
+    public void setDealerFee(String text){
+        TextView dealerFee = (TextView) findViewById(R.id.dealerFee);
+        dealerFee.setText(text + " р.");
+    }
+
+    public void setDealerBlockedMoney(String text){
+        TextView dealerBlockedMoney = (TextView) findViewById(R.id.dealerBlockedMoney);
+        dealerBlockedMoney.setText(text + " р.");
+    }
+
+
 }

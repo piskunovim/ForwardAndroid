@@ -141,6 +141,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/scrollView"
+            android:overScrollHeader="@color/forward_orange"
+            android:overScrollFooter="@color/forward_orange"
             android:layout_weight="1">
 
             <!-- Обертка -->
@@ -229,6 +231,7 @@
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
+                                android:onClick="enterMobileNetworks"
                                 android:gravity="center_vertical">
 
                                 <!-- Содержимое -->
