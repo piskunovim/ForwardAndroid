@@ -48,18 +48,6 @@ public class MainActivityFlat extends AbstractBaseActivity {
     protected void onResume() {
         super.onResume();
         Log.v(LOG_TAG, "MainActivityFlat resumed");
-
-      /* String[] countries = getResources().
-getStringArray(R.array.list_of_countries);
-ArrayAdapter adapter = new ArrayAdapter
-(this,android.R.layout.simple_list_item_1,countries);
-
-
-actv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView1);
-
-actv.setAdapter(adapter);
-*/
-
     }
 
 
@@ -101,7 +89,7 @@ actv.setAdapter(adapter);
         startActivity(intent);
     }
 
-    public void menuGroupClick(){
+    public void menuGroupClick() {
         Button button01,button02,button03, button04, button05, button06, button07, button08, button09;
 /*        button01 = (Button) findViewById(R.id.Button01);
         button02 = (Button) findViewById(R.id.Button02);
