@@ -63,7 +63,7 @@ public class MainActivityFlat extends AbstractBaseActivity {
         }
 
         //textSearchClick();
-//        menuGroupClick();
+        menuGroupClick();
 
         // Payment queue start
         //startPaymentQueue();
@@ -84,22 +84,18 @@ public class MainActivityFlat extends AbstractBaseActivity {
         startActivity(intent);
     }
 
-    public void enterMobileNetworks(View view){
-        Intent intent = new Intent(this, PaymentActivity.class);
-        startActivity(intent);
-    }
 
     public void menuGroupClick() {
-        Button button01,button02,button03, button04, button05, button06, button07, button08, button09;
-/*        button01 = (Button) findViewById(R.id.Button01);
-        button02 = (Button) findViewById(R.id.Button02);
-        button03 = (Button) findViewById(R.id.Button03);
-        button04 = (Button) findViewById(R.id.Button04);
-        button05 = (Button) findViewById(R.id.Button05);
-        button06 = (Button) findViewById(R.id.Button06);
-        button07 = (Button) findViewById(R.id.Button07);
-        button08 = (Button) findViewById(R.id.Button08);
-        button09 = (Button) findViewById(R.id.Button09);
+        LinearLayout button01,button02,button03, button04, button05, button06, button07, button08, button09;
+        button01 = (LinearLayout) findViewById(R.id.button01);
+        button02 = (LinearLayout) findViewById(R.id.button02);
+        button03 = (LinearLayout) findViewById(R.id.button03);
+        button04 = (LinearLayout) findViewById(R.id.button04);
+        button05 = (LinearLayout) findViewById(R.id.button05);
+        button06 = (LinearLayout) findViewById(R.id.button06);
+        button07 = (LinearLayout) findViewById(R.id.button07);
+        button08 = (LinearLayout) findViewById(R.id.button08);
+        button09 = (LinearLayout) findViewById(R.id.button09);
 
         button01.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +158,7 @@ public class MainActivityFlat extends AbstractBaseActivity {
             public void onClick(View view) {
                 openGroup(109);
             }
-        });*/
+        });
     }
 
     public void textSearchClick(){
@@ -297,29 +293,6 @@ db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIK
         startActivity(intent);
     }
 
-    /*@Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Выйти из приложения?")
-                .setMessage("Вы действительно хотите выйти?")
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        onExit();
-                    }
-                }).create().show();
-    }
-
-    private void onExit() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("EXIT", "true");
-        startActivity(intent);
-
-        this.finish();
-    }*/
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -341,45 +314,6 @@ db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIK
     }
 
 
-    // = Блок информации дилера = //
-    public void setDealerBlock(String balance, String credit, String moneyGo, String realMoney, String fee, String blockedMoney){
-        setDealerBalance(balance);
-        setDealerCredit(credit);
-        setDealerMoneyGo(moneyGo);
-        setDealerRealMoney(realMoney);
-        setDealerFee(fee);
-        setDealerBlockedMoney(blockedMoney);
-    }
-
-    public void setDealerBalance(String text){
-        TextView dealerBalance = (TextView) findViewById(R.id.dealerBalance);
-        dealerBalance.setText(text + " р.");
-    }
-
-    public void setDealerCredit(String text){
-        TextView dealerCredit = (TextView) findViewById(R.id.dealerKredit);
-        dealerCredit.setText(text + " р.");
-    }
-
-    public void setDealerMoneyGo(String text){
-        TextView dealerMoneyGo = (TextView) findViewById(R.id.dealerMoneyGo);
-        dealerMoneyGo.setText(text + " р.");
-    }
-
-    public void setDealerRealMoney(String text){
-        TextView dealerRealMoney = (TextView) findViewById(R.id.dealerRealMoney);
-        dealerRealMoney.setText(text + " р.");
-    }
-
-    public void setDealerFee(String text){
-        TextView dealerFee = (TextView) findViewById(R.id.dealerFee);
-        dealerFee.setText(text + " р.");
-    }
-
-    public void setDealerBlockedMoney(String text){
-        TextView dealerBlockedMoney = (TextView) findViewById(R.id.dealerBlockedMoney);
-        dealerBlockedMoney.setText(text + " р.");
-    }
-
+    
 
 }
