@@ -75,7 +75,7 @@ actv.setAdapter(adapter);
         }
 
         //textSearchClick();
-//        menuGroupClick();
+        menuGroupClick();
 
         // Payment queue start
         //startPaymentQueue();
@@ -96,22 +96,18 @@ actv.setAdapter(adapter);
         startActivity(intent);
     }
 
-    public void enterMobileNetworks(View view){
-        Intent intent = new Intent(this, PaymentActivity.class);
-        startActivity(intent);
-    }
 
     public void menuGroupClick(){
-        Button button01,button02,button03, button04, button05, button06, button07, button08, button09;
-/*        button01 = (Button) findViewById(R.id.Button01);
-        button02 = (Button) findViewById(R.id.Button02);
-        button03 = (Button) findViewById(R.id.Button03);
-        button04 = (Button) findViewById(R.id.Button04);
-        button05 = (Button) findViewById(R.id.Button05);
-        button06 = (Button) findViewById(R.id.Button06);
-        button07 = (Button) findViewById(R.id.Button07);
-        button08 = (Button) findViewById(R.id.Button08);
-        button09 = (Button) findViewById(R.id.Button09);
+        LinearLayout button01,button02,button03, button04, button05, button06, button07, button08, button09;
+        button01 = (LinearLayout) findViewById(R.id.button01);
+        button02 = (LinearLayout) findViewById(R.id.button02);
+        button03 = (LinearLayout) findViewById(R.id.button03);
+        button04 = (LinearLayout) findViewById(R.id.button04);
+        button05 = (LinearLayout) findViewById(R.id.button05);
+        button06 = (LinearLayout) findViewById(R.id.button06);
+        button07 = (LinearLayout) findViewById(R.id.button07);
+        button08 = (LinearLayout) findViewById(R.id.button08);
+        button09 = (LinearLayout) findViewById(R.id.button09);
 
         button01.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +170,7 @@ actv.setAdapter(adapter);
             public void onClick(View view) {
                 openGroup(109);
             }
-        });*/
+        });
     }
 
     public void textSearchClick(){

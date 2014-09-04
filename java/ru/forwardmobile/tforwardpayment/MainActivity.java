@@ -139,9 +139,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     public void sendMessage(View view){
-        Intent intent = new Intent(this,MainPageActivity.class);
-        startActivity(intent);
-        //SingIn(etName.getText().toString(), etPass.getText().toString());
+            SingIn(etName.getText().toString(), etPass.getText().toString());
     }
 
     public void clearLogin(View view){

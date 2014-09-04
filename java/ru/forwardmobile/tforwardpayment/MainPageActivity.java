@@ -100,7 +100,6 @@ public class MainPageActivity extends AbstractBaseActivity{
             });
            */
 
-
         }
 
     public void enterDealerInfo(View view)
@@ -187,6 +186,11 @@ public class MainPageActivity extends AbstractBaseActivity{
         t.setBackgroundColor(Color.parseColor("#cccccc"));
     }
 
+        //= Заполнение слайдера =//
+        public void sliderFill(){
+
+    }
+
 
 
     @Override
@@ -211,6 +215,7 @@ public class MainPageActivity extends AbstractBaseActivity{
 
         this.finish();
     }
+
 
 }
 

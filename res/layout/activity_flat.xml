@@ -226,12 +226,12 @@
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
+                                android:id="@+id/button01"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
-                                android:onClick="enterMobileNetworks"
                                 android:gravity="center_vertical">
 
                                 <!-- Содержимое -->
@@ -301,6 +301,7 @@
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
+                                android:id="@+id/button02"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
@@ -362,14 +363,16 @@
                         </LinearLayout>
 
                         <!-- ` Стационарная связь -->
-                        <LinearLayout android:id="@+id/Button03"
+                        <LinearLayout
+                            android:id="@+id/button03"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
                             android:background="@drawable/button_selector"
                             android:padding="2pt"
                             android:layout_marginBottom="10dp"
-                            android:minHeight="60dp">
+                            android:minHeight="60dp"
+                            android:clickable="true">
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
@@ -434,14 +437,16 @@
                         </LinearLayout>
 
                         <!-- ` Интернет и IP-телефония -->
-                        <LinearLayout android:id="@+id/Button04"
+                        <LinearLayout
+                            android:id="@+id/button04"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
                             android:background="@drawable/button_selector"
                             android:padding="2pt"
                             android:layout_marginBottom="10dp"
-                            android:minHeight="60dp">
+                            android:minHeight="60dp"
+                            android:clickable="true">
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
@@ -506,14 +511,15 @@
                         </LinearLayout>
 
                         <!-- ` Погашение кредитов -->
-                        <LinearLayout android:id="@+id/Button05"
+                        <LinearLayout android:id="@+id/button05"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
                             android:background="@drawable/button_selector"
                             android:padding="2pt"
                             android:layout_marginBottom="10dp"
-                            android:minHeight="60dp">
+                            android:minHeight="60dp"
+                            android:clickable="true">
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
@@ -578,7 +584,7 @@
                         </LinearLayout>
 
                         <!-- ` ЖКХ -->
-                        <LinearLayout android:id="@+id/Button06"
+                        <LinearLayout android:id="@+id/button06"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -586,7 +592,8 @@
                             android:padding="2pt"
                             android:layout_marginBottom="10dp"
                             android:gravity="center_vertical"
-                            android:minHeight="60dp">
+                            android:minHeight="60dp"
+                            android:clickable="true">
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
@@ -651,7 +658,7 @@
                         </LinearLayout>
 
                         <!-- ` Игры -->
-                        <LinearLayout android:id="@+id/Button07"
+                        <LinearLayout android:id="@+id/button07"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -659,7 +666,8 @@
                             android:padding="2pt"
                             android:layout_marginBottom="10dp"
                             android:gravity="center_vertical"
-                            android:minHeight="60dp">
+                            android:minHeight="60dp"
+                            android:clickable="true">
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
@@ -724,7 +732,7 @@
                         </LinearLayout>
 
                         <!-- ` Кошельки -->
-                        <LinearLayout android:id="@+id/Button08"
+                        <LinearLayout android:id="@+id/button08"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -732,7 +740,8 @@
                             android:padding="2pt"
                             android:layout_marginBottom="10dp"
                             android:gravity="center_vertical"
-                            android:minHeight="60dp">
+                            android:minHeight="60dp"
+                            android:clickable="true">
 
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
@@ -798,14 +807,15 @@
                         </LinearLayout>
 
                         <!-- ` Прочее -->
-                        <LinearLayout android:id="@+id/Button09"
+                        <LinearLayout android:id="@+id/button09"
                             android:layout_height="wrap_content"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
                             android:background="@drawable/button_selector"
                             android:padding="2pt"
                             android:gravity="center_vertical"
-                            android:minHeight="60dp">
+                            android:minHeight="60dp"
+                            android:clickable="true">
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
