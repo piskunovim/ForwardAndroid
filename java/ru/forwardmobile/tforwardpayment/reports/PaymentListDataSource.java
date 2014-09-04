@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.spp.IField;
+import ru.forwardmobile.tforwardpayment.spp.IFieldView;
 import ru.forwardmobile.tforwardpayment.spp.impl.PaymentDaoImpl;
 
 /**
@@ -167,10 +167,10 @@ public class PaymentListDataSource {
         item.setPsName( cursor.getString( cursor.getColumnIndex(PS_NAME_FIELD)) );
 
         // Поля
-        Collection<IField> fields = PaymentDaoImpl.parseFields(
+        Collection<IFieldView> fields = PaymentDaoImpl.parseFields(
                         cursor.getString(cursor.getColumnIndex(FIELDS_FIELD))
                     );
-        for(IField field: fields) item.addField(field);
+        for(IFieldView field: fields) item.addField(field);
 
         // Дата создания платежа
         item.setStartDate(new Date( cursor.getLong( cursor.getColumnIndex(START_DATE_FIELD) ) ));

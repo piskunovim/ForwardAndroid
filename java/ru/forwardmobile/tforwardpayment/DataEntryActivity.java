@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.actions.CheckTask;
-import ru.forwardmobile.tforwardpayment.spp.IField;
+import ru.forwardmobile.tforwardpayment.spp.IFieldView;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
@@ -36,12 +36,12 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
     public static final String PAYMENT_PARAMETER    = "paydx17";
     public static final String PS_PARAMETER         = "psidx3";
 
-    protected OperatorsDataSource       dataSource  = null;
+    protected OperatorsDataSourceImpl dataSource  = null;
     protected IPaymentDao               paymentDao  = null;
     protected ArrayAdapter              adapter     = null;
     protected List<IProviderMenuItem>   providers   = null;
     protected IPayment                  payment     = null;
-    protected List<IField>              fields      = null;
+    protected List<IFieldView>              fields      = null;
     protected boolean                   loaded      = false;
     protected Spinner                   selector    = null;
 
@@ -53,7 +53,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
         if(!loaded) {
             paymentDao = PaymentDaoFactory.getPaymentDao(this);
-            dataSource = new OperatorsDataSource(this);
+            dataSource = new OperatorsDataSourceImpl(this);
             providers = dataSource.getFullList();
             adapter = new ArrayAdapter<IProviderMenuItem>(this, android.R.layout.simple_list_item_1, providers);
         }
@@ -107,10 +107,10 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         }
 
         ViewGroup container = (ViewGroup) findViewById(R.id.mde_fields_container);
-        fields = new ArrayList<IField>();
-        for(IField field: provider.getFields())
+        fields = new ArrayList<IFieldView>();
+        for(IFieldView field: provider.getFields())
         {
-            IField oldField = payment.getField(field.getName());
+            IFieldView oldField = payment.getField(field.getName());
             if(oldField != null) {
                 field.setValue(oldField.getValue());
             }
@@ -200,9 +200,9 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         PaymentQueueWrapper.getQueue().processPayment(payment);
     }
 
-    private void drawFieldsInfo(ViewGroup container, Collection<IField> fieldInfoCollection) {
+    private void drawFieldsInfo(ViewGroup container, Collection<IFieldView> fieldInfoCollection) {
 
-        for(IField field: fieldInfoCollection) {
+        for(IFieldView field: fieldInfoCollection) {
 
             TextView label = new TextView(this);
             label.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
