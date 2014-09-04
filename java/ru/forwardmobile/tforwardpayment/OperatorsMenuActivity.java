@@ -23,7 +23,7 @@ public class OperatorsMenuActivity extends ActionBarActivity implements AdapterV
 
     Integer currentNode;
     ListAdapter adapter = null;
-    OperatorsDataSource dataSource = null;
+    OperatorsDataSourceImpl dataSource = null;
     ListView listView = null;
 
     Stack<Integer> stack = new Stack<Integer>();
@@ -37,7 +37,7 @@ public class OperatorsMenuActivity extends ActionBarActivity implements AdapterV
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
-        dataSource = new OperatorsDataSource(this);
+        dataSource = new OperatorsDataSourceImpl(this);
         showNode(getIntent().getIntExtra("gid",0));
     }
 

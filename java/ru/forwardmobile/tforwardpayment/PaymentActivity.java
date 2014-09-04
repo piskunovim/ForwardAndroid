@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.actions.CheckTask;
-import ru.forwardmobile.tforwardpayment.spp.IField;
+import ru.forwardmobile.tforwardpayment.spp.IFieldView;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
@@ -24,6 +24,7 @@ import ru.forwardmobile.tforwardpayment.spp.ProviderFactory;
 
 /**
  * @author Vasiliy Vanin
+ * @deprecated
  */
 public class PaymentActivity  extends Activity implements View.OnClickListener {
 
@@ -40,7 +41,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
     EditText    fullValueField;
     
     IProvider   provider;
-    Collection<IField> fieldsInfo;
+    Collection<IFieldView> fieldsInfo;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +58,9 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
         fields = (ViewGroup) layout.findViewById(R.id.data_entry_fields_container);
 
         // Список полей для сервера
-        fieldsInfo = new HashSet<IField>();
+        fieldsInfo = new HashSet<IFieldView>();
         
-        for( IField field: provider.getFields() ) {
+        for( IFieldView field: provider.getFields() ) {
             fields.addView( field.getView() );
             fieldsInfo.add(field);
         }
@@ -99,7 +100,7 @@ public class PaymentActivity  extends Activity implements View.OnClickListener {
                         .show();
             }            
             
-            // @TODO Убрать impl-ы из фабрик и заменить их на прием из BaseField.fieldInfo();
+            // @TODO Убрать impl-ы из фабрик и заменить их на прием из BaseFieldView.fieldInfo();
         } else 
         if( view.getId() == R.id.data_entry_button_start ) {
             // START 

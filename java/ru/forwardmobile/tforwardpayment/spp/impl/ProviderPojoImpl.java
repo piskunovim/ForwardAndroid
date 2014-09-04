@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import ru.forwardmobile.tforwardpayment.spp.IField;
+import ru.forwardmobile.tforwardpayment.spp.IFieldView;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 
 /**
@@ -16,14 +16,14 @@ public class ProviderPojoImpl implements IProvider {
     final Integer id;
     final Double maxSumm;
     final Double minSumm;
-    final Set<IField> fields = new HashSet<IField>();
+    final Set<IFieldView> fields = new HashSet<IFieldView>();
     final String name;
     
     public ProviderPojoImpl(String name, Integer id, Double maxSumm, Double minSumm) {
         this(name, id, maxSumm, minSumm, null);
     }
     
-    public ProviderPojoImpl(String name, Integer id, Double maxSumm, Double minSumm, Collection<IField> fields) {
+    public ProviderPojoImpl(String name, Integer id, Double maxSumm, Double minSumm, Collection<IFieldView> fields) {
         
         this.name = name;
         this.id = id;
@@ -34,7 +34,7 @@ public class ProviderPojoImpl implements IProvider {
             this.fields.addAll(fields);
     }
     
-    public void addField(IField field) {
+    public void addField(IFieldView field) {
         fields.add(field);
     }
     
@@ -52,7 +52,7 @@ public class ProviderPojoImpl implements IProvider {
 
     public String getName() { return name; }
 
-    public Collection<IField> getFields() {
+    public Collection<IFieldView> getFields() {
         return Collections.unmodifiableCollection(fields);
     }
 

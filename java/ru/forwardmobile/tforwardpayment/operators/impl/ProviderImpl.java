@@ -2,8 +2,10 @@ package ru.forwardmobile.tforwardpayment.operators.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import ru.forwardmobile.tforwardpayment.operators.IField;
+import ru.forwardmobile.tforwardpayment.operators.IProcessor;
 import ru.forwardmobile.tforwardpayment.operators.IProvider;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 
 /**
  * @author Василий Ванин
@@ -14,10 +16,17 @@ public class ProviderImpl implements IProvider {
     private String      name;
     private Double      maxLimit = 14999d;
     private Double      minLimit = 1d;
+
+    private IProcessor  processor = null;
     
-    private Collection<IFieldInfo>  fields
-                = new ArrayList<IFieldInfo>();
-    
+    private Collection<IField>  fields
+                = new ArrayList<IField>();
+
+    @Override
+    public IProcessor getProcessor() {
+        return processor;
+    }
+
     @Override
     public Integer getId() {
         return id;
@@ -29,7 +38,7 @@ public class ProviderImpl implements IProvider {
     }
 
     @Override
-    public Collection<IFieldInfo> getFields() {
+    public Collection<IField> getFields() {
         return fields;
     }
 
@@ -59,8 +68,15 @@ public class ProviderImpl implements IProvider {
         this.minLimit = minLimit;
     }
 
-    public void setFields(Collection<IFieldInfo> fields) {
+    public void setFields(Collection<IField> fields) {
         this.fields = fields;
     }
-    
+
+    public void addField(IField field) {
+        this.fields.add(field);
+    };
+
+    public void setProcessor(IProcessor processor) {
+        this.processor = processor;
+    }
 }

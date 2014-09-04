@@ -1,7 +1,6 @@
 package ru.forwardmobile.tforwardpayment.operators;
 
 import java.util.Collection;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
 
 /**
  * @author Василий Ванин
@@ -15,7 +14,7 @@ public interface IProvider {
     public String   getName();
     
     /** @return Collection Поля платежа */
-    public Collection<IFieldInfo> getFields();
+    public Collection<IField> getFields();
     
     /** @return double Максимальновозможная сумма платежа */
     public Double   getMaxLimit();
@@ -23,4 +22,6 @@ public interface IProvider {
     /** @return double Минимальновозможная сумма платежа */
     public Double   getMinLimit();
 
+    /** @return IProcessor Данные для обеспечения механизма проведения платежа */
+    public IProcessor   getProcessor();
 }

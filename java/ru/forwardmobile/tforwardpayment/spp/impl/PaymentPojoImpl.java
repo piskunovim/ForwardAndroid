@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.TSettings;
-import ru.forwardmobile.tforwardpayment.spp.IField;
+import ru.forwardmobile.tforwardpayment.spp.IFieldView;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 /**
@@ -20,7 +20,7 @@ public class PaymentPojoImpl extends PaymentImpl  {
     private Double                    value     = 0d;
     private Double                    fullValue = 0d;
     private Integer                   psId;
-    private Collection<IField>        fields = new HashSet<IField>();
+    private Collection<IFieldView>        fields = new HashSet<IFieldView>();
 
     private Integer id = null;
     private Date    startDate;
@@ -47,7 +47,7 @@ public class PaymentPojoImpl extends PaymentImpl  {
         this.fullValue  = fullValue;
     }    
 
-    public void addField(IField field) {
+    public void addField(IFieldView field) {
         fields.add(field);
     }
 
@@ -71,7 +71,7 @@ public class PaymentPojoImpl extends PaymentImpl  {
         this.transactionId = transactionId;
     }
 
-    public Collection<IField> getFields() {
+    public Collection<IFieldView> getFields() {
         return Collections.unmodifiableCollection(fields);
     }
 
@@ -104,14 +104,14 @@ public class PaymentPojoImpl extends PaymentImpl  {
     }
 
     @Override
-    public void setFields(Collection<IField> fields) {
+    public void setFields(Collection<IFieldView> fields) {
         this.fields = fields;
     }
 
     @Override
-    public IField getField(String name) {
+    public IFieldView getField(String name) {
 
-        for(IField field: fields) {
+        for(IFieldView field: fields) {
             if(name.equals(field.getName())) {
                 return field;
             }
@@ -160,9 +160,9 @@ public class PaymentPojoImpl extends PaymentImpl  {
     }
 
     @Override
-    public IField getTarget() {
+    public IFieldView getTarget() {
 
-        for(IField field: fields) {
+        for(IFieldView field: fields) {
             if("target" . equals( field.getName() )) {
                 return field;
             }

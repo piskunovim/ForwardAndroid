@@ -10,5 +10,5 @@ import java.util.Collection;
 public interface IProvider extends IProviderMenuItem {
     public Double               getMaxSumm();
     public Double               getMinSumm();
-    public Collection<IField>   getFields();
+    public Collection<IFieldView>   getFields();
 }
