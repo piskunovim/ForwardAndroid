@@ -90,18 +90,14 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         etName.setOnEditorActionListener(this);
         etPass.setOnEditorActionListener(this);
 
-
-      boolean databaseExists = checkDataBase();
-      boolean datatablesFull = checkForTables();
-
-        if (databaseExists && datatablesFull) {
+        if (checkDataBase() && checkForTables()) {
             Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "true");
             // запуск activity
             startActivity(intent);
             this.finish();
         } else {
-            Log.d(LOG_TAG, "Does not exist database");
+            Log.d(LOG_TAG, "Database does not exists");
         }
 
         //keyboard

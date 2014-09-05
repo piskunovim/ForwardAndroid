@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.spp.IField;
+import ru.forwardmobile.tforwardpayment.spp.IFieldView;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
 import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
@@ -44,7 +44,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
         // Набор полей
         StringBuilder payment_data = new StringBuilder();
-        for( IField field: payment.getFields() ) {
+        for( IFieldView field: payment.getFields() ) {
             payment_data.append("<f n=\"" + field.getName() + "\" t=\"" +  field.getLabel() + "\">" + field.getValue() + "</f>");
         }
 
@@ -86,7 +86,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
             if(cursor.moveToNext()) {
 
-                Collection<IField> fields = parseFields(cursor.getString(1));
+                Collection<IFieldView> fields = parseFields(cursor.getString(1));
                 IPayment payment = PaymentFactory.getPayment( cursor.getInt(0), (double) cursor.getInt(2)/100, (double) cursor.getInt(3)/100, fields );
                 payment.setErrorCode(cursor.getInt(4));
                 payment.setErrorDescription(cursor.getString(5));
@@ -116,7 +116,7 @@ public class PaymentDaoImpl implements IPaymentDao {
                 , new String[]{});
         try {
             while (cursor.moveToNext()) {
-                Collection<IField> fields = parseFields(cursor.getString(3));
+                Collection<IFieldView> fields = parseFields(cursor.getString(3));
                 IPayment payment = PaymentFactory.getPayment(cursor.getInt(2), (double) cursor.getInt(4) / 100, (double) cursor.getInt(5) / 100, fields);
                 payment.setErrorCode(cursor.getInt(6));
                 payment.setErrorDescription(cursor.getString(7));
@@ -157,9 +157,9 @@ public class PaymentDaoImpl implements IPaymentDao {
 
     }
 
-    public static Collection<IField> parseFields(String data) {
+    public static Collection<IFieldView> parseFields(String data) {
 
-        Collection<IField> fields = new HashSet<IField>();
+        Collection<IFieldView> fields = new HashSet<IFieldView>();
 
         try {
             Xml.parse(data, new FieldContentHandler(fields));
@@ -178,9 +178,9 @@ public class PaymentDaoImpl implements IPaymentDao {
         private StringBuffer buffer = new StringBuffer();
         private String currentField = null;
         private String currentLabel = null;
-        private final Collection<IField> collection;
+        private final Collection<IFieldView> collection;
 
-        public FieldContentHandler(Collection<IField> collection) {
+        public FieldContentHandler(Collection<IFieldView> collection) {
             this.collection = collection;
         }
 
@@ -200,7 +200,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
             if("f" . equals(localName)) {
-                collection.add(BaseField.fieldInfo(currentField, buffer.toString(), currentLabel));
+                collection.add(BaseFieldView.fieldInfo(currentField, buffer.toString(), currentLabel));
                 currentField = null;
                 buffer = new StringBuffer();
             }

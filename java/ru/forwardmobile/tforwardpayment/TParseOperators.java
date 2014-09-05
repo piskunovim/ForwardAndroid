@@ -77,9 +77,9 @@ public void loadSettings(String xmlString) throws Exception {
                         Integer groupId = Integer.valueOf(xpp.getAttributeValue(null,"id"));
 
                         ContentValues cv = new ContentValues();
-                        cv.put(OperatorsDataSource.GROUP_NAME_FIELD, xpp.getAttributeValue(null,"n"));
-                        cv.put(OperatorsDataSource.GROUP_ID_FIELD, groupId);
-                        cv.put(OperatorsDataSource.GROUP_PARENT_FIELD, currentGroup);
+                        cv.put(OperatorsDataSourceImpl.GROUP_NAME_FIELD, xpp.getAttributeValue(null,"n"));
+                        cv.put(OperatorsDataSourceImpl.GROUP_ID_FIELD, groupId);
+                        cv.put(OperatorsDataSourceImpl.GROUP_PARENT_FIELD, currentGroup);
 
                         db.insert(DatabaseHelper.PG_TABLE_NAME, null, cv);
 
@@ -93,14 +93,14 @@ public void loadSettings(String xmlString) throws Exception {
 
                         currentPs = Integer.valueOf(xpp.getAttributeValue(null, "i"));
                         ContentValues cv = new ContentValues();
-                        cv.put(OperatorsDataSource.PK_FIELD, currentPs);
-                        cv.put(OperatorsDataSource.P_NAME_FIELD, xpp.getAttributeValue(null,"n"));
-                        cv.put(OperatorsDataSource.MIN_FIELD, xpp.getAttributeValue(null,"min"));
-                        cv.put(OperatorsDataSource.MAX_FIELD, xpp.getAttributeValue(null,"max"));
-                        cv.put(OperatorsDataSource.P_GROUP_FIELD, currentGroup);
+                        cv.put(OperatorsDataSourceImpl.PK_FIELD, currentPs);
+                        cv.put(OperatorsDataSourceImpl.P_NAME_FIELD, xpp.getAttributeValue(null,"n"));
+                        cv.put(OperatorsDataSourceImpl.MIN_FIELD, xpp.getAttributeValue(null,"min"));
+                        cv.put(OperatorsDataSourceImpl.MAX_FIELD, xpp.getAttributeValue(null,"max"));
+                        cv.put(OperatorsDataSourceImpl.P_GROUP_FIELD, currentGroup);
 
                         db.replace(DatabaseHelper.P_TABLE_NAME, null, cv);
-                        db.delete(DatabaseHelper.F_TABLE_NAME, OperatorsDataSource.FLD_PROVIDER_FIELD + "= ?", new String[]{
+                        db.delete(DatabaseHelper.F_TABLE_NAME, OperatorsDataSourceImpl.FLD_PROVIDER_FIELD + "= ?", new String[]{
                                 String.valueOf(currentPs)
                         });
                         Log.i("PARSER", "Found provider " + currentPs);
@@ -110,17 +110,17 @@ public void loadSettings(String xmlString) throws Exception {
 
                         // @TODO LOAD FIELDS
                         ContentValues cv = new ContentValues();
-                        cv.put(OperatorsDataSource.FLD_NAME_FIELD, xpp.getAttributeValue(null,"n"));
-                        cv.put(OperatorsDataSource.FLD_TITLE_FIELD, xpp.getAttributeValue(null,"c"));
-                        cv.put(OperatorsDataSource.FLD_PREFIX_FIELD, xpp.getAttributeValue(null,"p"));
-                        cv.put(OperatorsDataSource.FLD_MASK_FIELD, xpp.getAttributeValue(null,"m"));
-                        cv.put(OperatorsDataSource.FLD_REQUIRED_FIELD, xpp.getAttributeValue(null,"r"));
-                        cv.put(OperatorsDataSource.FLD_TYPE_FIELD, xpp.getAttributeValue(null,"t"));
-                        cv.put(OperatorsDataSource.FLD_PROVIDER_FIELD, currentPs);
+                        cv.put(OperatorsDataSourceImpl.FLD_NAME_FIELD, xpp.getAttributeValue(null,"n"));
+                        cv.put(OperatorsDataSourceImpl.FLD_TITLE_FIELD, xpp.getAttributeValue(null,"c"));
+                        cv.put(OperatorsDataSourceImpl.FLD_PREFIX_FIELD, xpp.getAttributeValue(null,"p"));
+                        cv.put(OperatorsDataSourceImpl.FLD_MASK_FIELD, xpp.getAttributeValue(null,"m"));
+                        cv.put(OperatorsDataSourceImpl.FLD_REQUIRED_FIELD, xpp.getAttributeValue(null,"r"));
+                        cv.put(OperatorsDataSourceImpl.FLD_TYPE_FIELD, xpp.getAttributeValue(null,"t"));
+                        cv.put(OperatorsDataSourceImpl.FLD_PROVIDER_FIELD, currentPs);
 
                         db.insert(DatabaseHelper.F_TABLE_NAME, null, cv);
 
-                        Log.i("PARSER", "Found field " + cv.get(OperatorsDataSource.FLD_TITLE_FIELD));
+                        Log.i("PARSER", "Found field " + cv.get(OperatorsDataSourceImpl.FLD_TITLE_FIELD));
                     }else
                     // Start settings part
                     if ("s".equals(startNodeName)) {

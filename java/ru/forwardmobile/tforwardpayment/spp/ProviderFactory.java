@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.spp.impl.EnumFieldImpl;
+import ru.forwardmobile.tforwardpayment.spp.impl.EnumFieldViewImpl;
 import ru.forwardmobile.tforwardpayment.spp.impl.ProviderPojoImpl;
-import ru.forwardmobile.tforwardpayment.spp.impl.TextFieldImpl;
+import ru.forwardmobile.tforwardpayment.spp.impl.TextFieldViewImpl;
 
 /**
  * Фабрика для создания операторов 
@@ -33,17 +33,17 @@ public class ProviderFactory {
                 fieldCursor = helper.getProviderFields(id);
                 while(fieldCursor.moveToNext()) {
                     
-                    IField field = null;
+                    IFieldView field = null;
                     int fieldType = fieldCursor.getInt(4);
                     switch( fieldType ) {
-                        case IField.TEXT_FIELD_TYPE: 
-                            field = new TextFieldImpl(ctx, fieldCursor.getString(0), fieldCursor.getString(2));
+                        case IFieldView.TEXT_FIELD_TYPE:
+                            field = new TextFieldViewImpl(ctx, fieldCursor.getString(0), fieldCursor.getString(2));
                             break;
-                        case IField.ENUMERATION_FIELD_TYPE: 
-                            field = new EnumFieldImpl(ctx, fieldCursor.getString(0), fieldCursor.getString(2), fieldCursor.getString(3));
+                        case IFieldView.ENUMERATION_FIELD_TYPE:
+                            field = new EnumFieldViewImpl(ctx, fieldCursor.getString(0), fieldCursor.getString(2), fieldCursor.getString(3));
                             break;
                         default:
-                            field = new TextFieldImpl(ctx, fieldCursor.getString(0), fieldCursor.getString(2));
+                            field = new TextFieldViewImpl(ctx, fieldCursor.getString(0), fieldCursor.getString(2));
                             //throw new UnsupportedOperationException("Unsupported field type " + fieldType);
                     }
                     
@@ -82,9 +82,9 @@ public class ProviderFactory {
 
             public boolean isGroup(){ return false;}
 
-            public Collection<IField> getFields() {
+            public Collection<IFieldView> getFields() {
                 return Arrays.asList(
-                    (IField) new TextFieldImpl(ctx, "target", "Номер телефона")
+                    (IFieldView) new TextFieldViewImpl(ctx, "target", "Номер телефона")
                 );
             }
         };

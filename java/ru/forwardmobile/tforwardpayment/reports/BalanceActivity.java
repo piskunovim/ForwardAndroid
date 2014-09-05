@@ -40,7 +40,7 @@ public class BalanceActivity extends ActionBarActivity implements ITaskListener 
 
         try{
             rt = new RequestTask(this,this);
-            rt.execute();//transport);
+            rt.execute();
         }
         catch(Exception e){
              e.printStackTrace();
