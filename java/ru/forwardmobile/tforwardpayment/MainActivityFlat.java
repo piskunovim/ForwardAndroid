@@ -29,7 +29,7 @@ import ru.forwardmobile.tforwardpayment.reports.PaymentAdapter;
 /**
  * Created by PiskunovI on 15.07.14.
  */
-public class MainActivityFlat extends AbstractBaseActivity {
+public class MainActivityFlat extends AbstractBaseActivity implements View.OnClickListener {
 
     final static String LOG_TAG = "TFORWARD.MainActivityFlat";
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
@@ -62,11 +62,7 @@ public class MainActivityFlat extends AbstractBaseActivity {
             initialize(message);
         }
 
-        //textSearchClick();
-        menuGroupClick();
-
-        // Payment queue start
-        //startPaymentQueue();
+        initButtons();
     }
 
     private void initialize(String message) {
@@ -84,82 +80,6 @@ public class MainActivityFlat extends AbstractBaseActivity {
         startActivity(intent);
     }
 
-
-    public void menuGroupClick() {
-        LinearLayout button01,button02,button03, button04, button05, button06, button07, button08, button09;
-        button01 = (LinearLayout) findViewById(R.id.button01);
-        button02 = (LinearLayout) findViewById(R.id.button02);
-        button03 = (LinearLayout) findViewById(R.id.button03);
-        button04 = (LinearLayout) findViewById(R.id.button04);
-        button05 = (LinearLayout) findViewById(R.id.button05);
-        button06 = (LinearLayout) findViewById(R.id.button06);
-        button07 = (LinearLayout) findViewById(R.id.button07);
-        button08 = (LinearLayout) findViewById(R.id.button08);
-        button09 = (LinearLayout) findViewById(R.id.button09);
-
-        button01.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGroup(101);
-            }
-        });
-
-        button02.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGroup(102);
-            }
-        });
-
-        button03.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGroup(103);
-            }
-        });
-
-        button04.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGroup(105);
-            }
-        });
-
-        button05.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGroup(104);
-            }
-        });
-
-        button06.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGroup(106);
-            }
-        });
-
-        button07.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGroup(107);
-            }
-        });
-
-        button08.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGroup(108);
-            }
-        });
-
-        button09.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGroup(109);
-            }
-        });
-    }
 
     public void textSearchClick(){
         textSearch = (AutoCompleteTextView) findViewById(R.id.inputSearch);
@@ -313,7 +233,46 @@ db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIK
         stopService(new Intent(this,TPaymentService.class));
     }
 
+    private void initButtons() {
+        findViewById(R.id.main_buton_attractions).setOnClickListener(this);
+        findViewById(R.id.main_button_credit).setOnClickListener(this);
+        findViewById(R.id.main_button_emoney).setOnClickListener(this);
+        findViewById(R.id.main_button_internet).setOnClickListener(this);
+        findViewById(R.id.main_button_jkh).setOnClickListener(this);
+        findViewById(R.id.main_button_land_line).setOnClickListener(this);
+        findViewById(R.id.main_button_mobile).setOnClickListener(this);
+        findViewById(R.id.main_button_other).setOnClickListener(this);
+        findViewById(R.id.main_button_tv).setOnClickListener(this);
+    }
 
-    
+    @Override
+    public void onClick(View view) {
 
+        Log.i("onClick", "Clicked: " + view.getId());
+
+        Integer id = view.getId();
+        switch (id) {
+            case R.id.main_button_emoney:       openGroup(EMONEY_GROUP_ID); break;
+            case R.id.main_button_credit:       openGroup(CREDIT_GROUP_ID); break;
+            case R.id.main_buton_attractions:   openGroup(ATTRACTIONS_GROUP_ID); break;
+            case R.id.main_button_internet:     openGroup(INTERNET_GROUP_ID); break;
+            case R.id.main_button_jkh:          openGroup(JKH_GROUP_ID); break;
+            case R.id.main_button_land_line:    openGroup(LAND_LINE_GROUP_ID); break;
+            case R.id.main_button_mobile:       openGroup(MOBILE_GROUP_ID); break;
+            case R.id.main_button_other:        openGroup(OTHERS_GROUP_ID); break;
+            case R.id.main_button_tv:           openGroup(TV_GROUP_ID); break;
+            default: break;
+        };
+    }
+
+
+    protected final Integer MOBILE_GROUP_ID         = 101;
+    protected final Integer TV_GROUP_ID             = 102;
+    protected final Integer LAND_LINE_GROUP_ID      = 103;
+    protected final Integer CREDIT_GROUP_ID         = 104;
+    protected final Integer INTERNET_GROUP_ID       = 105;
+    protected final Integer JKH_GROUP_ID            = 106;
+    protected final Integer ATTRACTIONS_GROUP_ID    = 107;
+    protected final Integer EMONEY_GROUP_ID         = 108;
+    protected final Integer OTHERS_GROUP_ID         = 109;
 }

@@ -36,12 +36,12 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
     public static final String PAYMENT_PARAMETER    = "paydx17";
     public static final String PS_PARAMETER         = "psidx3";
 
-    protected OperatorsDataSourceImpl dataSource  = null;
+    protected OperatorsDataSourceImpl   dataSource  = null;
     protected IPaymentDao               paymentDao  = null;
     protected ArrayAdapter              adapter     = null;
     protected List<IProviderMenuItem>   providers   = null;
     protected IPayment                  payment     = null;
-    protected List<IFieldView>              fields      = null;
+    protected List<IFieldView>          fields      = null;
     protected boolean                   loaded      = false;
     protected Spinner                   selector    = null;
 
@@ -49,7 +49,6 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
 
         if(!loaded) {
             paymentDao = PaymentDaoFactory.getPaymentDao(this);
