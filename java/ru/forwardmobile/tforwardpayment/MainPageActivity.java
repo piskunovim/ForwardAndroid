@@ -19,12 +19,17 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
+import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
+import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
+import ru.forwardmobile.util.android.ITaskListener;
 
 /**
  * Created by gorbovi on 19.08.2014.
  */
-public class MainPageActivity extends AbstractBaseActivity{
+public class MainPageActivity extends AbstractBaseActivity implements ITaskListener {
 
         final static String LOG_TAG = "TFORWARD.MainPageActivity";
         public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
@@ -37,6 +42,8 @@ public class MainPageActivity extends AbstractBaseActivity{
         Button button;
         String message;
         private boolean isFirstRun = false;
+
+        ViewGroup view;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +60,10 @@ public class MainPageActivity extends AbstractBaseActivity{
             Log.d(LOG_TAG, "Initialize MainPageActivity");
 
 
-            ViewGroup view = (ViewGroup) findViewById(R.id.activity_main_page_container);
+            view =  (ViewGroup) findViewById(R.id.activity_main_page_container);
             DealerInfo dealerInfo = new DealerInfo(view);
             dealerInfo.setDealerName("Иванов Иван Иванович");
-            dealerInfo.setDealerShotBlock("Иванов Иван Иванович","100000","213560.55","10000");
+            //dealerInfo.setDealerShotBlock("Иванов Иван Иванович","100000","213560.55","10000");
 
 
             pager = (ViewPager) findViewById(R.id.pager);
@@ -130,6 +137,49 @@ public class MainPageActivity extends AbstractBaseActivity{
     {
         Intent intent = new Intent(this,PageSettings.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onTaskFinish(Object result) {
+        if(result != null && result instanceof IResponseSet) {
+
+            IResponseSet responseSet = (IResponseSet) result;
+
+            double balance  = 0;
+            double limit    = 0;
+            double total    = 0;
+
+            String balanceToView = "";
+            String creditToView = "";
+            String totalToView = "";
+
+            try {
+                // разбираем ответ
+                ICommandResponse response = (ICommandResponse) responseSet.getResponses().get(0);
+                Log.d(LOG_TAG, response.toString());
+                balance = Double.parseDouble(response.getParam("balance"));
+                limit = Double.parseDouble(response.getParam("limit"));
+                total = balance + limit;
+
+                DealerInfo dealerInfo = new DealerInfo(view);
+                // Показываем результат
+                if (balance != 0)
+                    balanceToView =  String.valueOf(new BigDecimal(balance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                if (limit != 0)
+                    creditToView = String.valueOf(new BigDecimal(limit).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                if (total != 0)
+                    if (total > 0)
+                        totalToView = String.valueOf(new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                    else
+                        totalToView = "Прием платежей невозможен!";
+                dealerInfo.setDealerShotBlock("Иванов Иван Иванович","100000","213560.55","10000");
+            } catch (Exception ex) {
+                // Ошибка разбора
+
+            }
+        } else {
+            // Ошибка отправки запроса
+        }
     }
 
 
