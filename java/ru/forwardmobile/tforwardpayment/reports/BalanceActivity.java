@@ -36,8 +36,6 @@ public class BalanceActivity extends ActionBarActivity implements ITaskListener 
         creditView      = (TextView) findViewById(R.id.creditView); //View "Кредитный лимит"
         totalView       = (TextView) findViewById(R.id.totalView); //View "Можно израсходовать"
 
-
-
         try{
             rt = new RequestTask(this,this);
             rt.execute();

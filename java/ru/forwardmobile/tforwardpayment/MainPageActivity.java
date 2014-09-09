@@ -20,7 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 
+import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 import ru.forwardmobile.tforwardpayment.dealer.IDealerBalance;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
@@ -45,6 +48,7 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
         private boolean isFirstRun = false;
 
         ViewGroup view;
+        DealerDataSource dt = new DealerDataSource(this);
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +66,10 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
 
 
             view =  (ViewGroup) findViewById(R.id.activity_main_page_container);
+
             DealerInfo dealerInfo = new DealerInfo(view);
-            dealerInfo.setDealerName("Иванов Иван Иванович");
-            //dealerInfo.setDealerShotBlock("Иванов Иван Иванович","100000","213560.55","10000");
+            Log.d(LOG_TAG, dt.dealersName);
+            dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersCredit, dt.dealersRealMoney);
 
 
             pager = (ViewPager) findViewById(R.id.pager);

@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 
+import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineFactory;
 import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
 import ru.forwardmobile.tforwardpayment.security.KeySingleton;
@@ -39,6 +40,7 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
 
     public MainAccessActivity(){
         loadListeners.add(new PaymentQueueManager());
+        loadListeners.add(new DealerDataSource(this));
     }
 
     @Override
