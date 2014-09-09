@@ -9,7 +9,7 @@ import ru.forwardmobile.tforwardpayment.R;
 /**
  * Created by PiskunovI on 29.08.2014.
  */
-public class DealerInfo {
+public class DealerInfo{
 
     protected ViewGroup viewGroup;
 

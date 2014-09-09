@@ -22,6 +22,7 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
+import ru.forwardmobile.tforwardpayment.dealer.IDealerBalance;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
 import ru.forwardmobile.util.android.ITaskListener;
@@ -29,7 +30,7 @@ import ru.forwardmobile.util.android.ITaskListener;
 /**
  * Created by gorbovi on 19.08.2014.
  */
-public class MainPageActivity extends AbstractBaseActivity implements ITaskListener {
+public class MainPageActivity extends AbstractBaseActivity implements IDealerBalance {
 
         final static String LOG_TAG = "TFORWARD.MainPageActivity";
         public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
@@ -121,6 +122,7 @@ public class MainPageActivity extends AbstractBaseActivity implements ITaskListe
         startActivity(intent);
     }
 
+
     public void enterMonitoring(View view)
     {
         Intent intent = new Intent(this,PageMonitoring.class);
@@ -164,7 +166,7 @@ public class MainPageActivity extends AbstractBaseActivity implements ITaskListe
                 DealerInfo dealerInfo = new DealerInfo(view);
                 // Показываем результат
                 if (balance != 0)
-                    balanceToView =  String.valueOf(new BigDecimal(balance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                    balanceToView = String.valueOf(new BigDecimal(balance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
                 if (limit != 0)
                     creditToView = String.valueOf(new BigDecimal(limit).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
                 if (total != 0)
@@ -172,7 +174,7 @@ public class MainPageActivity extends AbstractBaseActivity implements ITaskListe
                         totalToView = String.valueOf(new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
                     else
                         totalToView = "Прием платежей невозможен!";
-                dealerInfo.setDealerShotBlock("Иванов Иван Иванович","100000","213560.55","10000");
+                dealerInfo.setDealerShotBlock("Иванов Иван Иванович",balanceToView,creditToView,totalToView);
             } catch (Exception ex) {
                 // Ошибка разбора
 
@@ -180,6 +182,11 @@ public class MainPageActivity extends AbstractBaseActivity implements ITaskListe
         } else {
             // Ошибка отправки запроса
         }
+    }
+
+    @Override
+    public void getBalance() {
+
     }
 
 

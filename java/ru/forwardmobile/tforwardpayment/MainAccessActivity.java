@@ -44,6 +44,7 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
 
         Log.d(LOG_TAG, message);
 
+
         if (message.equals("true"))
         {
             commentary.setText("*пароль доступа был введен вами при первом при первом запуске приложения");
@@ -136,4 +137,15 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
             setPassword( ((TextView) findViewById(R.id.access_pass)).getText().toString() );
         }
     }
+
+    private void startPaymentQueue() {
+        Log.i(LOG_TAG, "Starting payment queue...");
+        startService(new Intent(this, TPaymentService.class));
+    }
+
+    private void stopPaymentQueue() {
+        Log.i(LOG_TAG,"Deactivating payment queue...");
+        stopService(new Intent(this,TPaymentService.class));
+    }
+
 }
