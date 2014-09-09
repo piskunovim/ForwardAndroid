@@ -61,10 +61,10 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
             button          = (Button)      findViewById(R.id.access_button);
 
             message         = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
-
             Log.d(LOG_TAG, "Initialize MainPageActivity");
 
-
+            Log.d(LOG_TAG, dt.dealersName);
+            Log.d(LOG_TAG, "dealersName");
             view =  (ViewGroup) findViewById(R.id.activity_main_page_container);
 
             DealerInfo dealerInfo = new DealerInfo(view);
