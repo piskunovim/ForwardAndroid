@@ -1,5 +1,6 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,11 +11,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collection;
+import java.util.HashSet;
+
+
 import ru.forwardmobile.tforwardpayment.security.CryptEngineFactory;
 import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
 import ru.forwardmobile.tforwardpayment.security.KeySingleton;
 import ru.forwardmobile.tforwardpayment.security.KeyStorageFactory;
 import ru.forwardmobile.tforwardpayment.security.XorImpl;
+import ru.forwardmobile.tforwardpayment.spp.PaymentQueueManager;
 
 /**
  * Created by PiskunovI on 23.06.14.
@@ -29,6 +35,11 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
     Button button;
     String message;
     private boolean isFirstRun = false;
+    private final Collection<onLoadListener> loadListeners  = new HashSet<onLoadListener>();
+
+    public MainAccessActivity(){
+        loadListeners.add(new PaymentQueueManager());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,12 +120,22 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
     // Вызывается в случае удачной авторизации
     public void onAuthenticationSuccess() {
 
+        initializeComponents();
+
         Intent intent = new Intent(this, MainPageActivity.class);
-        //Intent intent = new Intent(this, MainListActivity.class);
         intent.putExtra(EXTRA_MESSAGE,"true");
 
         startActivity(intent);
         this.finish();
+    }
+
+    private void initializeComponents(){
+
+        //@todo add SplashScreen
+
+        for(onLoadListener listener: loadListeners) {
+            listener.beforeApplicationStart(this);
+        }
     }
 
     @Override
@@ -138,14 +159,9 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
         }
     }
 
-    private void startPaymentQueue() {
-        Log.i(LOG_TAG, "Starting payment queue...");
-        startService(new Intent(this, TPaymentService.class));
-    }
 
-    private void stopPaymentQueue() {
-        Log.i(LOG_TAG,"Deactivating payment queue...");
-        stopService(new Intent(this,TPaymentService.class));
-    }
 
+    public interface onLoadListener{
+        public void beforeApplicationStart(Context context);
+    }
 }
