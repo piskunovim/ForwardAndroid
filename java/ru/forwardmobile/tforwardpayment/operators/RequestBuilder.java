@@ -21,7 +21,8 @@ public class RequestBuilder {
             if(IRequestProperty.TARGET_REQUEST_PROPERTY
                     . equals( property.getName() )) {
             
-                requestBody.append("target=" + payment.getField( property.getRefField() ).getValue() );
+                requestBody.append("target=" + payment.getField( Integer.valueOf(property.getRefField()) )
+                        .getValue().getValue() );
             } else {
                 
                 // Other fields should be passed as xml-data

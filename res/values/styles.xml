@@ -14,12 +14,12 @@
     </style>
 
     <style name="DataEntry.Title">
-        <item name="android:textSize">24dp</item>
+        <item name="android:textSize">18dp</item>
         <item name="android:textColor">@color/wet_asphalt</item>
     </style>
 
     <style name="DataEntry.fieldGroup">
-        <item name="android:padding">20dp</item>
+        <item name="android:padding">10dp</item>
     </style>
 
 </resources>

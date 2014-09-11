@@ -10,12 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import java.io.InputStream;
 import java.util.Stack;
 
-import ru.forwardmobile.tforwardpayment.operators.IOperatorsDataSource;
-import ru.forwardmobile.tforwardpayment.operators.OperatorsXmlReader;
-import ru.forwardmobile.tforwardpayment.operators.impl.OperatorsEntityManagerImpl;
+import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
+import ru.forwardmobile.tforwardpayment.operators.OperatorsEntityManagerFactory;
 import ru.forwardmobile.tforwardpayment.spp.IProviderMenuItem;
 
 /**
@@ -27,7 +25,7 @@ public class OperatorsMenuActivity extends ActionBarActivity implements AdapterV
 
     Integer currentNode;
     ListAdapter adapter = null;
-    IOperatorsDataSource dataSource = null;
+    IProvidersDataSource dataSource = null;
     ListView listView = null;
 
     Stack<Integer> stack = new Stack<Integer>();
@@ -41,11 +39,8 @@ public class OperatorsMenuActivity extends ActionBarActivity implements AdapterV
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
-        //@Todo убрать этот мусор отсюда
-        try {
-            InputStream is = getAssets().open("operators.xml");
-            dataSource = new OperatorsXmlReader().readOperators(is);
-        }catch(Exception ex) {}
+        //@Todo сделать фабрику для дата сорсов
+        dataSource = OperatorsEntityManagerFactory.getManager(this);
 
         Log.i("MENUA", "Show: " + getIntent().getIntExtra("gid",0));
         showNode(getIntent().getIntExtra("gid",0));

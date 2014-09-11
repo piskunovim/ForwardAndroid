@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.util.Xml;
 
 import org.xml.sax.Attributes;
@@ -19,10 +18,10 @@ import java.util.HashSet;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.spp.IFieldView;
+import ru.forwardmobile.tforwardpayment.spp.IField;
+import ru.forwardmobile.tforwardpayment.widget.FieldWidget;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
-import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
 
 /**
  * Created by vaninv on 30.05.2014.
@@ -43,9 +42,10 @@ public class PaymentDaoImpl implements IPaymentDao {
     public void save(IPayment payment) {
 
         // Набор полей
+        // @todo проверить
         StringBuilder payment_data = new StringBuilder();
-        for( IFieldView field: payment.getFields() ) {
-            payment_data.append("<f n=\"" + field.getName() + "\" t=\"" +  field.getLabel() + "\">" + field.getValue() + "</f>");
+        for( IField field: payment.getFields() ) {
+            payment_data.append("<f n=\"" + field.getName() + "\" t=\"" +  field.getName() + "\">" + field.getValue().getValue() + "</f>");
         }
 
         ContentValues cv = new ContentValues();
@@ -82,7 +82,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         Cursor cursor = dbHelper.getReadableDatabase().rawQuery("select psid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate " +
                 " from  payments where id = ?", new String[]{String.valueOf(id)});
 
-        try {
+     /*   try {
 
             if(cursor.moveToNext()) {
 
@@ -99,7 +99,7 @@ public class PaymentDaoImpl implements IPaymentDao {
             }
         } finally {
             cursor.close();
-        }
+        }*/
 
         return null;
     }
@@ -111,7 +111,7 @@ public class PaymentDaoImpl implements IPaymentDao {
     public synchronized Collection<IPayment> getUnprocessed() {
 
         List<IPayment> collection = new ArrayList<IPayment>();
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
+    /*    Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
                 + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where status not in(3,5) "
                 , new String[]{});
         try {
@@ -138,7 +138,7 @@ public class PaymentDaoImpl implements IPaymentDao {
             }
         } finally {
             cursor.close();
-        }
+        }*/
         return collection;
     }
 
@@ -157,9 +157,9 @@ public class PaymentDaoImpl implements IPaymentDao {
 
     }
 
-    public static Collection<IFieldView> parseFields(String data) {
+    public static Collection<FieldWidget> parseFields(String data) {
 
-        Collection<IFieldView> fields = new HashSet<IFieldView>();
+        Collection<FieldWidget> fields = new HashSet<FieldWidget>();
 
         try {
             Xml.parse(data, new FieldContentHandler(fields));
@@ -178,9 +178,9 @@ public class PaymentDaoImpl implements IPaymentDao {
         private StringBuffer buffer = new StringBuffer();
         private String currentField = null;
         private String currentLabel = null;
-        private final Collection<IFieldView> collection;
+        private final Collection<FieldWidget> collection;
 
-        public FieldContentHandler(Collection<IFieldView> collection) {
+        public FieldContentHandler(Collection<FieldWidget> collection) {
             this.collection = collection;
         }
 
@@ -200,7 +200,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
             if("f" . equals(localName)) {
-                collection.add(BaseFieldView.fieldInfo(currentField, buffer.toString(), currentLabel));
+                //collection.add(BaseFieldView.fieldInfo(currentField, buffer.toString(), currentLabel));
                 currentField = null;
                 buffer = new StringBuffer();
             }

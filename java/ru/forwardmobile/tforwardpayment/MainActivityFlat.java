@@ -1,12 +1,9 @@
 package ru.forwardmobile.tforwardpayment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,13 +15,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.reports.PaymentAdapter;
 
 /**
  * Created by PiskunovI on 15.07.14.
@@ -201,7 +196,7 @@ db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIK
     }
 
     public void startPayment(Integer id){
-        Intent intent = new Intent(this, PaymentActivity.class);
+        Intent intent = new Intent(this, DataEntryActivity.class);
         intent.putExtra("psid", id);
         startActivity(intent);
     }

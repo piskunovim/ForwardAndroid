@@ -41,7 +41,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Base.AppCompat.Light.DarkActionBar" >">
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,39 +50,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.MainPageActivity"
+            android:name=".MainPageActivity"
             android:label="@string/title_activity_main_list" >
         </activity>
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.PageMonitoring"
+            android:name=".PageMonitoring"
             android:label="Monitoring Page" >
         </activity>
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.PageNotifications"
+            android:name=".PageNotifications"
             android:label="Notifications Page" >
         </activity>
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.PageSettings"
+            android:name=".PageSettings"
             android:label="Settings Page" >
         </activity>
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.MainFooter"
-            android:label="Footer" >
-        </activity>
-        <activity
-            android:name="ru.forwardmobile.tforwardpayment.DealerInfoActivity"
+            android:name=".DealerInfoActivity"
             android:label="@string/title_dealer_info_activity" >
         </activity>
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.MainListActivity"
-            android:label="@string/title_activity_main_list" >
-        </activity>
-        <activity
-            android:name="ru.forwardmobile.tforwardpayment.MainAccessActivity"
+            android:name=".MainAccessActivity"
             android:label="@string/title_access_activity" >
         </activity>
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.MainActivityFlat"
+            android:name=".MainActivityFlat"
             android:label="@string/title_activity_main_list" >
         </activity>
         <activity
@@ -90,7 +82,7 @@
             android:label="@string/title_balance" >
         </activity>
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.PaymentActivity"
+            android:name=".DataEntryActivity"
             android:label="@string/data_entry_label" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -98,35 +90,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="ru.forwardmobile.tforwardpayment.DataEntryActivity"
-            android:label="@string/data_entry_label" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="ru.forwardmobile.tforwardpayment.OperatorsActivity"
-            android:label="@string/title_activity_operators" >
-        </activity>
 
         <activity
-            android:name="ru.forwardmobile.tforwardpayment.OperatorsMenuActivity"
+            android:name=".OperatorsMenuActivity"
             android:label="@string/title_activity_operators" >
         </activity>
 
         <service android:name=".TPaymentService" />
 
         <activity
-            android:name=".reports.SimplePaymentListActivity"
-            android:label="@string/title_activity_payment_list_impl" >
-        </activity>
-        <activity
-            android:name="ru.forwardmobile.tforwardpayment.HelpActivity"
+            android:name=".HelpActivity"
             android:label="@string/title_activity_help" >
         </activity>
+
+
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"

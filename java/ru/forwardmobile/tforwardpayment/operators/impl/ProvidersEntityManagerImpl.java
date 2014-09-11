@@ -1,7 +1,5 @@
 package ru.forwardmobile.tforwardpayment.operators.impl;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,16 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
-import ru.forwardmobile.tforwardpayment.operators.IOperatorsDataSource;
-import ru.forwardmobile.tforwardpayment.operators.IProvider;
+import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
 import ru.forwardmobile.tforwardpayment.operators.OperatorsXmlReader;
+import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.forwardmobile.tforwardpayment.spp.IProviderMenuItem;
 import ru.forwardmobile.tforwardpayment.spp.impl.MenuItem;
 
 /**
  * Created by Василий Ванин on 03.09.2014.
  */
-public class OperatorsEntityManagerImpl implements OperatorsXmlReader.IOperatorsXmlListener, IOperatorsDataSource {
+public class ProvidersEntityManagerImpl implements OperatorsXmlReader.IOperatorsXmlListener, IProvidersDataSource {
 
     private final HashMap<Integer, IProvider> providers
             = new HashMap<Integer, IProvider>();
@@ -91,7 +89,20 @@ public class OperatorsEntityManagerImpl implements OperatorsXmlReader.IOperators
 
     @Override
     public List<IProviderMenuItem> getFullList() {
-        return Collections.EMPTY_LIST;
+
+        List<IProviderMenuItem> fullList = new ArrayList<IProviderMenuItem>();
+        for(Integer key: providers.keySet()) {
+
+            final IProvider provider = providers.get(key);
+            fullList.add(MenuItem.getInstance(key, provider.getName()));
+        }
+
+        return fullList;
+    }
+
+    @Override
+    public IProvider getById(Integer id) {
+        return providers.get(id);
     }
 
     private class MenuGroupImpl implements IProviderMenuItem {

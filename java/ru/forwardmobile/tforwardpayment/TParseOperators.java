@@ -72,57 +72,6 @@ public void loadSettings(String xmlString) throws Exception {
                 case XmlPullParser.START_TAG:
                     String startNodeName = xpp.getName();
 
-                    if("p-g".equals(startNodeName)) {
-
-                        Integer groupId = Integer.valueOf(xpp.getAttributeValue(null,"id"));
-
-                        ContentValues cv = new ContentValues();
-                        cv.put(OperatorsDataSourceImpl.GROUP_NAME_FIELD, xpp.getAttributeValue(null,"n"));
-                        cv.put(OperatorsDataSourceImpl.GROUP_ID_FIELD, groupId);
-                        cv.put(OperatorsDataSourceImpl.GROUP_PARENT_FIELD, currentGroup);
-
-                        db.insert(DatabaseHelper.PG_TABLE_NAME, null, cv);
-
-                        hierarchy.push(currentGroup);
-                        currentGroup = groupId;
-
-                        Log.i("Parser", "Found group " + groupId);
-
-                    } else
-                    if("p" . equals(startNodeName)) {
-
-                        currentPs = Integer.valueOf(xpp.getAttributeValue(null, "i"));
-                        ContentValues cv = new ContentValues();
-                        cv.put(OperatorsDataSourceImpl.PK_FIELD, currentPs);
-                        cv.put(OperatorsDataSourceImpl.P_NAME_FIELD, xpp.getAttributeValue(null,"n"));
-                        cv.put(OperatorsDataSourceImpl.MIN_FIELD, xpp.getAttributeValue(null,"min"));
-                        cv.put(OperatorsDataSourceImpl.MAX_FIELD, xpp.getAttributeValue(null,"max"));
-                        cv.put(OperatorsDataSourceImpl.P_GROUP_FIELD, currentGroup);
-
-                        db.replace(DatabaseHelper.P_TABLE_NAME, null, cv);
-                        db.delete(DatabaseHelper.F_TABLE_NAME, OperatorsDataSourceImpl.FLD_PROVIDER_FIELD + "= ?", new String[]{
-                                String.valueOf(currentPs)
-                        });
-                        Log.i("PARSER", "Found provider " + currentPs);
-
-                    }else
-                    if("f" . equals(startNodeName)) {
-
-                        // @TODO LOAD FIELDS
-                        ContentValues cv = new ContentValues();
-                        cv.put(OperatorsDataSourceImpl.FLD_NAME_FIELD, xpp.getAttributeValue(null,"n"));
-                        cv.put(OperatorsDataSourceImpl.FLD_TITLE_FIELD, xpp.getAttributeValue(null,"c"));
-                        cv.put(OperatorsDataSourceImpl.FLD_PREFIX_FIELD, xpp.getAttributeValue(null,"p"));
-                        cv.put(OperatorsDataSourceImpl.FLD_MASK_FIELD, xpp.getAttributeValue(null,"m"));
-                        cv.put(OperatorsDataSourceImpl.FLD_REQUIRED_FIELD, xpp.getAttributeValue(null,"r"));
-                        cv.put(OperatorsDataSourceImpl.FLD_TYPE_FIELD, xpp.getAttributeValue(null,"t"));
-                        cv.put(OperatorsDataSourceImpl.FLD_PROVIDER_FIELD, currentPs);
-
-                        db.insert(DatabaseHelper.F_TABLE_NAME, null, cv);
-
-                        Log.i("PARSER", "Found field " + cv.get(OperatorsDataSourceImpl.FLD_TITLE_FIELD));
-                    }else
-                    // Start settings part
                     if ("s".equals(startNodeName)) {
                         insideSettings = true;
                     } else

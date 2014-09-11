@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import ru.forwardmobile.tforwardpayment.operators.IRequestProperty;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 /**
@@ -70,8 +70,8 @@ public class RequestPropertyImpl implements IRequestProperty {
         // Если не содержит дополнительных свойств
         if( getItems().isEmpty() ) {
         
-            IFieldInfo paymentField = payment.getField(field);
-            return exportField(paymentField.getName(), paymentField.getValue());
+            IField paymentField = payment.getField(Integer.valueOf(field));
+            return exportField(paymentField.getName(), paymentField.getValue().getValue());
         }   else {
             StringBuilder fields = new StringBuilder();
             Iterator<IRequestPropertyItem> iterator = getItems().iterator();
@@ -91,8 +91,8 @@ public class RequestPropertyImpl implements IRequestProperty {
                     } 
 
                 } else if(IRequestProperty.FIELD_REF_ITEM_TYPE . equals(item.getType())) {
-                    IFieldInfo paymentField = payment.getField(item.getValue());
-                    fields.append( exportField(paymentField.getName(), paymentField.getValue()));
+                    IField paymentField = payment.getField(Integer.valueOf(item.getValue()));
+                    fields.append( exportField(paymentField.getName(), paymentField.getValue().getValue()));
                 }
             }
             

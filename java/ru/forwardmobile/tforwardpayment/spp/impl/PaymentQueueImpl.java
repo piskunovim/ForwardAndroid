@@ -370,7 +370,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     paymentDao.save(payment);
 
                     String prefix = "#" + payment.getId() + ":";
-                    Log.d(LOGGER_TAG,prefix + " new status: " + PaymentImpl.statusNameEng(payment.getStatus()));
+                    Log.d(LOGGER_TAG,prefix + " new status: " + AbstractPaymentImpl.statusNameEng(payment.getStatus()));
 
                     // Платеж завершен, только в этом случае удаляем из очереди
                     if(payment.getStatus() == IPayment.DONE) {

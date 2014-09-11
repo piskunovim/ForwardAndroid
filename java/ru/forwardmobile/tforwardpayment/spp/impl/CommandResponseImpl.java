@@ -1,7 +1,6 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -214,7 +213,7 @@ public class CommandResponseImpl  implements ICommandResponse {
             throw new Exception("Пустой ответ сервера!");
         }
         if ( response.getErrCode() != null ) {
-            String err = PaymentImpl.getErrorName(response.getErrCode()) + " (" + response.getErrCode().toString();
+            String err = AbstractPaymentImpl.getErrorName(response.getErrCode()) + " (" + response.getErrCode().toString();
             if ( response.getErrDescription() != null ) {
                 err+= " " + response.getErrDescription();
             }

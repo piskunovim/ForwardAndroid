@@ -3,9 +3,9 @@ package ru.forwardmobile.tforwardpayment.spp.impl;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 /**
- * Created by Mindbreaker on 08.06.14.
+ * Created by Ванин Василий on 08.06.14.
  */
-public abstract class PaymentImpl implements IPayment {
+public abstract class AbstractPaymentImpl implements IPayment {
 
     public static final String getErrorName(Integer errorCode) {
         if(errorCode == null) {

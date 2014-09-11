@@ -16,6 +16,7 @@ import java.util.HashSet;
 
 
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
+import ru.forwardmobile.tforwardpayment.operators.OperatorsLoadListener;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineFactory;
 import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
 import ru.forwardmobile.tforwardpayment.security.KeySingleton;
@@ -41,6 +42,7 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
     public MainAccessActivity(){
         loadListeners.add(new PaymentQueueManager());
         loadListeners.add(new DealerDataSource(this));
+        loadListeners.add(new OperatorsLoadListener());
     }
 
     @Override
@@ -134,7 +136,7 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
     private void initializeComponents(){
 
         //@todo add SplashScreen
-
+        Log.v(LOG_TAG, "Fire listeners");
         for(onLoadListener listener: loadListeners) {
             listener.beforeApplicationStart(this);
         }

@@ -3,6 +3,8 @@ package ru.forwardmobile.tforwardpayment.spp;
 import java.util.Collection;
 import java.util.Date;
 
+import ru.forwardmobile.tforwardpayment.widget.FieldWidget;
+
 /**
  * @author Vasiliy Vanin
  */
@@ -23,8 +25,8 @@ public interface IPayment {
     public Integer                  getTransactionId();
     public void                     setTransactionId(Integer transactionId);
 
-    /** @return Collection<IFieldView> Набор полей */
-    public Collection<IFieldView>       getFields();
+    /** @return Collection<IField>  Набор полей */
+    public Collection<IField>       getFields();
 
     /** @return Integer Идентификатор платежной системы */
     public Integer                  getPsid();
@@ -52,7 +54,7 @@ public interface IPayment {
     public void                     setFinishDate(Date finishDate);
 
     /** @return IFieldView  Основное поле */
-    public IFieldView getTarget();
+    public IField                   getTarget();
 
     /** @return Integer Статус платежа, значения в IPayment */
     public Integer                  getStatus();
@@ -83,6 +85,6 @@ public interface IPayment {
     public String                   getStatusName();
     public void                     setPsid(Integer psid);
     public void                     setFullValue(Double fullValue);
-    public void                     setFields(Collection<IFieldView> fields);
-    public IFieldView getField(String name);
+    public void                     setFields(Collection<IField> fields);
+    public IField                   getField(Integer id);
 }

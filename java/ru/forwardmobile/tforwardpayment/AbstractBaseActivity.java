@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ru.forwardmobile.tforwardpayment.reports.BalanceActivity;
-import ru.forwardmobile.tforwardpayment.reports.SimplePaymentListActivity;
 
 /**
  * Created by vaninv on 25.07.2014.
@@ -56,14 +55,14 @@ public abstract class AbstractBaseActivity extends ActionBarActivity {
                             startActivity(intent);
                             break;
                         case 1:
-                            intent = new Intent(AbstractBaseActivity.this, SimplePaymentListActivity.class);
-                            intent.putExtra(SimplePaymentListActivity.LIST_TYPE, SimplePaymentListActivity.UNPROCESSED_PAYMENT_LIST_TYPE);
-                            startActivity(intent);
+//                            intent = new Intent(AbstractBaseActivity.this, SimplePaymentListActivity.class);
+//                            intent.putExtra(SimplePaymentListActivity.LIST_TYPE, SimplePaymentListActivity.UNPROCESSED_PAYMENT_LIST_TYPE);
+//                           startActivity(intent);
                             break;
                         case 2:
-                            intent = new Intent(AbstractBaseActivity.this, SimplePaymentListActivity.class);
-                            intent.putExtra(SimplePaymentListActivity.LIST_TYPE, SimplePaymentListActivity.ALL_PAYMENT_LIST_TYPE);
-                            startActivity(intent);
+//                            intent = new Intent(AbstractBaseActivity.this, SimplePaymentListActivity.class);
+//                           intent.putExtra(SimplePaymentListActivity.LIST_TYPE, SimplePaymentListActivity.ALL_PAYMENT_LIST_TYPE);
+//                            startActivity(intent);
                             break;
                         default:
                             break;

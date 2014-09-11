@@ -72,6 +72,8 @@
                     style="@style/DataEntry.fieldGroup"
                     android:id="@+id/mde_fields_container">
 
+
+
                 </LinearLayout>
 
 
@@ -79,7 +81,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -91,7 +94,6 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/DataEntry.Title"
                             android:text="@string/data_entry_amount_title"
                         />
 
@@ -113,14 +115,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/DataEntry.Title"
-                            android:text="@string/data_entry_full_amount_title"
+                              android:text="@string/data_entry_full_amount_title"
                         />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="100.00"
                             android:id="@+id/mde_full_value_value_text"
                             android:textSize="14dp"
                             android:visibility="gone"
@@ -148,9 +148,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:layout_margin="2dp"
-                        android:text="@string/data_entry_back_button"
-                        android:id="@+id/mde_button_back"
+                        android:text="@string/data_entry_button_check_text"
+                        android:id="@+id/mde_button_check"
                         android:background="@drawable/gardient_login_form_button"
+                        android:textColor="@color/white"
                     />
 
                     <Button
@@ -161,6 +162,7 @@
                         android:text="@string/data_entry_button_start_text"
                         android:id="@+id/mde_button_start"
                         android:background="@drawable/gardient_login_form_button"
+                        android:textColor="@color/white"
                     />
 
                 </LinearLayout>
