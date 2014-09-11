@@ -31,22 +31,22 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener,ITask
     Context context;
 
     // = имя дилера
-    public static String dealersName = new String();
+    public static String dealersName;
 
     // = баланс
-    public static String dealersBalance = new String();
+    public static String dealersBalance;
 
     // = можно израсходовать
-    public static String dealersRealMoney = new String();
+    public static String dealersRealMoney;
 
     // = кредит
-    public static String dealersCredit = new String();
+    public static String dealersCredit;
 
     // = деньги в пути
-    public static String dealersMoneyGo = new String();
+    public static String dealersMoneyGo;
 
     // = номер точки
-    public static String dealersPoint = new String();
+    public static String dealersPoint;
 
 
     public DealerDataSource(Context context) {
