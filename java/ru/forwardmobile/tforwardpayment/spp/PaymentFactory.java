@@ -1,24 +1,12 @@
 package ru.forwardmobile.tforwardpayment.spp;
 
-import java.util.Collection;
-import ru.forwardmobile.tforwardpayment.spp.impl.PaymentPojoImpl;
+import ru.forwardmobile.tforwardpayment.spp.impl.DefaultPaymentImpl;
 
 /**
- * DI контейнер для платежей
- * @author Vasiliy Vanin
+ * Created by Василий Ванин on 11.09.2014.
  */
 public class PaymentFactory {
-
     public static IPayment getPayment() {
-        return new PaymentPojoImpl();
+        return new DefaultPaymentImpl();
     }
-    
-    public static IPayment getPayment(Integer psid, Double value, Double fullValue, Collection<IFieldView> fields) {
-        PaymentPojoImpl payment = new PaymentPojoImpl(psid, value, fullValue);
-        for(IFieldView field: fields)
-            payment.addField(field);
-        
-        return payment;
-    }
-    
 }

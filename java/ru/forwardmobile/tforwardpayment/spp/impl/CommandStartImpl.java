@@ -4,7 +4,7 @@ import java.net.URLEncoder;
 
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
-import ru.forwardmobile.tforwardpayment.spp.IFieldInfo;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 public class CommandStartImpl extends CommandImpl {
@@ -27,11 +27,11 @@ public class CommandStartImpl extends CommandImpl {
         }
 
         StringBuilder xmlData = new StringBuilder();
-        for(IFieldInfo field: payment.getFields()) {
+        for(IField field: payment.getFields()) {
             if("target" . equals( field.getName() )) {
-                request.append("&target=" + URLEncoder.encode(field.getValue(),"UTF-8"));
+                request.append("&target=" + URLEncoder.encode(field.getValue().getValue(),"UTF-8"));
             } else {
-                xmlData.append("<f n=\"" + field.getName() + "\">" + field.getValue() + "</f>");
+                xmlData.append("<f n=\"" + field.getName() + "\">" + field.getValue().getValue() + "</f>");
             }
         }
 

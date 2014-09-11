@@ -1,27 +1,23 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.textservice.TextInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import java.lang.reflect.Field;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.widget.TextView;
 
-import ru.forwardmobile.tforwardpayment.reports.SimplePaymentListActivity;
 import ru.forwardmobile.util.http.Dates;
 
 

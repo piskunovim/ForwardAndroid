@@ -57,4 +57,8 @@ public abstract class AbstractTask extends AsyncTask<Object,Object,Object> {
         listener.onTaskFinish(result);
         super.onPostExecute(result);
     }
+
+    protected Context getContext() {
+        return ctx;
+    }
 }

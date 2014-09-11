@@ -1,6 +1,6 @@
 package ru.forwardmobile.tforwardpayment.operators.impl;
 
-import ru.forwardmobile.tforwardpayment.operators.IField;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.operators.IValue;
 
 /**

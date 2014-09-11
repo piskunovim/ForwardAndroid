@@ -1,7 +1,5 @@
 package ru.forwardmobile.tforwardpayment.operators;
 
-import android.util.Log;
-
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
@@ -11,13 +9,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ru.forwardmobile.tforwardpayment.operators.impl.FieldImpl;
-import ru.forwardmobile.tforwardpayment.operators.impl.OperatorsEntityManagerImpl;
+import ru.forwardmobile.tforwardpayment.operators.impl.ProvidersEntityManagerImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProcessingActionImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProcessorImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProviderImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.RequestPropertyImpl;
+import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.raketa.util.xml.AbstractXmlDeserializable;
-import ru.raketa.util.xml.IXmlDeserializable;
 import ru.raketa.util.xml.XmlHelper;
 
 /**
@@ -27,8 +25,8 @@ public class OperatorsXmlReader  {
 
     static final String LOGGER_TAG = "READER";
 
-    public OperatorsEntityManagerImpl readOperators(InputStream is) throws Exception {
-        OperatorsEntityManagerImpl em = new OperatorsEntityManagerImpl();
+    public ProvidersEntityManagerImpl readOperators(InputStream is) throws Exception {
+        ProvidersEntityManagerImpl em = new ProvidersEntityManagerImpl();
         Reader reader = new Reader(em);
         XmlHelper.parse(reader, is);
 
@@ -171,6 +169,8 @@ public class OperatorsXmlReader  {
                 if( OPERATOR_NAME_NODE_NAME . equals(name) ) {
                     if(field == null) {
                         provider.setName(text);
+                    } else {
+                        field.setName(text);
                     }
                     //Log.i(LOGGER_TAG, "Name: " + provider.getName());
                 } else
@@ -199,7 +199,7 @@ public class OperatorsXmlReader  {
                 } else
                 if( "comment" . equals(name)) {
                     if(field != null) {
-                        field.setComment(text);
+                          field.setComment(text.replaceAll("\\[/?\\w+\\]",""));
                     }
                 } else
                 if( CHECK_NODE_NAME.equals(name) ) {

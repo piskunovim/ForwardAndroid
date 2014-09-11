@@ -236,7 +236,9 @@
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
                                 android:onClick="enterMobileNetworks"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:id="@+id/main_button_mobile"
+                                >
 
                                 <!-- Содержимое -->
                                 <LinearLayout
@@ -309,7 +311,8 @@
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:id="@+id/main_button_tv">
 
                                 <!-- Содержимое -->
                                 <LinearLayout
@@ -365,7 +368,7 @@
                         </LinearLayout>
 
                         <!-- ` Стационарная связь -->
-                        <LinearLayout android:id="@+id/Button03"
+                        <LinearLayout
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -375,6 +378,7 @@
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
+                                android:id="@+id/main_button_land_line"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
@@ -445,6 +449,7 @@
 
                             <!-- Контейнер для содержимого. Белая заливка. -->
                             <LinearLayout
+                                android:id="@+id/main_button_internet"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal"
@@ -521,7 +526,9 @@
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:id="@+id/main_button_credit"
+                                >
 
                                 <!-- Содержимое -->
                                 <LinearLayout
@@ -602,7 +609,8 @@
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:id="@+id/main_button_jkh">
 
                                 <!-- Содержимое -->
                                 <LinearLayout
@@ -674,7 +682,8 @@
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:id="@+id/main_buton_attractions">
 
                                 <!-- Содержимое -->
                                 <LinearLayout
@@ -747,7 +756,8 @@
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:id="@+id/main_button_emoney">
 
                                 <!-- Содержимое -->
                                 <LinearLayout
@@ -818,7 +828,8 @@
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:id="@+id/main_button_other">
 
                                 <!-- Содержимое -->
                                 <LinearLayout

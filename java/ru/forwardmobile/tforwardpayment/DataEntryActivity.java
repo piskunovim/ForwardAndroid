@@ -1,219 +1,232 @@
 package ru.forwardmobile.tforwardpayment;
 
-import android.app.Activity;
-import android.graphics.Typeface;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import ru.forwardmobile.tforwardpayment.actions.CheckTask;
-import ru.forwardmobile.tforwardpayment.spp.IFieldView;
+import ru.forwardmobile.tforwardpayment.AbstractBaseActivity;
+import ru.forwardmobile.tforwardpayment.network.HttpTransport;
+import ru.forwardmobile.tforwardpayment.operators.IProcessingAction;
+import ru.forwardmobile.tforwardpayment.operators.IProcessor;
+import ru.forwardmobile.tforwardpayment.operators.RequestBuilder;
+import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
+import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
+import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
-import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
-import ru.forwardmobile.tforwardpayment.spp.IProviderMenuItem;
-import ru.forwardmobile.tforwardpayment.spp.PaymentDaoFactory;
+import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
+import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
 import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
-import ru.forwardmobile.tforwardpayment.spp.PaymentQueueWrapper;
-import ru.forwardmobile.tforwardpayment.spp.ProviderFactory;
-import ru.forwardmobile.tforwardpayment.spp.impl.MenuItem;
+import ru.forwardmobile.tforwardpayment.spp.ProvidersDataSourceFactory;
+import ru.forwardmobile.tforwardpayment.spp.impl.CommandRequestImpl;
+import ru.forwardmobile.tforwardpayment.widget.FieldWidget;
+import ru.forwardmobile.tforwardpayment.widget.FieldWidgetFactory;
+import ru.forwardmobile.util.android.AbstractTask;
+import ru.forwardmobile.util.android.ITaskListener;
 
 /**
- * Created by Василий Ванин on 31.07.2014.
+ * Активность для проведения НОВОГО платежа
+ * Created by Василий Ванин on 10.09.2014.
  */
-public class DataEntryActivity extends AbstractBaseActivity implements View.OnClickListener {
+public class DataEntryActivity extends AbstractBaseActivity implements View.OnClickListener, ITaskListener {
 
-    public static final String PAYMENT_PARAMETER    = "paydx17";
-    public static final String PS_PARAMETER         = "psidx3";
+    private static final String LOGGING_KEY = DataEntryActivity.class.getName();
 
-    protected OperatorsDataSourceImpl   dataSource  = null;
-    protected IPaymentDao               paymentDao  = null;
-    protected ArrayAdapter              adapter     = null;
-    protected List<IProviderMenuItem>   providers   = null;
-    protected IPayment                  payment     = null;
-    protected List<IFieldView>          fields      = null;
-    protected boolean                   loaded      = false;
-    protected Spinner                   selector    = null;
+    public  static final String PS_PARAMETER = "psidx2";
+    protected static final String VALUES_MAP = "vmapx8";
+
+    // Старые значения полей, могут быть заполнены при повороте, или при коррекции платежа
+    // Ключ - id поля, значение - реальное значение поля
+    protected Map<Integer,String> savedValues = new HashMap<Integer, String>();
+    protected IProvider provider = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
-        if(!loaded) {
-            paymentDao = PaymentDaoFactory.getPaymentDao(this);
-            dataSource = new OperatorsDataSourceImpl(this);
-            providers = dataSource.getFullList();
-            adapter = new ArrayAdapter<IProviderMenuItem>(this, android.R.layout.simple_list_item_1, providers);
+        setContentView(R.layout.data_entry_payment);
+
+        Integer psid;
+
+        // Пробуем достать ПС из параметров, либо из Bundle
+        if(savedInstanceState == null) {
+
+            psid = getIntent().getIntExtra(PS_PARAMETER, -1);
+        } else {
+            psid = savedInstanceState.getInt(PS_PARAMETER, -1);
+            savedValues = (Map<Integer,String>) savedInstanceState.getSerializable(VALUES_MAP);
         }
 
-        // Now activity needs to determine provider for this data entry form
-        // At first, it looking for id in PS_PARAMETER
-        Integer providerId = getIntent().getIntExtra( PS_PARAMETER, 0);
-        if(providerId == 0) {
-
-            payment = paymentDao.find( getIntent().getIntExtra(PAYMENT_PARAMETER, 0) );
-            if(payment == null) {
-                throw new IllegalArgumentException("Payment or psid wasn't specified.");
-            }
-
-            providerId = payment.getPsid();
+        if(psid < 0) {
+            throw new IllegalStateException("Ps parameter not found.");
         }
 
-        moveToFieldsView(providerId);
-        onProviderSelected(providerId);
-        loaded = true;
+        // Загрузка информации о провайдере
+        IProvidersDataSource providersDataSource = ProvidersDataSourceFactory.getDataSource(this);
+        provider = providersDataSource.getById(psid);
 
-
+        onProviderSelect();
     }
 
+    /** Вызивается, когда выбран провайдер */
+    protected void onProviderSelect() {
 
+        Log.i(LOGGING_KEY, "Starting payment to provider: " + provider.getName());
 
-    private void moveToFieldsView(Integer providerId) {
+        // Создаем поля для ввода
+        createFieldView();
 
-        setContentView(R.layout.data_entry_fields);
-
-        ((Button) findViewById(R.id.mde_button_check)).setOnClickListener(this);
-        ((Button) findViewById(R.id.mde_button_next)).setOnClickListener(this);
-
-        selector = (Spinner) findViewById(R.id.mde_provider_selector);
-        selector.setAdapter(adapter);
-
-        // To find selected index in list we use dummy menu item
-        // List uses hashCode method for search, so we don't need to specify the name of item
-        Integer selectedIndex = providers.indexOf(MenuItem.getInstance(providerId, null));
-        selector.setSelection(selectedIndex);
+        // Вешаем обработчики на кнопочки
+        createHandlers();
     }
 
+    /** Вызывается, чтобы повесить обработчики на кнопки */
+    protected void createHandlers() {
 
-    protected void onProviderSelected(Integer providerId) {
+        View buttonCheck = findViewById(R.id.mde_button_check);
+        buttonCheck.setOnClickListener(this);
+    }
 
-        IProvider provider = ProviderFactory.getProvider(providerId, this);
+    /** Вызывается для создания полей ввода */
+    protected void createFieldView() {
 
-        if(payment == null) {
-            payment = PaymentFactory.getPayment();
-            payment.setPsid(providerId);
-        }
+        // Подготовка контейнера
+        ViewGroup fieldGroup = (ViewGroup) findViewById(R.id.mde_fields_container);
 
-        ViewGroup container = (ViewGroup) findViewById(R.id.mde_fields_container);
-        fields = new ArrayList<IFieldView>();
-        for(IFieldView field: provider.getFields())
-        {
-            IFieldView oldField = payment.getField(field.getName());
-            if(oldField != null) {
-                field.setValue(oldField.getValue());
+        // Чистим все поля ввода
+        fieldGroup.removeAllViews();
+
+        // Создание и вывод полей
+        for(IField field: provider.getFields()) {
+
+            Log.i(LOGGING_KEY, "Rendering field: " + field.getName());
+
+            FieldWidget widget = FieldWidgetFactory.createWidget(field, this);
+
+            if(savedValues.containsKey(field.getId())) {
+                widget.setValue(savedValues.get(field.getId()));
             }
-
-            container.addView(field.getView());
-            fields.add(field);
+            fieldGroup.addView(widget);
         }
+    }
+
+    /** Вызывается, когда нужно прочитать значения полей */
+    protected Map<Integer, String> getFieldValues() {
+
+        HashMap<Integer, String> values = new HashMap<Integer, String>();
+
+        ViewGroup fieldGroup = (ViewGroup) findViewById(R.id.mde_fields_container);
+        for(int i = 0; i < fieldGroup.getChildCount(); i++) {
+            FieldWidget widget = (FieldWidget) fieldGroup.getChildAt(i);
+            Log.i(LOGGING_KEY, widget.getField().getName()  + " = " + widget.getValue().getValue());
+            values.put(widget.getField().getId(), widget.getValue().getValue());
+        }
+
+        return values;
     }
 
     @Override
     public void onClick(View view) {
+        if(R.id.mde_button_check == view.getId()) {
 
-        if(view.getId() == R.id.mde_button_check) {
+            // Получаем поля
+            savedValues = getFieldValues();
+
+            // Создаем платеж
+            IPayment payment = PaymentFactory.getPayment();
+
+            // Создаем поля для платежа
+            Collection<IField> fields = provider.getFields();
+
+            // Задаем значения полям
+            for(IField field: fields) {
+                field.setValue( savedValues.get(field.getId()) );
+            }
 
             payment.setFields(fields);
-            payment.setValue(10d);
 
+            CheckTask task = new CheckTask(provider, payment, this, this);
+            task.execute();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(PS_PARAMETER, provider.getId());
+        outState.putSerializable(VALUES_MAP, (Serializable) getFieldValues());
+    }
+
+    @Override
+    public void onTaskFinish(Object result) {
+        if(result instanceof IResponseSet) {
+            IResponseSet responseSet = (IResponseSet) result;
             try {
-                (new CheckTask(this, payment))
-                        .execute();
-            }catch(Exception ex) {
-                Toast.makeText(this,"Ошибка проверки " + ex.getMessage(), Toast.LENGTH_LONG)
+                ICommandResponse response = (ICommandResponse) responseSet.getResponses().get(0);
+                String message;
+                if(response.getDone() > 0) {
+                    message = "Проверка прошла успешно.";
+                } else {
+                    message = "Ошибка проверкаи номера: " + response.getErrDescription();
+                }
+            }catch (Exception ex) {
+
+                Toast.makeText(this, "Ошибка разбора запроса. " + ex.getMessage(), Toast.LENGTH_LONG)
                         .show();
+                ex.printStackTrace();
+                return;
             }
-        } else
-        if( view.getId() == R.id.mde_button_next ) {
+        } else {
+            Toast.makeText(this, "Получен неожиданный ответ от сервера.", Toast.LENGTH_LONG)
+                    .show();
+        }
+    }
 
-            // Packing fields to payment
-            payment.setFields(fields);
-            payment.setPsid( ((IProviderMenuItem) selector.getSelectedItem()).getId() );
-            setContentView(R.layout.data_entry_payment);
+    private class CheckTask extends AbstractTask {
 
-            ((Button) findViewById(R.id.mde_button_back)).setOnClickListener(this);
-            ((Button) findViewById(R.id.mde_button_start)).setOnClickListener(this);
+        final IProvider iProvider;
+        final IPayment  iPayment;
 
-            IProviderMenuItem item = (IProviderMenuItem) selector.getSelectedItem();
+        public CheckTask(IProvider iProvider, IPayment iPayment, Context ctx, ITaskListener listener) {
+            super(listener, ctx);
 
-            ((TextView) findViewById(R.id.mde_provider_name))
-                    .setText(item.getName());
+            this.iPayment  = iPayment;
+            this.iProvider = iProvider;
+        }
 
-            drawFieldsInfo((ViewGroup) findViewById(R.id.mde_fields_container), payment.getFields());
-        } else
-        if( view.getId() == R.id.mde_button_back ) {
-            moveToFieldsView(payment.getPsid());
-            onProviderSelected(payment.getPsid());
-        } else
-        if( view.getId() == R.id.mde_button_start ) {
-            try {
-                doPayment();
-                Toast.makeText(this, "Платеж поставлен в очередь", Toast.LENGTH_SHORT)
-                        .show();
-                onBackPressed();
+        @Override
+        protected Object doInBackground(Object... objects) {
 
-            } catch(Exception ex){
-                Toast.makeText(this, "Ошибка. " + ex.getMessage(), Toast.LENGTH_SHORT)
-                        .show();
+            // Get processor
+            IProcessor processor = iProvider.getProcessor();
+            IProcessingAction action = processor.getCheckAction();
+            RequestBuilder requestBuilder = new RequestBuilder();
+
+
+            IResponseSet responseSet = null;
+
+            try{
+                ICommandRequest request = new CommandRequestImpl("command=JT_CHECK_TARGET&" + requestBuilder.buildRequest(action,iPayment), true, true);
+                HttpTransport transport = new HttpTransport();
+                transport.setCryptEngine(new CryptEngineImpl(getContext()));
+                responseSet = transport.send(request);
             }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            return responseSet;
         }
     }
-
-    private void doPayment() throws Exception {
-
-        Double value;
-        Double fullValue;
-
-        try {
-            TextView valueView = (TextView) findViewById(R.id.mde_value_value);
-            value = Double.valueOf(valueView.getText().toString());
-        } catch (Exception ex) {
-            throw new Exception("Сумма к зачислению введена не верно!");
-        }
-
-        try {
-            TextView fullValueView = (TextView) findViewById(R.id.mde_full_value_value);
-            fullValue = Double.valueOf(fullValueView.getText().toString());
-        } catch(Exception ex) {
-            throw new Exception("Сумма с клиента введена не верно!");
-        }
-
-        if(value > fullValue) {
-            throw new Exception("Сумма с клиента не может быть меньшу суммы к зачислению!");
-        }
-
-        payment.setValue(value);
-        payment.setFullValue(value);
-
-        PaymentQueueWrapper.getQueue().processPayment(payment);
-    }
-
-    private void drawFieldsInfo(ViewGroup container, Collection<IFieldView> fieldInfoCollection) {
-
-        for(IFieldView field: fieldInfoCollection) {
-
-            TextView label = new TextView(this);
-            label.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            label.setText(field.getLabel());
-            container.addView(label);
-
-            TextView value = new TextView(this);
-            value.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            value.setText(field.getValue());
-            container.addView(value);
-        }
-    }
-
-
 }
