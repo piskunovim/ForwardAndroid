@@ -38,5 +38,7 @@ public class AlertDialogManager {
 
         // Выводим Alert-Сообщение
         alertDialog.show();
+
+
     }
 }

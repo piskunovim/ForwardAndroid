@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TextKeyListener;
@@ -35,21 +34,15 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
     //Инициализация строковой переменной логирования
     final static String LOG_TAG = "TFORWARD.MainActivity";
-    static final String DISPLAY_MESSAGE_ACTION =
-            "ru.forwardmobile.tforwardpayment.DISPLAY_MESSAGE";
+
     static final String SENDER_ID = "421740259735";
+
     //Объект передачи сообщения
     public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
+
     AsyncTask<Void, Void, Void> mRegisterTask;
-    AsyncTask<Void, Void, Void> mSendTask;
-    TextView lblMessage;
-    AlertDialogManager alert = new AlertDialogManager();
-    ConnectionDetector cd;
 
-    //инициализируем наши объекты формы
-    //Button btnSingIn = (Button) findViewById(R.id.singin);
-
-    //определяем статическую переменную для точки
+    //Определяем статическую переменную для точки
     public static String point;
 
 
@@ -105,19 +98,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         imm.hideSoftInputFromWindow(etName.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(etPass.getWindowToken(), 0);
 
-        /*etName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    // Always use a TextKeyListener when clearing a TextView to prevent android
-                    // warnings in the log
-                    clearLogin(v);
-                }
-            }
-
-        });*/
-
         etPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
@@ -126,7 +106,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
                     // Always use a TextKeyListener when clearing a TextView to prevent android
                     // warnings in the log
                     clearPass(v);
-
                 }
             }
 
@@ -141,7 +120,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     public void clearLogin(View view){
         if (etName.getText().toString().equals("Ваш Логин")){
             TextKeyListener.clear((etName).getText());
-            //imm.showSoftInput(etName, 0);
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
         }
     }
@@ -151,13 +129,11 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             TextKeyListener.clear((etPass).getText());
             etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-            //imm.showSoftInput(etPass, 0);
         }
     }
 
 
     public void SingIn(String pointid, String password){
-
         pd = new TPostData(this);
         pd.pointID = pointid;
         pd.password = password;
@@ -169,7 +145,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         Log.i(LOG_TAG, "Login result: " + responseStr);
 
-
         if (responseStr.length() > 0){
             try {
                 // Создаем объект Intent для вызова новой Activity
@@ -180,7 +155,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
             Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, responseStr);
-
 
             // запуск activity
             startActivity(intent);
@@ -226,22 +200,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         return false;
     }
 
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
 
     /**
      * Check if the database exist

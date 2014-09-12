@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -17,18 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 import ru.forwardmobile.tforwardpayment.dealer.IDealerBalance;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
-import ru.forwardmobile.util.android.ITaskListener;
 
 /**
  * Created by gorbovi on 19.08.2014.
@@ -36,7 +30,6 @@ import ru.forwardmobile.util.android.ITaskListener;
 public class MainPageActivity extends AbstractBaseActivity implements IDealerBalance {
 
         final static String LOG_TAG = "TFORWARD.MainPageActivity";
-        public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
         static final int PAGE_COUNT = 3;
 
         ViewPager pager;
@@ -45,7 +38,7 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
 
         Button button;
         String message;
-        private boolean isFirstRun = false;
+
 
         ViewGroup view;
         DealerDataSource dt = new DealerDataSource(this);
@@ -62,15 +55,12 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
 
             message         = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
             Log.d(LOG_TAG, "Initialize MainPageActivity");
-
-            Log.d(LOG_TAG, dt.dealersName);
             Log.d(LOG_TAG, "dealersName");
+
             view =  (ViewGroup) findViewById(R.id.activity_main_page_container);
 
             DealerInfo dealerInfo = new DealerInfo(view);
-            Log.d(LOG_TAG, dt.dealersName);
             dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersCredit, dt.dealersRealMoney);
-
 
             pager = (ViewPager) findViewById(R.id.pager);
             pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());

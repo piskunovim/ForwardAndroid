@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 
-import ru.forwardmobile.tforwardpayment.R;
 
 public class GCMActivity extends Activity {
 
