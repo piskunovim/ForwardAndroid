@@ -94,6 +94,7 @@ public class GCMIntentService extends GCMBaseIntentService {
      * Выдает уведомление, информирующее пользователя, что сервер послал сообщение.
      */
     private static void generateNotification(Context context, String message) {
+
         int icon = R.drawable.ic_launcher;
         long when = System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager)

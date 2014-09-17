@@ -75,6 +75,7 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener,ITask
                 limit = Double.parseDouble(response.getParam("limit"));
                 total = balance + limit;
 
+
                 String balanceToView = "";
                 String creditToView = "";
                 String totalToView = "";

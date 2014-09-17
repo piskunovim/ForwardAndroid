@@ -144,10 +144,11 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
         operatorArray.clear();
 
         /*SQLiteOpenHelper dbHelper = new DatabaseHelper(getApplicationContext());
-SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIKE '"+ operator +"'", null);
-*/
+        db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIKE '"+ operator +"'", null);
+        */
+
         cursor = initializeDB(0,operator);
 
         if (cursor.moveToFirst()) {
