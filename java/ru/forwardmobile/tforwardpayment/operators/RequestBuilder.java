@@ -39,6 +39,23 @@ public class RequestBuilder {
         
         requestBody.append("&id=")
                    .append(payment.getId());
+
+        // value fields
+        requestBody.append("&value=");
+        // check, if we have special value for check action
+        if(action.getAmountValue() > 0d) {
+            requestBody.append(action.getAmountValue().intValue());
+        } else {
+            requestBody.append(payment.getValue());
+        }
+
+        // check if we have full value
+        if(payment.getFullValue() > 0d) {
+            requestBody.append("&value_sp=" + payment.getFullValue());
+        }
+
+        // add psid property using IProcessingAction property
+        requestBody.append("&psid=" + action.getPsId());
         
         return requestBody.toString();
     }

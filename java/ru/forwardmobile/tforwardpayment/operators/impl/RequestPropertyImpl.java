@@ -86,9 +86,9 @@ public class RequestPropertyImpl implements IRequestProperty {
                     String[] typeValue = item.getValue().split("\\:");
                     
                     // Если пара полная, поле экспортируется сразу
-                    if(typeValue.length == 2) {
+                    if(typeValue.length == 2 && typeValue[1].length() > 0) {
                         fields.append( exportField(typeValue[0], typeValue[1]));
-                    } 
+                    }
 
                 } else if(IRequestProperty.FIELD_REF_ITEM_TYPE . equals(item.getType())) {
                     IField paymentField = payment.getField(Integer.valueOf(item.getValue()));

@@ -126,7 +126,9 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
         ViewGroup fieldGroup = (ViewGroup) findViewById(R.id.mde_fields_container);
         for(int i = 0; i < fieldGroup.getChildCount(); i++) {
+
             FieldWidget widget = (FieldWidget) fieldGroup.getChildAt(i);
+
             Log.i(LOGGING_KEY, widget.getField().getName()  + " = " + widget.getValue().getValue());
             values.put(widget.getField().getId(), widget.getValue().getValue());
         }
@@ -172,13 +174,16 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         if(result instanceof IResponseSet) {
             IResponseSet responseSet = (IResponseSet) result;
             try {
-                ICommandResponse response = (ICommandResponse) responseSet.getResponses().get(0);
+                ICommandResponse response = responseSet.getResponses().get(0);
                 String message;
                 if(response.getDone() > 0) {
                     message = "Проверка прошла успешно.";
                 } else {
                     message = "Ошибка проверкаи номера: " + response.getErrDescription();
                 }
+
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
             }catch (Exception ex) {
 
                 Toast.makeText(this, "Ошибка разбора запроса. " + ex.getMessage(), Toast.LENGTH_LONG)
@@ -216,7 +221,9 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
             IResponseSet responseSet = null;
 
             try{
-                ICommandRequest request = new CommandRequestImpl("command=JT_CHECK_TARGET&" + requestBuilder.buildRequest(action,iPayment), true, true);
+                ICommandRequest request = new CommandRequestImpl("command=JT_CHECK_TARGET&"
+                        + requestBuilder.buildRequest(action,iPayment), true, true);
+
                 HttpTransport transport = new HttpTransport();
                 transport.setCryptEngine(new CryptEngineImpl(getContext()));
                 responseSet = transport.send(request);
