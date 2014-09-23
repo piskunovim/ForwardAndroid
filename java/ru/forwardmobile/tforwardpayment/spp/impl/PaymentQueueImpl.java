@@ -1,5 +1,6 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -40,6 +41,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
     private HttpTransport       transport;
     private IRouter             router;
     private IPaymentDao         paymentDao;
+    private Context             ctx;
 
     public void setTransport(HttpTransport transport) {
         this.transport = transport;
@@ -48,6 +50,10 @@ public class PaymentQueueImpl implements IPaymentQueue {
     public void setDatabaseHelper(SQLiteOpenHelper helper) {
         paymentDao      = new PaymentDaoImpl( helper );
         router          = new RouterImpl();
+    }
+
+    public void setContext(Context ctx) {
+        this.ctx = ctx;
     }
 
     @Override
@@ -325,6 +331,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
                                 if ( request == null ) {
                                     request = new CommandRequestImpl(true, true);
                                     request.setRouter(this.router);
+                                    request.setContext(this.ctx);
                                 }
                                 request.addPayment(payment);
                             }

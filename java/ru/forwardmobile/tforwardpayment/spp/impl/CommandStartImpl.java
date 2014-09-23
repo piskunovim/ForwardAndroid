@@ -1,22 +1,46 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
+import android.content.Context;
+
 import java.net.URLEncoder;
 
+import ru.forwardmobile.tforwardpayment.operators.IProcessingAction;
+import ru.forwardmobile.tforwardpayment.operators.IProcessor;
+import ru.forwardmobile.tforwardpayment.operators.RequestBuilder;
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
+import ru.forwardmobile.tforwardpayment.spp.IProvider;
+import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
+import ru.forwardmobile.tforwardpayment.spp.IRequestBuilder;
+import ru.forwardmobile.tforwardpayment.spp.ProvidersDataSourceFactory;
 
 public class CommandStartImpl extends CommandImpl {
 
-    public CommandStartImpl(IPayment payment) {
-        super(ICommand.START, payment);
+    public CommandStartImpl(IPayment payment, Context context) {
+        super(ICommand.START, payment, context);
+        this.context = context;
     }
 
     public String getLine() throws Exception {
         StringBuilder request = new StringBuilder();
         request.append("command=JT_START");
 
+
+        IProvidersDataSource dataSource = ProvidersDataSourceFactory.getDataSource(context);
+        IProvider            provider = dataSource.getById(payment.getPsid());
+        IProcessor           processor = provider.getProcessor();
+
+        IRequestBuilder      requestBuilder = RequestBuilderFactory.getRequestBuilder();
+        request.append("&");
+        request.append(requestBuilder.buildRequest(processor.getPaymentAction(), payment));
+
+        if ( payment.getId() != null ) {
+            request.append("&payment_id=" + payment.getId().intValue());
+        }
+
+        /*
         request.append("&value=" + URLEncoder.encode(payment.getValue().toString(), "UTF-8"));
         request.append("&value_sp=" + URLEncoder.encode(payment.getFullValue().toString(), "UTF-8"));
         if ( payment.getPsid() != null ) {
@@ -25,6 +49,8 @@ public class CommandStartImpl extends CommandImpl {
         if ( payment.getId() != null ) {
             request.append("&payment_id=" + payment.getId().intValue());
         }
+
+
 
         StringBuilder xmlData = new StringBuilder();
         for(IField field: payment.getFields()) {
@@ -37,7 +63,7 @@ public class CommandStartImpl extends CommandImpl {
 
         if(xmlData.length() > 0) {
             request.append("&xml_data=" + URLEncoder.encode("<data>" + xmlData.toString() + "</data>", "UTF-8"));
-        }
+        }*/
 
         return request.toString();
     }

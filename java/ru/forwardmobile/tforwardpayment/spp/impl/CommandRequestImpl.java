@@ -1,5 +1,7 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,6 +19,8 @@ public class CommandRequestImpl implements ICommandRequest {
     private String body = null;
     private boolean requestSigned = false;
     private boolean responseSigned = false;
+
+    private Context context = null;
 
     public CommandRequestImpl(String body) {
         this.body = body;
@@ -36,9 +40,12 @@ public class CommandRequestImpl implements ICommandRequest {
         this.router = router;
     }
 
+    public void setContext(Context context) {
+        this.context = context;
+    }
     public void addPayment(IPayment payment) throws Exception {
         // Log.debug("Payment " + payment.getId() + " was added to request.");
-        ICommand command = CommandFactory.getCommand(this.router, payment);
+        ICommand command = CommandFactory.getCommand(this.router, payment, context);
         this.commands.add(command);
     }
 

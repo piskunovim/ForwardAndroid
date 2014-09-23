@@ -1,13 +1,15 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
+import android.content.Context;
+
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 public class CommandCommitImpl extends CommandImpl {
 
-    public CommandCommitImpl(IPayment payment) {
-        super(ICommand.COMMIT, payment);
+    public CommandCommitImpl(IPayment payment, Context context) {
+        super(ICommand.COMMIT, payment, context);
     }
 
     public String getLine() {

@@ -1,5 +1,6 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
+import android.content.Context;
 import android.util.Log;
 
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
@@ -8,8 +9,8 @@ import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 public class CommandCancelImpl extends CommandImpl {
 
-    public CommandCancelImpl(IPayment payment) {
-        super(ICommand.CANCEL, payment);
+    public CommandCancelImpl(IPayment payment, Context context) {
+        super(ICommand.CANCEL, payment, context);
     }
 
     public String getLine() {

@@ -1,5 +1,7 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
+import android.content.Context;
+
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
@@ -10,10 +12,11 @@ public abstract class CommandImpl implements ICommand {
     private int type = -1;
     protected IPayment payment = null;
     protected IPaymentDao paymentDao = null;
-
-    public CommandImpl(int type, IPayment payment) {
+    protected Context context = null;
+    public CommandImpl(int type, IPayment payment, Context context) {
         this.type = type;
         this.payment = payment;
+        this.context = context;
     }
 
     public int getType() {

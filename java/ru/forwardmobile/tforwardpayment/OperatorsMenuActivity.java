@@ -73,13 +73,13 @@ public class OperatorsMenuActivity extends ActionBarActivity implements AdapterV
 
         Log.i(LOGGER_TAG, "Starting payment to " + item.getName());
         startPayment(item.getId());
-
     }
 
     protected void startPayment(Integer item) {
         Intent intent = new Intent(this, DataEntryActivity.class);
         intent.putExtra(DataEntryActivity.PS_PARAMETER, item);
         startActivity(intent);
+        this.finish();
     }
 
     @Override

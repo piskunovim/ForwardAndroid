@@ -109,7 +109,10 @@ public class OperatorsXmlReader  {
                 // На всякий случай
                 try {
                     processingAction.setAmountValue(readDouble(parser, "amount-value"));
-                }catch(Exception ex){};
+                }catch(Exception ex){
+                    // Default value
+                    processingAction.setAmountValue(10d);
+                };
 
                 requestProperties = new ArrayList<IRequestProperty>();
 
@@ -151,6 +154,12 @@ public class OperatorsXmlReader  {
             } else
             if( "operator_id" . equals(name)) {
                 listener.onOperatorMenuItem(readInt(parser,"id"));
+            } else
+            if("fixed-text" . equals(name) && requestProperty != null) {
+                requestProperty.addItem(IRequestProperty.FIXED_TEXT_ITEM_TYPE, parser.getAttributeValue(null,"id"));
+            } else
+            if("field-ref" . equals(name) && requestProperty != null) {
+                requestProperty.addItem(IRequestProperty.FIELD_REF_ITEM_TYPE, parser.getAttributeValue(null,"id"));
             }
 
         }
