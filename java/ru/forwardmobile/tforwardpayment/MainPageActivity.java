@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 
 import java.math.BigDecimal;
 
+import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 import ru.forwardmobile.tforwardpayment.dealer.IDealerBalance;
@@ -268,7 +269,22 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
         this.finish();
     }
 
+    private void stopPaymentQueue() {
+        Log.i(LOG_TAG,"Deactivating payment queue...");
+        stopService(new Intent(this,TPaymentService.class));
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        stopPaymentQueue();
+        DatabaseHelper helper = new DatabaseHelper(this);
+        helper.saveSettings();
+        helper.close();
+
+        this.finish();
+    }
 }
 
 

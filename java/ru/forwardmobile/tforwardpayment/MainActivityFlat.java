@@ -212,22 +212,8 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        stopPaymentQueue();
-        DatabaseHelper helper = new DatabaseHelper(this);
-        helper.saveSettings();
-        helper.close();
     }
 
-    private void startPaymentQueue() {
-        Log.i(LOG_TAG, "Starting payment queue...");
-        startService(new Intent(this, TPaymentService.class));
-    }
-
-    private void stopPaymentQueue() {
-        Log.i(LOG_TAG,"Deactivating payment queue...");
-        stopService(new Intent(this,TPaymentService.class));
-    }
 
     private void initButtons() {
         findViewById(R.id.main_buton_attractions).setOnClickListener(this);

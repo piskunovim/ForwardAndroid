@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.util.Xml;
 
 import org.xml.sax.Attributes;
@@ -18,13 +19,16 @@ import java.util.HashSet;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.operators.IValue;
+import ru.forwardmobile.tforwardpayment.spp.FieldFactory;
 import ru.forwardmobile.tforwardpayment.spp.IField;
+import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
 import ru.forwardmobile.tforwardpayment.widget.FieldWidget;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
 
 /**
- * Created by vaninv on 30.05.2014.
+ * Created by Василий Ванин on 30.05.2014.
  */
 public class PaymentDaoImpl implements IPaymentDao {
 
@@ -34,6 +38,7 @@ public class PaymentDaoImpl implements IPaymentDao {
     public PaymentDaoImpl(Context ctx) {
         dbHelper = new DatabaseHelper(ctx);
     }
+
     public PaymentDaoImpl(SQLiteOpenHelper dbHelper)    {
         this.dbHelper = dbHelper;
     }
@@ -45,7 +50,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         // @todo проверить
         StringBuilder payment_data = new StringBuilder();
         for( IField field: payment.getFields() ) {
-            payment_data.append("<f n=\"" + field.getName() + "\" t=\"" +  field.getName() + "\">" + field.getValue().getValue() + "</f>");
+            payment_data.append("<f n=\"" + field.getId() + "\" t=\"" +  field.getName() + "\">" + field.getValue().getValue() + "</f>");
         }
 
         ContentValues cv = new ContentValues();
@@ -82,24 +87,26 @@ public class PaymentDaoImpl implements IPaymentDao {
         Cursor cursor = dbHelper.getReadableDatabase().rawQuery("select psid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate " +
                 " from  payments where id = ?", new String[]{String.valueOf(id)});
 
-     /*   try {
+        try {
 
             if(cursor.moveToNext()) {
 
-                Collection<IFieldView> fields = parseFields(cursor.getString(1));
-                IPayment payment = PaymentFactory.getPayment( cursor.getInt(0), (double) cursor.getInt(2)/100, (double) cursor.getInt(3)/100, fields );
-                payment.setErrorCode(cursor.getInt(4));
-                payment.setErrorDescription(cursor.getString(5));
-                payment.setStartDate(new Date(cursor.getLong(6)));
+                IPayment payment = PaymentFactory.getPayment();
+                payment.setPsid(cursor.getInt(0));
+                payment.setValue( (double) cursor.getInt(2)/100 );
+                payment.setFullValue( (double) cursor.getInt(3)/100 );
+                payment.setErrorCode( cursor.getInt(4) );
+                payment.setErrorDescription( cursor.getString(5) );
+                payment.setStartDate( new Date(cursor.getLong(6)) );
                 payment.setStatus(cursor.getInt(7));
                 payment.setDateOfProcess(new Date(cursor.getLong(8)));
-                payment.setId(id);
+                payment.setFields(parseFields(cursor.getString(1)));
 
                 return payment;
             }
         } finally {
             cursor.close();
-        }*/
+        }
 
         return null;
     }
@@ -111,13 +118,19 @@ public class PaymentDaoImpl implements IPaymentDao {
     public synchronized Collection<IPayment> getUnprocessed() {
 
         List<IPayment> collection = new ArrayList<IPayment>();
-    /*    Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
                 + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where status not in(3,5) "
                 , new String[]{});
         try {
             while (cursor.moveToNext()) {
-                Collection<IFieldView> fields = parseFields(cursor.getString(3));
-                IPayment payment = PaymentFactory.getPayment(cursor.getInt(2), (double) cursor.getInt(4) / 100, (double) cursor.getInt(5) / 100, fields);
+
+                Collection<IField> fields = parseFields(cursor.getString(3));
+
+                IPayment payment = PaymentFactory.getPayment();
+                payment.setPsid(cursor.getInt(1));
+                payment.setValue((double) cursor.getInt(4) / 100 );
+                payment.setFullValue((double) cursor.getInt(5) / 100);
+                payment.setFields(fields);
                 payment.setErrorCode(cursor.getInt(6));
                 payment.setErrorDescription(cursor.getString(7));
                 payment.setStartDate(new Date(cursor.getLong(8)));
@@ -125,7 +138,7 @@ public class PaymentDaoImpl implements IPaymentDao {
                 payment.setDateOfProcess(new Date(cursor.getLong(10)));
 
                 payment.setId(cursor.getInt(0));
-                payment.setTransactionId(cursor.getInt(1));
+                payment.setTransactionId(cursor.getInt(2));
 
                 Log.v(LOGGER_TAG, "Fetching payment id "
                         + payment.getId()
@@ -138,7 +151,7 @@ public class PaymentDaoImpl implements IPaymentDao {
             }
         } finally {
             cursor.close();
-        }*/
+        }
         return collection;
     }
 
@@ -157,9 +170,9 @@ public class PaymentDaoImpl implements IPaymentDao {
 
     }
 
-    public static Collection<FieldWidget> parseFields(String data) {
-
-        Collection<FieldWidget> fields = new HashSet<FieldWidget>();
+    public static Collection<IField> parseFields(String data) {
+        Log.i(LOGGER_TAG, data);
+        Collection<IField> fields = new HashSet<IField>();
 
         try {
             Xml.parse(data, new FieldContentHandler(fields));
@@ -176,11 +189,10 @@ public class PaymentDaoImpl implements IPaymentDao {
 
         private Locator locator = null;
         private StringBuffer buffer = new StringBuffer();
-        private String currentField = null;
-        private String currentLabel = null;
-        private final Collection<FieldWidget> collection;
+        private final Collection<IField> collection;
+        private IField field = null;
 
-        public FieldContentHandler(Collection<FieldWidget> collection) {
+        public FieldContentHandler(Collection<IField> collection) {
             this.collection = collection;
         }
 
@@ -192,16 +204,20 @@ public class PaymentDaoImpl implements IPaymentDao {
         @Override
         public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
             if("f" . equals(localName)) {
-                currentField = atts.getValue(0);
-                currentLabel = atts.getValue(1);
+
+                field = FieldFactory.getField();
+
+                field.setId(Integer.parseInt(atts.getValue(0)));
+                field.setName(atts.getValue(1));
             }
         }
 
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
             if("f" . equals(localName)) {
-                //collection.add(BaseFieldView.fieldInfo(currentField, buffer.toString(), currentLabel));
-                currentField = null;
+
+                field.setValue(buffer.toString());
+                collection.add(field);
                 buffer = new StringBuffer();
             }
         }
