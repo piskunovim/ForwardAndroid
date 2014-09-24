@@ -22,7 +22,7 @@ import ru.forwardmobile.util.android.ITaskListener;
 /**
  * Created by PiskunovI on 09.09.2014.
  */
-public class DealerDataSource implements MainAccessActivity.onLoadListener,ITaskListener{
+public class DealerDataSource implements MainAccessActivity.onLoadListener{
 
     String LOG_TAG = "DealerDataSource";
 
@@ -53,7 +53,7 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener,ITask
           this.context = context;
     }
 
-    @Override
+
     public void onTaskFinish(Object result) {
 
         Log.d(LOG_TAG, "onTaskFinish started");
@@ -147,8 +147,9 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener,ITask
         Log.i(LOG_TAG,"started");
 
         try {
-            DealerDataTask dt = new DealerDataTask(this, context);
+            DealerDataTask dt = new DealerDataTask(null, context);
             dt.execute();
+            onTaskFinish(dt.get());
         } catch (Exception e) {
             e.printStackTrace();
         }

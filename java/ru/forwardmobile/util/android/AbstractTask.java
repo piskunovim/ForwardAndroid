@@ -28,6 +28,10 @@ public abstract class AbstractTask extends AsyncTask<Object,Object,Object> {
         }
     }
 
+    public AbstractTask(){
+        this(null,null);
+    }
+
     // Лучше создавать отдельный конструктор, если какой-то из параметров можно не задавать,
     // чтобы пользователи твоего кода знали, что экземпляр будут работоспособен и с таким набором
     // параметров.
@@ -54,7 +58,10 @@ public abstract class AbstractTask extends AsyncTask<Object,Object,Object> {
         if(progressDialog != null)
             progressDialog.dismiss();
 
-        listener.onTaskFinish(result);
+        if (listener != null) {
+            listener.onTaskFinish(result);
+        }
+
         super.onPostExecute(result);
     }
 

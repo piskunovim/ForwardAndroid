@@ -85,24 +85,6 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
                 }
             });
 
-           // applyFonts(findViewById(R.id.activity_main_page_container), null);
-
-           /* LinearLayout DealerInfo = (LinearLayout) findViewById(R.id.dealerInfo);
-            DealerInfo.OnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!onSearch){
-                        cancelButton.setVisibility(View.VISIBLE);
-                        searchListView.setVisibility(View.VISIBLE);
-                        linearLayout01.setVisibility(View.GONE);
-                        linearLayout02.setVisibility(View.GONE);
-                        linearLayout03.setVisibility(View.GONE);
-                        onSearch=true;
-                    }
-                }
-            });
-           */
-
         }
 
     public void enterDealerInfo(View view)
@@ -172,7 +154,6 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
                 dealerInfo.setDealerShotBlock("Иванов Иван Иванович",balanceToView,creditToView,totalToView);
             } catch (Exception ex) {
                 // Ошибка разбора
-
             }
         } else {
             // Ошибка отправки запроса

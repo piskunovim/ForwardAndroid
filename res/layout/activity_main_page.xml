@@ -426,7 +426,7 @@
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
                     android:clickable="true"
-                    android:onClick="enterNotifications">
+                    android:onClick="enterSettings">
 
                     <!-- Содержимое -->
                     <LinearLayout
