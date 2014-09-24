@@ -234,7 +234,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             try {
 
                 db = dbHelper.getReadableDatabase();
-                cursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.PG_TABLE_NAME + " LIMIT 1", null);
+                cursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.SETTINGS_TABLE_NAME + " LIMIT 1", null);
                 return cursor.moveToNext();
             } finally {
                 if(cursor != null) cursor.close();

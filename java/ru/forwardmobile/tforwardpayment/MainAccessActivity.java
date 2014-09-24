@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 
+import ru.forwardmobile.tforwardpayment.app.SettingsLoader;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.operators.OperatorsLoadListener;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineFactory;
@@ -40,8 +41,13 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
     private final Collection<onLoadListener> loadListeners  = new HashSet<onLoadListener>();
 
     public MainAccessActivity(){
+        // Загрузка настроек
+        loadListeners.add(new SettingsLoader());
+        // Запуск очереди платежей
         loadListeners.add(new PaymentQueueManager());
+        // Загрузка информации об агенте
         loadListeners.add(new DealerDataSource(this));
+        // Загрузка и кеширование списка операторов
         loadListeners.add(new OperatorsLoadListener());
     }
 

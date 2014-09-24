@@ -16,4 +16,6 @@ public interface IField {
     public String       getName();
     public IValue       getValue();
     public void         setValue(String value);
+    public void         setId(Integer id);
+    public void         setName(String name);
 }

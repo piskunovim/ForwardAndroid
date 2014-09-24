@@ -2,12 +2,14 @@ package ru.forwardmobile.tforwardpayment.operators;
 
 import java.net.URLEncoder;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
+import ru.forwardmobile.tforwardpayment.spp.IRequestBuilder;
 
 /**
  * @author Василий Ванин
  */
-public class RequestBuilder {
-    
+public class RequestBuilder implements IRequestBuilder {
+
+    @Override
     public String buildRequest(IProcessingAction action, IPayment payment) {
         
         StringBuilder requestBody = new StringBuilder();
@@ -39,6 +41,23 @@ public class RequestBuilder {
         
         requestBody.append("&id=")
                    .append(payment.getId());
+
+        // value fields
+        requestBody.append("&value=");
+        // check, if we have special value for check action
+        if(action.getAmountValue() > 0d) {
+            requestBody.append(action.getAmountValue().intValue());
+        } else {
+            requestBody.append(payment.getValue());
+        }
+
+        // check if we have full value
+        if(payment.getFullValue() > 0d) {
+            requestBody.append("&value_sp=" + payment.getFullValue());
+        }
+
+        // add psid property using IProcessingAction property
+        requestBody.append("&psid=" + action.getPsId());
         
         return requestBody.toString();
     }

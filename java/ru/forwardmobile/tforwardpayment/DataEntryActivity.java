@@ -1,11 +1,15 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -22,10 +26,12 @@ import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
+import ru.forwardmobile.tforwardpayment.spp.IPaymentQueue;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
 import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
+import ru.forwardmobile.tforwardpayment.spp.PaymentQueueWrapper;
 import ru.forwardmobile.tforwardpayment.spp.ProvidersDataSourceFactory;
 import ru.forwardmobile.tforwardpayment.spp.impl.CommandRequestImpl;
 import ru.forwardmobile.tforwardpayment.widget.FieldWidget;
@@ -94,6 +100,9 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
         View buttonCheck = findViewById(R.id.mde_button_check);
         buttonCheck.setOnClickListener(this);
+
+        View buttonStart = findViewById(R.id.mde_button_start);
+        buttonStart.setOnClickListener(this);
     }
 
     /** Вызывается для создания полей ввода */
@@ -126,7 +135,9 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
         ViewGroup fieldGroup = (ViewGroup) findViewById(R.id.mde_fields_container);
         for(int i = 0; i < fieldGroup.getChildCount(); i++) {
+
             FieldWidget widget = (FieldWidget) fieldGroup.getChildAt(i);
+
             Log.i(LOGGING_KEY, widget.getField().getName()  + " = " + widget.getValue().getValue());
             values.put(widget.getField().getId(), widget.getValue().getValue());
         }
@@ -156,6 +167,45 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
             CheckTask task = new CheckTask(provider, payment, this, this);
             task.execute();
+        } else
+        if(R.id.mde_button_start == view.getId() ) {
+
+            // Создаем платеж
+            IPayment payment = PaymentFactory.getPayment();
+
+            // Создаем поля для платежа
+            Collection<IField> fields = provider.getFields();
+
+            // Задаем значения полям
+            for(IField field: fields) {
+                field.setValue( savedValues.get(field.getId()) );
+            }
+
+            payment.setFields(fields);
+
+            // Платежная система
+            payment.setPsid(provider.getId());
+
+            // Суммы платежа
+            payment.setValue( getPaymentValue() );
+            payment.setFullValue( getPaymentFullValue() );
+
+            IPaymentQueue queue = PaymentQueueWrapper.getQueue();
+
+            // Добавляем в очередь
+            try {
+                queue.processPayment(payment);
+                Toast.makeText(this, "Платеж поставлен в очередь.", Toast.LENGTH_LONG)
+                        .show();
+
+                Intent intent = new Intent(this, MainActivityFlat.class);
+                startActivity(intent);
+
+                this.finish();
+            }catch (Exception ex) {
+                Toast.makeText(this, "Ошибка: " + ex.getMessage(), Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
     }
 
@@ -172,13 +222,16 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         if(result instanceof IResponseSet) {
             IResponseSet responseSet = (IResponseSet) result;
             try {
-                ICommandResponse response = (ICommandResponse) responseSet.getResponses().get(0);
+                ICommandResponse response = responseSet.getResponses().get(0);
                 String message;
                 if(response.getDone() > 0) {
                     message = "Проверка прошла успешно.";
                 } else {
                     message = "Ошибка проверкаи номера: " + response.getErrDescription();
                 }
+
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
             }catch (Exception ex) {
 
                 Toast.makeText(this, "Ошибка разбора запроса. " + ex.getMessage(), Toast.LENGTH_LONG)
@@ -190,6 +243,16 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
             Toast.makeText(this, "Получен неожиданный ответ от сервера.", Toast.LENGTH_LONG)
                     .show();
         }
+    }
+
+    public Double getPaymentValue() {
+        TextView valueView = (TextView) findViewById(R.id.mde_value_value);
+        return Double.valueOf(valueView.getText().toString().trim());
+    }
+
+    public Double getPaymentFullValue() {
+        TextView valueView = (TextView) findViewById(R.id.mde_full_value_value);
+        return Double.valueOf(valueView.getText().toString().trim());
     }
 
     private class CheckTask extends AbstractTask {
@@ -216,7 +279,9 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
             IResponseSet responseSet = null;
 
             try{
-                ICommandRequest request = new CommandRequestImpl("command=JT_CHECK_TARGET&" + requestBuilder.buildRequest(action,iPayment), true, true);
+                ICommandRequest request = new CommandRequestImpl("command=JT_CHECK_TARGET&"
+                        + requestBuilder.buildRequest(action,iPayment), true, true);
+
                 HttpTransport transport = new HttpTransport();
                 transport.setCryptEngine(new CryptEngineImpl(getContext()));
                 responseSet = transport.send(request);

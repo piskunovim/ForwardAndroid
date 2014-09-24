@@ -7,11 +7,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import ru.forwardmobile.tforwardpayment.spp.IPayment;
+import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
 import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
 import ru.forwardmobile.tforwardpayment.operators.OperatorsEntityManagerFactory;
+import ru.forwardmobile.tforwardpayment.spp.PaymentDaoFactory;
 
 /**
- * Created by vaninv on 30.05.2014.
+ * Created by Василий Ванин on 30.05.2014.
  */
 public class TestActivity extends Activity {
 
@@ -29,6 +32,14 @@ public class TestActivity extends Activity {
     protected void onStart() {
         super.onStart();
         Log.i(LOGGER_TAG, "OnStart()");
+
+        IPaymentDao dao = PaymentDaoFactory.getPaymentDao(this);
+        IPayment payment = dao.find(2);
+
+        Log.i(LOGGER_TAG, "Target: " + payment.getTarget().getValue().getValue());
+        Log.i(LOGGER_TAG, "Processed: " + payment.getDateOfProcess());
+
+
     }
 
     @Override

@@ -100,15 +100,13 @@ public class BalanceActivity extends ActionBarActivity implements ITaskListener 
                 HttpTransport transport = new HttpTransport();
                 transport.setCryptEngine(new CryptEngineImpl(BalanceActivity.this));
                 responseSet = transport.send(request);
-            }
-            catch(Exception e)
+            } catch(Exception e)
             {
                 e.printStackTrace();
             }
 
             return responseSet;
         }
-
     }
 
 }

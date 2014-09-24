@@ -38,6 +38,7 @@ public class TPaymentService extends Service {
                 HttpTransport transport = new HttpTransport();
                 transport.setCryptEngine(new CryptEngineImpl(this));
 
+                queue.setContext(this);
                 queue.setTransport(transport);
                 queue.start();
 

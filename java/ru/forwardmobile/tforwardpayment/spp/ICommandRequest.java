@@ -1,10 +1,13 @@
 package ru.forwardmobile.tforwardpayment.spp;
 
+import android.content.Context;
+
 import java.util.Collection;
 
 public interface ICommandRequest {
 
     public void setRouter(IRouter router);
+    public void setContext(Context context);
     public void addPayment(IPayment payment) throws Exception;
     public Collection<ICommand> getCommands();
     public Collection<String> getLines() throws Exception;

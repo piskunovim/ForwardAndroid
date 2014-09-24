@@ -1,5 +1,6 @@
 package ru.forwardmobile.tforwardpayment.spp;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.Collection;
@@ -11,6 +12,13 @@ public interface IPaymentQueue extends Runnable {
     public void start() throws Exception;
     public void stop();
     public boolean isActive();
+
+    /**
+     * Вызывается при добавлении платежа в очередь, или повторном проведении
+     * ошибочного платежа по инициативе внешнего модуля
+     * @param payment
+     * @throws Exception
+     */
     public void processPayment(IPayment payment) throws Exception;
 
     public Collection<IPayment> getActivePayments();
@@ -33,4 +41,5 @@ public interface IPaymentQueue extends Runnable {
 
     public void setTransport(HttpTransport transport);
     public void setDatabaseHelper(SQLiteOpenHelper helper);
+    public void setContext(Context ctx);
 }

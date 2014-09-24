@@ -10,8 +10,8 @@ import ru.forwardmobile.tforwardpayment.operators.IRequestProperty;
  */
 public class ProcessingActionImpl implements IProcessingAction {
 
-    // Use 10.00 RUR as default value
-    private Double  amountValue     = 10d;
+
+    private Double  amountValue     = 0d;
     private boolean withCheck       = false;
     private Integer psId            = null;
     
