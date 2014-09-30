@@ -241,7 +241,6 @@ public void GetXMLSettings(String xmlstring ) throws Exception {
                                 cv.put("required", xpp.getAttributeValue(i));
                             } else if (xpp.getAttributeName(i).equals("t")) {
                                 cv.put("type", xpp.getAttributeValue(i));
-
                             }
                         }
                         db.insert(DatabaseHelper.F_TABLE_NAME, null, cv);

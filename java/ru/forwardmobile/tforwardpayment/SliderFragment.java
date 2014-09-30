@@ -16,8 +16,11 @@ import java.util.Random;
 
 import android.support.v4.app.Fragment;
 
+import ru.forwardmobile.tforwardpayment.messages.IMessage;
+import ru.forwardmobile.tforwardpayment.messages.IMessageDao;
 
-public class SliderFragment extends Fragment {
+
+public class SliderFragment extends Fragment implements IMessage {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
 
@@ -101,5 +104,20 @@ public class SliderFragment extends Fragment {
         t.setBackgroundColor(Color.parseColor("#cccccc"));
 
         return view;
+    }
+
+    @Override
+    public Integer getType() {
+        return null;
+    }
+
+    @Override
+    public String getText() {
+        return null;
+    }
+
+    @Override
+    public Date regDate() {
+        return null;
     }
 }

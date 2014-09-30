@@ -346,6 +346,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         }
     }
 
+
+
     protected  void applyBoldFonts(final View v, Typeface fontToSet)
     {
         if(fontToSet == null)

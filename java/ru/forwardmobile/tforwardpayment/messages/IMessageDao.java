@@ -27,6 +27,7 @@ public interface IMessageDao {
      */
     public void delete(Integer id);
 
+
     /**
      * Список сохраненных сообщений
      * @return
