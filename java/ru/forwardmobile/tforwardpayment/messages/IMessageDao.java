@@ -1,6 +1,7 @@
 package ru.forwardmobile.tforwardpayment.messages;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * DataAccessObject сообщений
@@ -32,4 +33,11 @@ public interface IMessageDao {
      * @return
      */
     public Collection<IMessage> getMessages();
+
+    /**
+     * Список последних сообщений
+     * @param limit
+     * @return
+     */
+    public List<IMessage> getLastMessages(int limit);
 }

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ` ПЛАТЕЖ УСПЕШЕН. Обертка с серым абрисом -->
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/payment_row_env"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/button_selector"
+    android:padding="3pt"
+    android:layout_marginBottom="10dp">
+
+    <!-- Блок вертикальной отцентровки. Белая заливка -->
+    <LinearLayout
+        android:id="@+id/payment_row_row"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/main_page_btn_events"
+        android:padding="3dp"
+        android:clickable="true">
+
+        <!-- Блок статусов -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_weight="1">
+
+            <!-- Контейнер для полей "Статус" и "Дата платежа"  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingRight="0dp"
+                android:paddingLeft="10dp"
+                android:id="@+id/payment_row_status_wrapper">
+
+                <!-- Статус  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Статус"
+                        android:textColor="@color/forward_orange"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:minWidth="50dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Проведен"
+                        android:textSize="11sp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/payment_row_status"
+                    />
+                </LinearLayout>
+
+                <!-- Дата платежа  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Начало:"
+                        android:textSize="11sp"
+                        android:minWidth="50dp"/>
+                    <TextView
+                        android:id="@+id/payment_row_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2014-08-24 10:00:01"
+                        android:textSize="11sp"
+                        android:layout_marginLeft="10dp"/>
+                </LinearLayout>
+
+                <!-- Дата завершения платежа  -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Конец:"
+                        android:textSize="11sp"
+                        android:minWidth="50dp"/>
+                    <TextView
+                        android:id="@+id/payment_row_end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:visibility="visible"
+
+                        android:text="2014-08-24 12:00:05"
+                        android:textSize="11sp"
+                        android:layout_marginLeft="10dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Разделитель -->
+        <LinearLayout
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/greybg"/>
+
+        <!-- Контейнер для Номера телефона, Опреатора и Суммы платежа -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1.2">
+
+            <!-- Номер, оператор -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="right"
+                android:padding="2dp">
+
+                <!-- Номер телефона -->
+                <TextView android:id="@+id/payment_row_fields"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+7 9189182747"
+                    android:textSize="14sp"
+                    android:textColor="@color/forward_orange"
+                    android:textStyle="bold"/>
+
+                <!-- Сотовый оператор -->
+                <TextView android:id="@+id/payment_row_ps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="МТС"
+                    android:textSize="11sp"/>
+
+
+            </LinearLayout>
+
+            <!-- Разделитель -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/greybg"/>
+
+
+                <!-- Контейнер для Суммы платежа -->
+                <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:gravity="right"
+                   android:padding="2dp">
+
+                <!-- Сумма -->
+                <TextView
+                    android:id="@+id/payment_row_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1445.00 р. / 1500.00 р."
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

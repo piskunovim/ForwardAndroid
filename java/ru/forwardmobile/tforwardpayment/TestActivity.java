@@ -33,13 +33,7 @@ public class TestActivity extends Activity {
         super.onStart();
         Log.i(LOGGER_TAG, "OnStart()");
 
-        IPaymentDao dao = PaymentDaoFactory.getPaymentDao(this);
-        IPayment payment = dao.find(2);
-
-        Log.i(LOGGER_TAG, "Target: " + payment.getTarget().getValue().getValue());
-        Log.i(LOGGER_TAG, "Processed: " + payment.getDateOfProcess());
-
-
+        testPaymentDao();
     }
 
     @Override
@@ -79,5 +73,23 @@ public class TestActivity extends Activity {
 
         // Stop method tracing that the activity started during onCreate()
         android.os.Debug.stopMethodTracing();
+    }
+
+    private void testPaymentDao() {
+
+        IPaymentDao dao = PaymentDaoFactory.getPaymentDao(this);
+        IPayment payment = dao.find(2);
+
+        Log.i(LOGGER_TAG, "Id: " + payment.getId());
+        Log.i(LOGGER_TAG, "Psid: " + payment.getPsid());
+        Log.i(LOGGER_TAG, "Transaction: " + payment.getTransactionId());
+        Log.i(LOGGER_TAG, "Value: " + payment.getValue());
+        Log.i(LOGGER_TAG, "FullVal: " + payment.getFullValue());
+        Log.i(LOGGER_TAG, "ErrorCode: " + payment.getErrorCode());
+        Log.i(LOGGER_TAG, "ErrorDescr: " + payment.getErrorDescription());
+        Log.i(LOGGER_TAG, "StartDate: " + payment.getStartDate());
+        Log.i(LOGGER_TAG, "Status: " + payment.getStatusName());
+        Log.i(LOGGER_TAG, "Target: " + payment.getTarget().getValue().getValue());
+        Log.i(LOGGER_TAG, "Processed: " + payment.getDateOfProcess());
     }
 }

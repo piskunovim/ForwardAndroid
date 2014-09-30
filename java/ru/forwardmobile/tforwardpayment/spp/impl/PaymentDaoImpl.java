@@ -84,7 +84,7 @@ public class PaymentDaoImpl implements IPaymentDao {
     @Override
     public IPayment find(Integer id) {
 
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("select psid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate " +
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("select psid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate, transactid " +
                 " from  payments where id = ?", new String[]{String.valueOf(id)});
 
         try {
@@ -101,6 +101,8 @@ public class PaymentDaoImpl implements IPaymentDao {
                 payment.setStatus(cursor.getInt(7));
                 payment.setDateOfProcess(new Date(cursor.getLong(8)));
                 payment.setFields(parseFields(cursor.getString(1)));
+                payment.setTransactionId(cursor.getInt(9));
+                payment.setId(id);
 
                 return payment;
             }
