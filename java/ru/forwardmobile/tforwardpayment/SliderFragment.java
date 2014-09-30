@@ -47,6 +47,7 @@ public class SliderFragment extends Fragment implements IMessage {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.main_page_slider_fragment, null);
 
         TextView fDate = (TextView) view.findViewById(R.id.fDate);

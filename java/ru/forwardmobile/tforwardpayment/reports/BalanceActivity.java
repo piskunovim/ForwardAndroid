@@ -77,7 +77,6 @@ public class BalanceActivity extends ActionBarActivity implements ITaskListener 
                         totalView.setText("Прием платежей невозможен!");
             } catch (Exception ex) {
                 // Ошибка разбора
-
             }
         } else {
             // Ошибка отправки запроса

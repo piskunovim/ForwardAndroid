@@ -33,9 +33,6 @@ public class ReportBaseFilter extends LinearLayout implements DatePickerDialog.O
 
     private   TextView triggeredItem    = null;
 
-
-
-
     public ReportBaseFilter(Context ctx, ViewGroup container) {
         this(ctx, container, new Date());
     }
@@ -92,8 +89,6 @@ public class ReportBaseFilter extends LinearLayout implements DatePickerDialog.O
 
         Dialog fastDialog = new FastChoiceDialog(getContext());
         fastDialog.show();
-
-
     }
 
     @Override
