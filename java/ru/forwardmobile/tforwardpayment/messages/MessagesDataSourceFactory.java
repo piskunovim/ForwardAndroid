@@ -120,8 +120,7 @@ public class MessagesDataSourceFactory {
                     }
                 });
 
-
-                return null;
+                return list;
             }
         };
     }

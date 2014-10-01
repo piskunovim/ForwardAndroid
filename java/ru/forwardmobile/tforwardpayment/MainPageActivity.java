@@ -226,7 +226,6 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
     }
 
 
-
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
