@@ -58,7 +58,7 @@ public class MessagesDataSourceFactory {
 
                     @Override
                     public String getText() {
-                        return "Йа последнее сообщение. Напишите в меня много текста";
+                        return "Я последнее сообщение. Напишите в меня много текста";
                     }
 
                     @Override

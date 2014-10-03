@@ -23,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String     P_TABLE_NAME            = "providers";
     public static final String     F_TABLE_NAME            = "provider_fields";
     public static final String     PAYMENT_QUEUE_TABLE     = "payments";
+    public static final String     MESSAGES_TABLE_NAME     = "messages";
 	
 
     public DatabaseHelper(Context context) {
@@ -114,9 +115,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ")"
         );
 
+        //Agent messages table
+        sqld.execSQL("CREATE TABLE " + MESSAGES_TABLE_NAME
+                + "(id integer primary key, type integer, messageText text, regDate integer)");
+
     }
-    
-    
+
     public Cursor getProvider(Integer id) {
         return getReadableDatabase().rawQuery("select name, min, max from " + P_TABLE_NAME + " where id = ? ",
                 new String[]{ String.valueOf(id) });
@@ -128,8 +132,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
-
-
-
+    public Cursor getMessage(Integer id) {
+        return getReadableDatabase().rawQuery("select type, messageText, regDate from " + MESSAGES_TABLE_NAME + " where id = ?" , new String[]{
+                String.valueOf(id)
+        });
+    }
 
 }
