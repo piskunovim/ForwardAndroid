@@ -1,9 +1,14 @@
 package ru.forwardmobile.tforwardpayment.messages;
 
+import android.database.Cursor;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 
 /**
  * Created by Василий Ванин on 30.09.2014.
@@ -15,6 +20,8 @@ public class MessagesDataSourceFactory {
     }
 
     private static IMessageDao createDummyDao() {
+
+
         return new IMessageDao() {
             @Override
             public IMessage find(Integer id) {
@@ -41,6 +48,8 @@ public class MessagesDataSourceFactory {
             @Override
             public List<IMessage> getLastMessages(int limit) {
 
+
+
                 // Ну а йа всегда возвращаю три сообщения, что хотите, то и передавайте
                 List<IMessage> list = new ArrayList<IMessage>();
 
@@ -58,7 +67,11 @@ public class MessagesDataSourceFactory {
 
                     @Override
                     public String getText() {
-                        return "Я последнее сообщение. Напишите в меня много текста";
+                        DatabaseHelper sqdb = new DatabaseHelper();
+                        Cursor cursor = sqdb.getMessage(11);
+                        String str = cursor.getString(cursor.getColumnIndex("messageText"));
+                        Log.d("getMessagesText: ", str);
+                        return "str";
                     }
 
                     @Override

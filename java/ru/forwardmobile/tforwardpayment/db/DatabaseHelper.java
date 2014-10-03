@@ -29,6 +29,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, SQLITE_DATABASE_NAME, null, SQLITE_DATABASE_VERSION);
     }
+
+    public DatabaseHelper() {
+        super(null, SQLITE_DATABASE_NAME, null, SQLITE_DATABASE_VERSION);
+    }
     
     @Override
     public void onCreate(SQLiteDatabase sqld) {
@@ -119,6 +123,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqld.execSQL("CREATE TABLE " + MESSAGES_TABLE_NAME
                 + "(id integer primary key, type integer, messageText text, regDate integer)");
 
+        sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('11', '1', 'Я первое сообщение', '1111');");
+        sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('21', '0', 'Я второе сообщение', '2222');");
+        sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('31', '1', 'Я третье сообщение', '3333');");
+
     }
 
     public Cursor getProvider(Integer id) {
@@ -133,6 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getMessage(Integer id) {
+        Log.d("getMessageId: ", id.toString());
         return getReadableDatabase().rawQuery("select type, messageText, regDate from " + MESSAGES_TABLE_NAME + " where id = ?" , new String[]{
                 String.valueOf(id)
         });
