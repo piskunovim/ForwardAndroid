@@ -140,11 +140,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
-    public Cursor getMessage(Integer id) {
-        Log.d("getMessageId: ", id.toString());
-        return getReadableDatabase().rawQuery("select type, messageText, regDate from " + MESSAGES_TABLE_NAME + " where id = ?" , new String[]{
-                String.valueOf(id)
-        });
+    public Cursor getMessage() {
+        return getReadableDatabase().rawQuery("select type, messageText, regDate from " + MESSAGES_TABLE_NAME , null);
     }
 
 }

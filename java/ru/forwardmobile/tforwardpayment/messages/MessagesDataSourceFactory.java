@@ -1,5 +1,6 @@
 package ru.forwardmobile.tforwardpayment.messages;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -15,12 +16,13 @@ import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
  */
 public class MessagesDataSourceFactory {
 
-    public static IMessageDao getMessageDao() {
-        return createDummyDao();
+    public static IMessageDao getMessageDao(Context context) {
+        return createDummyDao(context);
     }
 
-    private static IMessageDao createDummyDao() {
+    private static IMessageDao createDummyDao(Context context) {
 
+        final Context ctx = context;
 
         return new IMessageDao() {
             @Override
@@ -52,86 +54,41 @@ public class MessagesDataSourceFactory {
 
                 // Ну а йа всегда возвращаю три сообщения, что хотите, то и передавайте
                 List<IMessage> list = new ArrayList<IMessage>();
+                DatabaseHelper sqDb = new DatabaseHelper(ctx);
+                Cursor cursor = sqDb.getMessage();
+                for (int i = 1; i<=3 ; i++) {
+                    cursor.moveToNext();
+                    final String str = cursor.getString(cursor.getColumnIndex("messageText"));
+                    final Integer id = i;
+                    // Добавляем сообщения
+                    list.add(new IMessage() {
+                        @Override
+                        public Integer getId() {
+                            return id;
+                        }
 
-                // Последнее сообщение
-                list.add(new IMessage() {
-                    @Override
-                    public Integer getId() {
-                        return 1;
-                    }
-
-                    @Override
-                    public Integer getType() {
-                        return IMessage.TYPE_INFO;
-                    }
-
-                    @Override
-                    public String getText() {
-                        DatabaseHelper sqdb = new DatabaseHelper();
-                        Cursor cursor = sqdb.getMessage(11);
-                        String str = cursor.getString(cursor.getColumnIndex("messageText"));
-                        Log.d("getMessagesText: ", str);
-                        return "str";
-                    }
-
-                    @Override
-                    public Date regDate() {
-                        // Какая разница, любая дата подойдет
-                        return new Date();
-                    }
-                });
-
-
-                // Предпоследнее сообщение
-                list.add(new IMessage() {
-                    @Override
-                    public Integer getId() {
-                        return 2;
-                    }
-
-                    @Override
-                    public Integer getType() {
-                        return IMessage.TYPE_INFO;
-                    }
-
-                    @Override
-                    public String getText() {
-                        return "Йа Предпоследнее сообщение. Я как последнее, только пришло чуть раньше.";
-                    }
-
-                    @Override
-                    public Date regDate() {
-                        // Какая разница, любая дата подойдет
-                        return new Date();
-                    }
-                });
+                        @Override
+                        public Integer getType() {
+                            return IMessage.TYPE_INFO;
+                        }
 
 
 
-                // И еще одно
-                list.add(new IMessage() {
-                    @Override
-                    public Integer getId() {
-                        // Тоже без разницы
-                        return 999;
-                    }
+                        @Override
+                        public String getText() {
+                            Log.d("getMessagesText: ", str);
+                            return str;
+                        }
 
-                    @Override
-                    public Integer getType() {
-                        return IMessage.TYPE_INFO;
-                    }
+                        @Override
+                        public Date regDate() {
+                            // Какая разница, любая дата подойдет
+                            return new Date();
+                        }
+                    });
+                }
 
-                    @Override
-                    public String getText() {
-                        return "Йа еще одно сообщение, может я тут давно, а может тоже только пришло. Да кого это волнует, всем плевать на меня, потому что я в конце.";
-                    }
 
-                    @Override
-                    public Date regDate() {
-                        // Какая разница, любая дата подойдет
-                        return new Date();
-                    }
-                });
 
                 return list;
             }

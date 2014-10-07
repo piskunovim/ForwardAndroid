@@ -118,6 +118,7 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
                     KeyStorageFactory.getKeyStorage( getApplicationContext() ).getKey(IKeyStorage.SECRET_KEY_TYPE),
                     password
                );
+	   
 
         // Сохраняем шифрованный ключ на диск
         KeySingleton.getInstance( getApplicationContext() )

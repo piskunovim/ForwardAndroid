@@ -56,8 +56,9 @@ public class SliderFragment extends Fragment {
 
         TextView fDate = (TextView) view.findViewById(R.id.fDate);
         TextView fDescription = (TextView) view.findViewById(R.id.fDescription);
+        ViewGroup pager = (LinearLayout) view.findViewById(R.id.pager);
 
-        IMessageDao messageDao = MessagesDataSourceFactory.getMessageDao();
+        IMessageDao messageDao = MessagesDataSourceFactory.getMessageDao(getActivity());
         List<IMessage> listMessage = messageDao.getLastMessages(3);
         IMessage iMessage = listMessage.get(pageNumber);
 

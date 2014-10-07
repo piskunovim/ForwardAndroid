@@ -7,7 +7,7 @@ package ru.forwardmobile.tforwardpayment.messages;
 public class MessageData {
 
   public void generateMessages(){
-      MessagesDataSourceFactory.getMessageDao();
+      //MessagesDataSourceFactory.getMessageDao();
   }
 
 
