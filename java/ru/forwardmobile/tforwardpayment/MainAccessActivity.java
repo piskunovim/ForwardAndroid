@@ -111,17 +111,20 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
      */
     public void setPassword(String password)
     {
+
+        TSettings.setAuthenticationPass(password,getApplicationContext());
+
         // Если мы находимся в этом методе, значит у нас по-любому доступен расшифрованный закрытый ключ
         // Шифруем этот ключ паролем, который ввел наш пользователь
-        byte[] encryptedKey = new XorImpl().encrypt(
+        /*byte[] encryptedKey = new XorImpl().encrypt(
                     KeyStorageFactory.getKeyStorage( getApplicationContext() ).getKey(IKeyStorage.SECRET_KEY_TYPE),
                     password
                );
-	   
+	   */
 
         // Сохраняем шифрованный ключ на диск
-        KeySingleton.getInstance( getApplicationContext() )
-                .setEncKey( encryptedKey );
+        /*KeySingleton.getInstance( getApplicationContext() )
+                .setEncKey( encryptedKey );*/
 
         // делаем вид, что мы авторизовались
         onAuthenticationSuccess();

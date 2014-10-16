@@ -243,13 +243,27 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
     }
 
     public Double getPaymentValue() {
-        TextView valueView = (TextView) findViewById(R.id.mde_value_value);
-        return Double.valueOf(valueView.getText().toString().trim());
+        try {
+            TextView valueView = (TextView) findViewById(R.id.mde_value_value);
+            return Double.valueOf(valueView.getText().toString().trim());
+        }
+        catch (Exception ex){
+            Toast.makeText(this, "Ошибка введенной суммы", Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     public Double getPaymentFullValue() {
-        TextView valueView = (TextView) findViewById(R.id.mde_full_value_value);
-        return Double.valueOf(valueView.getText().toString().trim());
+        try {
+            TextView valueView = (TextView) findViewById(R.id.mde_full_value_value);
+            return Double.valueOf(valueView.getText().toString().trim());
+        }
+        catch (Exception ex){
+                Toast.makeText(this, "Ошибка введенной суммы", Toast.LENGTH_LONG).show();
+                ex.printStackTrace();
+                return null;
+        }
     }
 
     private class CheckTask extends AbstractTask {

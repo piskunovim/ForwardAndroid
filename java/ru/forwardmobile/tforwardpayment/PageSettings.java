@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ru.forwardmobile.tforwardpayment.settings.GroupSettingsItems;
 import ru.forwardmobile.tforwardpayment.settings.SettingsItems;
@@ -60,7 +61,25 @@ public class PageSettings extends ActionBarActivity {
 
         //Создадим кнопку, чтобы сохранить изменения
         testBtn.createButton(this,"Сохранить");
-        someSetting.addItem(testBtn,viewGroup);
+        someSetting.addItem(testBtn, viewGroup);
+
+
+        testBtn.getButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String password = testEditable.getEditText().getText().toString();
+                TSettings.setAuthenticationPass(password, PageSettings.this);
+                Toast.makeText(PageSettings.this, password, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        /*testBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(PageSettings.this, testEditable.getSetEditText(), Toast.LENGTH_LONG).show();
+                   Log.d(LOG_TAG, "Наш пароль: " + testEditable.getSetEditText());
+            }
+        });*/
 
 
         // Изменяем шрифт (если требуется)

@@ -1,9 +1,16 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.content.Context;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.Set;
+
+import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
+import ru.forwardmobile.tforwardpayment.security.KeySingleton;
+import ru.forwardmobile.tforwardpayment.security.KeyStorageFactory;
+import ru.forwardmobile.tforwardpayment.security.XorImpl;
 
 
 /**
@@ -101,5 +108,19 @@ public class TSettings extends Properties {
     private TSettings(){}
     private static final TSettings instance
             = new TSettings();
+
+    public static void setAuthenticationPass(String password, Context context){
+        // Если мы находимся в этом методе, значит у нас по-любому доступен расшифрованный закрытый ключ
+        // Шифруем этот ключ паролем, который ввел наш пользователь
+        byte[] encryptedKey = new XorImpl().encrypt(
+                KeyStorageFactory.getKeyStorage(context).getKey(IKeyStorage.SECRET_KEY_TYPE),
+                password
+        );
+
+
+        // Сохраняем шифрованный ключ на диск
+        KeySingleton.getInstance(context)
+                .setEncKey( encryptedKey );
+    }
 
 }
