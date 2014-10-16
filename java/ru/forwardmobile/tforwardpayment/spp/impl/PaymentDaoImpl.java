@@ -13,6 +13,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -43,6 +44,67 @@ public class PaymentDaoImpl implements IPaymentDao {
         this.dbHelper = dbHelper;
     }
 
+
+    public Collection<IPayment> getPayments(Date startDate, Date finishDate){
+
+        Log.d(LOGGER_TAG, String.valueOf(startDate.getTime()));
+        Log.d(LOGGER_TAG, String.valueOf(finishDate.getTime()));
+
+        List<IPayment> collection = new ArrayList<IPayment>();
+
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
+                + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where processDate >= " + startDate.getTime() + " and processDate < " + finishDate.getTime()
+                , new String[]{});
+        try {
+            while (cursor.moveToNext()) {
+
+                Collection<IField> fields = parseFields(cursor.getString(3));
+
+                IPayment payment = PaymentFactory.getPayment();
+                payment.setPsid(cursor.getInt(1));
+                payment.setValue((double) cursor.getInt(4) / 100 );
+                payment.setFullValue((double) cursor.getInt(5) / 100);
+                payment.setFields(fields);
+                payment.setErrorCode(cursor.getInt(6));
+                payment.setErrorDescription(cursor.getString(7));
+                payment.setStartDate(new Date(cursor.getLong(8)));
+                payment.setStatus(cursor.getInt(9));
+                payment.setDateOfProcess(new Date(cursor.getLong(10)));
+
+                payment.setId(cursor.getInt(0));
+                payment.setTransactionId(cursor.getInt(2));
+
+                Log.v(LOGGER_TAG, "Fetching payment id "
+                        + payment.getId()
+                        + ", StartDate " + payment.getStartDate()
+                        + ", psid " + payment.getPsid()
+                        + ", status " + payment.getStatus()
+                        + ", processDate " + payment.getDateOfProcess());
+
+                collection.add(payment);
+            }
+        } finally {
+            cursor.close();
+        }
+        return collection;
+    }
+
+    public Collection<IPayment> getPayments(){
+        Calendar tomorrowDate = Calendar.getInstance();
+        Calendar todayDate = Calendar.getInstance();
+
+        tomorrowDate.add(Calendar.DATE, 1);
+        tomorrowDate.set(Calendar.HOUR, 0);
+        tomorrowDate.set(Calendar.MINUTE, 0);
+        tomorrowDate.set(Calendar.SECOND, 0);
+
+        todayDate.set(Calendar.HOUR, 0);
+        todayDate.set(Calendar.MINUTE, 0);
+        todayDate.set(Calendar.SECOND, 0);
+
+        return getPayments(todayDate.getTime(), tomorrowDate.getTime());
+    }
+
     @Override
     public void save(IPayment payment) {
 
@@ -50,6 +112,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         // @todo проверить
         StringBuilder payment_data = new StringBuilder();
         for( IField field: payment.getFields() ) {
+            Log.d(LOGGER_TAG, "Save value: " + field.getValue().getValue());
             payment_data.append("<f n=\"" + field.getId() + "\" t=\"" +  field.getName() + "\">" + field.getValue().getValue() + "</f>");
         }
 
@@ -121,7 +184,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
         List<IPayment> collection = new ArrayList<IPayment>();
         Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
-                + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where status not in(3,5) "
+                + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where status not in(" + IPayment.FAILED + ","+ IPayment.DONE +") "
                 , new String[]{});
         try {
             while (cursor.moveToNext()) {
@@ -217,7 +280,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
             if("f" . equals(localName)) {
-
+                Log.d(LOGGER_TAG+" buffer: ", buffer.toString());
                 field.setValue(buffer.toString());
                 collection.add(field);
                 buffer = new StringBuffer();

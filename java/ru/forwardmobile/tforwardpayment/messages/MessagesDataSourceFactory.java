@@ -50,8 +50,6 @@ public class MessagesDataSourceFactory {
             @Override
             public List<IMessage> getLastMessages(int limit) {
 
-
-
                 // Ну а йа всегда возвращаю три сообщения, что хотите, то и передавайте
                 List<IMessage> list = new ArrayList<IMessage>();
                 DatabaseHelper sqDb = new DatabaseHelper(ctx);
@@ -88,9 +86,7 @@ public class MessagesDataSourceFactory {
                     });
                 }
 
-
-
-                return list;
+            return list;
             }
         };
     }
