@@ -19,13 +19,11 @@ import java.util.HashSet;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
-import ru.forwardmobile.tforwardpayment.operators.IValue;
 import ru.forwardmobile.tforwardpayment.spp.FieldFactory;
 import ru.forwardmobile.tforwardpayment.spp.IField;
-import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
-import ru.forwardmobile.tforwardpayment.widget.FieldWidget;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
+import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
 
 /**
  * Created by Василий Ванин on 30.05.2014.
@@ -51,6 +49,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         StringBuilder payment_data = new StringBuilder();
         for( IField field: payment.getFields() ) {
             payment_data.append("<f n=\"" + field.getId() + "\" t=\"" +  field.getName() + "\">" + field.getValue().getValue() + "</f>");
+            Log.i(LOGGER_TAG, "Saving field " + field.getId() + ". Name " + field.getName() + " value: " + field.getValue().getValue());
         }
 
         ContentValues cv = new ContentValues();
@@ -220,9 +219,11 @@ public class PaymentDaoImpl implements IPaymentDao {
 
                 field.setValue(buffer.toString());
                 collection.add(field);
-                buffer = new StringBuffer();
             }
+
+            buffer = new StringBuffer();
         }
+
         @Override
         public void characters(char[] ch, int start, int length) throws SAXException {
             buffer.append(ch, start, length);

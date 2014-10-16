@@ -1,7 +1,6 @@
 package ru.forwardmobile.tforwardpayment.reports;
 
 import android.content.Context;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 
 import java.util.Collection;

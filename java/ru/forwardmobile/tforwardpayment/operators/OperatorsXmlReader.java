@@ -9,10 +9,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ru.forwardmobile.tforwardpayment.operators.impl.FieldImpl;
-import ru.forwardmobile.tforwardpayment.operators.impl.ProvidersEntityManagerImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProcessingActionImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProcessorImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProviderImpl;
+import ru.forwardmobile.tforwardpayment.operators.impl.ProvidersEntityManagerImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.RequestPropertyImpl;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.raketa.util.xml.AbstractXmlDeserializable;

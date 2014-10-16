@@ -3,6 +3,7 @@ package ru.forwardmobile.tforwardpayment;
 /**
  * Created by PiskunovI on 24.07.2014.
  */
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,9 +12,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
-
-import ru.forwardmobile.tforwardpayment.MainActivity;
-import ru.forwardmobile.tforwardpayment.R;
 
 import static ru.forwardmobile.tforwardpayment.CommonUtilities.SENDER_ID;
 import static ru.forwardmobile.tforwardpayment.CommonUtilities.displayMessage;

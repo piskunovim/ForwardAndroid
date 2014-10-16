@@ -14,7 +14,6 @@ import android.widget.Toast;
 import java.util.Collection;
 import java.util.HashSet;
 
-
 import ru.forwardmobile.tforwardpayment.app.SettingsLoader;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.operators.OperatorsLoadListener;

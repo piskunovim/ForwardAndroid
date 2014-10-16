@@ -1,7 +1,6 @@
 package ru.forwardmobile.tforwardpayment.widget;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import ru.forwardmobile.tforwardpayment.operators.IValue;

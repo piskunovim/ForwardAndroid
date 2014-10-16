@@ -1,6 +1,5 @@
 package ru.forwardmobile.tforwardpayment.spp;
 
-import java.util.Collection;
 import java.util.List;
 
 /**

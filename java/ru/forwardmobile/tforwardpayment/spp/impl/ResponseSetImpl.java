@@ -2,7 +2,6 @@ package ru.forwardmobile.tforwardpayment.spp.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;

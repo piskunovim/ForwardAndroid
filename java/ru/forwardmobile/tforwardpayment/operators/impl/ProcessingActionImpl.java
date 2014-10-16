@@ -2,6 +2,7 @@ package ru.forwardmobile.tforwardpayment.operators.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
 import ru.forwardmobile.tforwardpayment.operators.IProcessingAction;
 import ru.forwardmobile.tforwardpayment.operators.IRequestProperty;
 

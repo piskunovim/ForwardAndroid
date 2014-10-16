@@ -1,10 +1,11 @@
 package ru.forwardmobile.tforwardpayment.security;
 
 import android.content.Context;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author Vasiliy Vanin

@@ -1,7 +1,7 @@
 package ru.forwardmobile.tforwardpayment.operators.impl;
 
-import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.operators.IValue;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 
 /**
  * Created by Василий Ванин on 26.08.2014.

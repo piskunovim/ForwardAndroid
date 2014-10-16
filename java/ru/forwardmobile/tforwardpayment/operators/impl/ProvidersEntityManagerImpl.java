@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
-import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
 import ru.forwardmobile.tforwardpayment.operators.OperatorsXmlReader;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.forwardmobile.tforwardpayment.spp.IProviderMenuItem;
+import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
 import ru.forwardmobile.tforwardpayment.spp.impl.MenuItem;
 
 /**

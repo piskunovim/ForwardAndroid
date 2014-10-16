@@ -1,13 +1,9 @@
 package ru.forwardmobile.tforwardpayment.dealer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.ViewGroup;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import ru.forwardmobile.tforwardpayment.MainAccessActivity;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;

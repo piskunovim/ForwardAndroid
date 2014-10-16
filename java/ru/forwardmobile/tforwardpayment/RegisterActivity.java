@@ -3,8 +3,7 @@ package ru.forwardmobile.tforwardpayment;
 /**
  * Created by PiskunovI on 25.07.2014.
  */
-import static ru.forwardmobile.tforwardpayment.CommonUtilities.SENDER_ID;
-import static ru.forwardmobile.tforwardpayment.CommonUtilities.SERVER_URL;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import ru.forwardmobile.tforwardpayment.R;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.SENDER_ID;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.SERVER_URL;
 
 public class RegisterActivity extends Activity {
     // alert dialog manager

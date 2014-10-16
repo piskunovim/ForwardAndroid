@@ -1,16 +1,11 @@
 package ru.forwardmobile.tforwardpayment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
 
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
-import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
-import ru.forwardmobile.tforwardpayment.operators.OperatorsEntityManagerFactory;
 import ru.forwardmobile.tforwardpayment.spp.PaymentDaoFactory;
 
 /**

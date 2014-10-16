@@ -4,9 +4,6 @@ package ru.forwardmobile.tforwardpayment;
  * Created by PiskunovI on 25.07.2014.
  */
 
-import static ru.forwardmobile.tforwardpayment.CommonUtilities.DISPLAY_MESSAGE_ACTION;
-import static ru.forwardmobile.tforwardpayment.CommonUtilities.EXTRA_MESSAGE;
-import static ru.forwardmobile.tforwardpayment.CommonUtilities.SENDER_ID;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,6 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
+
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.DISPLAY_MESSAGE_ACTION;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.EXTRA_MESSAGE;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.SENDER_ID;
 
 
 public class GCMActivity extends Activity {

@@ -3,8 +3,6 @@ package ru.forwardmobile.tforwardpayment.spp;
 import java.util.Collection;
 import java.util.Date;
 
-import ru.forwardmobile.tforwardpayment.widget.FieldWidget;
-
 /**
  * @author Vasiliy Vanin
  */

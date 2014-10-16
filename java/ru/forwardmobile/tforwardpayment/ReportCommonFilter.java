@@ -10,13 +10,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import android.widget.TextView;
 
 import ru.forwardmobile.util.http.Dates;
 

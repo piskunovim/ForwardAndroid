@@ -4,8 +4,8 @@ package ru.forwardmobile.tforwardpayment;
  * Created by PiskunovI on 25.07.2014.
  */
 
-  import android.content.Context;
-  import android.os.PowerManager;
+import android.content.Context;
+import android.os.PowerManager;
 
 public abstract class WakeLocker {
     private static PowerManager.WakeLock wakeLock;

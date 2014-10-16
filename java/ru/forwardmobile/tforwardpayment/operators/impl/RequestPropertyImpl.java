@@ -1,10 +1,9 @@
 package ru.forwardmobile.tforwardpayment.operators.impl;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 import ru.forwardmobile.tforwardpayment.operators.IRequestProperty;
 import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;

@@ -3,8 +3,8 @@ package ru.forwardmobile.tforwardpayment.operators.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.operators.IProcessor;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 
 

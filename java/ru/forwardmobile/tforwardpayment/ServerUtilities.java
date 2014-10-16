@@ -3,9 +3,11 @@ package ru.forwardmobile.tforwardpayment;
 /**
  * Created by PiskunovI on 24.07.2014.
  */
-import static ru.forwardmobile.tforwardpayment.CommonUtilities.SERVER_URL;
-import static ru.forwardmobile.tforwardpayment.CommonUtilities.TAG;
-import static ru.forwardmobile.tforwardpayment.CommonUtilities.displayMessage;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.google.android.gcm.GCMRegistrar;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -18,12 +20,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.google.android.gcm.GCMRegistrar;
-
-import ru.forwardmobile.tforwardpayment.R;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.SERVER_URL;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.TAG;
+import static ru.forwardmobile.tforwardpayment.CommonUtilities.displayMessage;
 
 
 public final class ServerUtilities {

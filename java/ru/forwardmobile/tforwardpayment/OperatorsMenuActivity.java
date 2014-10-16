@@ -12,9 +12,9 @@ import android.widget.ListView;
 
 import java.util.Stack;
 
-import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
 import ru.forwardmobile.tforwardpayment.operators.OperatorsEntityManagerFactory;
 import ru.forwardmobile.tforwardpayment.spp.IProviderMenuItem;
+import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
 
 /**
  * Created by vaninv on 14.07.2014.

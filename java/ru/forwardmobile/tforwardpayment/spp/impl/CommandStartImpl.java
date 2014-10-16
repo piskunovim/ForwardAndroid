@@ -2,14 +2,9 @@ package ru.forwardmobile.tforwardpayment.spp.impl;
 
 import android.content.Context;
 
-import java.net.URLEncoder;
-
-import ru.forwardmobile.tforwardpayment.operators.IProcessingAction;
 import ru.forwardmobile.tforwardpayment.operators.IProcessor;
-import ru.forwardmobile.tforwardpayment.operators.RequestBuilder;
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
-import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;

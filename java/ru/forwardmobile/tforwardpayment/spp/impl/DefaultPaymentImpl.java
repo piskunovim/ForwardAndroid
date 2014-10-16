@@ -38,7 +38,7 @@ public class DefaultPaymentImpl extends AbstractPaymentImpl {
     private Collection<IField> fields = new ArrayList<IField>();
     @Override
     public Collection<IField> getFields() {
-        return fields;
+        return this.fields;
     }
 
     private Integer psid = null;

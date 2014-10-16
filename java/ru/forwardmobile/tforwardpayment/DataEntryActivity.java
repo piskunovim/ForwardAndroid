@@ -9,14 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import ru.forwardmobile.tforwardpayment.AbstractBaseActivity;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.operators.IProcessingAction;
 import ru.forwardmobile.tforwardpayment.operators.IProcessor;

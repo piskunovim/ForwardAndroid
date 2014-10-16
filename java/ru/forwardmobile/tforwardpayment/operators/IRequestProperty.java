@@ -1,6 +1,7 @@
 package ru.forwardmobile.tforwardpayment.operators;
 
 import java.util.Collection;
+
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 
 /**

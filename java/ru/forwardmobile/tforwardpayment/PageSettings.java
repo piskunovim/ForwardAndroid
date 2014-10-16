@@ -6,9 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.ViewGroup.LayoutParams;
 
 import ru.forwardmobile.tforwardpayment.settings.GroupSettingsItems;
 import ru.forwardmobile.tforwardpayment.settings.SettingsItems;

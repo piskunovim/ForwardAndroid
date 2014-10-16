@@ -12,7 +12,6 @@ import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.network.ServerRequestFactory;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
 import ru.forwardmobile.tforwardpayment.spp.IField;
-import ru.forwardmobile.tforwardpayment.widget.FieldWidget;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.util.http.HttpUtils;
 import ru.forwardmobile.util.http.IRequest;

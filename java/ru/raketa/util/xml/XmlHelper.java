@@ -1,8 +1,10 @@
 package ru.raketa.util.xml;
 
 import android.util.Xml;
-import java.io.InputStream;
+
 import org.xmlpull.v1.XmlPullParser;
+
+import java.io.InputStream;
 
 /**
  * XML - помощник
