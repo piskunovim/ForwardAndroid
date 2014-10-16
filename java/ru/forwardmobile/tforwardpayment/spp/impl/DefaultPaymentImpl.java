@@ -7,6 +7,8 @@ import java.util.Date;
 import ru.forwardmobile.tforwardpayment.TSettings;
 import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
+import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
+import ru.forwardmobile.tforwardpayment.spp.ProvidersDataSourceFactory;
 
 /**
  * Created by vaninv on 11.09.2014.
@@ -14,6 +16,9 @@ import ru.forwardmobile.tforwardpayment.spp.IPayment;
 public class DefaultPaymentImpl extends AbstractPaymentImpl {
 
     private Integer id = null;
+
+    private String title;
+
     @Override
     public Integer getId() {
         return id;
@@ -221,6 +226,17 @@ public class DefaultPaymentImpl extends AbstractPaymentImpl {
     public int getErrorRepeatCount() {
         return errorRepeatCount;
     }
+
+    @Override
+    public String getPsTitle() {
+        return this.title;
+    }
+
+    @Override
+    public void setPsTitle(String title) {
+        this.title = title;
+    }
+
 
     @Override
     public void setPsid(Integer psid) {

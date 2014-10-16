@@ -81,6 +81,8 @@ public interface IPayment {
     public int                      getErrorRepeatCount();
 
     public String                   getStatusName();
+    public String                   getPsTitle();
+    public void                     setPsTitle(String title);
     public void                     setPsid(Integer psid);
     public void                     setFullValue(Double fullValue);
     public void                     setFields(Collection<IField> fields);
