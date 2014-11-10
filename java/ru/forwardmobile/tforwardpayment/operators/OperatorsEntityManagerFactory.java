@@ -2,6 +2,9 @@ package ru.forwardmobile.tforwardpayment.operators;
 
 import android.content.Context;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import ru.forwardmobile.tforwardpayment.operators.impl.ProvidersEntityManagerImpl;
 
 /**
@@ -16,8 +19,11 @@ public class OperatorsEntityManagerFactory {
         if (manager == null) {
             try {
 
+                File file = new File(ctx.getFilesDir() + "/" + "operators.xml");
+                FileInputStream fileInputStream = new FileInputStream(file);
+
                 manager = new OperatorsXmlReader()
-                        .readOperators(ctx.getAssets().open("operators.xml"));
+                        .readOperators(fileInputStream);
             } catch(Exception ex) {
                 throw new RuntimeException(ex);
             }

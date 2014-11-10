@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
 
 public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
@@ -151,6 +152,10 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             }catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+            // Загрузка operators.xml
+            GetOperatorsXML getOperators = new GetOperatorsXML(this);
+            getOperators.execute();
 
             Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, responseStr);

@@ -101,7 +101,6 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
             } catch (Exception ex) {
                 // Ошибка разбора
                 ex.printStackTrace();
-
             }
         } else {
             // Ошибка отправки запроса

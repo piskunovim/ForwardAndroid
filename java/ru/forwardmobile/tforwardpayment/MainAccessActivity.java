@@ -16,6 +16,7 @@ import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.app.SettingsLoader;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
+import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
 import ru.forwardmobile.tforwardpayment.operators.OperatorsLoadListener;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineFactory;
 import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
@@ -125,6 +126,8 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
         // Сохраняем шифрованный ключ на диск
         /*KeySingleton.getInstance( getApplicationContext() )
                 .setEncKey( encryptedKey );*/
+
+				onAuthenticationSuccess();
 
         // делаем вид, что мы авторизовались
         onAuthenticationSuccess();
