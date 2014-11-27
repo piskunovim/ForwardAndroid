@@ -61,7 +61,7 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
             view =  (ViewGroup) findViewById(R.id.activity_main_page_container);
 
             DealerInfo dealerInfo = new DealerInfo(view);
-            dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersCredit, dt.dealersRealMoney);
+            dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersRealMoney, dt.dealersCredit);
 
             pager = (ViewPager) findViewById(R.id.pager);
             pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());

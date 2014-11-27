@@ -5,7 +5,8 @@
     android:background="#CCC"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="1dp">
+    android:padding="1dp"
+    android:id="@+id/activity_flat_page_container">
 
     <!-- ` Информация о дилере -->
     <LinearLayout
@@ -17,7 +18,8 @@
         android:layout_margin="2dp"
         android:layout_weight="0"
         android:clickable="true"
-        android:onClick="enterDealerInfo">
+        android:onClick="enterDealerInfo"
+        >
 
         <!-- ` Иконка -->
         <LinearLayout

@@ -114,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     public void sendMessage(View view){
-            SingIn(etName.getText().toString(), etPass.getText().toString());
+            SignIn(etName.getText().toString(), etPass.getText().toString());
     }
 
     public void clearLogin(View view){
@@ -133,8 +133,9 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     }
 
 
-    public void SingIn(String pointid, String password){
+    public void SignIn(String pointid, String password){
         pd = new TPostData(this);
+        TSettings.set("pointid",pointid);
         pd.pointID = pointid;
         pd.password = password;
         pd.execute();
@@ -142,6 +143,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     public void onSignIn(String responseStr) {
+
 
         Log.i(LOG_TAG, "Login result: " + responseStr);
 
@@ -277,6 +279,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             Log.d(LOG_TAG, SENDER_ID);
 
             GCMRegistrar.register(this, SENDER_ID);
+
 
         } else {
             Log.d(LOG_TAG, "Устройство уже зарегистрированно на GCM");

@@ -24,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String     F_TABLE_NAME            = "provider_fields";
     public static final String     PAYMENT_QUEUE_TABLE     = "payments";
     public static final String     MESSAGES_TABLE_NAME     = "messages";
-	
+
 
     public DatabaseHelper(Context context) {
         super(context, SQLITE_DATABASE_NAME, null, SQLITE_DATABASE_VERSION);

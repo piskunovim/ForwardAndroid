@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
+import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 
 /**
  * Created by PiskunovI on 15.07.14.
@@ -39,6 +42,9 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
     String onTextChanged = "";
     ArrayList<String> operatorArray = new ArrayList<String>();
 
+    ViewGroup view;
+    DealerDataSource dt = new DealerDataSource(this);
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -49,6 +55,12 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flat);
+
+
+        view =  (ViewGroup) findViewById(R.id.activity_flat_page_container);
+
+        DealerInfo dealerInfo = new DealerInfo(view);
+        dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersRealMoney, dt.dealersCredit);
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);

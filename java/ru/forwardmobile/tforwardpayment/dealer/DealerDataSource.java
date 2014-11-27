@@ -1,11 +1,25 @@
 package ru.forwardmobile.tforwardpayment.dealer;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import ru.forwardmobile.tforwardpayment.MainAccessActivity;
+import ru.forwardmobile.tforwardpayment.TSettings;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
@@ -87,12 +101,32 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
                     else
                         totalToView =  "Прием платежей невозможен!";
 
+                //URL url = new URL("http://");
 
-                dealersName = "Иванов Иван Иванович";
-                dealersBalance = balanceToView;
+                DealerAsyncTask dealerAsyncTask = new DealerAsyncTask();
+                dealerAsyncTask.execute();
+                String JSONString = new String();
+
+                try {
+                    JSONString = dealerAsyncTask.get();
+                    Log.d("JSONObject Title", JSONString);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                JsonObject o = new JsonParser().parse(JSONString).getAsJsonObject();
+
+                dealersName = o.getAsJsonPrimitive("title").toString().substring(1,o.getAsJsonPrimitive("title").toString().length()-1);
+                dealersBalance = o.getAsJsonPrimitive("account").toString().substring(1,o.getAsJsonPrimitive("account").toString().length()-1);
+                dealersCredit = o.getAsJsonPrimitive("credit").toString().substring(1,o.getAsJsonPrimitive("credit").toString().length()-1);
+                dealersRealMoney = o.getAsJsonPrimitive("may_expend").toString().substring(1,o.getAsJsonPrimitive("may_expend").toString().length()-1);
+
+                /*dealersBalance = balanceToView;
                 dealersCredit = creditToView;
                 dealersRealMoney = totalToView;
-
+*/
                 //String[] items = new String[]{ "Иванов Иван Иванович", balanceToView, creditToView, totalToView};
                 //dealerInfo.addAll(Arrays.asList(items));
 
@@ -117,6 +151,8 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
 
         @Override
         protected Object doInBackground(Object... objects) {
+
+
             IResponseSet responseSet = null;
 
             try{
@@ -131,10 +167,39 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
             }
 
             return responseSet;
+
         }
     };
 
 
+
+   /* class DealerAsyncTask  extends AsyncTask<Object,Void,String>{
+
+        @Override
+        protected String doInBackground(Object[] objects) {
+            try {
+                URL url = new URL("http://192.168.1.242:3000/dealers_info/"+ TSettings.get("pointid").toString());
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+
+                InputStream in = new BufferedInputStream(connection.getInputStream());
+                BufferedReader r = new BufferedReader(new InputStreamReader(in));
+                StringBuilder total = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    total.append(line);
+                }
+                Log.d("MainActivityLog",total.toString());
+
+                return total.toString();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
+    }*/
 
     @Override
     public void beforeApplicationStart(Context context) {
