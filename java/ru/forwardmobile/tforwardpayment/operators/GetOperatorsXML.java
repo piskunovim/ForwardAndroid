@@ -28,7 +28,8 @@ public class GetOperatorsXML extends AsyncTask<String,Void,Boolean> {
     protected Boolean doInBackground(String... strings) {
         String Tag = "HTTPConnectionTag";
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://192.168.1.242:3000/get_operators");
+        //HttpGet httpget = new HttpGet("http://192.168.1.242:3000/get_operators");
+        HttpGet httpget = new HttpGet("http://forwardmobile.ru:3000/get_operators");
 
         String filename = "operators.xml";
         FileOutputStream outputStream;

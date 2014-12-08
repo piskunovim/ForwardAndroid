@@ -76,6 +76,7 @@
                             android:ems="10"
                             android:id="@+id/epass"
                             android:textColor="#cccccc"
+                            android:inputType="number"
                             android:password="false"
                             android:enabled="true"
                             android:layout_gravity="center_horizontal"

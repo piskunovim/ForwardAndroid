@@ -36,15 +36,23 @@ public final class ServerUtilities {
      */
     public static void register(final Context context, String name, final String regId) {
         Log.i(TAG, "registering device (regId = " + regId + ")");
+
+        TSettings.set("regid",regId);
+
+        GCMHTTPTask gcmhttpTask = new GCMHTTPTask();
+        gcmhttpTask.execute();
+
         String serverUrl = SERVER_URL;
         Map<String, String> params = new HashMap<String, String>();
         params.put("regId", regId);
         params.put("name", name);
 
+
+
         long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
         // После того как GCM возвращает регистрационный идентификатор, мы должны зарегистрироваться на нашем сервере
         // Так как сервер может быть недоступен, мы будем повторять попытку несколько раз.
-        for (int i = 1; i <= MAX_ATTEMPTS; i++) {
+        /*for (int i = 1; i <= MAX_ATTEMPTS; i++) {
             Log.d(TAG, "Попытка #" + i + " на регистрацию");
             try {
                 displayMessage(context, context.getString(
@@ -75,7 +83,7 @@ public final class ServerUtilities {
                 // увеличиваем время ожидания по экспоненте
                 backoff *= 2;
             }
-        }
+        }*/
         String message = context.getString(R.string.server_register_error,
                 MAX_ATTEMPTS);
         CommonUtilities.displayMessage(context, message);

@@ -1,4 +1,4 @@
-package ru.forwardmobile.tforwardpayment.dealer;
+package ru.forwardmobile.tforwardpayment;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -11,19 +11,23 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import ru.forwardmobile.tforwardpayment.TSettings;
+import java.net.URLEncoder;
 
 /**
- * Created by PiskunovI on 20.11.2014.
+ * Created by PiskunovI on 01.12.2014.
  */
-public class DealerAsyncTask extends AsyncTask<Object,Void,String> {
+public class GCMHTTPTask extends AsyncTask<Void,Void,Void> {
+
+    String LOG_TAG = "GCMHTTPTask";
 
     @Override
-    protected String doInBackground(Object[] objects) {
+    protected Void doInBackground(Void... voids) {
         try {
-            //URL url = new URL("http://192.168.1.242:3000/dealers_info/"+ TSettings.get("pointid"));
-            URL url = new URL("http://forwardmobile.ru:3000/dealers_info/"+ TSettings.get("pointid"));
+            Log.d(LOG_TAG +" RegID", TSettings.get("regid"));
+            String encodedRegID = URLEncoder.encode(TSettings.get("regid"), "UTF-8");
+            String phonenumber = "111111";
+            //URL url = new URL("http://192.168.1.242:3000/send_reg_id/"+ phonenumber + "/"+ encodedRegID);
+            URL url = new URL("http://forwardmobile.ru:3000/send_reg_id/"+ phonenumber + "/"+ encodedRegID);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
             InputStream in = new BufferedInputStream(connection.getInputStream());
@@ -34,13 +38,13 @@ public class DealerAsyncTask extends AsyncTask<Object,Void,String> {
                 total.append(line);
             }
 
-            return total.toString();
+            Log.d(LOG_TAG, "Ended");
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 }

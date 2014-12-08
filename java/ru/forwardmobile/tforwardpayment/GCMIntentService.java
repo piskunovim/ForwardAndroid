@@ -4,14 +4,19 @@ package ru.forwardmobile.tforwardpayment;
  * Created by PiskunovI on 24.07.2014.
  */
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
+
+import java.io.UnsupportedEncodingException;
 
 import static ru.forwardmobile.tforwardpayment.CommonUtilities.SENDER_ID;
 import static ru.forwardmobile.tforwardpayment.CommonUtilities.displayMessage;
@@ -51,8 +56,16 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onMessage(Context context, Intent intent) {
         Log.i(TAG, "Received message");
-        String message = intent.getExtras().getString("price");
+        String message = intent.getExtras().getString("message");
 
+        //message = new String(getFromBase64(message));
+        //Log.d("GCMOnReceicedMessage", message);
+        //try {
+            //message= new String(message.getBytes("UTF-8"));
+            Log.d("GCMMessage",message);
+        //} catch (UnsupportedEncodingException e) {
+        //    e.printStackTrace();
+        //}
         displayMessage(context, message);
         // notifies user
         generateNotification(context, message);
@@ -94,12 +107,14 @@ public class GCMIntentService extends GCMBaseIntentService {
     private static void generateNotification(Context context, String message) {
 
         int icon = R.drawable.ic_launcher;
+        //message = "Rododendron message to use in our application";
         long when = System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification(icon, message, when);
 
         String title = context.getString(R.string.app_name);
+
 
         Intent notificationIntent = new Intent(context, GCMActivity.class);
         // устанавливаем intent таким образом, чтобы он не начал новую активити
@@ -117,6 +132,18 @@ public class GCMIntentService extends GCMBaseIntentService {
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification);
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.FROYO)
+    private String getFromBase64(String message){
+        byte[] data1 = Base64.decode(message, Base64.DEFAULT);
+        String someText = null;
+        try {
+            someText = new String(data1, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return someText;
     }
 
 }

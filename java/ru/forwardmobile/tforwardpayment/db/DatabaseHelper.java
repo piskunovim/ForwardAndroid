@@ -121,7 +121,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Agent messages table
         sqld.execSQL("CREATE TABLE " + MESSAGES_TABLE_NAME
-                + "(id integer primary key, type integer, messageText text, regDate integer)");
+                + "(id integer primary key, type integer, messageText text, regDate text)");
 
         sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('11', '1', 'Я первое сообщение', '1111');");
         sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('21', '0', 'Я второе сообщение', '2222');");
@@ -144,4 +144,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return getReadableDatabase().rawQuery("select type, messageText, regDate from " + MESSAGES_TABLE_NAME , null);
     }
 
+    public void setPushMessage(){
+        Cursor c = getWritableDatabase().rawQuery("select `id`,`type`,`messageText`,`regDate` from " + SETTINGS_TABLE_NAME, new String[]{});
+
+        if(c.moveToNext()) {
+
+            do {
+                TSettings.set(c.getString(0), c.getString(1));
+                Log.v(LOGGER_TAG, "Read " + c.getString(0) + " with " + c.getString(1));
+            } while(c.moveToNext());
+        } else {
+            Log.v(LOGGER_TAG, "Settings query returned an empty cursor.");
+        }
+    }
 }
