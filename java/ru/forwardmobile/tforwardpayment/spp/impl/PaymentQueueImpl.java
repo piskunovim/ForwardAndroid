@@ -71,7 +71,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
         Log.v(LOGGER_TAG, "Stop signal received...");
         try {
             this.thread.join();
-        }catch (InterruptedException ex){
+        }catch (Exception ex){
             //
         }
 

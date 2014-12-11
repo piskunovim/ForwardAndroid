@@ -22,6 +22,8 @@ public class TSettings extends Properties {
     private static final String LOGGER_TAG              = "TFORWARD.TSETTINGS";
     public static final String SERVER_HOST              = "server_host";
     public static final String SERVER_PORT              = "server_port";
+    public static final String NODE_HOST                = "node_host";
+    public static final String NODE_PORT                = "node_port";
     public static final String CERTIFICATE_ACESS_ID     = "access-id";
     public static final String MAXIMUM_START_TRY_COUNT  = "maxstarttryesx";
     public static final String QUEUE_ERROR_DELAY        = "queue_error_delay";

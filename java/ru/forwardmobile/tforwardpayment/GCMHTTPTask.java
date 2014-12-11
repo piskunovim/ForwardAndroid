@@ -27,7 +27,7 @@ public class GCMHTTPTask extends AsyncTask<Void,Void,Void> {
             String encodedRegID = URLEncoder.encode(TSettings.get("regid"), "UTF-8");
             String phonenumber = "111111";
             //URL url = new URL("http://192.168.1.242:3000/send_reg_id/"+ phonenumber + "/"+ encodedRegID);
-            URL url = new URL("http://forwardmobile.ru:3000/send_reg_id/"+ phonenumber + "/"+ encodedRegID);
+            URL url = new URL("http://"+TSettings.get(TSettings.NODE_HOST)+":"+TSettings.get(TSettings.NODE_PORT)+"/send_reg_id/"+ phonenumber + "/"+ encodedRegID);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
             InputStream in = new BufferedInputStream(connection.getInputStream());

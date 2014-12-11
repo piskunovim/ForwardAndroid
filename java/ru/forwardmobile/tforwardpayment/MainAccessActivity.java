@@ -130,7 +130,7 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
 				onAuthenticationSuccess();
 
         // делаем вид, что мы авторизовались
-        onAuthenticationSuccess();
+        //onAuthenticationSuccess();
     }
 
     // Вызывается в случае удачной авторизации
