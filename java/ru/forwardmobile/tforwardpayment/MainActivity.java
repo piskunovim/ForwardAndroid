@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     EditText etName, etPass;
+    Button btnSignIn;
     TPostData pd;
     InputMethodManager imm;
     //Для проверки соединения с сетью Интернет//СonnectionDetector cd;
@@ -75,7 +77,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         setContentView(R.layout.activity_main);
 
         applyFonts(findViewById(R.id.activity_main_container), null);
-        // applyBoldFonts( findViewById(R.id.activity_main_container_footer) ,null);
 
         // Для тестового сервера
         /*
@@ -98,6 +99,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         etName = (EditText) findViewById(R.id.epid);
         etPass = (EditText) findViewById(R.id.epass);
 
+        btnSignIn = (Button) findViewById(R.id.singin);
+
         etName.setOnEditorActionListener(this);
         etPass.setOnEditorActionListener(this);
 
@@ -116,6 +119,14 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         imm.hideSoftInputFromWindow(etName.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(etPass.getWindowToken(), 0);
 
+        etName.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+              if (hasFocus){
+                  clearLogin(v);
+              }
+            }
+        });
         etPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
@@ -128,12 +139,17 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             }
 
         });
+
+        //перенесено из layout
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SignIn(etName.getText().toString(), etPass.getText().toString());
+            }
+        });
+
     }
 
-
-    public void sendMessage(View view){
-            SignIn(etName.getText().toString(), etPass.getText().toString());
-    }
 
     //очистка поля по нажатию на поле ввода Логина
     public void clearLogin(View view){
@@ -273,12 +289,13 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         }
     }
 
+    //Регистрация устройства GCM
     public void RegDevice(final String pointid) throws Exception {
+
        Log.d(LOG_TAG, "RegDevice started...");
-
-
        Log.d(LOG_TAG, "pointid: "+ pointid);
-        point = pointid;
+
+       point = pointid;
 
         //Убеждаемся, что устройство имеет соответствующие зависимости.
         GCMRegistrar.checkDevice(this);
@@ -297,6 +314,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             // Регистрации ранее небыло, регистрируем сейчас на GCM
             Log.d(LOG_TAG, "regId - new registration");
             Log.d(LOG_TAG, SENDER_ID);
+
 
             GCMRegistrar.register(this, SENDER_ID);
 
@@ -334,6 +352,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             }
         }
     }
+
     /**
      * Получаем push-сообщения
      * */
@@ -375,25 +394,5 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
 
-    protected  void applyBoldFonts(final View v, Typeface fontToSet)
-    {
-        if(fontToSet == null)
-            fontToSet = Typeface.createFromAsset(getAssets(), "MagistralBlackC.otf");
-
-        try {
-            if (v instanceof ViewGroup) {
-                ViewGroup vg = (ViewGroup) v;
-                for (int i = 0; i < vg.getChildCount(); i++) {
-                    View child = vg.getChildAt(i);
-                    applyFonts(child, fontToSet);
-                }
-            } else if (v instanceof TextView) {
-                ((TextView)v).setTypeface(fontToSet);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // ignore
-        }
-    }
 
 }

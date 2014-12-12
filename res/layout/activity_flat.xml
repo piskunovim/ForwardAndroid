@@ -169,16 +169,6 @@
                         android:layout_height="wrap_content" android:layout_width="match_parent"
                         android:padding="10dp"
                         android:visibility="gone">
-                        <!-- Editext for Search -->
-                        <AutoCompleteTextView
-                            android:id="@+id/inputSearch"
-                            android:layout_weight="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:hint="Поиск оператора..."
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            />
                         <Button
                             android:background="@color/white"
                             android:id="@+id/cancelButton"

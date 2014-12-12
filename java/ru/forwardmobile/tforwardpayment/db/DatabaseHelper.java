@@ -19,6 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final int        SQLITE_DATABASE_VERSION = 8;
     public static final String     SQLITE_DATABASE_NAME    = "forward";
     public static final String     SETTINGS_TABLE_NAME     = "settings2";
+    public static final String     DEALER_TABLE_NAME        = "dealer";
     public static final String     PG_TABLE_NAME           = "groups";
     public static final String     P_TABLE_NAME            = "providers";
     public static final String     F_TABLE_NAME            = "provider_fields";
@@ -126,6 +127,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('11', '1', 'Я первое сообщение', '1111');");
         sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('21', '1', 'Я второе сообщение', '2222');");
         sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('31', '1', 'Я третье сообщение', '3333');");
+
+        sqld.execSQL("CREATE TABLE " + DEALER_TABLE_NAME + " (id integer primary key, name, balance, real_money, dealers_credit )");
 
     }
 

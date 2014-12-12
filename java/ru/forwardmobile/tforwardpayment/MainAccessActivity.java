@@ -36,7 +36,10 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
     TextView commentary;
     EditText keyWord;
     Button button;
+
+    //сообщение, состояние ко
     String message;
+
     private boolean isFirstRun = false;
     private final Collection<onLoadListener> loadListeners  = new HashSet<onLoadListener>();
 
@@ -60,7 +63,6 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
         commentary      = (TextView)    findViewById(R.id.access_commentary);
         button          = (Button)      findViewById(R.id.access_button);
         keyWord         = (EditText)    findViewById(R.id.access_pass);
-
         message         = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         Log.d(LOG_TAG, message);

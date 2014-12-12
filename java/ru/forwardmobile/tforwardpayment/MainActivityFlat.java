@@ -30,17 +30,6 @@ import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 public class MainActivityFlat extends AbstractBaseActivity implements View.OnClickListener {
 
     final static String LOG_TAG = "TFORWARD.MainActivityFlat";
-    public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
-    private AutoCompleteTextView textSearch;
-    private LinearLayout linearLayout01,linearLayout02,linearLayout03;
-    private Button cancelButton;
-    private ListView searchListView;
-    private boolean onSearch = false;
-    private ArrayAdapter<String> adapterSearch;
-    String afterTextChanged = "";
-    String beforeTextChanged = "";
-    String onTextChanged = "";
-    ArrayList<String> operatorArray = new ArrayList<String>();
 
     ViewGroup view;
     DealerDataSource dt = new DealerDataSource(this);
@@ -56,8 +45,7 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flat);
 
-
-        view =  (ViewGroup) findViewById(R.id.activity_flat_page_container);
+        view = (ViewGroup) findViewById(R.id.activity_flat_page_container);
 
         DealerInfo dealerInfo = new DealerInfo(view);
         dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersRealMoney, dt.dealersCredit);
@@ -87,132 +75,6 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
         startActivity(intent);
     }
 
-
-    public void textSearchClick(){
-        textSearch = (AutoCompleteTextView) findViewById(R.id.inputSearch);
-        cancelButton = (Button) findViewById(R.id.cancelButton);
-        searchListView = (ListView) findViewById(R.id.listViewSearch);
-        linearLayout01 = (LinearLayout) findViewById(R.id.LinearLayout01);
-        linearLayout02 = (LinearLayout) findViewById(R.id.LinearLayout02);
-        linearLayout03 = (LinearLayout) findViewById(R.id.LinearLayout03);
-
-        textSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!onSearch){
-                    cancelButton.setVisibility(View.VISIBLE);
-                    searchListView.setVisibility(View.VISIBLE);
-                    linearLayout01.setVisibility(View.GONE);
-                    linearLayout02.setVisibility(View.GONE);
-                    linearLayout03.setVisibility(View.GONE);
-                    onSearch=true;
-                }
-            }
-        });
-
-        textSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                beforeTextChanged = textSearch.getText().toString();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                onTextChanged = textSearch.getText().toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                afterTextChanged = textSearch.getText().toString();
-                searchOperator(afterTextChanged);
-                //afterTextChanged = textSearch.getText().toString();
-                /*Toast.makeText(MainActivityFlat.this, "before: " + beforeTextChanged
-                    + '\n' + "on: " + onTextChanged
-                    + '\n' + "after: " + afterTextChanged
-                    , Toast.LENGTH_SHORT).show();*/
-            }
-        });
-
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onSearch){
-                    cancelButton.setVisibility(View.GONE);
-                    searchListView.setVisibility(View.GONE);
-                    linearLayout01.setVisibility(View.VISIBLE);
-                    linearLayout02.setVisibility(View.VISIBLE);
-                    linearLayout03.setVisibility(View.VISIBLE);
-                    onSearch=false;
-                }
-            }
-        });
-
-    }
-
-    public void searchOperator(String operator)
-    {
-        operator = "%" + operator + "%";
-        Cursor cursor;
-        operatorArray.clear();
-
-        /*SQLiteOpenHelper dbHelper = new DatabaseHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIKE '"+ operator +"'", null);
-        */
-
-        cursor = initializeDB(0,operator);
-
-        if (cursor.moveToFirst()) {
-            //Log.d(LOG_TAG, cursor.getString(cursor.getColumnIndex("name")));
-
-            do{
-                operatorArray.add(cursor.getString(cursor.getColumnIndex("name")));
-            }while (cursor.moveToNext());
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, operatorArray);
-            searchListView.setAdapter(adapter);
-
-            searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    TextView c = (TextView) view;
-                    String text = c.getText().toString();
-                    Cursor cursorID = initializeDB(1,text);
-                    if (cursorID.moveToFirst()) {
-
-                        Log.i(LOG_TAG, "Starting payment to " + text);
-                        startPayment(Integer.parseInt(cursorID.getString(cursorID.getColumnIndex("id"))));
-
-                    }
-                }
-            });
-
-        } else {
-            Log.d(LOG_TAG, "Table got 0 rows");
-        }
-
-
-    }
-
-    private Cursor initializeDB(Integer state, String searchString) {
-        SQLiteOpenHelper dbHelper = new DatabaseHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        if (state == 0) {
-            return db.rawQuery("SELECT name FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIKE '" + searchString + "'", null);
-        }
-        else {
-            return db.rawQuery("SELECT id FROM " + DatabaseHelper.P_TABLE_NAME + " WHERE name LIKE '" + searchString + "'", null);
-        }
-    }
-
-    public void startPayment(Integer id){
-        Intent intent = new Intent(this, DataEntryActivity.class);
-        intent.putExtra("psid", id);
-        startActivity(intent);
-    }
 
     private void openGroup(Integer groupNumber){
         Log.d(LOG_TAG, "Opening group number: " + Integer.toString(groupNumber));
