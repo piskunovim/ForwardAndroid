@@ -29,6 +29,8 @@ public class PageNotifications  extends ActionBarActivity {
 
     ArrayList<String> arrayListDate = new ArrayList<String>();
     ArrayList<String> arrayListMessages = new ArrayList<String>();
+    ArrayList<String> arrayListType = new ArrayList<String>();
+
     ListView listView;
 
     @Override
@@ -65,6 +67,10 @@ public class PageNotifications  extends ActionBarActivity {
                 if (c.getString(typeIndex).equals("2")) {
                     arrayListDate.add(c.getString(dateColIndex)); //what a hell -_-
                     arrayListMessages.add(c.getString(messageColIndex));
+
+                    // Типы сообщений временно отключены
+                    // arrayListType.add(c.getString(typeIndex));
+
                     Log.d(LOG_TAG,
                             "date = " + c.getString(dateColIndex) +
                                     ", message = " + c.getString(messageColIndex));
@@ -91,11 +97,15 @@ public class PageNotifications  extends ActionBarActivity {
         private final String[] itemsDate;
         private final String[] itemsText;
 
+        // Типы сообщений временно отключены
+        // private final String[] itemsType;
+
         public NotifyArrayAdapter(Activity context, String[] date, String[] text) {
             super(context, R.layout.push_list_item, text);
             this.context = context;
             this.itemsDate = date;
             this.itemsText = text;
+            //this.itemsType = type;
         }
 
         @Override

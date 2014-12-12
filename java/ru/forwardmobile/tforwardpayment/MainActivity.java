@@ -1,5 +1,9 @@
 package ru.forwardmobile.tforwardpayment;
 
+/*
+ Главный экран приложения
+ */
+
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
@@ -35,6 +39,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     //Инициализация строковой переменной логирования
     final static String LOG_TAG = "TFORWARD.MainActivity";
 
+    //ID проекта для GCM
     static final String SENDER_ID = "421740259735";
 
     //Объект передачи сообщения
@@ -79,8 +84,9 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         TSettings.set(TSettings.NODE_HOST, "192.168.1.6");
         TSettings.set(TSettings.NODE_PORT, "3000");
-         */
+        */
 
+        //Для доступа к серверу извне
         TSettings.set(TSettings.NODE_HOST, "www.forwardmobile.ru");
         TSettings.set(TSettings.NODE_PORT, "3000");
 
@@ -88,7 +94,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         TSettings.set(TSettings.SERVER_PORT, "8193");
 
 
-        //получаем идентификаторы точки доступа и пароль
+        //Получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
         etPass = (EditText) findViewById(R.id.epass);
 
@@ -98,7 +104,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         if (checkDataBase() && checkForTables()) {
             Intent intent = new Intent(this, MainAccessActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "true");
-            // запуск activity
+
             startActivity(intent);
             this.finish();
         } else {
@@ -129,6 +135,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             SignIn(etName.getText().toString(), etPass.getText().toString());
     }
 
+    //очистка поля по нажатию на поле ввода Логина
     public void clearLogin(View view){
         if (etName.getText().toString().equals("Ваш Логин")){
             TextKeyListener.clear((etName).getText());
@@ -136,6 +143,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         }
     }
 
+    //очистка поля по нажатию на поле ввода Пароля
     public void clearPass(View view){
         if(etPass.getText().toString().equals("Ваш Пароль")){
             TextKeyListener.clear((etPass).getText());
