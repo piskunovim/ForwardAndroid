@@ -1,19 +1,17 @@
 package ru.forwardmobile.tforwardpayment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+        import android.app.AlertDialog;
+        import android.content.DialogInterface;
+        import android.content.Intent;
+        import android.graphics.Typeface;
+        import android.support.v7.app.ActionBarActivity;
+        import android.view.Menu;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.TextView;
 
-import ru.forwardmobile.tforwardpayment.reports.BalanceActivity;
-import ru.forwardmobile.tforwardpayment.reports.PaymentReportActivity;
-
+        import ru.forwardmobile.tforwardpayment.reports.PaymentReportActivity;
 /**
  * Created by vaninv on 25.07.2014.
  */
@@ -36,8 +34,9 @@ public abstract class AbstractBaseActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_help) {
-            Intent intent = new Intent(AbstractBaseActivity.this, BalanceActivity.class);
-            AbstractBaseActivity.this.startActivity(intent);
+            //11.12.2014 - на данном этапе не используется BalanceActivity
+            //Intent intent = new Intent(AbstractBaseActivity.this, BalanceActivity.class);
+            //AbstractBaseActivity.this.startActivity(intent);
             return true;
         }
         if (id == R.id.action_report) {
@@ -52,8 +51,9 @@ public abstract class AbstractBaseActivity extends ActionBarActivity {
                     Intent intent;
                     switch (which){
                         case 0:
-                            intent = new Intent(AbstractBaseActivity.this, BalanceActivity.class);
-                            startActivity(intent);
+                            //11.12.2014 - на данном этапе не используется BalanceActivity
+                            //intent = new Intent(AbstractBaseActivity.this, BalanceActivity.class);
+                            //startActivity(intent);
                             break;
                         case 1:
                             intent = new Intent(AbstractBaseActivity.this, PaymentReportActivity.class);
@@ -101,3 +101,5 @@ public abstract class AbstractBaseActivity extends ActionBarActivity {
     }
 
 }
+
+

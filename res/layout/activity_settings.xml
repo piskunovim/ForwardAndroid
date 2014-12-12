@@ -1,76 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- Настройки приложения -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/settingsLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    >
 
-    <!-- ` СТАДИЯ РАЗРАБОТКИ. Обертка с серым абрисом -->
-    <!--<LinearLayout android:id="@+id/LinearLayout01"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:background="@drawable/button_selector"
-        android:padding="3pt"
-        android:layout_margin="10dp">
+<!-- 11.12.2014 - заполняется динамически  -->
 
-        <!- Блок вертикальной отцентровки. Белая заливка -->
-    <!-- <LinearLayout
-         android:id="@+id/payments_button"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal"
-         android:background="@drawable/main_page_btn_events">
-
-         <!- ` Контейннер для иконки -->
-    <!--   <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:orientation="horizontal"
-           android:gravity="center"
-           android:padding="5dp"
-           android:layout_weight="3">
-           <!-Иконка -->
-    <!--         <ImageView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:background="@drawable/pay_attention"/>
-         </LinearLayout>
-
-         <!- Контейнер для текста -->
-            <!-- <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical"
-                 android:paddingTop="30dp"
-                 android:paddingBottom="30dp"
-                 android:paddingLeft="5dp"
-                 android:paddingRight="5dp"
-                 android:layout_weight="1"
-                 android:gravity="center_vertical|center_horizontal">
-                 <!- Заголовок -->
-            <!--    <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Уважаемый агент!"
-                    android:textColor="@color/forward_orange"
-                    android:textSize="@dimen/main_page_orangeHeader"/>
-                <!- Тест уведомления -->
-            <!--   <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:gravity="center"
-                   android:text="Данный раздел находится в стадии разработки."/>
-
-               <!- Извинения -->
-            <!--   <TextView
-               <!-   android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:text="Приносим свои извинения!"/>
-          </LinearLayout>
-      </LinearLayout>
-  </LinearLayout>-->
 </LinearLayout>
+

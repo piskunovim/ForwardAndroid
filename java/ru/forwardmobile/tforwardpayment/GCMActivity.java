@@ -39,7 +39,7 @@ public class GCMActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gcm);
+        //setContentView(R.layout.activity_gcm);
 
         cd = new ConnectionDetector(getApplicationContext());
 
@@ -66,7 +66,7 @@ public class GCMActivity extends Activity {
         // при разработке приложения. Раскомментируйте ее, когда оно будет готово.
         GCMRegistrar.checkManifest(this);
 
-        lblMessage = (TextView) findViewById(R.id.lblMessage);
+        //lblMessage = (TextView) findViewById(R.id.lblMessage);
 
         registerReceiver(mHandleMessageReceiver, new IntentFilter(
                 DISPLAY_MESSAGE_ACTION));

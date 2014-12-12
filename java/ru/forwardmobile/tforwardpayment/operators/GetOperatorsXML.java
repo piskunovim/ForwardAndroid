@@ -39,19 +39,20 @@ public class GetOperatorsXML extends AsyncTask<String,Void,Boolean> {
 
 
 
-    @Override
+  /*  @Override
     protected void onPreExecute() {
 
         dialog.show();
         super.onPreExecute();
     }
-
+*/
 
     @Override
     protected Boolean doInBackground(String... strings) {
         String Tag = "HTTPConnectionTag";
         HttpClient httpclient = new DefaultHttpClient();
         //HttpGet httpget = new HttpGet("http://192.168.1.242:3000/get_operators");
+        //HttpGet httpget = new HttpGet("http://192.168.1.6:3000/get_operators");
         HttpGet httpget = new HttpGet("http://"+TSettings.get(TSettings.NODE_HOST)+":"+TSettings.get(TSettings.NODE_PORT)+"/get_operators");
 
         String filename = "operators.xml";
@@ -90,7 +91,7 @@ public class GetOperatorsXML extends AsyncTask<String,Void,Boolean> {
 
     }
 
-    @Override
+/*    @Override
     protected void onPostExecute(Boolean result) {
          try {
              if ((this.dialog != null) && this.dialog.isShowing()) {
@@ -107,4 +108,5 @@ public class GetOperatorsXML extends AsyncTask<String,Void,Boolean> {
          }
 
     }
+    */
 }

@@ -78,10 +78,6 @@
             android:label="@string/title_activity_main_list" >
         </activity>
         <activity
-            android:name=".reports.BalanceActivity"
-            android:label="@string/title_balance" >
-        </activity>
-        <activity
             android:name=".DataEntryActivity"
             android:label="@string/data_entry_label" >
             <intent-filter>
@@ -100,12 +96,6 @@
         </activity>
 
         <service android:name=".TPaymentService" />
-
-        <activity
-            android:name=".HelpActivity"
-            android:label="@string/title_activity_help" >
-        </activity>
-
 
 
         <receiver

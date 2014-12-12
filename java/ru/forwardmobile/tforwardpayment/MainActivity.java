@@ -73,12 +73,13 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         // applyBoldFonts( findViewById(R.id.activity_main_container_footer) ,null);
 
         // Для тестового сервера
-        //TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
-        //TSettings.set(TSettings.SERVER_PORT, "8170");
+        /*
+        TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
+        TSettings.set(TSettings.SERVER_PORT, "8170");
 
-        //TSettings.set(TSettings.NODE_HOST, "192.168.1.6");
-        //TSettings.set(TSettings.NODE_PORT, "3000");
-
+        TSettings.set(TSettings.NODE_HOST, "192.168.1.6");
+        TSettings.set(TSettings.NODE_PORT, "3000");
+         */
 
         TSettings.set(TSettings.NODE_HOST, "www.forwardmobile.ru");
         TSettings.set(TSettings.NODE_PORT, "3000");

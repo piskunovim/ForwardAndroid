@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="ru.forwardmobile.tforwardpayment.HelpActivity" >
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    <!--11.12.2014 - раскомментировать, когда будет создан Help
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="ru.forwardmobile.tforwardpayment.HelpActivity" -->
     
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"

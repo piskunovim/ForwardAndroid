@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- Контейнер блока информационных сообщений -->
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -9,37 +11,38 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-         <LinearLayout
-             android:layout_width="90dp"
-             android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/fDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textSize="@dimen/slider_date_text"
-                    android:textAppearance="?android:attr/textAppearanceLarge">
-                    </TextView>
-         </LinearLayout>
-         <LinearLayout
+        <LinearLayout
+            android:layout_width="90dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/fDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/slider_date_text"
+                android:textAppearance="?android:attr/textAppearanceLarge">
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="2dp"
             android:layout_height="match_parent"
             android:background="#FFF"
-          />
-          <LinearLayout
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/fDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/fDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/slider_text"
-                    android:gravity="left|center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:padding="5dp">
-                </TextView>
-           </LinearLayout>
-         </LinearLayout>
-
+                android:textSize="@dimen/slider_text"
+                android:gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp">
+            </TextView>
+        </LinearLayout>
     </LinearLayout>
+
+</LinearLayout>
+
