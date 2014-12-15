@@ -78,22 +78,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         applyFonts(findViewById(R.id.activity_main_container), null);
 
-        // Для тестового сервера
-        /*
-        TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
-        TSettings.set(TSettings.SERVER_PORT, "8170");
-
-        TSettings.set(TSettings.NODE_HOST, "192.168.1.6");
-        TSettings.set(TSettings.NODE_PORT, "3000");
-        */
-
-        //Для доступа к серверу извне
-        TSettings.set(TSettings.NODE_HOST, "www.forwardmobile.ru");
-        TSettings.set(TSettings.NODE_PORT, "3000");
-
-        TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
-        TSettings.set(TSettings.SERVER_PORT, "8193");
-
+        //задаем найстройки работы сервера
+        getServerParams("test");
 
         //Получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
@@ -389,6 +375,25 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         } catch (Exception e) {
             e.printStackTrace();
             // ignore
+        }
+    }
+
+    protected void getServerParams(String params){
+        if (params.equals("online")) {
+          //Для доступа к серверу извне
+          TSettings.set(TSettings.NODE_HOST, "www.forwardmobile.ru");
+          TSettings.set(TSettings.NODE_PORT, "3000");
+
+          TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
+          TSettings.set(TSettings.SERVER_PORT, "8193");
+        }
+        else{
+          // Для тестового сервера
+          TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
+          TSettings.set(TSettings.SERVER_PORT, "8170");
+
+          TSettings.set(TSettings.NODE_HOST, "192.168.1.6");
+          TSettings.set(TSettings.NODE_PORT, "3000");
         }
     }
 

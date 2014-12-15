@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutionException;
 
 import ru.forwardmobile.tforwardpayment.MainAccessActivity;
 import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
@@ -47,17 +48,31 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
     public static String dealersBalance;
 
     // = можно израсходовать
-    public static String dealersRealMoney;
+    public static String dealerMayExpend;
 
     // = кредит
     public static String dealersCredit;
 
     // = деньги в пути
-    public static String dealersMoneyGo;
+    public static String dealerSummFuftutres;
 
     // = номер точки
-    public static String dealersPoint;
+    //public static String dealersPoint;
 
+    // = невыплаченное вознаграждение
+    public static String dealerFee;
+
+    // = заблокированно средств
+    public static String dealerRetentionAmount;
+
+    // = имя менеджера
+    public static String managerName;
+
+    // = телефон менеджера
+    public static String managerPhone;
+
+    // = почта менеджера
+    public static String managerEmail;
 
     public DealerDataSource(Context context) {
           this.context = context;
@@ -101,8 +116,6 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
                     else
                         totalToView =  "Прием платежей невозможен!";
 
-                //URL url = new URL("http://");
-
                 DealerAsyncTask dealerAsyncTask = new DealerAsyncTask();
                 dealerAsyncTask.execute();
                 String JSONString = new String();
@@ -118,19 +131,27 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
 
                 JsonObject o = new JsonParser().parse(JSONString).getAsJsonObject();
 
-                dealersName = o.getAsJsonPrimitive("title").toString().substring(1,o.getAsJsonPrimitive("title").toString().length()-1);
+                /*dealersName = o.getAsJsonPrimitive("title").toString().substring(1,o.getAsJsonPrimitive("title").toString().length()-1);
                 dealersBalance = o.getAsJsonPrimitive("account").toString().substring(1,o.getAsJsonPrimitive("account").toString().length()-1);
                 dealersCredit = o.getAsJsonPrimitive("credit").toString().substring(1,o.getAsJsonPrimitive("credit").toString().length()-1);
                 dealersRealMoney = o.getAsJsonPrimitive("may_expend").toString().substring(1,o.getAsJsonPrimitive("may_expend").toString().length()-1);
+                */
 
-                /*dealersBalance = balanceToView;
-                dealersCredit = creditToView;
-                dealersRealMoney = totalToView;
-*/
-                //String[] items = new String[]{ "Иванов Иван Иванович", balanceToView, creditToView, totalToView};
-                //dealerInfo.addAll(Arrays.asList(items));
+                dealersName = o.getAsJsonPrimitive("title").toString().substring(1,o.getAsJsonPrimitive("title").toString().length()-1);
+                dealersBalance = o.getAsJsonPrimitive("account").toString().substring(1,o.getAsJsonPrimitive("account").toString().length()-1);
+                dealersCredit = o.getAsJsonPrimitive("credit").toString().substring(1,o.getAsJsonPrimitive("credit").toString().length()-1);
+                dealerRetentionAmount = o.getAsJsonPrimitive("retention_amount").toString().substring(1,o.getAsJsonPrimitive("retention_amount").toString().length()-1);
+                dealerMayExpend =  o.getAsJsonPrimitive("may_expend").toString().substring(1,o.getAsJsonPrimitive("may_expend").toString().length()-1);
+                dealerFee = o.getAsJsonPrimitive("fee").toString().substring(1,o.getAsJsonPrimitive("fee").toString().length()-1);
+                dealerSummFuftutres = o.getAsJsonPrimitive("summ_fuftutres").toString().substring(1,o.getAsJsonPrimitive("summ_fuftutres").toString().length()-1);
 
-                Log.d(LOG_TAG, dealersBalance);
+                managerName = o.getAsJsonPrimitive("fio").toString().substring(1,o.getAsJsonPrimitive("fio").toString().length()-1);
+                managerPhone = o.getAsJsonPrimitive("phone").toString().substring(1,o.getAsJsonPrimitive("phone").toString().length()-1);
+                managerEmail = o.getAsJsonPrimitive("email").toString().substring(1,o.getAsJsonPrimitive("email").toString().length()-1);
+
+
+              //  DatabaseHelper databaseHelper = new DatabaseHelper();
+              //  databaseHelper.getReadableDatabase;
 
             } catch (Exception ex) {
                 // Ошибка разбора
@@ -172,35 +193,6 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
     };
 
 
-
-   /* class DealerAsyncTask  extends AsyncTask<Object,Void,String>{
-
-        @Override
-        protected String doInBackground(Object[] objects) {
-            try {
-                URL url = new URL("http://192.168.1.242:3000/dealers_info/"+ TSettings.get("pointid").toString());
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-
-                InputStream in = new BufferedInputStream(connection.getInputStream());
-                BufferedReader r = new BufferedReader(new InputStreamReader(in));
-                StringBuilder total = new StringBuilder();
-                String line;
-                while ((line = r.readLine()) != null) {
-                    total.append(line);
-                }
-                Log.d("MainActivityLog",total.toString());
-
-                return total.toString();
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return "";
-        }
-    }*/
-
     @Override
     public void beforeApplicationStart(Context context) {
 
@@ -215,9 +207,6 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
         }
     }
 
-/*    public ArrayList<String> getDealerInfo(){
-        return dealerInfo;
-    }
-*/
+
 
 }

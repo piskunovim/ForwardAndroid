@@ -37,7 +37,7 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
     EditText keyWord;
     Button button;
 
-    //сообщение, состояние ко
+    //сообщение состояния авторизации
     String message;
 
     private boolean isFirstRun = false;
@@ -67,7 +67,8 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
 
         Log.d(LOG_TAG, message);
 
-
+        // true  - входим не первый раз, запрашиваем введенный ранее пароль;
+        // иначе - это наш первый вход, запрашиваем установку пароля
         if (message.equals("true"))
         {
             commentary.setText("*пароль доступа был введен вами при первом при первом запуске приложения");

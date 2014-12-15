@@ -31,6 +31,8 @@ import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
 public class MainPageActivity extends AbstractBaseActivity implements IDealerBalance {
 
         final static String LOG_TAG = "TFORWARD.MainPageActivity";
+
+        //количество страниц в блоке информационных сообщений
         static final int PAGE_COUNT = 3;
 
         ViewPager pager;
@@ -55,13 +57,14 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
             button          = (Button)      findViewById(R.id.access_button);
 
             message         = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
+
             Log.d(LOG_TAG, "Initialize MainPageActivity");
             Log.d(LOG_TAG, "dealersName");
 
             view =  (ViewGroup) findViewById(R.id.activity_main_page_container);
 
-            DealerInfo dealerInfo = new DealerInfo(view);
-            dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersRealMoney, dt.dealersCredit);
+            //DealerInfo dealerInfo = new DealerInfo(view);
+            //dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersRealMoney, dt.dealersCredit);
 
             pager = (ViewPager) findViewById(R.id.pager);
             pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
