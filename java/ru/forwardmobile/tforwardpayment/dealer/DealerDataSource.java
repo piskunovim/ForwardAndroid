@@ -1,6 +1,8 @@
 package ru.forwardmobile.tforwardpayment.dealer;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -37,8 +39,6 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
 
     String LOG_TAG = "DealerDataSource";
 
-    //public static ArrayList<String> dealerInfo = new ArrayList<String>();
-
     Context context;
 
     // = имя дилера
@@ -74,6 +74,7 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
     // = почта менеджера
     public static String managerEmail;
 
+
     public DealerDataSource(Context context) {
           this.context = context;
     }
@@ -85,14 +86,18 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
         Log.d(LOG_TAG, result.toString());
         if(result != null && result instanceof IResponseSet) {
 
+            /*
             IResponseSet responseSet = (IResponseSet) result;
 
             double balance  = 0;
             double limit    = 0;
             double total    = 0;
+            */
 
             try {
                 // разбираем ответ
+
+                /*
                 ICommandResponse response = (ICommandResponse) responseSet.getResponses().get(0);
 
 
@@ -114,7 +119,7 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
                     if (total > 0)
                         totalToView = String.valueOf(new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
                     else
-                        totalToView =  "Прием платежей невозможен!";
+                        totalToView =  "Прием платежей невозможен!"; */
 
                 DealerAsyncTask dealerAsyncTask = new DealerAsyncTask();
                 dealerAsyncTask.execute();
@@ -149,9 +154,27 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
                 managerPhone = o.getAsJsonPrimitive("phone").toString().substring(1,o.getAsJsonPrimitive("phone").toString().length()-1);
                 managerEmail = o.getAsJsonPrimitive("email").toString().substring(1,o.getAsJsonPrimitive("email").toString().length()-1);
 
+                ContentValues cv  = new ContentValues();
 
-              //  DatabaseHelper databaseHelper = new DatabaseHelper();
-              //  databaseHelper.getReadableDatabase;
+                DatabaseHelper dbHelper = new DatabaseHelper(context);
+
+                // подключаемся к БД
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                cv.put("name", dealersName);
+                cv.put("balance", dealersBalance);
+                cv.put("may_expend", dealerMayExpend);
+                cv.put("credit", dealersCredit);
+                cv.put("retention_amount",dealerRetentionAmount);
+                cv.put("fee", dealerFee);
+                cv.put("summ_fuftutres",dealerSummFuftutres);
+                cv.put("fio", managerName);
+                cv.put("phone", managerPhone);
+                cv.put("email", managerEmail);
+
+                db.insert(DatabaseHelper.DEALER_TABLE_NAME, null, cv);
+                cv.clear();
+
 
             } catch (Exception ex) {
                 // Ошибка разбора

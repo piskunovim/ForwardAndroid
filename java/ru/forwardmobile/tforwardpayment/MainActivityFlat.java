@@ -48,7 +48,7 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
         view = (ViewGroup) findViewById(R.id.activity_flat_page_container);
 
         DealerInfo dealerInfo = new DealerInfo(view);
-        dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersRealMoney, dt.dealersCredit);
+        //dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersRealMoney, dt.dealersCredit);
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);

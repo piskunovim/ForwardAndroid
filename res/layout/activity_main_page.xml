@@ -175,7 +175,7 @@
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
                     android:clickable="true"
-                    android:onClick="enterPayments">
+                >
 
                     <!-- Содержимое -->
                     <LinearLayout
@@ -335,6 +335,7 @@
 
                 <!-- Блок вертикальной отцентровки. Белая заливка -->
                 <LinearLayout
+                    android:id="@+id/notifications_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:baselineAligned="false"
@@ -342,7 +343,7 @@
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
                     android:clickable="true"
-                    android:onClick="enterNotifications">
+                >
 
                     <!-- Содержимое -->
                     <LinearLayout
@@ -408,7 +409,7 @@
 
             <!-- ` НАСТРОЙКИ. Обертка с серым абрисом -->
             <LinearLayout
-                android:id="@+id/LinearLayout04"
+                android:id="@+id/settings_button"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:baselineAligned="false"
@@ -426,7 +427,7 @@
                     android:gravity="center_vertical"
                     android:background="@drawable/main_page_btn_events"
                     android:clickable="true"
-                    android:onClick="enterSettings">
+                >
 
                     <!-- Содержимое -->
                     <LinearLayout

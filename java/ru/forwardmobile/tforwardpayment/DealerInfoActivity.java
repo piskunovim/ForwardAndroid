@@ -58,7 +58,6 @@ public class DealerInfoActivity extends AbstractBaseActivity {
         String dealersName = o.getAsJsonPrimitive("title").toString().substring(1,o.getAsJsonPrimitive("title").toString().length()-1);
         String dealersBalance = o.getAsJsonPrimitive("account").toString().substring(1,o.getAsJsonPrimitive("account").toString().length()-1);
         String dealersCredit = o.getAsJsonPrimitive("credit").toString().substring(1,o.getAsJsonPrimitive("credit").toString().length()-1);
-        String dealerMaintenanceAmount = o.getAsJsonPrimitive("maintenance_amount").toString().substring(1,o.getAsJsonPrimitive("maintenance_amount").toString().length()-1);
         String dealerRetentionAmount = o.getAsJsonPrimitive("retention_amount").toString().substring(1,o.getAsJsonPrimitive("retention_amount").toString().length()-1);
         String dealerMayExpend =  o.getAsJsonPrimitive("may_expend").toString().substring(1,o.getAsJsonPrimitive("may_expend").toString().length()-1);
         String dealerFee = o.getAsJsonPrimitive("fee").toString().substring(1,o.getAsJsonPrimitive("fee").toString().length()-1);

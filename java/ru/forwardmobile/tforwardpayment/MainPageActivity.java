@@ -3,6 +3,8 @@ package ru.forwardmobile.tforwardpayment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,9 +28,9 @@ import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
 
 /**
- * Created by gorbovi on 19.08.2014.
+ * Created by piskunovi on 16.12.2014.
  */
-public class MainPageActivity extends AbstractBaseActivity implements IDealerBalance {
+public class MainPageActivity extends AbstractBaseActivity {
 
         final static String LOG_TAG = "TFORWARD.MainPageActivity";
 
@@ -38,12 +40,9 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
         ViewPager pager;
         PagerAdapter pagerAdapter;
 
+        LinearLayout enterPaymentsBtn, enterNotificationsBtn, enterSettingsBtn;
 
-        Button button;
-        String message;
-
-
-        ViewGroup view;
+        // пока заполняем таблицу DEALER_TABLE_NAME при помощи данной странности (не забыть переделать!)
         DealerDataSource dt = new DealerDataSource(this);
 
         @Override
@@ -51,21 +50,47 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
             super.onCreate(savedInstanceState);
 
             setContentView(R.layout.activity_main_page);
-            ClearDots();
-
-
-            button          = (Button)      findViewById(R.id.access_button);
-
-            message         = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
 
             Log.d(LOG_TAG, "Initialize MainPageActivity");
-            Log.d(LOG_TAG, "dealersName");
 
-            view =  (ViewGroup) findViewById(R.id.activity_main_page_container);
+            // сброс индикатора страниц #информационного_блока_сообщений
+            ClearDots();
 
-            //DealerInfo dealerInfo = new DealerInfo(view);
-            //dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersRealMoney, dt.dealersCredit);
+            // = кнопка "Проведение платежей"
+            enterPaymentsBtn = (LinearLayout) findViewById(R.id.payments_button);
 
+            enterPaymentsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                 enterPayments(view);
+                }
+            });
+
+            // = кнопка "Уведомления"
+            enterNotificationsBtn = (LinearLayout) findViewById(R.id.notifications_button);
+
+            enterNotificationsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    enterNotifications(view);
+                }
+            });
+
+            // = кнопка "Настройки"
+            enterSettingsBtn = (LinearLayout) findViewById(R.id.settings_button);
+
+            enterSettingsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    enterSettings(view);
+                }
+            });
+
+
+            // метод заполняет информационный блок дилера данными
+            dealerInfoBlock();
+
+            // #информационный_блок_сообщений
             pager = (ViewPager) findViewById(R.id.pager);
             pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
             pager.setAdapter(pagerAdapter);
@@ -90,6 +115,10 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
             });
 
         }
+
+    /*
+      Переход на соответствующие Activity
+     */
 
     public void enterDealerInfo(View view)
     {
@@ -122,53 +151,41 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
         startActivity(intent);
     }
 
-    @Override
-    public void onTaskFinish(Object result) {
-        if(result != null && result instanceof IResponseSet) {
+    /*
+      Заполнение информационного блока дилера
+    */
+    public void dealerInfoBlock(){
 
-            IResponseSet responseSet = (IResponseSet) result;
+        String dealersName = "Отсутствует",
+               dealersBalance = "Отсутствует",
+               dealersMayExpend = "Отсутствует",
+               dealersCredit = "Отсутствует";
 
-            double balance  = 0;
-            double limit    = 0;
-            double total    = 0;
+        ViewGroup view =  (ViewGroup) findViewById(R.id.activity_main_page_container);
 
-            String balanceToView = "";
-            String creditToView = "";
-            String totalToView = "";
+        // включает методы заполнения компонентов необходимыми данными
+        DealerInfo dealerInfo = new DealerInfo(view);
 
-            try {
-                // разбираем ответ
-                ICommandResponse response = (ICommandResponse) responseSet.getResponses().get(0);
-                Log.d(LOG_TAG, response.toString());
-                balance = Double.parseDouble(response.getParam("balance"));
-                limit = Double.parseDouble(response.getParam("limit"));
-                total = balance + limit;
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
 
-                DealerInfo dealerInfo = new DealerInfo(view);
-                // Показываем результат
-                if (balance != 0)
-                    balanceToView = String.valueOf(new BigDecimal(balance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-                if (limit != 0)
-                    creditToView = String.valueOf(new BigDecimal(limit).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-                if (total != 0)
-                    if (total > 0)
-                        totalToView = String.valueOf(new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-                    else
-                        totalToView = "Прием платежей невозможен!";
-                dealerInfo.setDealerShotBlock("Иванов Иван Иванович",balanceToView,creditToView,totalToView);
-            } catch (Exception ex) {
-                // Ошибка разбора
-            }
-        } else {
-            // Ошибка отправки запроса
-        }
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor c = db.rawQuery("SELECT * FROM " + dbHelper.DEALER_TABLE_NAME , null);
+
+        if (c.moveToFirst()) {
+          dealersName = c.getString(c.getColumnIndex("name"));
+          dealersBalance = c.getString(c.getColumnIndex("balance"));
+          dealersMayExpend = c.getString(c.getColumnIndex("may_expend"));
+          dealersCredit = c.getString(c.getColumnIndex("credit"));
+          Log.d(LOG_TAG," dealersNameInBase = " + dealersName + ", dealersBalanceInBase = " + dealersBalance);
+          Log.d(LOG_TAG," dealersMayExpend = " + dealersMayExpend + ", dealersCredit = " + dealersCredit);
+        } else
+            Log.d(LOG_TAG, "0 rows");
+
+        c.close();
+
+        dealerInfo.setDealerShotBlock(dealersName,dealersBalance, dealersMayExpend, dealersCredit);
     }
-
-    @Override
-    public void getBalance() {
-
-    }
-
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -188,6 +205,9 @@ public class MainPageActivity extends AbstractBaseActivity implements IDealerBal
 
     }
 
+    /*
+     Изменяеняем состояние индикатора
+     */
     private void SlideIndicator(int page){
         Log.d("Sliding: ", Integer.toString(page));
         if (page == 0){
