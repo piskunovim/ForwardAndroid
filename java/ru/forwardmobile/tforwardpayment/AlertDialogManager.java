@@ -26,7 +26,7 @@ public class AlertDialogManager {
         // Устанавливаем Сообщение Окна
         alertDialog.setMessage(message);
 
-   //     if(status != null)
+    //     if(status != null)
             // Устанавливаем иконки алерт-окна
      //       alertDialog.setIcon((status) ? R.drawable.success : R.drawable.fail);
 

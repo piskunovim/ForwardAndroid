@@ -37,6 +37,12 @@ import ru.forwardmobile.util.android.ITaskListener;
  */
 public class DealerDataSource implements MainAccessActivity.onLoadListener{
 
+    /*
+    Позволю сделать здесь парочку заметок по поводу того, что не понимаю смысла существования данного модуля
+    1. Очевидно спроектирован данный класс был в далекие времена, которые благополучно забыты.
+    2. Его функциональность уже перенесена в DealerInfo. Что есть приятно ^_^
+    3. Следует еще раз задаться вопросом: все ли перенесли?
+    */
     String LOG_TAG = "DealerDataSource";
 
     Context context;

@@ -32,7 +32,7 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
     final static String LOG_TAG = "TFORWARD.MainActivityFlat";
 
     ViewGroup view;
-    DealerDataSource dt = new DealerDataSource(this);
+    //DealerDataSource dt = new DealerDataSource(this);
 
     @Override
     protected void onResume() {
@@ -47,8 +47,9 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
 
         view = (ViewGroup) findViewById(R.id.activity_flat_page_container);
 
-        DealerInfo dealerInfo = new DealerInfo(view);
-        //dealerInfo.setDealerShotBlock(dt.dealersName,dt.dealersBalance, dt.dealersRealMoney, dt.dealersCredit);
+        DealerInfo dealerInfo = new DealerInfo(view, this);
+        dealerInfo.getDealerInfo();
+        dealerInfo.getBlockInfo();
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);

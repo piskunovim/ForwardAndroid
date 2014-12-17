@@ -42,8 +42,8 @@ public class MainPageActivity extends AbstractBaseActivity {
 
         LinearLayout enterPaymentsBtn, enterNotificationsBtn, enterSettingsBtn;
 
-        // пока заполняем таблицу DEALER_TABLE_NAME при помощи данной странности (не забыть переделать!)
-        DealerDataSource dt = new DealerDataSource(this);
+        // 16.12.14 некто пришел и закомментировал эту строчку. Видимо она совсем не нужна...может удалить?
+        // DealerDataSource dt = new DealerDataSource(this);
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,13 @@ public class MainPageActivity extends AbstractBaseActivity {
 
             // сброс индикатора страниц #информационного_блока_сообщений
             ClearDots();
+
+            ViewGroup view = (ViewGroup) findViewById(R.id.activity_main_page_container);
+
+            // метод заполняет информационный блок дилера данными
+            DealerInfo dealerInfo = new DealerInfo(view, this);
+            dealerInfo.getDealerInfo(); // запрашиваем информацию
+            dealerInfo.getBlockInfo();  // выводим в блок
 
             // = кнопка "Проведение платежей"
             enterPaymentsBtn = (LinearLayout) findViewById(R.id.payments_button);
@@ -86,9 +93,6 @@ public class MainPageActivity extends AbstractBaseActivity {
                 }
             });
 
-
-            // метод заполняет информационный блок дилера данными
-            dealerInfoBlock();
 
             // #информационный_блок_сообщений
             pager = (ViewPager) findViewById(R.id.pager);
@@ -154,7 +158,7 @@ public class MainPageActivity extends AbstractBaseActivity {
     /*
       Заполнение информационного блока дилера
     */
-    public void dealerInfoBlock(){
+    /*public void dealerInfoBlock(){
 
         String dealersName = "Отсутствует",
                dealersBalance = "Отсутствует",
@@ -185,7 +189,7 @@ public class MainPageActivity extends AbstractBaseActivity {
         c.close();
 
         dealerInfo.setDealerShotBlock(dealersName,dealersBalance, dealersMayExpend, dealersCredit);
-    }
+    }*/
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
