@@ -409,7 +409,6 @@
 
             <!-- ` НАСТРОЙКИ. Обертка с серым абрисом -->
             <LinearLayout
-                android:id="@+id/settings_button"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:baselineAligned="false"
@@ -420,6 +419,7 @@
 
                 <!-- Блок вертикальной отцентровки. Белая заливка -->
                 <LinearLayout
+                    android:id="@+id/settings_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:baselineAligned="false"

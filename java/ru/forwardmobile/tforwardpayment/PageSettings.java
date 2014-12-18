@@ -42,6 +42,9 @@ public class PageSettings extends ActionBarActivity {
         testEditable = new SettingsItems(this);
         //Button
         testBtn = new SettingsItems(this);
+        //Operators
+        operatorsBtn = new SettingsItems(this);
+
 
 
         //Просто добавим какой-нибудь TextView
@@ -60,12 +63,12 @@ public class PageSettings extends ActionBarActivity {
         testEditable.createEditSettings(this, "Пароль:","******");
         someSetting.addItem(testEditable, viewGroup);
 
-        operatorsBtn.createButton(this,"Обновить operators.xml");
-        someSetting.addItem(operatorsBtn, viewGroup);
-
         //Создадим кнопку, чтобы сохранить изменения
         testBtn.createButton(this,"Сохранить");
         someSetting.addItem(testBtn, viewGroup);
+
+        operatorsBtn.createButton(this,"Обновить operators.xml");
+        someSetting.addItem(operatorsBtn, viewGroup);
 
 
 
