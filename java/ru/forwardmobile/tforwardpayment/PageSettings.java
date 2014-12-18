@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
 import ru.forwardmobile.tforwardpayment.settings.GroupSettingsItems;
 import ru.forwardmobile.tforwardpayment.settings.SettingsItems;
 
@@ -18,7 +19,7 @@ import ru.forwardmobile.tforwardpayment.settings.SettingsItems;
 public class PageSettings extends ActionBarActivity {
 
     final static String LOG_TAG = "TFORWARD.PageSettings";
-    SettingsItems testBtn, testText, testEditable;
+    SettingsItems testBtn, testText, testEditable, operatorsBtn;
 
 
     @Override
@@ -59,9 +60,13 @@ public class PageSettings extends ActionBarActivity {
         testEditable.createEditSettings(this, "Пароль:","******");
         someSetting.addItem(testEditable, viewGroup);
 
+        operatorsBtn.createButton(this,"Обновить operators.xml");
+        someSetting.addItem(operatorsBtn, viewGroup);
+
         //Создадим кнопку, чтобы сохранить изменения
         testBtn.createButton(this,"Сохранить");
         someSetting.addItem(testBtn, viewGroup);
+
 
 
         testBtn.getButton().setOnClickListener(new View.OnClickListener() {
@@ -70,6 +75,15 @@ public class PageSettings extends ActionBarActivity {
                 String password = testEditable.getEditText().getText().toString();
                 TSettings.setAuthenticationPass(password, PageSettings.this);
                 Toast.makeText(PageSettings.this, password, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        operatorsBtn.getButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GetOperatorsXML getOperators = new GetOperatorsXML(PageSettings.this);
+                getOperators.execute();
             }
         });
 

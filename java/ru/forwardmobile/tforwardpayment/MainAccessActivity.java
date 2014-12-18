@@ -115,6 +115,8 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
      */
     public void setPassword(String password)
     {
+        //Требуется пересмотр функциональности данного метода
+
 
         TSettings.setAuthenticationPass(password,getApplicationContext());
 
