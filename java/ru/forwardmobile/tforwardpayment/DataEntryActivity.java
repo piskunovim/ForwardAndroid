@@ -221,10 +221,10 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
             try {
                 ICommandResponse response = responseSet.getResponses().get(0);
                 String message;
-                if(response.getDone() > 0) {
+                if( response.getDone() > 0) {
                     message = "Проверка прошла успешно.";
                 } else {
-                    message = "Ошибка проверкаи номера: " + response.getErrDescription();
+                    message = "Ошибка проверки номера: " + response.getErrDescription();
                 }
 
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();

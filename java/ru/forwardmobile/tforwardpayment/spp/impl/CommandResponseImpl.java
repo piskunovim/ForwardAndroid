@@ -171,7 +171,7 @@ public class CommandResponseImpl  implements ICommandResponse {
     }
 
     public Integer getDone() {
-        return this.done;
+        return this.done == null ? 0 : this.done;
     }
 
     public void setErrorCode(String errorCode) {

@@ -171,6 +171,7 @@ public class HttpTransport
         BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(response.getData())));
         String responseLine = reader.readLine();
         while (responseLine != null && responseLine.length() > 0) {
+            Log.i("TFORWARD.HttpTransport", responseLine + "");
             responseSet.addLine(responseLine.getBytes());
             responseLine = reader.readLine();
         }
