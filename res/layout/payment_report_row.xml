@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
+
         android:background="@drawable/main_page_btn_events"
         android:padding="3dp"
         android:clickable="true">
@@ -22,7 +22,7 @@
         <!-- Блок статусов -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_weight="1">

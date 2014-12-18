@@ -24,6 +24,7 @@ import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 import ru.forwardmobile.tforwardpayment.dealer.IDealerBalance;
+import ru.forwardmobile.tforwardpayment.reports.PaymentReportActivity;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
 
@@ -40,7 +41,7 @@ public class MainPageActivity extends AbstractBaseActivity {
         ViewPager pager;
         PagerAdapter pagerAdapter;
 
-        LinearLayout enterPaymentsBtn, enterNotificationsBtn, enterSettingsBtn;
+        LinearLayout enterPaymentsBtn, enterNotificationsBtn, enterSettingsBtn, enterReportPaymentsBtn;
 
         // 16.12.14 некто пришел и закомментировал эту строчку. Видимо она совсем не нужна...может удалить?
         // DealerDataSource dt = new DealerDataSource(this);
@@ -70,6 +71,16 @@ public class MainPageActivity extends AbstractBaseActivity {
                 @Override
                 public void onClick(View view) {
                  enterPayments(view);
+                }
+            });
+
+            // = кнопка "Отчет по платежам"
+            enterReportPaymentsBtn = (LinearLayout) findViewById(R.id.report_payments_button);
+
+            enterReportPaymentsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    enterReportPayments(view);
                 }
             });
 
@@ -137,9 +148,9 @@ public class MainPageActivity extends AbstractBaseActivity {
     }
 
 
-    public void enterMonitoring(View view)
+    public void enterReportPayments(View view)
     {
-        Intent intent = new Intent(this,PageMonitoring.class);
+        Intent intent = new Intent(this,PaymentReportActivity.class);
         startActivity(intent);
     }
 

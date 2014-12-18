@@ -135,7 +135,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
             FieldWidget widget = (FieldWidget) fieldGroup.getChildAt(i);
 
-            Log.i(LOGGING_KEY, widget.getField().getName()  + " = " + widget.getValue().getValue());
+            Log.i(LOGGING_KEY, "Widget Fileds: " + widget.getField().getName()  + " = " + widget.getValue().getValue());
             values.put(widget.getField().getId(), widget.getValue().getValue());
         }
 

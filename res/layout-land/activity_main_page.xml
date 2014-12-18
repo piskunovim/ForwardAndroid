@@ -289,7 +289,7 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:contentDescription="@string/monitoring_system"
+                                    android:contentDescription="@string/report_payments_system"
                                     android:src="@drawable/dot_icon"/>
                             </LinearLayout>
 
@@ -304,7 +304,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/monitoring_system"
+                                    android:text="@string/report_payments_system"
                                     android:textSize="@dimen/main_page_orangeHeader"
                                     android:textColor="@color/forward_orange"
                                     android:layout_marginBottom="1dp"
@@ -312,7 +312,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/ms_description"
+                                    android:text="@string/rps_description"
                                     android:textSize="@dimen/main_page_block_descriptions"/>
 
                             </LinearLayout>
@@ -327,7 +327,7 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:contentDescription="@string/monitoring_system"
+                                    android:contentDescription="@string/report_payments_system"
                                     android:src="@drawable/arrow"/>
                             </LinearLayout>
                         </LinearLayout>

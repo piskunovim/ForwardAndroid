@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import ru.forwardmobile.tforwardpayment.R;
 import ru.forwardmobile.tforwardpayment.TSettings;
 
 /**
@@ -61,6 +62,7 @@ public class SettingsItems extends LinearLayout{
         Title = new TextView(context);
         Title.setText(text);
         Title.setTextSize(20);
+        Title.setBackground(getResources().getDrawable(R.drawable.gardient_login_form_button));
         Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 
