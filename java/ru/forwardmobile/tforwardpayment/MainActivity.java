@@ -37,6 +37,9 @@ import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
 
 public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
+    static final String TEST_SERVER = "test";
+    static final String REAL_SERVER = "online";
+
     //Инициализация строковой переменной логирования
     final static String LOG_TAG = "TFORWARD.MainActivity";
 
@@ -79,7 +82,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         applyFonts(findViewById(R.id.activity_main_container), null);
 
         //задаем найстройки работы сервера
-        getServerParams("test");
+        getServerParams(TEST_SERVER);
 
         //Получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);

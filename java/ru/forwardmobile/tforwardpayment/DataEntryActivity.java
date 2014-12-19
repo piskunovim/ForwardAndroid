@@ -128,8 +128,6 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
     /** Вызывается, когда нужно прочитать значения полей */
     protected Map<Integer, String> getFieldValues() {
 
-        Log.d(LOGGING_KEY, "Widget Fields getFieldValues");
-
         HashMap<Integer, String> values = new HashMap<Integer, String>();
 
         ViewGroup fieldGroup = (ViewGroup) findViewById(R.id.mde_fields_container);
@@ -149,8 +147,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         if(R.id.mde_button_check == view.getId()) {
 
             // Получаем поля
-
-            savedValues = getFieldValues();
+            Map<Integer, String> valueMap = getFieldValues();
 
             // Создаем платеж
             IPayment payment = PaymentFactory.getPayment();
@@ -160,7 +157,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
             // Задаем значения полям
             for(IField field: fields) {
-                field.setValue( savedValues.get(field.getId()) );
+                field.setValue( valueMap.get(field.getId()) );
             }
 
             payment.setFields(fields);
@@ -170,6 +167,9 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         } else
         if(R.id.mde_button_start == view.getId() ) {
 
+            // Получаем поля
+            Map<Integer, String> valueMap = getFieldValues();
+
             // Создаем платеж
             IPayment payment = PaymentFactory.getPayment();
 
@@ -178,7 +178,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
             // Задаем значения полям
             for(IField field: fields) {
-                field.setValue( savedValues.get(field.getId()) );
+                field.setValue( valueMap.get(field.getId()) );
             }
 
             payment.setFields(fields);
@@ -224,10 +224,10 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
             try {
                 ICommandResponse response = responseSet.getResponses().get(0);
                 String message;
-                if(response.getDone() > 0) {
+                if( response.getDone() > 0) {
                     message = "Проверка прошла успешно.";
                 } else {
-                    message = "Ошибка проверкаи номера: " + response.getErrDescription();
+                    message = "Ошибка проверки номера: " + response.getErrDescription();
                 }
 
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
