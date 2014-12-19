@@ -188,7 +188,7 @@
                         android:orientation="horizontal"
                         android:background="@drawable/main_page_btn_events"
                         android:clickable="true"
-                        android:onClick="enterPayments">
+                        >
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -265,6 +265,7 @@
                     android:layout_weight="1">
 
                     <LinearLayout
+                        android:id="@+id/report_payments_button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
@@ -362,7 +363,7 @@
                         android:orientation="horizontal"
                         android:background="@drawable/main_page_btn_events"
                         android:clickable="true"
-                        android:onClick="enterNotifications">
+                        android:id="@+id/notifications_button">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -438,12 +439,13 @@
                     android:layout_weight="1">
 
                     <LinearLayout
+                        android:id="@+id/settings_button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:background="@drawable/main_page_btn_events"
                         android:clickable="true"
-                        android:onClick="enterNotifications">
+                        >
 
                         <LinearLayout
                             android:layout_width="match_parent"

@@ -71,22 +71,22 @@
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/epid"
+                    android:enabled="true"
                     android:editable="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:enabled="true"
-                    android:textIsSelectable="true"
-                    android:imeOptions="actionNext"
-                    android:text="Ваш Логин"
+                    android:imeOptions="actionDone"
+                    android:hint="Ваш номер точки"
                     android:background="@drawable/main_btn_border"
                     android:padding="5dp"
-                    android:textColor="#cccccc"/>
+                 />
 
                     <!-- Объединение Поля "Ввод пароля" и кнопки "Помощь"  -->
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
+                  <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5pt"
                         android:padding="0dp">
                         <!-- Пароль -->
                         <EditText
@@ -95,47 +95,19 @@
                             android:inputType="numberPassword"
                             android:ems="10"
                             android:id="@+id/epass"
-                            android:textColor="#cccccc"
-                            android:password="false"
                             android:enabled="true"
-                            android:clickable="false"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
                             android:editable="true"
                             android:imeOptions="actionDone"
-                            android:text="Ваш Пароль"
+                            android:hint="Ваш Пароль"
                             android:background="@drawable/main_btn_border"
                             android:padding="5dp"
                             android:layout_marginTop="6dp" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_alignWithParentIfMissing="false"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentStart="false"
-                            android:layout_alignParentRight="false"
-                            android:layout_alignParentLeft="false">
-                            <!-- Разделитель -->
-                            <LinearLayout
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="#ccc"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="5dp">
-                            </LinearLayout>
-                            <Button
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:text="\?"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginRight="9dp"
-                                android:background="@drawable/clear_bg"/>
-                        </LinearLayout>
-                    </RelativeLayout>
+
+                    </LinearLayout>
 
                 <!-- Кнопка ВХОД -->
                 <Button
