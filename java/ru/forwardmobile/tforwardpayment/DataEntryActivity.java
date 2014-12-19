@@ -128,6 +128,8 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
     /** Вызывается, когда нужно прочитать значения полей */
     protected Map<Integer, String> getFieldValues() {
 
+        Log.d(LOGGING_KEY, "Widget Fields getFieldValues");
+
         HashMap<Integer, String> values = new HashMap<Integer, String>();
 
         ViewGroup fieldGroup = (ViewGroup) findViewById(R.id.mde_fields_container);
@@ -147,6 +149,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         if(R.id.mde_button_check == view.getId()) {
 
             // Получаем поля
+
             savedValues = getFieldValues();
 
             // Создаем платеж
