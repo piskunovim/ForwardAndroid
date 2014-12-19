@@ -20,7 +20,7 @@ import ru.forwardmobile.tforwardpayment.spp.impl.PaymentDaoImpl;
  * Отображение списка платежей
  * Created by Василий Ванин on 26.09.2014.
  */
-public class PaymentReportActivity extends AbstractBaseActivity {
+public class PaymentReportActivity extends AbstractBaseActivity implements AdapterView.OnItemClickListener {
 
     @Override
     protected void onStart() {
@@ -41,7 +41,9 @@ public class PaymentReportActivity extends AbstractBaseActivity {
 
         paymentList.setAdapter(paymentReportAdapter);
 
-        paymentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        paymentList.setOnItemClickListener(this);
+
+       /* paymentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -82,9 +84,15 @@ public class PaymentReportActivity extends AbstractBaseActivity {
                 builder.show();
 
                 Toast.makeText(getApplicationContext(), operator, Toast.LENGTH_SHORT).show();*/
-            }
-        });
+         //   }
+        //});
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.d("PaymentItemClick", "position: " + i);
+        Toast.makeText(this, "PaymentItemClick", Toast.LENGTH_SHORT).show();
     }
 
 

@@ -104,40 +104,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             Log.d(LOG_TAG, "Database does not exists");
         }
 
-        //keyboard
-        /*
-        imm = (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(etName.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(etPass.getWindowToken(), 0);
-        */
-
-        /*
-        etName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    // Always use a TextKeyListener when clearing a TextView to prevent android
-                    // warnings in the log
-                    clearLogin(v);
-                }
-            }
-
-        });
-
-        etPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    // Always use a TextKeyListener when clearing a TextView to prevent android
-                    // warnings in the log
-                    clearPass(v);
-                }
-            }
-
-         });*/
-
         //перенесено из layout
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,26 +112,6 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             }
         });
 
-    }
-
-
-    //очистка поля по нажатию на поле ввода Логина
-    public void clearLogin(View view){
-        etName.clearFocus();
-        if (etName.getText().toString().equals("Ваш Логин")){
-            TextKeyListener.clear((etName).getText());
-            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-        }
-    }
-
-    //очистка поля по нажатию на поле ввода Пароля
-    public void clearPass(View view){
-        etPass.clearFocus();
-        if(etPass.getText().toString().equals("Ваш Пароль")){
-            TextKeyListener.clear((etPass).getText());
-            etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-        }
     }
 
 

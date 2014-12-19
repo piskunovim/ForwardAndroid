@@ -57,11 +57,10 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:imeOptions="actionDone"
-                    android:text="Ваш Логин"
+                    android:hint="Ваш номер точки"
                     android:background="@drawable/main_btn_border"
                     android:padding="5dp"
-                    android:textColor="#cccccc"
-                    android:onClick="clearLogin"/>
+                />
 
                 <!-- Объединение Поля "Ввод пароля" и кнопки "Помощь"  -->
                 <RelativeLayout
@@ -74,7 +73,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:inputType="number"
+                            android:inputType="numberPassword"
                             android:editable="true"
                             android:enabled="true"
                             android:layout_gravity="center_horizontal"
@@ -82,12 +81,11 @@
                             android:layout_marginRight="15dp"
                             android:layout_marginTop="6dp"
                             android:imeOptions="actionDone"
-                            android:text="Ваш Пароль"
+                            android:hint="Ваш Пароль"
                             android:background="@drawable/main_btn_border"
                             android:padding="5dp"
                             android:password="false"
-                            android:textColor="#cccccc"
-                            android:onClick="clearPass"/>
+                    />
 
                     <!--<LinearLayout
                         android:layout_width="wrap_content"
