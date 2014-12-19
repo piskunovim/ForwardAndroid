@@ -147,7 +147,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         if(R.id.mde_button_check == view.getId()) {
 
             // Получаем поля
-            savedValues = getFieldValues();
+            Map<Integer, String> valueMap = getFieldValues();
 
             // Создаем платеж
             IPayment payment = PaymentFactory.getPayment();
@@ -157,7 +157,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
             // Задаем значения полям
             for(IField field: fields) {
-                field.setValue( savedValues.get(field.getId()) );
+                field.setValue( valueMap.get(field.getId()) );
             }
 
             payment.setFields(fields);
@@ -167,6 +167,9 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         } else
         if(R.id.mde_button_start == view.getId() ) {
 
+            // Получаем поля
+            Map<Integer, String> valueMap = getFieldValues();
+
             // Создаем платеж
             IPayment payment = PaymentFactory.getPayment();
 
@@ -175,7 +178,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
             // Задаем значения полям
             for(IField field: fields) {
-                field.setValue( savedValues.get(field.getId()) );
+                field.setValue( valueMap.get(field.getId()) );
             }
 
             payment.setFields(fields);
