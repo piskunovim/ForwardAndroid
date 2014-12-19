@@ -2,7 +2,7 @@
 <!-- ` ПЛАТЕЖ УСПЕШЕН. Обертка с серым абрисом -->
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/payment_row_env"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:background="@drawable/button_selector"
     android:padding="3pt"
@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/payment_row_row"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
 
         android:background="@drawable/main_page_btn_events"
@@ -113,7 +113,7 @@
         <!-- Контейнер для Номера телефона, Опреатора и Суммы платежа -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1.2">
 

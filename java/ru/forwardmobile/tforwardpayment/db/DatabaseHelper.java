@@ -116,7 +116,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " errorDescription text, " +
                     " startDate text, " +
                     " status integer, " +
-                    " processDate text " +
+                    " processDate text, " +
+                    " pstitle text " +
                 ")"
         );
 

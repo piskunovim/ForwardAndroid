@@ -24,7 +24,10 @@ import ru.forwardmobile.tforwardpayment.spp.FieldFactory;
 import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
 import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
+import ru.forwardmobile.tforwardpayment.spp.IProvider;
+import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
 import ru.forwardmobile.tforwardpayment.spp.PaymentFactory;
+import ru.forwardmobile.tforwardpayment.spp.ProvidersDataSourceFactory;
 
 /**
  * Created by Василий Ванин on 30.05.2014.
@@ -33,8 +36,11 @@ public class PaymentDaoImpl implements IPaymentDao {
 
     private static final String LOGGER_TAG = "TFORWARD.DAO";
     private final SQLiteOpenHelper dbHelper;
+    private Context context;
+
 
     public PaymentDaoImpl(Context ctx) {
+        context = ctx;
         dbHelper = new DatabaseHelper(ctx);
     }
 
@@ -50,7 +56,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
         List<IPayment> collection = new ArrayList<IPayment>();
 
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate, pstitle from "
                 + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where processDate >= " + startDate.getTime() + " and processDate < " + finishDate.getTime()
                 , new String[]{});
         try {
@@ -68,9 +74,17 @@ public class PaymentDaoImpl implements IPaymentDao {
                 payment.setStartDate(new Date(cursor.getLong(8)));
                 payment.setStatus(cursor.getInt(9));
                 payment.setDateOfProcess(new Date(cursor.getLong(10)));
+                payment.setPsTitle(cursor.getString(11));
 
                 payment.setId(cursor.getInt(0));
                 payment.setTransactionId(cursor.getInt(2));
+
+                /*
+                IProvidersDataSource providersDataSource = ProvidersDataSourceFactory.getDataSource(context);
+                IProvider provider = providersDataSource.getById(payment.getPsid());
+
+                payment.setPsTitle(provider.getName());
+                */
 
                 Log.v(LOGGER_TAG, "Fetching payment id "
                         + payment.getId()
@@ -115,6 +129,10 @@ public class PaymentDaoImpl implements IPaymentDao {
             Log.i(LOGGER_TAG, "Saving field " + field.getId() + ". Name " + field.getName() + " value: " + field.getValue().getValue());
         }
 
+        // для получения psTitle обращаемся к provider
+        IProvidersDataSource providersDataSource = ProvidersDataSourceFactory.getDataSource(context);
+        IProvider provider = providersDataSource.getById(payment.getPsid());
+
         ContentValues cv = new ContentValues();
 
         cv.put("transactid", payment.getTransactionId());
@@ -127,6 +145,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         cv.put("startDate", safeTimestamp( payment.getStartDate()));
         cv.put("status", payment.getStatus());
         cv.put("processDate", safeTimestamp(payment.getDateOfProcess()));
+        cv.put("pstitle", provider.getName());
 
         if(payment.getId() == null) {
             Long rowId = dbHelper.getWritableDatabase().insert(DatabaseHelper.PAYMENT_QUEUE_TABLE, null, cv);
@@ -146,7 +165,7 @@ public class PaymentDaoImpl implements IPaymentDao {
     @Override
     public IPayment find(Integer id) {
 
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("select psid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate, transactid " +
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("select psid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate, transactid, pstitle " +
                 " from  payments where id = ?", new String[]{String.valueOf(id)});
 
         try {
@@ -164,6 +183,7 @@ public class PaymentDaoImpl implements IPaymentDao {
                 payment.setDateOfProcess(new Date(cursor.getLong(8)));
                 payment.setFields(parseFields(cursor.getString(1)));
                 payment.setTransactionId(cursor.getInt(9));
+                payment.setPsTitle(cursor.getString(11));
                 payment.setId(id);
 
                 return payment;
@@ -200,6 +220,7 @@ public class PaymentDaoImpl implements IPaymentDao {
                 payment.setStartDate(new Date(cursor.getLong(8)));
                 payment.setStatus(cursor.getInt(9));
                 payment.setDateOfProcess(new Date(cursor.getLong(10)));
+                payment.setPsTitle(cursor.getString(11));
 
                 payment.setId(cursor.getInt(0));
                 payment.setTransactionId(cursor.getInt(2));
