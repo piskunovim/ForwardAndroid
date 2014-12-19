@@ -46,18 +46,17 @@
 
                 <!-- Логин -->
                 <EditText
+                    android:id="@+id/epid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/epid"
+                    android:inputType="number"
                     android:editable="true"
+                    android:enabled="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:enabled="true"
-                    android:textIsSelectable="true"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:text="Ваш Логин"
                     android:background="@drawable/main_btn_border"
                     android:padding="5dp"
@@ -71,24 +70,24 @@
                     android:padding="0dp">
                     <!-- Пароль -->
                     <EditText
+                            android:id="@+id/epass"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:id="@+id/epass"
-                            android:textColor="#cccccc"
                             android:inputType="number"
-                            android:password="false"
+                            android:editable="true"
                             android:enabled="true"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
-                            android:editable="true"
+                            android:layout_marginTop="6dp"
                             android:imeOptions="actionDone"
                             android:text="Ваш Пароль"
                             android:background="@drawable/main_btn_border"
                             android:padding="5dp"
-                        android:layout_marginTop="6dp"
-                        android:selectAllOnFocus="true"/>
+                            android:password="false"
+                            android:textColor="#cccccc"
+                            android:onClick="clearPass"/>
 
                     <!--<LinearLayout
                         android:layout_width="wrap_content"
