@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<!-- ` НАСТРОЙКИ ПРИЛОЖЕНИЯ-->
 
-<!-- Настройки приложения -->
+    <!-- Контейнер для содержимого -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:baselineAligned="false"
+        android:background="@drawable/button_selector"
+        android:padding="3pt">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/settingsLayout"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+        <!-- Блок вертикальной отцентровки. Белая заливка -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:background="@drawable/main_page_btn_events"
+            android:padding="20dp">
 
+                <!-- ` GorbovI 2014-12-18: Блок с настройками. Заполняется динамически. -->
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/settingsLayout"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </LinearLayout>
 
-<!-- 11.12.2014 - заполняется динамически  -->
+            <LinearLayout
+                android:id="@+id/settings_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+             </LinearLayout>
 
-</LinearLayout>
+        </LinearLayout>
+     </LinearLayout>
 
+</ScrollView>

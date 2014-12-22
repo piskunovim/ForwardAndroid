@@ -60,7 +60,7 @@ public class PageSettings extends ActionBarActivity {
         testEditable.createEditSettings(this, "Номер точки:","1197");
         someSetting.addItem(testEditable, viewGroup);
 
-        testEditable.createEditSettings(this, "Пароль:","******");
+        testEditable.createEditSettings(this, "Пароль:", "******");
         someSetting.addItem(testEditable, viewGroup);
 
         //Создадим кнопку, чтобы сохранить изменения
