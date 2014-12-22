@@ -5,7 +5,8 @@
     android:background="#CCC"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="1dp">
+    android:padding="1dp"
+    android:id="@+id/activity_flat_page_container">
 
     <!-- ` Информация о дилере -->
     <LinearLayout
@@ -219,7 +220,7 @@
                         android:layout_weight="1">
 
                         <!-- ` МОБИЛЬНАЯ СВЯЗЬ. Обрертка с серым абрисом -->
-                        <LinearLayout android:id="@+id/Button01"
+                        <LinearLayout android:id="@+id/main_button_mobile_envelope"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -235,7 +236,6 @@
                                 android:orientation="horizontal"
                                 android:background="@drawable/main_page_btn_events"
                                 android:clickable="true"
-                                android:onClick="enterMobileNetworks"
                                 android:gravity="center_vertical"
                                 android:id="@+id/main_button_mobile"
                                 >
@@ -296,7 +296,7 @@
                         </LinearLayout>
 
                         <!-- ` ТЕЛЕВИДЕНИЕ. Обертка с серым абрисом. -->
-                        <LinearLayout android:id="@+id/Button02"
+                        <LinearLayout android:id="@+id/main_button_tv_envelope"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -369,6 +369,7 @@
 
                         <!-- ` Стационарная связь -->
                         <LinearLayout
+                            android:id="@+id/main_button_land_line_envelope"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -439,7 +440,7 @@
                         </LinearLayout>
 
                         <!-- ` Интернет и IP-телефония -->
-                        <LinearLayout android:id="@+id/Button04"
+                        <LinearLayout android:id="@+id/main_button_internet_envelope"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -511,7 +512,7 @@
                         </LinearLayout>
 
                         <!-- ` Погашение кредитов -->
-                        <LinearLayout android:id="@+id/Button05"
+                        <LinearLayout android:id="@+id/main_button_credit_envelope"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -593,7 +594,7 @@
                         android:layout_weight="1">
 
                         <!-- ` ЖКХ -->
-                        <LinearLayout android:id="@+id/Button06"
+                        <LinearLayout android:id="@+id/main_button_jkh_envelope"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -666,7 +667,7 @@
                         </LinearLayout>
 
                         <!-- ` Игры -->
-                        <LinearLayout android:id="@+id/Button07"
+                        <LinearLayout android:id="@+id/main_buton_attractions_envelope"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -739,7 +740,7 @@
                         </LinearLayout>
 
                         <!-- ` Кошельки -->
-                        <LinearLayout android:id="@+id/Button08"
+                        <LinearLayout android:id="@+id/main_button_emoney_envelope"
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
@@ -813,7 +814,7 @@
                         </LinearLayout>
 
                         <!-- ` Прочее -->
-                        <LinearLayout android:id="@+id/Button09"
+                        <LinearLayout android:id="@+id/main_button_other_envelope"
                             android:layout_height="wrap_content"
                             android:layout_width="match_parent"
                             android:orientation="horizontal"

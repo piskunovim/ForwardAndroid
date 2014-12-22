@@ -15,7 +15,7 @@ import ru.forwardmobile.tforwardpayment.AbstractBaseActivity;
 import ru.forwardmobile.tforwardpayment.R;
 import ru.forwardmobile.tforwardpayment.spp.IPaymentDao;
 import ru.forwardmobile.tforwardpayment.spp.PaymentDaoFactory;
-import ru.forwardmobile.tforwardpayment.spp.impl.PaymentDaoImpl;
+
 
 /**
  * Отображение списка платежей
@@ -44,15 +44,13 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
 
         paymentList.setOnItemClickListener(this);
 
-        /* paymentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    }
 
-
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d("PaymentItemClick", "position: " + i);
 
-
-                /*LinearLayout currentLayout = (LinearLayout) view;
+                LinearLayout currentLayout = (LinearLayout) view;
                 AlertDialog.Builder builder = new AlertDialog.Builder(PaymentReportActivity.this);
 
                 // = Оператор (psTitle)
@@ -68,32 +66,21 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
                 String sum = "Принято/К зачислению: \n" + textView.getText().toString();
 
                 // = Дата совершения платежа
-                textView = (TextView) currentLayout.findViewById(R.id.pay_date_begin);
+                textView = (TextView) currentLayout.findViewById(R.id.payment_row_start);
                 String dateBegin = "Отправлен: " + textView.getText().toString();
 
                 // = Дата завершения платежа
-                textView = (TextView) currentLayout.findViewById(R.id.pay_date_end);
+                textView = (TextView) currentLayout.findViewById(R.id.payment_row_end);
                 String dateEnd = "Завершен: " + textView.getText().toString();
 
                 // = Статус платежа
-                textView = (TextView) currentLayout.findViewById(R.id.pay_status);
+                textView = (TextView) currentLayout.findViewById(R.id.payment_row_status);
                 String stat = "Статус: " + textView.getText().toString();
 
                 builder.setTitle("Подробная информация:");
                 builder.setMessage(operator +"\n" + num + "\n" + sum + "\n" + dateBegin + "\n" + dateEnd + "\n" + stat);
 
                 builder.show();
-
-                Toast.makeText(getApplicationContext(), operator, Toast.LENGTH_SHORT).show();*/
-         //   }
-        //});
-
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.d("PaymentItemClick", "position: " + i);
-        Toast.makeText(this, "PaymentItemClick", Toast.LENGTH_SHORT).show();
     }
 
 
