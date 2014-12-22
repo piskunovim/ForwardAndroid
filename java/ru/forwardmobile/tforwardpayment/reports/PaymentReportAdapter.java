@@ -56,7 +56,7 @@ public class PaymentReportAdapter extends ArrayAdapter<IPayment> {
         holder.endDateTitle.setText(Dates.Format(payment.getDateOfProcess(),"dd/MM/yyyy HH:mm"));
         holder.phoneNumberTitle.setText(payment.getTarget().getValue().getDisplayValue());
         holder.psTitle.setText(payment.getPsTitle());
-        holder.amountValue.setText(payment.getValue() + "/" + payment.getFullValue());
+        holder.amountValue.setText(payment.getValue() + " руб. /" + payment.getFullValue() + " руб.");
 
         return convertView;
     }

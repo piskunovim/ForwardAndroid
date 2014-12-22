@@ -14,6 +14,10 @@
     <dimen name="main_page_orangeHeader">14sp</dimen>           <!-- ` Размер заголовков меню  на главной ( оранжевые )  -->
     <dimen name="main_page_block_descriptions">10sp</dimen>     <!-- ` Размер описания блоков меню  на главной  -->
 
+    <!-- ` РАЗДЕЛ УВЕДОМЛЕНИЙ -->
+    <dimen name="notify_orangeHeader">16sp</dimen>           <!-- ` Размер заголовков меню  на главной ( оранжевые )  -->
+    <dimen name="notify_block_message">14sp</dimen>     <!-- ` Размер описания блоков меню  на главной  -->
+
 
     <!-- РАЗДЕЛ ИНФОРМАЦИЯ О ДИЛЕРЕ -->
     <dimen name="dealer_info_orangeHeader">14sp</dimen>         <!-- ` Размер заголовков в разделе " Информация о дилере " ( оранжевые )  -->

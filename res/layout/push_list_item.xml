@@ -7,27 +7,53 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
+    <!-- Содержимое -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:baselineAligned="true"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/itemData"
+        <!-- ` Иконка -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:gravity="center_vertical"
-            />
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/payments_systems"
+                android:src="@drawable/dot_icon"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/itemText"
-            android:layout_width="wrap_content"
+
+
+        <!-- Текст -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:gravity="center_vertical"
-            />
+            android:orientation="vertical"
+            android:layout_weight="6"
+            android:layout_margin="2dp"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/itemData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2014-12-09 17:33:29"
+                android:textSize="@dimen/notify_orangeHeader"
+                android:textColor="@color/forward_orange"
+                android:layout_marginBottom="1dp"
+                />
+            <TextView
+                android:id="@+id/itemText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Тут содержимое"
+                android:textSize="@dimen/notify_block_message"/>
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
-

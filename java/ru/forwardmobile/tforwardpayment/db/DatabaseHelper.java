@@ -125,9 +125,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqld.execSQL("CREATE TABLE " + MESSAGES_TABLE_NAME
                 + "(id integer primary key, type integer, messageText text, regDate text)");
 
-        sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('11', '1', 'Я первое сообщение', '1111');");
-        sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('21', '1', 'Я второе сообщение', '2222');");
-        sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('31', '1', 'Я третье сообщение', '3333');");
+        sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('11', '1', 'Новых уведомлений нет', '1111');");
+        sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('21', '1', 'Новых уведомлений нет', '2222');");
+        sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('31', '1', 'Новых уведомлений нет', '3333');");
 
         sqld.execSQL("CREATE TABLE " + DEALER_TABLE_NAME + " (id integer primary key, name text, balance text, may_expend text, credit text, retention_amount text, fee text, summ_fuftutres text, fio text, phone text, email text)");
 

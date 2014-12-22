@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class PageNotifications  extends ActionBarActivity {
 
     ListView listView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,29 @@ public class PageNotifications  extends ActionBarActivity {
         Log.d(LOG_TAG, "Initialize PageNotifications");
 
         listView = (ListView)findViewById(R.id.listView);
+
+        Button btnUpdate = (Button) findViewById(R.id.btn_update);
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                arrayListDate = new ArrayList<String>();
+                arrayListMessages = new ArrayList<String>();
+                NotifyArrayAdapter adapter = getPushNotifications();
+
+                listView.setAdapter(adapter);
+            }
+        });
+
+        NotifyArrayAdapter adapter = getPushNotifications();
+
+        listView.setAdapter(adapter);
+
+        applyFonts( findViewById(R.id.notifyActivityContainer) ,null);
+
+    }
+
+    public NotifyArrayAdapter getPushNotifications(){
 
         MessageParser messageParser = new MessageParser(this);
         messageParser.execute();
@@ -85,10 +110,7 @@ public class PageNotifications  extends ActionBarActivity {
         Log.d(LOG_TAG, "arrayListDate.length = " + arrayListDate.size() +"; arrayListMessages = " + arrayListMessages.size());
         NotifyArrayAdapter adapter = new NotifyArrayAdapter(PageNotifications.this, arrayListDate.toArray(new String[arrayListDate.size()]), arrayListMessages.toArray(new String[arrayListMessages.size()]));
 
-        listView.setAdapter(adapter);
-
-        applyFonts( findViewById(R.id.notifyActivityContainer) ,null);
-
+        return adapter;
     }
 
     public class NotifyArrayAdapter extends ArrayAdapter<String> {
