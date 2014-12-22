@@ -2,10 +2,11 @@
 <!-- ` ПЛАТЕЖ УСПЕШЕН. Обертка с серым абрисом -->
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/payment_row_env"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@drawable/button_selector"
     android:padding="3pt"
+    android:duplicateParentState="true"
     android:layout_marginBottom="10dp">
 
     <!-- Блок вертикальной отцентровки. Белая заливка -->
@@ -14,10 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
         android:background="@drawable/main_page_btn_events"
-        android:padding="3dp"
-        android:clickable="true">
+        android:padding="3dp">
 
         <!-- Блок статусов -->
         <LinearLayout

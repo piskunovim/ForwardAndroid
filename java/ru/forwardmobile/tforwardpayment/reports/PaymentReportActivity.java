@@ -22,6 +22,8 @@ import ru.forwardmobile.tforwardpayment.spp.impl.PaymentDaoImpl;
  */
 public class PaymentReportActivity extends AbstractBaseActivity implements AdapterView.OnItemClickListener {
 
+    static final String LOGGER = PaymentReportActivity.class.getName();
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -31,6 +33,7 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_paymentlist);
 
         ListView paymentList = (ListView) findViewById(R.id.listView);
@@ -42,6 +45,8 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
         paymentList.setAdapter(paymentReportAdapter);
 
         paymentList.setOnItemClickListener(this);
+
+        Log.i(LOGGER, "Мы здесь!");
 
        /* paymentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,6 +93,7 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
         //});
 
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
