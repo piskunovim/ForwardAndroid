@@ -3,9 +3,12 @@ package ru.forwardmobile.tforwardpayment;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +22,7 @@ import ru.forwardmobile.tforwardpayment.settings.SettingsItems;
 public class PageSettings extends ActionBarActivity {
 
     final static String LOG_TAG = "TFORWARD.PageSettings";
-    SettingsItems testBtn, testText, testEditable, operatorsBtn;
+    SettingsItems testBtn, testText, testEditable, operatorsBtn,passwordWidget;
 
 
     @Override
@@ -54,14 +57,18 @@ public class PageSettings extends ActionBarActivity {
 
         // Для добавления поля ввода с заголовком используем createEditSettings,
         // но если заголовок не нужен, используем createEditText
-        testEditable.createEditSettings(this, "Агент:","Иванов Иван Иванович");
+        testEditable.createTextView(this, "Агент: Иванов Иван Иванович");
         someSetting.addItem(testEditable, viewGroup);
 
-        testEditable.createEditSettings(this, "Номер точки:","1197");
+        testEditable.createTextView(this, "Номер точки: 1197");
         someSetting.addItem(testEditable, viewGroup);
 
-        testEditable.createEditSettings(this, "Пароль:", "******");
-        someSetting.addItem(testEditable, viewGroup);
+        passwordWidget = new SettingsItems(this);
+        passwordWidget.createEditSettings(this, "Пароль:", "******");
+        passwordWidget.getEditText().setRawInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        passwordWidget.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
+        someSetting.addItem(passwordWidget, viewGroup);
+
 
         //Создадим кнопку, чтобы сохранить изменения
         testBtn.createButton(this,"Сохранить");
@@ -75,9 +82,22 @@ public class PageSettings extends ActionBarActivity {
         testBtn.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String password = testEditable.getEditText().getText().toString();
+                String password = passwordWidget.getEditText().getText().toString();
+
+                if(password == null || password.length() == 0) {
+                    Toast.makeText(PageSettings.this, "Вы не ввели пароль!", Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
+                if(password.contains("*")) {
+                    Toast.makeText(PageSettings.this, "Пароль не изменен! Строка содержит недопустимые символы.", Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+
                 TSettings.setAuthenticationPass(password, PageSettings.this);
-                Toast.makeText(PageSettings.this, password, Toast.LENGTH_LONG).show();
+                Toast.makeText(PageSettings.this, "Пароль успешно изменен!", Toast.LENGTH_LONG).show();
             }
         });
 
