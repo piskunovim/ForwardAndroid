@@ -1,28 +1,40 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.util.Map;
+
+import ru.forwardmobile.tforwardpayment.actions.UpdateApplicationFromLocalRepo;
+import ru.forwardmobile.tforwardpayment.actions.UpdateCheckTask;
 import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
 import ru.forwardmobile.tforwardpayment.settings.GroupSettingsItems;
 import ru.forwardmobile.tforwardpayment.settings.SettingsItems;
+import ru.forwardmobile.util.android.ITaskListener;
 
 /**
  * Created by PiskunovI on 28.08.2014.
  */
-public class PageSettings extends ActionBarActivity {
+public class PageSettings extends ActionBarActivity implements View.OnClickListener {
 
     final static String LOG_TAG = "TFORWARD.PageSettings";
-    SettingsItems testBtn, testText, testEditable, operatorsBtn,passwordWidget;
+    SettingsItems testBtn, testText, testEditable, operatorsBtn,passwordWidget,updateCheckBtn;
 
 
     @Override
@@ -47,7 +59,8 @@ public class PageSettings extends ActionBarActivity {
         testBtn = new SettingsItems(this);
         //Operators
         operatorsBtn = new SettingsItems(this);
-
+        // Version
+        updateCheckBtn = new SettingsItems(this);
 
 
         //Просто добавим какой-нибудь TextView
@@ -77,7 +90,10 @@ public class PageSettings extends ActionBarActivity {
         operatorsBtn.createButton(this,"Обновить operators.xml");
         someSetting.addItem(operatorsBtn, viewGroup);
 
-
+        updateCheckBtn.createButton(this,"Проверить обновление");
+        someSetting.addItem(updateCheckBtn, viewGroup);
+        updateCheckBtn.getButton()
+                .setOnClickListener(this);
 
         testBtn.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,4 +162,90 @@ public class PageSettings extends ActionBarActivity {
     }
 
 
+    @Override
+    public void onClick(View view) {
+        if(updateCheckBtn.getButton().equals(view)) {
+            checkForUpdate();
+        }
+    }
+
+    private void checkForUpdate() {
+        AsyncTask checkTask = new UpdateCheckTask(this, new ITaskListener() {
+            @Override
+            public void onTaskFinish(Object result) {
+                // Ошибка запроса
+                if(result == null) {
+                    Toast.makeText(PageSettings.this, "Ошибка запроса актуальной версии, пожалуйста, повторите запрос позже.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Map info = (Map) result;
+                Integer code = Integer.valueOf((String) info.get("version"));
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(PageSettings.this);
+                if(code > TSettings.VERSION_CODE) {
+                    builder.setTitle("Доступно обновление!");
+
+                    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                            PageSettings.this,
+                            android.R.layout.select_dialog_item);
+
+                    arrayAdapter.add("Обновить с ForwardMobile");
+                    builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            updateFromLocalRepository();
+                        }
+                    });
+                    builder.setPositiveButton("Пропустить", null);
+                } else {
+                    builder.setTitle("Обновление не требуется");
+                    builder.setMessage("Установлена актуальная версия приложения.");
+                    builder.setPositiveButton("Ок", null);
+                }
+
+                builder.show();
+            }
+        });
+
+        checkTask.execute();
+    }
+
+    private void updateFromLocalRepository() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Обратите внимание!");
+        builder.setMessage("На ваше устройство будет загружена новая версия приложения для приема платежей. " +
+                "По окончании загрузки запустится мастер установки. Ваши данные не будут затронуты при обновлении.");
+        builder.setPositiveButton("Хорошо", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                AsyncTask task = new UpdateApplicationFromLocalRepo(PageSettings.this, new ITaskListener() {
+                    @Override
+                    public void onTaskFinish(Object result) {
+                        Integer statusCode = (Integer) result;
+                        if(statusCode == 1) {
+
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/download/" + "app.apk")),
+                                    "application/vnd.android.package-archive");
+                            startActivity(intent);
+
+                        } else {
+                            Toast.makeText(PageSettings.this, "При обновлении произошла ошибка. Попробуйте позже", Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    }
+                });
+
+                task.execute();
+            }
+        });
+
+        builder.setNegativeButton("Не сейчас", null);
+        builder.show();
+    }
 }
