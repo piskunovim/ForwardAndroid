@@ -32,11 +32,11 @@ public class TSettings extends Properties {
     public static final String MAXIMUM_TRY_COUNT        = "maximum_try_count";
     public static final char   CRLF                     = '\n';
 
-    public static final Integer VERSION_CODE            = 100;
-    public static final String  LOCAL_REPOSITORY_URL    = "http://192.168.1.4/files/android/payment.apk";
+    public static final Integer VERSION_CODE            = 101;
+    public static final String  LOCAL_REPOSITORY_URL    = "http://www.forwardmobile.ru/files/android/payment.apk";
 
     public static String getVersion() {
-        return "Android 1.0 (Build 201405161511)";
+        return "Android_101";
     }
     
     /**

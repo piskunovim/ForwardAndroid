@@ -70,11 +70,11 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
 
         // Для добавления поля ввода с заголовком используем createEditSettings,
         // но если заголовок не нужен, используем createEditText
-        testEditable.createTextView(this, "Агент: Иванов Иван Иванович");
-        someSetting.addItem(testEditable, viewGroup);
+        //testEditable.createTextView(this, "Агент: Иванов Иван Иванович");
+        //someSetting.addItem(testEditable, viewGroup);
 
-        testEditable.createTextView(this, "Номер точки: 1197");
-        someSetting.addItem(testEditable, viewGroup);
+        //testEditable.createTextView(this, "Номер точки: ");
+        //someSetting.addItem(testEditable, viewGroup);
 
         passwordWidget = new SettingsItems(this);
         passwordWidget.createEditSettings(this, "Пароль:", "******");
@@ -230,7 +230,7 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
                         if(statusCode == 1) {
 
                             Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/download/" + "app.apk")),
+                            intent.setDataAndType(Uri.fromFile(new File(getFilesDir() + "/" +  "app.apk")),
                                     "application/vnd.android.package-archive");
                             startActivity(intent);
 

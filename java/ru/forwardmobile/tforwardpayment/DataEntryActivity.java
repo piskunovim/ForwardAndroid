@@ -105,6 +105,10 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
     /** Вызывается для создания полей ввода */
     protected void createFieldView() {
 
+        // Подставляем название провайдера
+        ((TextView) findViewById(R.id.mde_provider_name))
+                .setText(provider.getName());
+
         // Подготовка контейнера
         ViewGroup fieldGroup = (ViewGroup) findViewById(R.id.mde_fields_container);
 

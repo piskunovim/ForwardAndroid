@@ -21,7 +21,7 @@
         android:padding="5dp">
 
         <!-- ` ПЛАТЕЖ УСПЕШЕН. Обертка с серым абрисом -->
-        <LinearLayout android:id="@+id/LinearLayout01"
+        <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="@drawable/button_selector"
@@ -30,7 +30,7 @@
 
             <!-- Блок вертикальной отцентровки. Белая заливка -->
             <LinearLayout
-                android:id="@+id/payments_button"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -52,7 +52,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingLeft="10dp">
+                        android:paddingLeft="10dp"
+                        android:paddingRight="0dp">
 
                         <!-- Статус  -->
                         <LinearLayout
@@ -68,7 +69,6 @@
                                 android:textStyle="bold"
                                 android:minWidth="50dp"/>
                             <TextView
-                                android:id="@+id/pay_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Проведен"
@@ -191,7 +191,7 @@
 
 
         <!-- ` ПЛАТЕЖ ЗАВЕРШЕН ОШИБКОЙ. Обертка с серым абрисом -->
-        <LinearLayout android:id="@+id/LinearLayout01"
+        <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="@drawable/button_selector"
@@ -200,8 +200,7 @@
 
             <!-- Блок вертикальной отцентровки. Белая заливка -->
             <LinearLayout
-                android:id="@+id/payments_button"
-                android:layout_width="match_parent"
+                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
@@ -240,7 +239,6 @@
                                 android:textStyle="bold"
                                 android:minWidth="50dp"/>
                             <TextView
-                                android:id="@+id/pay_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
@@ -262,7 +260,6 @@
                                 android:textSize="11sp"
                                 android:minWidth="50dp"/>
                             <TextView
-                                android:id="@+id/pay_date_begin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
@@ -283,7 +280,6 @@
                                 android:textSize="11sp"
                                 android:minWidth="50dp"/>
                             <TextView
-                                android:id="@+id/pay_date_end"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
@@ -320,7 +316,7 @@
                         android:padding="2dp">
 
                         <!-- Номер телефона -->
-                        <TextView android:id="@+id/pay_fields"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="+7 9619002545"
@@ -329,7 +325,7 @@
                             android:textStyle="bold"/>
 
                         <!-- Сотовый оператор -->
-                        <TextView android:id="@+id/pay_psid"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Билайн"
@@ -354,7 +350,6 @@
 
                         <!-- Сумма -->
                         <TextView
-                            android:id="@+id/pay_sum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="250.00 р."
@@ -368,7 +363,7 @@
 
 
         <!-- ` ПЛАТЕЖ ОТМЕНЕН. Обертка с серым абрисом -->
-        <LinearLayout android:id="@+id/LinearLayout01"
+        <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="@drawable/button_selector"
@@ -377,7 +372,6 @@
 
             <!-- Блок вертикальной отцентровки. Белая заливка -->
             <LinearLayout
-                android:id="@+id/payments_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -417,7 +411,6 @@
                                 android:textStyle="bold"
                                 android:minWidth="50dp"/>
                             <TextView
-                                android:id="@+id/pay_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
@@ -439,7 +432,6 @@
                                 android:textSize="11sp"
                                 android:minWidth="50dp"/>
                             <TextView
-                                android:id="@+id/pay_date_begin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
@@ -460,7 +452,6 @@
                                 android:textSize="11sp"
                                 android:minWidth="50dp"/>
                             <TextView
-                                android:id="@+id/pay_date_end"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
@@ -497,7 +488,7 @@
                         android:padding="2dp">
 
                         <!-- Номер телефона -->
-                        <TextView android:id="@+id/pay_fields"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="+7 9619002545"
@@ -506,7 +497,7 @@
                             android:textStyle="bold"/>
 
                         <!-- Сотовый оператор -->
-                        <TextView android:id="@+id/pay_psid"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Билайн"
@@ -531,7 +522,7 @@
 
                         <!-- Сумма -->
                         <TextView
-                            android:id="@+id/pay_sum"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="250.00 р."

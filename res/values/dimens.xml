@@ -38,4 +38,6 @@
     <dimen name="payment_list_number">17sp</dimen>              <!-- ` Размер поля " Номер Телефона " в списке платежей  -->
     <dimen name="payment_list_sum">17sp</dimen>                 <!-- ` Размер поля " Сумма " в списке платежей  -->
 
+    <!-- ЗАГОЛОВОК ПРИ ПРОВЕДЕНИИ ПЛАТЕЖА -->
+    <dimen name="mde_provider_title">24sp</dimen>
 </resources>

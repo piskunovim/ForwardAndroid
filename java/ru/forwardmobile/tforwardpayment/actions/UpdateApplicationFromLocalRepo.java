@@ -2,6 +2,7 @@ package ru.forwardmobile.tforwardpayment.actions;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -51,18 +52,17 @@ public class UpdateApplicationFromLocalRepo extends AbstractTask {
         HttpEntity content = response.getEntity();
 
 
-        String PATH = Environment.getExternalStorageDirectory() + "/download/";
-        File file = new File(PATH);
-        file.mkdirs();
-        File outputFile = new File(file, "app.apk");
-        FileOutputStream fos = new FileOutputStream(outputFile);
+        FileOutputStream fos = getContext().openFileOutput("app.apk", Context.MODE_WORLD_READABLE);
 
         InputStream is = content.getContent();
 
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[256 * 1024];
         int len1 = 0;
+        int realRead = 0;
         while ((len1 = is.read(buffer)) != -1) {
             fos.write(buffer, 0, len1);
+            realRead += len1;
+            Log.i(UpdateApplicationFromLocalRepo.class.getName(), "Downloaded: " + realRead);
         }
         fos.close();
         is.close();

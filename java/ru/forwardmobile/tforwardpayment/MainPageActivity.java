@@ -279,6 +279,12 @@ public class MainPageActivity extends AbstractBaseActivity {
     }
 
     private void onExit() {
+
+        stopPaymentQueue();
+        DatabaseHelper helper = new DatabaseHelper(this);
+        helper.saveSettings();
+        helper.close();
+
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -296,13 +302,6 @@ public class MainPageActivity extends AbstractBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        stopPaymentQueue();
-        DatabaseHelper helper = new DatabaseHelper(this);
-        helper.saveSettings();
-        helper.close();
-
-        this.finish();
     }
 }
 
