@@ -1,6 +1,10 @@
 package ru.forwardmobile.tforwardpayment.settings;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.print.PrintAttributes;
+import android.support.v4.view.MarginLayoutParamsCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +34,13 @@ public class SettingsItems extends LinearLayout{
     public void createButton(Context context, String buttonText){
         Button = new Button(context);
         Button.setText(buttonText);
-        Button.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        LinearLayout.LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,10,0,10);
+
+        Button.setLayoutParams(params);
+        Button.setBackgroundResource(R.drawable.gardient_login_form_button);
+        Button.setTextColor(Color.parseColor("#FFFFFF"));
     }
 
     public Button getButton(){
@@ -62,7 +72,7 @@ public class SettingsItems extends LinearLayout{
         Title = new TextView(context);
         Title.setText(text);
         Title.setTextSize(20);
-        Title.setBackground(getResources().getDrawable(R.drawable.gardient_login_form_button));
+        Title.setPadding(0, 40, 0, 0);
         Title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 
