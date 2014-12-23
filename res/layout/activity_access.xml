@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:paddingTop="20dp"
-    android:clickable="true">
+    android:clickable="true"
+    android:id="@+id/access_activity_layout">
 
 
 

@@ -1,5 +1,6 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
 import ru.forwardmobile.tforwardpayment.settings.GroupSettingsItems;
 import ru.forwardmobile.tforwardpayment.settings.SettingsItems;
+import ru.forwardmobile.util.android.ITaskListener;
 
 /**
  * Created by PiskunovI on 28.08.2014.
@@ -105,8 +107,25 @@ public class PageSettings extends ActionBarActivity {
         operatorsBtn.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GetOperatorsXML getOperators = new GetOperatorsXML(PageSettings.this);
+                //GetOperatorsXML getOperators = new GetOperatorsXML(PageSettings.this,);
+                //getOperators.execute();
+                // Загрузка operators.xml
+                GetOperatorsXML getOperators = new GetOperatorsXML(PageSettings.this, new ITaskListener() {
+                    @Override
+                    public void onTaskFinish(Object result) {
+                        Integer status = (Integer) result;
+
+                        if (status == 1)
+                        {
+                            Toast.makeText(PageSettings.this,"Operators.xml успешно загружен!", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(PageSettings.this,"Ошибка загрузки operators.xml", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 getOperators.execute();
+
             }
         });
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import java.util.HashSet;
 
 import ru.forwardmobile.tforwardpayment.app.SettingsLoader;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
+import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
 import ru.forwardmobile.tforwardpayment.operators.OperatorsLoadListener;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineFactory;
@@ -157,6 +159,10 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
         for(onLoadListener listener: loadListeners) {
             listener.beforeApplicationStart(this);
         }
+
+        //получаем информацию о дилере и записываем в базу
+        //DealerInfo dealerInfo = new DealerInfo((ViewGroup)findViewById(R.id.access_activity_layout), this);
+        //dealerInfo.getDealerInfo();
     }
 
     @Override

@@ -61,7 +61,10 @@ public class MainPageActivity extends AbstractBaseActivity {
 
             // метод заполняет информационный блок дилера данными
             DealerInfo dealerInfo = new DealerInfo(view, this);
+
+            // почему-то это закомментировали, можно удалить
             dealerInfo.getDealerInfo(); // запрашиваем информацию
+
             dealerInfo.getBlockInfo();  // выводим в блок
 
             // = кнопка "Проведение платежей"
