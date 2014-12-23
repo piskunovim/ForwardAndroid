@@ -50,7 +50,7 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
         DealerInfo dealerInfo = new DealerInfo(view, this);
 
         // почему-то это закомментировали, можно удалить
-        dealerInfo.getDealerInfo();
+        // dealerInfo.getDealerInfo();
 
         dealerInfo.getBlockInfo();
 

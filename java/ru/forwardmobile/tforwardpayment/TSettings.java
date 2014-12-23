@@ -22,6 +22,7 @@ public class TSettings extends Properties {
     private static final String LOGGER_TAG              = "TFORWARD.TSETTINGS";
     public static final String POINT_ID                 = "pointid";
     public static final String REG_ID                   = "regid";
+    public static final String DEALERS_NAME             = "dealers_name";
     public static final String SERVER_HOST              = "server_host";
     public static final String SERVER_PORT              = "server_port";
     public static final String NODE_HOST                = "node_host";

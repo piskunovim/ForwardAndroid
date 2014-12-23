@@ -63,7 +63,7 @@ public class MainPageActivity extends AbstractBaseActivity {
             DealerInfo dealerInfo = new DealerInfo(view, this);
 
             // почему-то это закомментировали, можно удалить
-            dealerInfo.getDealerInfo(); // запрашиваем информацию
+            //dealerInfo.getDealerInfo(); // запрашиваем информацию
 
             dealerInfo.getBlockInfo();  // выводим в блок
 

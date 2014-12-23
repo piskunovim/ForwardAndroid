@@ -161,8 +161,8 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
         }
 
         //получаем информацию о дилере и записываем в базу
-        //DealerInfo dealerInfo = new DealerInfo((ViewGroup)findViewById(R.id.access_activity_layout), this);
-        //dealerInfo.getDealerInfo();
+        DealerInfo dealerInfo = new DealerInfo((ViewGroup)findViewById(R.id.access_activity_layout), this);
+        dealerInfo.getDealerInfo();
     }
 
     @Override
