@@ -57,8 +57,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="MTC"
-                        android:textSize="42dp"
+                        android:textSize="@dimen/mde_provider_title"
                         android:id="@+id/mde_provider_name"
                     />
 
