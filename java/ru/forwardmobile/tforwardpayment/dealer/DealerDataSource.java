@@ -63,7 +63,7 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
     public static String dealerSummFuftutres;
 
     // = номер точки
-    //public static String dealersPoint;
+    // public static String dealersPoint;
 
     // = невыплаченное вознаграждение
     public static String dealerFee;
@@ -142,7 +142,8 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
 
                 JsonObject o = new JsonParser().parse(JSONString).getAsJsonObject();
 
-                /*dealersName = o.getAsJsonPrimitive("title").toString().substring(1,o.getAsJsonPrimitive("title").toString().length()-1);
+                /*
+                dealersName = o.getAsJsonPrimitive("title").toString().substring(1,o.getAsJsonPrimitive("title").toString().length()-1);
                 dealersBalance = o.getAsJsonPrimitive("account").toString().substring(1,o.getAsJsonPrimitive("account").toString().length()-1);
                 dealersCredit = o.getAsJsonPrimitive("credit").toString().substring(1,o.getAsJsonPrimitive("credit").toString().length()-1);
                 dealersRealMoney = o.getAsJsonPrimitive("may_expend").toString().substring(1,o.getAsJsonPrimitive("may_expend").toString().length()-1);

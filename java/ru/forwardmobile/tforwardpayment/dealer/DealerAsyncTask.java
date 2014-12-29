@@ -17,7 +17,6 @@ public class DealerAsyncTask extends AsyncTask<Object,Void,String> {
     @Override
     protected String doInBackground(Object[] objects) {
         try {
-            //URL url = new URL("http://192.168.1.242:3000/dealers_info/"+ TSettings.get("pointid"));
             URL url = new URL("http://"+TSettings.get(TSettings.NODE_HOST)+":"+TSettings.get(TSettings.NODE_PORT)+"/dealers_info/"+ TSettings.get(TSettings.POINT_ID));
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             InputStream in = new BufferedInputStream(connection.getInputStream());

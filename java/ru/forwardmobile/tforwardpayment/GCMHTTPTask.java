@@ -26,7 +26,7 @@ public class GCMHTTPTask extends AsyncTask<Void,Void,Void> {
             Log.d(LOG_TAG +" RegID", TSettings.get(TSettings.REG_ID));
             String encodedRegID = URLEncoder.encode(TSettings.get(TSettings.REG_ID), "UTF-8");
             String phonenumber = "111111";
-            //URL url = new URL("http://192.168.1.242:3000/send_reg_id/"+ phonenumber + "/"+ encodedRegID);
+
             URL url = new URL("http://"+TSettings.get(TSettings.NODE_HOST)+":"+TSettings.get(TSettings.NODE_PORT)+"/send_reg_id/"+ phonenumber + "/"+ encodedRegID);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 

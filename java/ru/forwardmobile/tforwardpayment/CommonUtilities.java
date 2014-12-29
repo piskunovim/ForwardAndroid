@@ -6,6 +6,8 @@ package ru.forwardmobile.tforwardpayment;
 import android.content.Context;
 import android.content.Intent;
 
+import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
+
 public final class CommonUtilities {
 
     // указываем url сервера регистрации здесь
@@ -38,4 +40,5 @@ public final class CommonUtilities {
         intent.putExtra(EXTRA_MESSAGE, message);
         context.sendBroadcast(intent);
     }
+
 }

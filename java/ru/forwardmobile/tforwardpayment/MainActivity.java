@@ -84,7 +84,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         applyFonts(findViewById(R.id.activity_main_container), null);
 
         //задаем найстройки работы сервера
-        getServerParams(REAL_SERVER);
+        //getServerParams(REAL_SERVER);
+        getServerParams(TEST_SERVER);
 
         //Получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
