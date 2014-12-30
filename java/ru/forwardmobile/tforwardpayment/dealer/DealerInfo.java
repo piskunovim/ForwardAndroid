@@ -168,6 +168,8 @@ public class DealerInfo {
         managerPhone = o.getAsJsonPrimitive("phone").toString().substring(1, o.getAsJsonPrimitive("phone").toString().length() - 1);
         managerEmail = o.getAsJsonPrimitive("email").toString().substring(1, o.getAsJsonPrimitive("email").toString().length() - 1);
 
+        TSettings.set(TSettings.DEALERS_NAME, dealersName);
+
         ContentValues cv = new ContentValues();
 
         DatabaseHelper dbHelper = new DatabaseHelper(context);

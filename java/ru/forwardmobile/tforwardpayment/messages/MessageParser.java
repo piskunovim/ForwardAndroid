@@ -47,8 +47,7 @@ public class MessageParser extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            //URL url = new URL("http://192.168.1.242:3000/get_notifications_queue/"+ TSettings.get("regid")); //в качестве параметра reg_id
-            URL url = new URL("http://"+TSettings.get(TSettings.NODE_HOST)+":"+TSettings.get(TSettings.NODE_PORT)+"/get_notifications_queue/"+ TSettings.get("regid")); //в качестве параметра reg_id
+            URL url = new URL("http://"+TSettings.get(TSettings.NODE_HOST)+":"+TSettings.get(TSettings.NODE_PORT)+"/get_notifications_queue/"+ TSettings.get(TSettings.REG_ID)); //в качестве параметра reg_id
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
             InputStream in = new BufferedInputStream(connection.getInputStream());

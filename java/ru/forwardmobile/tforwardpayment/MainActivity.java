@@ -35,6 +35,7 @@ import com.google.android.gcm.GCMRegistrar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
+import ru.forwardmobile.util.android.ITaskListener;
 
 public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
@@ -83,6 +84,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         applyFonts(findViewById(R.id.activity_main_container), null);
 
         //задаем найстройки работы сервера
+        //getServerParams(REAL_SERVER);
         getServerParams(TEST_SERVER);
 
         //Получаем идентификаторы точки доступа и пароль
@@ -116,15 +118,17 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
 
     public void SignIn(String pointid, String password){
+
+        TSettings.set(TSettings.POINT_ID, pointid);
+
         pd = new TPostData(this);
-        TSettings.set("pointid",pointid);
         pd.pointID = pointid;
         pd.password = password;
         pd.execute();
     }
 
 
-    public void onSignIn(String responseStr) {
+    public void onSignIn(final String responseStr) {
 
         Log.i(LOG_TAG, "Login result: " + responseStr);
 
@@ -137,15 +141,25 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             }
 
             // Загрузка operators.xml
-            GetOperatorsXML getOperators = new GetOperatorsXML(this);
+            GetOperatorsXML getOperators = new GetOperatorsXML(this, new ITaskListener() {
+                @Override
+                public void onTaskFinish(Object result) {
+                    Integer status = (Integer) result;
+
+                    if (status == 1)
+                    {
+                        Intent intent = new Intent(MainActivity.this, MainAccessActivity.class);
+                        intent.putExtra(EXTRA_MESSAGE, responseStr);
+                        // запуск activity
+                        startActivity(intent);
+                        MainActivity.this.finish();
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this,"Ошибка загрузки operators.xml", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
             getOperators.execute();
-
-            Intent intent = new Intent(this, MainAccessActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, responseStr);
-
-            // запуск activity
-            startActivity(intent);
-            this.finish();
 
         } else {
             new AlertDialog.Builder(this)

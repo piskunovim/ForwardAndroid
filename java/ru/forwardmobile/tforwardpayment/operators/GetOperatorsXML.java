@@ -19,40 +19,25 @@ import java.io.IOException;
 import ru.forwardmobile.tforwardpayment.MainActivity;
 import ru.forwardmobile.tforwardpayment.TParseOperators;
 import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.util.android.AbstractTask;
+import ru.forwardmobile.util.android.ITaskListener;
 
 /**
  * Created by PiskunovI on 10.11.2014.
  */
-public class GetOperatorsXML extends AsyncTask<String,Void,Boolean> {
-    private Context mContext;
-    ProgressDialog dialog;
-    public GetOperatorsXML (Context context){
-        mContext = context;
-        dialog = new ProgressDialog(mContext);
-        dialog.setTitle("Загрузка");
-        dialog.setMessage("Пожалуйста ждите.");
+public class GetOperatorsXML extends AbstractTask {
+
+
+    public GetOperatorsXML (Context context, ITaskListener listener){
+        super(listener, context);
     }
 
-
-
-
-
-
-
-  /*  @Override
-    protected void onPreExecute() {
-
-        dialog.show();
-        super.onPreExecute();
-    }
-*/
 
     @Override
-    protected Boolean doInBackground(String... strings) {
+    protected Object doInBackground(Object... strings) {
         String Tag = "HTTPConnectionTag";
         HttpClient httpclient = new DefaultHttpClient();
-        //HttpGet httpget = new HttpGet("http://192.168.1.242:3000/get_operators");
-        //HttpGet httpget = new HttpGet("http://192.168.1.6:3000/get_operators");
+
         HttpGet httpget = new HttpGet("http://"+TSettings.get(TSettings.NODE_HOST)+":"+TSettings.get(TSettings.NODE_PORT)+"/get_operators");
 
         String filename = "operators.xml";
@@ -69,44 +54,26 @@ public class GetOperatorsXML extends AsyncTask<String,Void,Boolean> {
             Log.d(Tag, line);
 
             try {
-                outputStream = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
+                outputStream = getContext().openFileOutput(filename, Context.MODE_PRIVATE);
                 outputStream.write(line.getBytes());
                 outputStream.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return true;
+            return 1;
         }
         catch (ClientProtocolException e) {
             Log.d(Tag, "Ошибка!");
             e.printStackTrace();
-            return false;
+            return 0;
         }
         catch (IOException e) {
-// TODO Auto-generated catch block
+        // TODO Auto-generated catch block
             Log.d(Tag, "Запрос не отправлен!");
             e.printStackTrace();
-            return false;
+            return 0;
         }
 
     }
 
-/*    @Override
-    protected void onPostExecute(Boolean result) {
-         try {
-             if ((this.dialog != null) && this.dialog.isShowing()) {
-                 this.dialog.dismiss();
-             }
-             super.onPostExecute(result);
-         }
-         catch (final IllegalArgumentException e){
-             // Handle or log or ignore
-         }catch (final Exception e) {
-             // Handle or log or ignore
-         } finally {
-             this.dialog = null;
-         }
-
-    }
-    */
 }

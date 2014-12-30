@@ -37,7 +37,8 @@ public final class ServerUtilities {
     public static void register(final Context context, String name, final String regId) {
         Log.i(TAG, "registering device (regId = " + regId + ")");
 
-        TSettings.set("regid",regId);
+        if (regId != null)
+            TSettings.set(TSettings.REG_ID, regId);
 
         GCMHTTPTask gcmhttpTask = new GCMHTTPTask();
         gcmhttpTask.execute();

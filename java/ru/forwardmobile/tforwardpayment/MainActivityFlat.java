@@ -48,7 +48,10 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
         view = (ViewGroup) findViewById(R.id.activity_flat_page_container);
 
         DealerInfo dealerInfo = new DealerInfo(view, this);
-        dealerInfo.getDealerInfo();
+
+        // почему-то это закомментировали, можно удалить
+        // dealerInfo.getDealerInfo();
+
         dealerInfo.getBlockInfo();
 
         Intent intent = getIntent();

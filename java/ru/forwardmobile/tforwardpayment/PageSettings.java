@@ -70,11 +70,11 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
 
         // Для добавления поля ввода с заголовком используем createEditSettings,
         // но если заголовок не нужен, используем createEditText
-        //testEditable.createTextView(this, "Агент: Иванов Иван Иванович");
-        //someSetting.addItem(testEditable, viewGroup);
+        testEditable.createTextView(this, "Агент: " + TSettings.get(TSettings.DEALERS_NAME));
+        someSetting.addItem(testEditable, viewGroup);
 
-        //testEditable.createTextView(this, "Номер точки: ");
-        //someSetting.addItem(testEditable, viewGroup);
+        testEditable.createTextView(this, "Номер точки: " + TSettings.get(TSettings.POINT_ID));
+        someSetting.addItem(testEditable, viewGroup);
 
         passwordWidget = new SettingsItems(this);
         passwordWidget.createEditSettings(this, "Пароль:", "******");
@@ -121,8 +121,26 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
         operatorsBtn.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GetOperatorsXML getOperators = new GetOperatorsXML(PageSettings.this);
+
+                // Загрузка operators.xml
+                GetOperatorsXML getOperators = new GetOperatorsXML(PageSettings.this, new ITaskListener() {
+                    @Override
+                    public void onTaskFinish(Object result) {
+                        Integer status = (Integer) result;
+
+                        if (status == 1)
+                        {
+                            Toast.makeText(PageSettings.this,"Operators.xml загружен успешно!", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(PageSettings.this,"Ошибка загрузки operators.xml", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 getOperators.execute();
+
+                //GetOperatorsXML getOperators = new GetOperatorsXML(PageSettings.this);
+                //getOperators.execute();
             }
         });
 
