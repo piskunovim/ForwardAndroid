@@ -14,7 +14,7 @@ import com.google.gson.JsonParser;
 import java.util.concurrent.ExecutionException;
 
 import ru.forwardmobile.tforwardpayment.R;
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 
 /**
@@ -140,7 +140,7 @@ public class DealerInfo {
 
      try{
         // запрашиваем информацию
-        DealerAsyncTask dealerAsyncTask = new DealerAsyncTask();
+        DealerAsyncTask dealerAsyncTask = new DealerAsyncTask(context);
         dealerAsyncTask.execute();
 
         String JSONString = new String();
@@ -168,7 +168,7 @@ public class DealerInfo {
         managerPhone = o.getAsJsonPrimitive("phone").toString().substring(1, o.getAsJsonPrimitive("phone").toString().length() - 1);
         managerEmail = o.getAsJsonPrimitive("email").toString().substring(1, o.getAsJsonPrimitive("email").toString().length() - 1);
 
-        TSettings.set(TSettings.DEALERS_NAME, dealersName);
+        Settings.set(context, Settings.DEALERS_NAME, dealersName);
 
         ContentValues cv = new ContentValues();
 
@@ -243,7 +243,7 @@ public class DealerInfo {
             dealerMayExpend        = c.getString(c.getColumnIndex("may_expend"));
             dealersCredit          = c.getString(c.getColumnIndex("credit"));
             dealerSummFuftutres    = c.getString(c.getColumnIndex("summ_fuftutres"));
-            dealersPoint           = TSettings.get("pointid").toString();
+            dealersPoint           = Settings.get(context, "pointid").toString();
             dealerFee              = c.getString(c.getColumnIndex("fee"));
             dealerRetentionAmount  = c.getString(c.getColumnIndex("retention_amount"));
             managerName            = c.getString(c.getColumnIndex("fio"));

@@ -15,8 +15,9 @@ public class PaymentQueueManager implements MainAccessActivity.onLoadListener {
     String LOG_TAG = "PaymentQueueManager";
 
     @Override
-    public void beforeApplicationStart(Context context) {
+    public String beforeApplicationStart(Context context) {
         startPaymentQueue(context);
+        return null;
     }
 
     private void startPaymentQueue(Context context) {

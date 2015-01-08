@@ -1,14 +1,14 @@
 package ru.forwardmobile.tforwardpayment.spp.impl;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
-import ru.forwardmobile.tforwardpayment.spp.IProvidersDataSource;
-import ru.forwardmobile.tforwardpayment.spp.ProvidersDataSourceFactory;
 
 /**
  * Created by vaninv on 11.09.2014.
@@ -18,6 +18,11 @@ public class DefaultPaymentImpl extends AbstractPaymentImpl {
     private Integer id = null;
 
     private String title;
+    private final Context context;
+
+    public DefaultPaymentImpl(Context context) {
+        this.context = context;
+    }
 
     @Override
     public Integer getId() {
@@ -147,11 +152,11 @@ public class DefaultPaymentImpl extends AbstractPaymentImpl {
     @Override
     public void errorDelay() {
         incTryCount();
-        if ( tryCount >= TSettings.getInt(TSettings.MAXIMUM_TRY_COUNT, 10)) {
+        if ( tryCount >= Settings.getInt(context, Settings.MAXIMUM_TRY_COUNT, 10)) {
             setStatus(IPayment.FAILED);
             setErrorDescription("Состояние платежа не определено. " + getErrorDescription());
         } else {
-            delay(TSettings.getInt(TSettings.QUEUE_ERROR_DELAY, 60));
+            delay(Settings.getInt(context, Settings.QUEUE_ERROR_DELAY, 60));
         }
     }
 

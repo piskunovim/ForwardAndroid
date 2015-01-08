@@ -64,7 +64,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
                 Collection<IField> fields = parseFields(cursor.getString(3));
 
-                IPayment payment = PaymentFactory.getPayment();
+                IPayment payment = PaymentFactory.getPayment(context);
                 payment.setPsid(cursor.getInt(1));
                 payment.setValue((double) cursor.getInt(4) / 100 );
                 payment.setFullValue((double) cursor.getInt(5) / 100);
@@ -172,7 +172,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
             if(cursor.moveToNext()) {
 
-                IPayment payment = PaymentFactory.getPayment();
+                IPayment payment = PaymentFactory.getPayment(context);
                 payment.setPsid(cursor.getInt(0));
                 payment.setValue( (double) cursor.getInt(2)/100 );
                 payment.setFullValue( (double) cursor.getInt(3)/100 );
@@ -210,7 +210,7 @@ public class PaymentDaoImpl implements IPaymentDao {
 
                 Collection<IField> fields = parseFields(cursor.getString(3));
 
-                IPayment payment = PaymentFactory.getPayment();
+                IPayment payment = PaymentFactory.getPayment(context);
                 payment.setPsid(cursor.getInt(1));
                 payment.setValue((double) cursor.getInt(4) / 100 );
                 payment.setFullValue((double) cursor.getInt(5) / 100);

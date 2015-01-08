@@ -10,8 +10,9 @@ import ru.forwardmobile.tforwardpayment.MainAccessActivity;
 public class OperatorsLoadListener implements MainAccessActivity.onLoadListener {
 
     @Override
-    public void beforeApplicationStart(Context context) {
+    public String beforeApplicationStart(Context context) {
         // вот и все
         OperatorsEntityManagerFactory.getManager(context);
+        return null;
     }
 }

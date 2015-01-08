@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
@@ -70,10 +69,10 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
 
         // Для добавления поля ввода с заголовком используем createEditSettings,
         // но если заголовок не нужен, используем createEditText
-        testEditable.createTextView(this, "Агент: " + TSettings.get(TSettings.DEALERS_NAME));
+        testEditable.createTextView(this, "Агент: " + Settings.get(this, Settings.DEALERS_NAME));
         someSetting.addItem(testEditable, viewGroup);
 
-        testEditable.createTextView(this, "Номер точки: " + TSettings.get(TSettings.POINT_ID));
+        testEditable.createTextView(this, "Номер точки: " + Settings.get(this, Settings.POINT_ID));
         someSetting.addItem(testEditable, viewGroup);
 
         passwordWidget = new SettingsItems(this);
@@ -112,7 +111,7 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
                     return;
                 }
 
-                TSettings.setAuthenticationPass(password, PageSettings.this);
+                Settings.setAuthenticationPass(password, PageSettings.this);
                 Toast.makeText(PageSettings.this, "Пароль успешно изменен!", Toast.LENGTH_LONG).show();
             }
         });
@@ -202,7 +201,7 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
                 Integer code = Integer.valueOf((String) info.get("version"));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(PageSettings.this);
-                if(code > TSettings.VERSION_CODE) {
+                if(code > Settings.VERSION_CODE) {
                     builder.setTitle("Доступно обновление!");
 
                     final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(

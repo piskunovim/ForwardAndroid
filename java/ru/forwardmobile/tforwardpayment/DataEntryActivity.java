@@ -154,7 +154,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
             Map<Integer, String> valueMap = getFieldValues();
 
             // Создаем платеж
-            IPayment payment = PaymentFactory.getPayment();
+            IPayment payment = PaymentFactory.getPayment(DataEntryActivity.this);
 
             // Создаем поля для платежа
             Collection<IField> fields = provider.getFields();
@@ -175,7 +175,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
             Map<Integer, String> valueMap = getFieldValues();
 
             // Создаем платеж
-            IPayment payment = PaymentFactory.getPayment();
+            IPayment payment = PaymentFactory.getPayment(DataEntryActivity.this);
 
             // Создаем поля для платежа
             Collection<IField> fields = provider.getFields();
@@ -277,12 +277,14 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
         final IProvider iProvider;
         final IPayment  iPayment;
+        final Context   context;
 
         public CheckTask(IProvider iProvider, IPayment iPayment, Context ctx, ITaskListener listener) {
             super(listener, ctx);
 
             this.iPayment  = iPayment;
             this.iProvider = iProvider;
+            this.context = ctx;
         }
 
         @Override
@@ -302,7 +304,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
                 HttpTransport transport = new HttpTransport();
                 transport.setCryptEngine(new CryptEngineImpl(getContext()));
-                responseSet = transport.send(request);
+                responseSet = transport.send(request, context);
             }
             catch(Exception e)
             {

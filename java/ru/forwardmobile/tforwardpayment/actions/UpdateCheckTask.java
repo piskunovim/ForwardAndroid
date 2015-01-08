@@ -5,10 +5,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.util.android.AbstractTask;
 import ru.forwardmobile.util.android.ITaskListener;
 import ru.forwardmobile.util.http.IRequest;
@@ -34,8 +33,8 @@ public class UpdateCheckTask extends AbstractTask {
 
         IRequest request = RequestFactory.getRequest();
 
-        request.setHost(TSettings.get(TSettings.NODE_HOST));
-        request.setPort(TSettings.getInt(TSettings.NODE_PORT));
+        request.setHost(Settings.get(getContext(), Settings.NODE_HOST));
+        request.setPort(Settings.getInt(getContext(), Settings.NODE_PORT));
         request.setPath("/info");
         request.setTimeout(30);
 

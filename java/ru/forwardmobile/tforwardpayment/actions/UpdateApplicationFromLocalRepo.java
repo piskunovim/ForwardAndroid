@@ -1,7 +1,6 @@
 package ru.forwardmobile.tforwardpayment.actions;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -10,11 +9,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.util.android.AbstractTask;
 import ru.forwardmobile.util.android.ITaskListener;
 
@@ -32,7 +30,7 @@ public class UpdateApplicationFromLocalRepo extends AbstractTask {
 
         try {
 
-            Update(TSettings.LOCAL_REPOSITORY_URL);
+            Update(Settings.LOCAL_REPOSITORY_URL);
         } catch (Exception ex) {
             ex.printStackTrace();
             return 0;

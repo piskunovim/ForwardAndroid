@@ -21,7 +21,7 @@ import ru.forwardmobile.tforwardpayment.security.KeyStorageFactory;
 /**
  * Created by PiskunovI on 08.05.14.
  */
-public class TParseOperators {
+public class AuthenticationParser {
 
     final String LOG_TAG = "ParserLog";
     Context context;
@@ -29,7 +29,7 @@ public class TParseOperators {
 
     String tmp = "";
 
-public TParseOperators(Context context) {
+public AuthenticationParser(Context context) {
     this.context = context;
     keyStorage   = KeyStorageFactory.getKeyStorage(context);
 }
@@ -37,9 +37,9 @@ public TParseOperators(Context context) {
 /**
  * @deprecated Use constructor with context
  */
-public TParseOperators(){}
+public AuthenticationParser(){}
 
-public void loadSettings(String xmlString) throws Exception {
+public void loadSettings(String xmlString) throws XmlPullParserException, IOException {
 
     DatabaseHelper dbHelper = new DatabaseHelper(context);
     SQLiteDatabase db       = dbHelper.getWritableDatabase();
@@ -103,9 +103,9 @@ public void loadSettings(String xmlString) throws Exception {
                             // Access ID
                             if ("access-id".equals(xpp.getName())) {
                                 Log.d(LOG_TAG, "Saving acces id. " + buffer);
-                                TSettings.set(TSettings.CERTIFICATE_ACESS_ID, buffer);
+                                Settings.set(context, Settings.CERTIFICATE_ACESS_ID, buffer);
                             } else if (insideSettings && "v".equals(xpp.getName())) {
-                                TSettings.set(currentProperty, buffer);
+                                Settings.set(context, currentProperty, buffer);
                             }
                         }
                     }
@@ -123,16 +123,10 @@ public void loadSettings(String xmlString) throws Exception {
             xpp.next();
         }
 
-        // Сохраняем дополнительные настройки в базу
-        dbHelper.saveSettings();
-
         // Подтверждаем изменения
         db.setTransactionSuccessful();
 
         Log.i("PARESER", "Transaction finished");
-    } catch (XmlPullParserException e) {
-        e.printStackTrace();
-        throw new Exception(e);
     } finally {
         // завершаем транзакцию, если до этого вызова не было вызова setTransactionSuccessful(),
         // все изменения, которые успели произойти, откатятся
@@ -275,9 +269,9 @@ public void GetXMLSettings(String xmlstring ) throws Exception {
                         // Access ID
                         if ("access-id".equals(xpp.getName())) {
                             Log.d(LOG_TAG, "Saving acces id. " + buffer);
-                            TSettings.set(TSettings.CERTIFICATE_ACESS_ID, buffer);
+                            Settings.set(context, Settings.CERTIFICATE_ACESS_ID, buffer);
                         } else if (insideSettings && "v".equals(xpp.getName())) {
-                            TSettings.set(currentProperty, buffer);
+                            Settings.set(context, currentProperty, buffer);
                         }
                     }
 
@@ -293,9 +287,6 @@ public void GetXMLSettings(String xmlstring ) throws Exception {
             // следующий элемент
             xpp.next();
         }
-
-        // Сохраняем дополнительные настройки в базу
-        dbHelper.saveSettings();
 
         // Подтверждаем изменения
         db.setTransactionSuccessful();

@@ -49,6 +49,7 @@ public abstract class AbstractTask extends AsyncTask<Object,Object,Object> {
     protected void onPreExecute() {
         if(progressDialog != null) {
             progressDialog.show();
+            progressDialog.setCancelable(false);
         }
         super.onPreExecute();
     }
@@ -56,7 +57,12 @@ public abstract class AbstractTask extends AsyncTask<Object,Object,Object> {
     @Override
     protected final void onPostExecute(Object result) {
         if(progressDialog != null)
-            progressDialog.dismiss();
+            try {
+                progressDialog.dismiss();
+            }
+            catch (Exception ex){
+
+            }
 
         if (listener != null) {
             listener.onTaskFinish(result);

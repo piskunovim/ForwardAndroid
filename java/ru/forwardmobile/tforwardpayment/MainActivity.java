@@ -5,26 +5,21 @@ package ru.forwardmobile.tforwardpayment;
  */
 
 import android.app.AlertDialog;
-import android.app.Service;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.method.PasswordTransformationMethod;
-import android.text.method.TextKeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,9 +28,25 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 
-import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import ru.forwardmobile.tforwardpayment.network.HttpTransport;
+import ru.forwardmobile.tforwardpayment.network.ServerRequestFactory;
 import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
+import ru.forwardmobile.util.DialogSignleton;
 import ru.forwardmobile.util.android.ITaskListener;
+import ru.forwardmobile.util.http.Converter;
+import ru.forwardmobile.util.http.IRequest;
 
 public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
@@ -45,11 +56,10 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     //Инициализация строковой переменной логирования
     final static String LOG_TAG = "TFORWARD.MainActivity";
 
+    ProgressDialog progressDialog = null;
+
     //ID проекта для GCM
     static final String SENDER_ID = "421740259735";
-
-    //Объект передачи сообщения
-    public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
 
     AsyncTask<Void, Void, Void> mRegisterTask;
 
@@ -59,9 +69,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
     EditText etName, etPass;
     Button btnSignIn;
-    TPostData pd;
-    InputMethodManager imm;
-    //Для проверки соединения с сетью Интернет//СonnectionDetector cd;
+    AuthenticationTask at;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +84,10 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         } else {
             initialize();
         }
+
+        if (DialogSignleton.getTaskRunning()){
+          showDialog();
+        }
     }
 
     private void initialize() {
@@ -84,8 +96,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         applyFonts(findViewById(R.id.activity_main_container), null);
 
         //задаем найстройки работы сервера
-        //getServerParams(REAL_SERVER);
-        getServerParams(TEST_SERVER);
+        getServerParams(REAL_SERVER);
 
         //Получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
@@ -96,17 +107,13 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         etName.setOnEditorActionListener(this);
         etPass.setOnEditorActionListener(this);
 
-        if (checkDataBase() && checkForTables()) {
+        if ( Settings.getInt(this, Settings.isAuthenticated, 0) > 0 ) {
             Intent intent = new Intent(this, MainAccessActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, "true");
 
             startActivity(intent);
             this.finish();
-        } else {
-            Log.d(LOG_TAG, "Database does not exists");
         }
 
-        //перенесено из layout
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,61 +126,38 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
     public void SignIn(String pointid, String password){
 
-        TSettings.set(TSettings.POINT_ID, pointid);
+        showDialog();
+        DialogSignleton.setTaskRunning(true);
+        at = new AuthenticationTask();
+        at.pointID = pointid;
+        at.password = password;
+        at.execute();
+    }
 
-        pd = new TPostData(this);
-        pd.pointID = pointid;
-        pd.password = password;
-        pd.execute();
+    private void showDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Загрузка");
+        progressDialog.setMessage("Пожалуйста подождите...");
+        progressDialog.show();
+
+        DialogSignleton.setDialog(progressDialog);
     }
 
 
-    public void onSignIn(final String responseStr) {
+    private void reportError(){
 
-        Log.i(LOG_TAG, "Login result: " + responseStr);
 
-        if (responseStr.length() > 0){
-            try {
-                // Создаем объект Intent для вызова новой Activity
-                RegDevice(etName.getText().toString());
-            }catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-            // Загрузка operators.xml
-            GetOperatorsXML getOperators = new GetOperatorsXML(this, new ITaskListener() {
-                @Override
-                public void onTaskFinish(Object result) {
-                    Integer status = (Integer) result;
-
-                    if (status == 1)
-                    {
-                        Intent intent = new Intent(MainActivity.this, MainAccessActivity.class);
-                        intent.putExtra(EXTRA_MESSAGE, responseStr);
-                        // запуск activity
-                        startActivity(intent);
-                        MainActivity.this.finish();
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Ошибка авторизации")
+                .setMessage("Внимание! Произошла ошибка авторизации на сервере ForwardMobile. Пожалуйста. " +
+                        "проверьте наличие на вашем устройстве доступа к сети интернет и правильность вводимых данных.")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
                     }
-                    else {
-                        Toast.makeText(MainActivity.this,"Ошибка загрузки operators.xml", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            getOperators.execute();
-
-        } else {
-            new AlertDialog.Builder(this)
-                    .setTitle("Ошибка авторизации")
-                    .setMessage("Внимание! Произошла ошибка авторизации на сервере ForwardMobile. Пожалуйста. " +
-                            "проверьте наличие на вашем устройстве доступа к сети интернет и правильность вводимых данных.")
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .show();
-
-        }
+                })
+                .show();
     }
 
     @Override
@@ -223,30 +207,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         }
     }
 
-    public boolean checkForTables(){
 
-        SQLiteOpenHelper dbHelper = null;
-
-        try {
-            dbHelper = new DatabaseHelper(this);
-            SQLiteDatabase db = null;
-            Cursor cursor = null;
-
-            try {
-
-                db = dbHelper.getReadableDatabase();
-                cursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.SETTINGS_TABLE_NAME + " LIMIT 1", null);
-                return cursor.moveToNext();
-            } finally {
-                if(cursor != null) cursor.close();
-                if(db != null) db.close();
-            }
-
-        } finally {
-            if(dbHelper != null)
-                dbHelper.close();
-        }
-    }
 
     //Регистрация устройства GCM
     public void RegDevice(final String pointid) throws Exception {
@@ -327,6 +288,11 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             Log.e("UnRegister Receiver Error", "> " +
                     e.getMessage());
         }
+
+        if(progressDialog != null && progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+
         super.onDestroy();
     }
 
@@ -354,23 +320,143 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     protected void getServerParams(String params){
         if (params.equals("online")) {
           //Для доступа к серверу извне
-          TSettings.set(TSettings.NODE_HOST, "www.forwardmobile.ru");
-          TSettings.set(TSettings.NODE_PORT, "3000");
+          Settings.set(this, Settings.SERVER_HOST, "www.forwardmobile.ru");
+          Settings.set(this, Settings.SERVER_PORT, "8193");
 
-          TSettings.set(TSettings.SERVER_HOST, "www.forwardmobile.ru");
-          TSettings.set(TSettings.SERVER_PORT, "8193");
+          Settings.set(this, Settings.NODE_HOST, "192.168.1.6");
+          Settings.set(this, Settings.NODE_PORT, "3000");
         }
         else{
           // Для тестового сервера
-          TSettings.set(TSettings.SERVER_HOST, "192.168.1.253");
-          TSettings.set(TSettings.SERVER_PORT, "8170");
+          Settings.set(this, Settings.SERVER_HOST, "192.168.1.253");
+          Settings.set(this, Settings.SERVER_PORT, "8170");
 
-          TSettings.set(TSettings.NODE_HOST, "192.168.1.6");
-          TSettings.set(TSettings.NODE_PORT, "3000");
+          Settings.set(this, Settings.NODE_HOST, "192.168.1.6");
+          Settings.set(this, Settings.NODE_PORT, "3000");
         }
     }
 
 
+    protected class AuthenticationTask extends AsyncTask<String, String, String> {
+
+        String pointID;
+        String password;
+        final String LOG_TAG = "TFORWARD.TPostData";
+
+        AuthenticationParser parse;
+
+        public AuthenticationTask() {
+
+            parse = new AuthenticationParser(MainActivity.this);
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String error = AuthenticatePoint();
+
+            if(error != null)
+                return error;
+
+            Log.d(LOG_TAG, "Authentication successful ...");
+
+            try {
+                RegDevice(pointID);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Log.d(LOG_TAG, "Loading operators ...");
+            error = loadOperatorsXML();
+
+
+            return error;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            DialogSignleton.setTaskRunning(false);
+
+            if(DialogSignleton.getDialog() != null && DialogSignleton.getDialog().isShowing()) {
+                DialogSignleton.getDialog().dismiss();
+            }
+
+            if(result == null) {
+                Intent intent = new Intent(MainActivity.this, MainAccessActivity.class);
+                startActivity(intent);
+                MainActivity.this.finish();
+
+            } else  {
+               reportError();
+            }
+        }
+
+        protected String AuthenticatePoint() {
+
+            try {
+
+                StringBuilder builder = new StringBuilder();
+                builder.append("command=JT_EXPORT_CONFIGURATION")
+                        .append("&pointid=" + pointID)
+                        .append("&password=" + password);
+
+                IRequest request = ServerRequestFactory.getRequest(builder.toString());
+                HttpTransport transport = new HttpTransport();
+
+                byte[] resp = transport.send(request, MainActivity.this);
+                parse.loadSettings(Converter.toUnicode(resp));
+
+            }catch (XmlPullParserException ex) {
+                Log.d(LOG_TAG, "XMLPULLERR " + ex.getMessage());
+                return "Ошибка авторизации.";
+            }catch (Exception ex) {
+                return "Ошибка отправки запроса: " + ex.getMessage();
+            }
+
+            Settings.set(MainActivity.this, Settings.POINT_ID, pointID);
+            return null;
+        }
+
+        protected String loadOperatorsXML (){
+            String Tag = "HTTPConnectionTag";
+            HttpClient httpclient = new DefaultHttpClient();
+
+            HttpGet httpget = new HttpGet("http://"+ Settings.get(MainActivity.this, Settings.NODE_HOST)+":"+ Settings.get(MainActivity.this, Settings.NODE_PORT)+"/get_operators");
+
+            String filename = "operators.xml";
+
+
+            try {
+                Log.d(Tag, "Запрос отправлен!");
+
+                HttpResponse response = httpclient.execute(httpget);
+
+                HttpEntity httpEntity = response.getEntity();
+
+                String line = EntityUtils.toString(httpEntity, "UTF-8");
+                Log.d(Tag, line);
+
+                FileOutputStream outputStream = null;
+                try {
+                    outputStream = MainActivity.this.openFileOutput(filename, Context.MODE_PRIVATE);
+                    outputStream.write(line.getBytes());
+                    outputStream.close();
+                } finally {
+                    if(outputStream != null)
+                        try { outputStream.close(); }catch (Exception ex){}
+                }
+                return null;
+            }
+            catch (Exception e) {
+                Log.d(Tag, "Запрос не отправлен!");
+                e.printStackTrace();
+                return "Ошибка получения списка операторов.";
+            }
+        }
+
+    }
 
 
 }
+

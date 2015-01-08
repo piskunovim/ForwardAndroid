@@ -1,5 +1,6 @@
 package ru.forwardmobile.tforwardpayment.network;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -9,7 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Iterator;
 
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.tforwardpayment.security.ICryptEngine;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
@@ -31,21 +32,21 @@ public class HttpTransport
         this.cryptEngine = engine;
     }
     
-    public byte[] send(IRequest request) throws Exception {
+    public byte[] send(IRequest request, Context context) throws Exception {
 
         StringBuilder requestBody = new StringBuilder(new String(request.getData()));
         
         // Если для запроса необходима цифровая подпись,
         // запрос подписывается
         if( cryptEngine != null ) {
-            addSignature(requestBody);
+            addSignature(requestBody, context);
         } 
  
         request.setData(requestBody.toString().getBytes());
         //  Отправка запроса
-        request.setHost(TSettings.get(TSettings.SERVER_HOST,"www.forwardmobile.ru"));
-        request.setPort(TSettings.getInt(TSettings.SERVER_PORT,8193));
-        request.setPath("/?v=" + TSettings.getVersion());
+        request.setHost(Settings.get(context, Settings.SERVER_HOST));
+        request.setPort(Settings.getInt(context, Settings.SERVER_PORT));
+        request.setPath("/?v=" + Settings.getVersion());
 
         Log.i("TFORWARD.HttpTransport", request.toString());
         
@@ -85,25 +86,25 @@ public class HttpTransport
     
        
     
-    private void addSignature(StringBuilder requestBody) throws Exception {
+    private void addSignature(StringBuilder requestBody, Context context) throws Exception {
         // По протоколу добляется перевод строки, 
-        requestBody.append(TSettings.CRLF)
+        requestBody.append(Settings.CRLF)
 
         // за ним следует идентификатор сертификата.
-        .append( TSettings.get(TSettings.CERTIFICATE_ACESS_ID) );
+        .append( Settings.get(context, Settings.CERTIFICATE_ACESS_ID) );
 
         // Эти данные необходимо подписать
         byte[] signData = requestBody.toString().getBytes();
 
         // Теперь еще один перевод строки
-        requestBody.append(TSettings.CRLF);
+        requestBody.append(Settings.CRLF);
 
         // и подпись
         requestBody.append(cryptEngine.generateSignature(signData));        
     }
 
 
-    public IResponseSet send(ICommandRequest command) throws Exception  {
+    public IResponseSet send(ICommandRequest command, Context context) throws Exception  {
 
         // Generating request text
         StringBuilder body = new StringBuilder();
@@ -115,13 +116,13 @@ public class HttpTransport
             while (iterator.hasNext()) {
                 body.append(iterator.next());
                 if(iterator.hasNext()) {
-                    body.append(TSettings.CRLF);
+                    body.append(Settings.CRLF);
                 }
             }
         }
 
         // Generating signature
-        addSignature( body );
+        addSignature( body, context );
 
         // Set status to commands
         command.setSended();
@@ -129,9 +130,9 @@ public class HttpTransport
         IRequest request = ServerRequestFactory.getRequest("");
         request.setData( body.toString().getBytes() );
 
-        request.setHost(TSettings.get(TSettings.SERVER_HOST, "www.forwardmobile.ru"));
-        request.setPort(TSettings.getInt(TSettings.SERVER_PORT, 8193));
-        request.setPath("/?v=" + TSettings.getVersion());
+        request.setHost(Settings.get(context, Settings.SERVER_HOST));
+        request.setPort(Settings.getInt(context, Settings.SERVER_PORT));
+        request.setPath("/?v=" + Settings.getVersion());
 
         Log.i("TFORWARD.HttpTransport", request.toString());
 

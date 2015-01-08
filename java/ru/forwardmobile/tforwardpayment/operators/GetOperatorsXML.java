@@ -1,8 +1,6 @@
 package ru.forwardmobile.tforwardpayment.operators;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -16,9 +14,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import ru.forwardmobile.tforwardpayment.MainActivity;
-import ru.forwardmobile.tforwardpayment.TParseOperators;
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.util.android.AbstractTask;
 import ru.forwardmobile.util.android.ITaskListener;
 
@@ -38,7 +34,7 @@ public class GetOperatorsXML extends AbstractTask {
         String Tag = "HTTPConnectionTag";
         HttpClient httpclient = new DefaultHttpClient();
 
-        HttpGet httpget = new HttpGet("http://"+TSettings.get(TSettings.NODE_HOST)+":"+TSettings.get(TSettings.NODE_PORT)+"/get_operators");
+        HttpGet httpget = new HttpGet("http://"+ Settings.get(getContext(), Settings.NODE_HOST)+":"+ Settings.get(getContext(), Settings.NODE_PORT)+"/get_operators");
 
         String filename = "operators.xml";
         FileOutputStream outputStream;

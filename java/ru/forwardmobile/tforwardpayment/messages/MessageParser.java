@@ -7,29 +7,19 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 
 /**
@@ -47,7 +37,7 @@ public class MessageParser extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            URL url = new URL("http://"+TSettings.get(TSettings.NODE_HOST)+":"+TSettings.get(TSettings.NODE_PORT)+"/get_notifications_queue/"+ TSettings.get(TSettings.REG_ID)); //в качестве параметра reg_id
+            URL url = new URL("http://"+ Settings.get(context, Settings.NODE_HOST)+":"+ Settings.get(context, Settings.NODE_PORT)+"/get_notifications_queue/"+ Settings.get(context, Settings.REG_ID)); //в качестве параметра reg_id
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
             InputStream in = new BufferedInputStream(connection.getInputStream());

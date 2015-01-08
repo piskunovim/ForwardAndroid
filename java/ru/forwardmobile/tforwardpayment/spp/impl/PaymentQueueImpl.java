@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
@@ -284,7 +284,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     Log.d(LOGGER_TAG, "Sending " + request.getCommands().size() + " commands.");
                     IResponseSet responseSet = null;
                     try {
-                        responseSet = transport.send( request );
+                        responseSet = transport.send( request, ctx );
                     } catch (Exception ex) {
                         Log.w(LOGGER_TAG, "Sending error: " + ex.getMessage());
                         request.onError("Ошибка обработки: " + ex.getMessage());
@@ -390,9 +390,9 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     /* Повторяем ошибочный платеж, если число попыток меньше заданного в настройках */
                     if((payment.getStatus() == IPayment.FAILED )) {
                         payment.incErrorRepeatCount();
-                        if(payment.getErrorRepeatCount() < TSettings.getInt(TSettings.MAXIMUM_START_TRY_COUNT, 10)) {
+                        if(payment.getErrorRepeatCount() < Settings.getInt(ctx, Settings.MAXIMUM_START_TRY_COUNT, 10)) {
                             Log.d(LOGGER_TAG, "Repeating #" + payment.getId() + " - try " + payment.getErrorRepeatCount()
-                                    + " of " + TSettings.getInt(TSettings.MAXIMUM_START_TRY_COUNT, 10) + "..");
+                                    + " of " + Settings.getInt(ctx, Settings.MAXIMUM_START_TRY_COUNT, 10) + "..");
                             repeatPayment(payment);
                             // payment.delay(TSettings.getInt(TSettings.QUEUE_ERROR_DELAY, 600));
                             payment.delay(10);
@@ -415,7 +415,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
     private void removeFromQueue(IPayment payment) {
         activePayments.remove(payment);
-        if ( storedPayments.size() >= TSettings.getInt(TSettings.MAXIMUM_STORED_PAYMENTS, 500) ) {
+        if ( storedPayments.size() >= Settings.getInt(ctx, Settings.MAXIMUM_STORED_PAYMENTS, 500) ) {
             IPayment deletedPayment = storedPayments.remove(0);
             storedPayments.remove(deletedPayment);
             paymentDao.delete(deletedPayment);

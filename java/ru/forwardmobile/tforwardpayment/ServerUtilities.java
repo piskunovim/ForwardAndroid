@@ -22,7 +22,6 @@ import java.util.Random;
 
 import static ru.forwardmobile.tforwardpayment.CommonUtilities.SERVER_URL;
 import static ru.forwardmobile.tforwardpayment.CommonUtilities.TAG;
-import static ru.forwardmobile.tforwardpayment.CommonUtilities.displayMessage;
 
 
 public final class ServerUtilities {
@@ -38,9 +37,9 @@ public final class ServerUtilities {
         Log.i(TAG, "registering device (regId = " + regId + ")");
 
         if (regId != null)
-            TSettings.set(TSettings.REG_ID, regId);
+            Settings.set(context, Settings.REG_ID, regId);
 
-        GCMHTTPTask gcmhttpTask = new GCMHTTPTask();
+        GCMHTTPTask gcmhttpTask = new GCMHTTPTask(context);
         gcmhttpTask.execute();
 
         String serverUrl = SERVER_URL;

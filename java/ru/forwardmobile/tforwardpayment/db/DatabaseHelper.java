@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 
 /**
  * @author Vasiliy Vanin, Piskunov Igor'
@@ -26,15 +26,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String     PAYMENT_QUEUE_TABLE     = "payments";
     public static final String     MESSAGES_TABLE_NAME     = "messages";
 
-
     public DatabaseHelper(Context context) {
         super(context, SQLITE_DATABASE_NAME, null, SQLITE_DATABASE_VERSION);
     }
 
-    public DatabaseHelper() {
-        super(null, SQLITE_DATABASE_NAME, null, SQLITE_DATABASE_VERSION);
-    }
-    
     @Override
     public void onCreate(SQLiteDatabase sqld) {
                 
@@ -56,41 +51,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
         
-    /**
-     * Вызывается при запуске, чтобы заполнить объект настройками из базы
-     */
-    public void readSettings() {
 
-        Cursor c = getWritableDatabase().rawQuery("select `property`,`value` from " + SETTINGS_TABLE_NAME, new String[]{});
 
-        if(c.moveToNext()) {
-
-            do {
-                TSettings.set(c.getString(0), c.getString(1));
-                Log.v(LOGGER_TAG, "Read " + c.getString(0) + " with " + c.getString(1));
-            } while(c.moveToNext());
-        } else {
-            Log.v(LOGGER_TAG, "Settings query returned an empty cursor.");
-        }
-    }
-    
-    public void saveSettings() {
-        for( Object key: TSettings.getKeys() ) {
-            saveSettings(key.toString(), TSettings.get(key.toString()));
-        }
-    }
-    
-    public void saveSettings(String key, String value) {
-
-        Log.v(LOGGER_TAG,"saving " + key + " with value " + value);
-        ContentValues cv = new ContentValues();
-        cv.put("property", key);
-        cv.put("value", value);
-
-        getWritableDatabase().replace(SETTINGS_TABLE_NAME, null, cv);
-    }
-
-    
     private void initDatabaseV6(SQLiteDatabase sqld) {
         //Operators group table 
 	    sqld.execSQL("CREATE TABLE " + PG_TABLE_NAME
@@ -148,13 +110,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return getReadableDatabase().rawQuery("select type, messageText, regDate from " + MESSAGES_TABLE_NAME , null);
     }
 
-    public void setPushMessage(){
+    public void setPushMessage(Context context){
         Cursor c = getWritableDatabase().rawQuery("select `id`,`type`,`messageText`,`regDate` from " + SETTINGS_TABLE_NAME, new String[]{});
 
         if(c.moveToNext()) {
 
             do {
-                TSettings.set(c.getString(0), c.getString(1));
+                Settings.set(context, c.getString(0), c.getString(1));
                 Log.v(LOGGER_TAG, "Read " + c.getString(0) + " with " + c.getString(1));
             } while(c.moveToNext());
         } else {

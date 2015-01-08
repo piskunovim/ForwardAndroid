@@ -2,17 +2,12 @@ package ru.forwardmobile.tforwardpayment.settings;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.print.PrintAttributes;
-import android.support.v4.view.MarginLayoutParamsCompat;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ru.forwardmobile.tforwardpayment.R;
-import ru.forwardmobile.tforwardpayment.TSettings;
 
 /**
  * Created by PiskunovI on 01.10.2014.

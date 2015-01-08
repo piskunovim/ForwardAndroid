@@ -1,7 +1,9 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -12,13 +14,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
-import ru.forwardmobile.tforwardpayment.app.SettingsLoader;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
-import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
 import ru.forwardmobile.tforwardpayment.operators.OperatorsLoadListener;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineFactory;
 import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
@@ -26,6 +28,8 @@ import ru.forwardmobile.tforwardpayment.security.KeySingleton;
 import ru.forwardmobile.tforwardpayment.security.KeyStorageFactory;
 import ru.forwardmobile.tforwardpayment.security.XorImpl;
 import ru.forwardmobile.tforwardpayment.spp.PaymentQueueManager;
+import ru.forwardmobile.util.android.AbstractTask;
+import ru.forwardmobile.util.android.ITaskListener;
 
 /**
  * Created by PiskunovI on 23.06.14.
@@ -33,25 +37,21 @@ import ru.forwardmobile.tforwardpayment.spp.PaymentQueueManager;
 public class MainAccessActivity extends ActionBarActivity implements  View.OnClickListener {
 
     final static String LOG_TAG = "TFORWARD.MainActivityAccess";
-    public final static String EXTRA_MESSAGE = "ru.forwardmobile.tforwardpayment";
+    private boolean isTaskRunning = false;
+    ProgressDialog progressDialog = null;
 
     TextView commentary;
     EditText keyWord;
     Button button;
 
-    //сообщение состояния авторизации
-    String message;
-
-    private boolean isFirstRun = false;
+    private boolean isFirstRun = true;
     private final Collection<onLoadListener> loadListeners  = new HashSet<onLoadListener>();
 
     public MainAccessActivity(){
-        // Загрузка настроек
-        loadListeners.add(new SettingsLoader());
         // Запуск очереди платежей
         loadListeners.add(new PaymentQueueManager());
         // Загрузка информации об агенте
-        loadListeners.add(new DealerDataSource(this));
+        loadListeners.add(new DealerDataSource());
         // Загрузка и кеширование списка операторов
         loadListeners.add(new OperatorsLoadListener());
     }
@@ -65,25 +65,35 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
         commentary      = (TextView)    findViewById(R.id.access_commentary);
         button          = (Button)      findViewById(R.id.access_button);
         keyWord         = (EditText)    findViewById(R.id.access_pass);
-        message         = getIntent().getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        Log.d(LOG_TAG, message);
+        isFirstRun = Settings.getInt(this, Settings.isAuthenticated, 0) == 0;
 
-        // true  - входим не первый раз, запрашиваем введенный ранее пароль;
-        // иначе - это наш первый вход, запрашиваем установку пароля
-        if (message.equals("true"))
+        if ( !isFirstRun )
         {
             commentary.setText("*пароль доступа был введен вами при первом при первом запуске приложения");
             button.setText("Вперед");
         } else {
             commentary.setText("*в будущем этот пароль будет  \n запрашиваться приложением");
             button.setText("Подтвердить");
-            isFirstRun = true;
         }
 
         button.setOnClickListener(this);
 
         Log.d(LOG_TAG, "Activity access form started");
+        if(savedInstanceState != null) {
+            isTaskRunning = savedInstanceState.getBoolean("init_running");
+            if(isTaskRunning) {
+                showDialog();
+            }
+        }
+    }
+
+    private void showDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Загрузка");
+        progressDialog.setMessage("Пожалуйста подождите...");
+        progressDialog.show();
     }
 
     public void authenticate(String pass) throws Exception {
@@ -117,56 +127,44 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
      */
     public void setPassword(String password)
     {
-        //Требуется пересмотр функциональности данного метода
 
-
-        TSettings.setAuthenticationPass(password,getApplicationContext());
-
-        // Если мы находимся в этом методе, значит у нас по-любому доступен расшифрованный закрытый ключ
-        // Шифруем этот ключ паролем, который ввел наш пользователь
-        /*byte[] encryptedKey = new XorImpl().encrypt(
-                    KeyStorageFactory.getKeyStorage( getApplicationContext() ).getKey(IKeyStorage.SECRET_KEY_TYPE),
-                    password
-               );
-	   */
-
-        // Сохраняем шифрованный ключ на диск
-        /*KeySingleton.getInstance( getApplicationContext() )
-                .setEncKey( encryptedKey );*/
-
-				onAuthenticationSuccess();
-
-        // делаем вид, что мы авторизовались
-        //onAuthenticationSuccess();
+        Settings.setAuthenticationPass(password, getApplicationContext());
+        onAuthenticationSuccess();
     }
 
     // Вызывается в случае удачной авторизации
     public void onAuthenticationSuccess() {
 
-        initializeComponents();
+        AsyncTask task = new InitializeTask(this, new ITaskListener() {
+            @Override
+            public void onTaskFinish(Object result) {
 
-        Intent intent = new Intent(this, MainPageActivity.class);
-        intent.putExtra(EXTRA_MESSAGE,"true");
+                isTaskRunning = false;
+                if(result != null) {
 
-        startActivity(intent);
-        this.finish();
-    }
+                    Toast.makeText(
+                            MainAccessActivity.this,
+                            "Ошибка при загрузке компонентов: " + result.toString(),
+                            Toast.LENGTH_SHORT
+                    ).show();
+                } else {
 
-    private void initializeComponents(){
+                    Intent intent = new Intent(MainAccessActivity.this, MainPageActivity.class);
+                    startActivity(intent);
+                    MainAccessActivity.this.finish();
+                }
+            }
+        });
 
-        //@todo add SplashScreen
-        Log.v(LOG_TAG, "Fire listeners");
-        for(onLoadListener listener: loadListeners) {
-            listener.beforeApplicationStart(this);
-        }
-
-        //получаем информацию о дилере и записываем в базу
-        DealerInfo dealerInfo = new DealerInfo((ViewGroup)findViewById(R.id.access_activity_layout), this);
-        dealerInfo.getDealerInfo();
+        showDialog();
+        task.execute();
+        isTaskRunning = true;
     }
 
     @Override
     public void onClick(View view) {
+
+        String access_pass = ((TextView) findViewById(R.id.access_pass)).getText().toString();
         Log.v(LOG_TAG, "AccessClick.");
         if( !isFirstRun ) {
             try {
@@ -182,13 +180,61 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
                         .show();
             }
         } else {
-            setPassword( ((TextView) findViewById(R.id.access_pass)).getText().toString() );
+            setPassword(access_pass);
+            Settings.set(this, Settings.isAuthenticated, "1");
         }
     }
 
 
-
     public interface onLoadListener{
-        public void beforeApplicationStart(Context context);
+        public String beforeApplicationStart(Context context);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("init_running", isTaskRunning);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onDestroy() {
+
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+
+        super.onDestroy();
+    }
+
+    protected class InitializeTask extends AsyncTask<Object,Object,Object> {
+
+        private final ITaskListener listener;
+        private final Context context;
+
+        public InitializeTask(Context context, ITaskListener listener) {
+            this.context = context;
+            this.listener = listener;
+        }
+
+        protected void onPreExecute(){}
+
+        @Override
+        protected Object doInBackground(Object... objects) {
+
+            for(onLoadListener listener: loadListeners) {
+                Log.v(LOG_TAG, "Executing:  " + listener.getClass().getName());
+                String error = null;
+                while ((error = listener.beforeApplicationStart(context)) != null) {
+                    return error;
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            listener.onTaskFinish(o);
+        }
     }
 }

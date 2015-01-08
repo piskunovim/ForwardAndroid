@@ -49,28 +49,9 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
 
         DealerInfo dealerInfo = new DealerInfo(view, this);
 
-        // почему-то это закомментировали, можно удалить
-        // dealerInfo.getDealerInfo();
-
         dealerInfo.getBlockInfo();
 
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
-        if (message != null) {
-            initialize(message);
-        }
-
         initButtons();
-    }
-
-    private void initialize(String message) {
-
-        Log.d(LOG_TAG, message);
-        Log.v(LOG_TAG, "Loading settings");
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        dbHelper.readSettings();
-        dbHelper.close();
     }
 
     public void enterDealerInfo(View view)

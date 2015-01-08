@@ -69,7 +69,7 @@ public class CheckTask extends AsyncTask<Void, Integer, Integer> {
         }
         
         try {
-            byte[] response = transport.send(request);
+            byte[] response = transport.send(request, ctx);
             Log.i(TAG,"response " + new String(response));
             Map<String,String> responseParams = HttpUtils.getRequestParams(new String(response));
 

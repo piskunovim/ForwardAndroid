@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
 import ru.forwardmobile.tforwardpayment.spp.IPayment;
@@ -86,12 +86,12 @@ public class CommandRequestImpl implements ICommandRequest {
             payment.setErrorDescription(errorDescription);
             if ( payment.getStatus() == IPayment.NEW ) {
                 payment.incTryCount();
-                if ( payment.getTryCount() >= TSettings.getInt(TSettings.MAXIMUM_START_TRY_COUNT, 10)) {
+                if ( payment.getTryCount() >= Settings.getInt(context, Settings.MAXIMUM_START_TRY_COUNT, 10)) {
                     payment.setStatus(IPayment.FAILED);
                     payment.setErrorCode(new Integer(200));
                     payment.setErrorDescription(errorDescription);
                 } else {
-                    payment.delay(TSettings.getInt(TSettings.QUEUE_ERROR_DELAY, 600));
+                    payment.delay(Settings.getInt(context, Settings.QUEUE_ERROR_DELAY, 600));
                 }
             } else {
                 payment.errorDelay();

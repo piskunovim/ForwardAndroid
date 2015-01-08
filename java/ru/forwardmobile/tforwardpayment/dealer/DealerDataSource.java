@@ -3,7 +3,6 @@ package ru.forwardmobile.tforwardpayment.dealer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -11,22 +10,18 @@ import com.google.gson.JsonParser;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import ru.forwardmobile.tforwardpayment.MainAccessActivity;
-import ru.forwardmobile.tforwardpayment.TSettings;
+import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
-import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
 import ru.forwardmobile.tforwardpayment.spp.impl.CommandRequestImpl;
 import ru.forwardmobile.util.android.AbstractTask;
@@ -44,8 +39,6 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
     3. Следует еще раз задаться вопросом: все ли перенесли?
     */
     String LOG_TAG = "DealerDataSource";
-
-    Context context;
 
     // = имя дилера
     public static String dealersName;
@@ -81,73 +74,17 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
     public static String managerEmail;
 
 
-    public DealerDataSource(Context context) {
-          this.context = context;
-    }
+    public String loadDealerInfo(Context context) {
 
+        Log.d(LOG_TAG, "loadDealerInfo started");
 
-    public void onTaskFinish(Object result) {
-
-        Log.d(LOG_TAG, "onTaskFinish started");
-        Log.d(LOG_TAG, result.toString());
-        if(result != null && result instanceof IResponseSet) {
-
-            /*
-            IResponseSet responseSet = (IResponseSet) result;
-
-            double balance  = 0;
-            double limit    = 0;
-            double total    = 0;
-            */
-
+            SQLiteDatabase db = null;
             try {
-                // разбираем ответ
 
-                /*
-                ICommandResponse response = (ICommandResponse) responseSet.getResponses().get(0);
-
-
-                balance = Double.parseDouble(response.getParam("balance"));
-                limit = Double.parseDouble(response.getParam("limit"));
-                total = balance + limit;
-
-
-                String balanceToView = "";
-                String creditToView = "";
-                String totalToView = "";
-
-                // Показываем результат
-                if (balance != 0)
-                    balanceToView = String.valueOf(new BigDecimal(balance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue()) ;
-                if (limit != 0)
-                    creditToView = String.valueOf(new BigDecimal(limit).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-                if (total != 0)
-                    if (total > 0)
-                        totalToView = String.valueOf(new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-                    else
-                        totalToView =  "Прием платежей невозможен!"; */
-
-                DealerAsyncTask dealerAsyncTask = new DealerAsyncTask();
-                dealerAsyncTask.execute();
-                String JSONString = new String();
-
-                try {
-                    JSONString = dealerAsyncTask.get();
-                    Log.d("JSONObject Title", JSONString);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
+                String JSONString  = getDealerInfo(context);
+                Log.d("JSONObject Title", JSONString);
 
                 JsonObject o = new JsonParser().parse(JSONString).getAsJsonObject();
-
-                /*
-                dealersName = o.getAsJsonPrimitive("title").toString().substring(1,o.getAsJsonPrimitive("title").toString().length()-1);
-                dealersBalance = o.getAsJsonPrimitive("account").toString().substring(1,o.getAsJsonPrimitive("account").toString().length()-1);
-                dealersCredit = o.getAsJsonPrimitive("credit").toString().substring(1,o.getAsJsonPrimitive("credit").toString().length()-1);
-                dealersRealMoney = o.getAsJsonPrimitive("may_expend").toString().substring(1,o.getAsJsonPrimitive("may_expend").toString().length()-1);
-                */
 
                 dealersName = o.getAsJsonPrimitive("title").toString().substring(1,o.getAsJsonPrimitive("title").toString().length()-1);
                 dealersBalance = o.getAsJsonPrimitive("account").toString().substring(1,o.getAsJsonPrimitive("account").toString().length()-1);
@@ -166,7 +103,7 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
                 DatabaseHelper dbHelper = new DatabaseHelper(context);
 
                 // подключаемся к БД
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                db = dbHelper.getWritableDatabase();
 
                 cv.put("name", dealersName);
                 cv.put("balance", dealersBalance);
@@ -186,57 +123,54 @@ public class DealerDataSource implements MainAccessActivity.onLoadListener{
             } catch (Exception ex) {
                 // Ошибка разбора
                 ex.printStackTrace();
+                return "Ошибка получения информации об Агенте. "
+                            + ex.getMessage();
             }
-        } else {
-            // Ошибка отправки запроса
-        }
+            finally {
+                if(db!=null)
+                    db.close();
+            }
+
+        return null;
     }
 
-    class DealerDataTask extends AbstractTask {
-
-        public DealerDataTask(ITaskListener listener, Context ctx) {
-            super(listener, ctx);
-        }
+    public String getDealerInfo(Context context) throws Exception{
 
 
 
-        @Override
-        protected Object doInBackground(Object... objects) {
+        URL url = new URL("http://"+ Settings.get(context, Settings.NODE_HOST)+":"+ Settings.get(context, Settings.NODE_PORT)+"/dealers_info/"+ Settings.get(context, Settings.POINT_ID));
+        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
+        InputStream in = null;
+        BufferedReader r = null;
 
-            IResponseSet responseSet = null;
+        try {
+            in = new BufferedInputStream(connection.getInputStream());
+            r = new BufferedReader(new InputStreamReader(in));
+            StringBuilder total = new StringBuilder();
+            String line;
 
-            try{
-                ICommandRequest request = new CommandRequestImpl("command=JT_GET_BALANCE_INFO", true, true);
-                HttpTransport transport = new HttpTransport();
-                transport.setCryptEngine(new CryptEngineImpl(context));
-                responseSet = transport.send(request);
+            while ((line = r.readLine()) != null) {
+                total.append(line);
             }
-            catch(Exception e)
-            {
-                e.printStackTrace();
+            return total.toString();
+        }finally {
+            if(in != null) {
+                try { in.close();} catch (Exception ex){}
             }
 
-            return responseSet;
-
+            if(r != null) {
+                try { r.close();}catch (Exception ex){}
+            }
         }
-    };
+    }
 
 
     @Override
-    public void beforeApplicationStart(Context context) {
+    public String beforeApplicationStart(Context context) {
 
         Log.i(LOG_TAG,"started");
-
-        try {
-            DealerDataTask dt = new DealerDataTask(null, context);
-            dt.execute();
-            onTaskFinish(dt.get());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return loadDealerInfo(context);
     }
-
-
 
 }

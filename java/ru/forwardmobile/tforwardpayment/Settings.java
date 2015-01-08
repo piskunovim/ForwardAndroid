@@ -3,7 +3,10 @@ package ru.forwardmobile.tforwardpayment;
 import android.content.Context;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 import java.util.Set;
 
@@ -17,9 +20,10 @@ import ru.forwardmobile.tforwardpayment.security.XorImpl;
  * Набор настроек приложения
  * @author Vasiliy Vanin
  */
-public class TSettings extends Properties {
+public class Settings extends Properties {
 
     private static final String LOGGER_TAG              = "TFORWARD.TSETTINGS";
+    public static final String isAuthenticated          = "authenticated";
     public static final String POINT_ID                 = "pointid";
     public static final String REG_ID                   = "regid";
     public static final String DEALERS_NAME             = "dealers_name";
@@ -35,11 +39,18 @@ public class TSettings extends Properties {
     public static final String MAXIMUM_TRY_COUNT        = "maximum_try_count";
     public static final char   CRLF                     = '\n';
 
-    public static final Integer VERSION_CODE            = 101;
+    public static final Integer VERSION_CODE            = 102;
     public static final String  LOCAL_REPOSITORY_URL    = "http://www.forwardmobile.ru/files/android/payment.apk";
 
+    // Набор стандартных настроек
+    private static final String DEFAULT_SERVER_HOST     = "www.forwardmobile.ru";
+    private static final String DEFAULT_SERVER_PORT     = "8193";
+
+    private static final String DEFAULT_NODE_HOST       = "www.forwardmobile.ru";
+    private static final String DEFAULT_NODE_PORT       = "3000";
+
     public static String getVersion() {
-        return "Android_101";
+        return "Android_102";
     }
     
     /**
@@ -50,12 +61,12 @@ public class TSettings extends Properties {
      * @param name
      * @return  String or null
      */
-    public static String get(String name ) {
-        return instance.getProperty(name);
+    public static String get(Context context, String name ) {
+        return getInstance(context).getProperty(name);
     }
 
-    public static String get(String name, String value) {
-        if(instance.containsKey(name)) return get(name);
+    public static String get(Context context, String name, String value) {
+        if(getInstance(context).containsKey(name)) return get(context, name);
         else return value;
     }
     
@@ -63,12 +74,12 @@ public class TSettings extends Properties {
      * @param name
      * @return int or null
      */
-    public static int getInt(String name) {
-        return Integer.valueOf(get(name));
+    public static int getInt(Context context, String name) {
+        return Integer.valueOf(get(context, name));
     }
-    public static int getInt(String name, int value) {
+    public static int getInt(Context context, String name, int value) {
         try {
-            return Integer.parseInt(get(name));
+            return Integer.parseInt(get(context, name));
         }catch(Exception ex) {
             return value;
         }
@@ -77,12 +88,12 @@ public class TSettings extends Properties {
      * @param name
      * @return double or null
      */
-    public static double getDouble(String name) {
-        return Double.valueOf(get(name));
+    public static double getDouble(Context context, String name) {
+        return Double.valueOf(get(context, name));
     }
-    public static double getDouble(String name, Double value) {
+    public static double getDouble(Context context, String name, Double value) {
         try {
-            return Double.parseDouble(get(name));
+            return Double.parseDouble(get(context, name));
         }catch(Exception ex){
             return value;
         }
@@ -92,8 +103,8 @@ public class TSettings extends Properties {
      * @param name
      * @return InputStream (never return null)
      */
-    public static InputStream getAsStream(String name) {
-        String value = get(name);
+    public static InputStream getAsStream(Context context, String name) {
+        String value = get(context, name);
         if( value != null ) {
             return new ByteArrayInputStream(value.getBytes());
         } else {
@@ -102,18 +113,51 @@ public class TSettings extends Properties {
         }
     }
     
-    public static void  set(String name, String value) {
-        instance.setProperty(name, value);
-    }
-    
-    public static Set<Object> getKeys() {
-        return instance.keySet();
+    public static void  set(Context context, String name, String value) {
+        getInstance(context).setProperty(name, value);
+        OutputStream os = null;
+        try {
+
+            os = context.openFileOutput("settings.properties", Context.MODE_PRIVATE);
+            getInstance(context).store(os, null);
+
+        }catch(IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if(os != null)
+                try { os.close();}catch (Exception ex){}
+        }
     }
 
+    private Settings(){}
+    private static Settings instance;
 
-    private TSettings(){}
-    private static final TSettings instance
-            = new TSettings();
+    private static Settings getInstance(Context context) {
+
+        if(instance == null) {
+
+            instance = new Settings();
+            InputStream is = null;
+            try {
+
+                is = context.openFileInput("settings.properties");
+                instance.load(is);
+            } catch(IOException ex) {
+
+                instance.set(context, Settings.NODE_HOST, DEFAULT_NODE_HOST);
+                instance.set(context, Settings.NODE_PORT, DEFAULT_NODE_PORT);
+
+                instance.set(context, Settings.SERVER_HOST, DEFAULT_SERVER_HOST);
+                instance.set(context, Settings.SERVER_PORT, DEFAULT_SERVER_PORT);
+
+            }finally {
+                if(is != null)
+                    try { is.close(); }catch (Exception ex){}
+            }
+        }
+
+        return instance;
+    }
 
     public static void setAuthenticationPass(String password, Context context){
         // Если мы находимся в этом методе, значит у нас по-любому доступен расшифрованный закрытый ключ
@@ -128,5 +172,6 @@ public class TSettings extends Properties {
         KeySingleton.getInstance(context)
                 .setEncKey( encryptedKey );
     }
+
 
 }
