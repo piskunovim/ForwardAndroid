@@ -202,7 +202,7 @@ public class PaymentDaoImpl implements IPaymentDao {
     public synchronized Collection<IPayment> getUnprocessed() {
 
         List<IPayment> collection = new ArrayList<IPayment>();
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate from "
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate, pstitle from "
                 + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where status not in(" + IPayment.FAILED + ","+ IPayment.DONE +") "
                 , new String[]{});
         try {
