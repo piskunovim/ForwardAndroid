@@ -170,7 +170,7 @@ public class DealerInfo {
             DatabaseHelper dbHelper = new DatabaseHelper(context);
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.rawQuery("DELETE FROM " + DatabaseHelper.DEALER_TABLE_NAME + " WHERE 1", null);
+            db.execSQL("DELETE FROM " + DatabaseHelper.DEALER_TABLE_NAME + " WHERE 1");
 
             cv.put("name", dealersName);
             cv.put("balance", dealersBalance);
