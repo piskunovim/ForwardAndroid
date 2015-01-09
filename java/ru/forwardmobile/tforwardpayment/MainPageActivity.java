@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
@@ -59,13 +63,33 @@ public class MainPageActivity extends AbstractBaseActivity {
 
             ViewGroup view = (ViewGroup) findViewById(R.id.activity_main_page_container);
 
+            final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+
             // метод заполняет информационный блок дилера данными
-            DealerInfo dealerInfo = new DealerInfo(view, this);
+            final DealerInfo dealerInfo = new DealerInfo(view, this);
 
             // почему-то это закомментировали, можно удалить
             //dealerInfo.getDealerInfo(); // запрашиваем информацию
 
             dealerInfo.getBlockInfo();  // выводим в блок
+
+            //SwipeRefresh
+            swipeView.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
+            swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeView.setRefreshing(true);
+                    Log.d(LOG_TAG, "Обновление Информации Агента");
+                    ( new Handler()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeView.setRefreshing(false);
+                            dealerInfo.getDealerInfo();
+                            dealerInfo.getBlockInfo();
+                        }
+                    }, 3000);
+                }
+            });
 
             // = кнопка "Проведение платежей"
             enterPaymentsBtn = (LinearLayout) findViewById(R.id.payments_button);
@@ -303,6 +327,8 @@ public class MainPageActivity extends AbstractBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 }
 
 

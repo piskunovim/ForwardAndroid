@@ -137,7 +137,7 @@ public class DealerInfo {
             managerEmail;         // = почта менеджера
 
     public void getDealerInfo(){
-
+        dealerInfoMissing();
      try{
         // запрашиваем информацию
         DealerAsyncTask dealerAsyncTask = new DealerAsyncTask(context);
@@ -175,6 +175,7 @@ public class DealerInfo {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.rawQuery("DELETE FROM " + DatabaseHelper.DEALER_TABLE_NAME + " WHERE 1", null);
 
         cv.put("name", dealersName);
         cv.put("balance", dealersBalance);
@@ -220,7 +221,7 @@ public class DealerInfo {
 
         c.close();
 
-        Log.d("DealerInfo: ", dealersName + "; Balance: " + dealersBalance + "; MayExpend: " +dealerMayExpend);
+        Log.d("DealerInfo: ", dealersName + "; Balance: " + dealersBalance + "; MayExpend: " +dealerMayExpend + "; credit:" + dealersCredit);
 
         // заполняем информационный блок информацией дилера
         setDealerShotBlock(dealersName, dealersBalance, dealerMayExpend, dealersCredit);

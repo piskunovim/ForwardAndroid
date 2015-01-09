@@ -16,7 +16,6 @@ import com.google.gson.JsonParser;
 
 import java.util.concurrent.ExecutionException;
 
-import ru.forwardmobile.tforwardpayment.dealer.DealerAsyncTask;
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 
 /**
