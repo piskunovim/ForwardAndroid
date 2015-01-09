@@ -11,6 +11,12 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import ru.forwardmobile.tforwardpayment.R;
@@ -138,61 +144,48 @@ public class DealerInfo {
 
     public void getDealerInfo(){
         dealerInfoMissing();
-     try{
-        // запрашиваем информацию
-        DealerAsyncTask dealerAsyncTask = new DealerAsyncTask(context);
-        dealerAsyncTask.execute();
+        try{
 
-        String JSONString = new String();
-
-        try {
-            JSONString = dealerAsyncTask.get();
+            String JSONString = requestDealerInfo();
             Log.d("JSONObject Title", JSONString);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+
+            JsonObject o = new JsonParser().parse(JSONString).getAsJsonObject();
+
+            dealersName = o.getAsJsonPrimitive("title").toString().substring(1, o.getAsJsonPrimitive("title").toString().length() - 1);
+            dealersBalance = o.getAsJsonPrimitive("account").toString().substring(1, o.getAsJsonPrimitive("account").toString().length() - 1);
+            dealersCredit = o.getAsJsonPrimitive("credit").toString().substring(1, o.getAsJsonPrimitive("credit").toString().length() - 1);
+            dealerRetentionAmount = o.getAsJsonPrimitive("retention_amount").toString().substring(1, o.getAsJsonPrimitive("retention_amount").toString().length() - 1);
+            dealerMayExpend = o.getAsJsonPrimitive("may_expend").toString().substring(1, o.getAsJsonPrimitive("may_expend").toString().length() - 1);
+            dealerFee = o.getAsJsonPrimitive("fee").toString().substring(1, o.getAsJsonPrimitive("fee").toString().length() - 1);
+            dealerSummFuftutres = o.getAsJsonPrimitive("summ_fuftutres").toString().substring(1, o.getAsJsonPrimitive("summ_fuftutres").toString().length() - 1);
+
+            managerName = o.getAsJsonPrimitive("fio").toString().substring(1, o.getAsJsonPrimitive("fio").toString().length() - 1);
+            managerPhone = o.getAsJsonPrimitive("phone").toString().substring(1, o.getAsJsonPrimitive("phone").toString().length() - 1);
+            managerEmail = o.getAsJsonPrimitive("email").toString().substring(1, o.getAsJsonPrimitive("email").toString().length() - 1);
+
+            Settings.set(context, Settings.DEALERS_NAME, dealersName);
+
+            ContentValues cv = new ContentValues();
+
+            DatabaseHelper dbHelper = new DatabaseHelper(context);
+
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.rawQuery("DELETE FROM " + DatabaseHelper.DEALER_TABLE_NAME + " WHERE 1", null);
+
+            cv.put("name", dealersName);
+            cv.put("balance", dealersBalance);
+            cv.put("may_expend", dealerMayExpend);
+            cv.put("credit", dealersCredit);
+            cv.put("retention_amount", dealerRetentionAmount);
+            cv.put("fee", dealerFee);
+            cv.put("summ_fuftutres", dealerSummFuftutres);
+            cv.put("fio", managerName);
+            cv.put("phone", managerPhone);
+            cv.put("email", managerEmail);
+
+            db.insert(DatabaseHelper.DEALER_TABLE_NAME, null, cv);
+            cv.clear();
         }
-
-        JsonObject o = new JsonParser().parse(JSONString).getAsJsonObject();
-
-        dealersName = o.getAsJsonPrimitive("title").toString().substring(1, o.getAsJsonPrimitive("title").toString().length() - 1);
-        dealersBalance = o.getAsJsonPrimitive("account").toString().substring(1, o.getAsJsonPrimitive("account").toString().length() - 1);
-        dealersCredit = o.getAsJsonPrimitive("credit").toString().substring(1, o.getAsJsonPrimitive("credit").toString().length() - 1);
-        dealerRetentionAmount = o.getAsJsonPrimitive("retention_amount").toString().substring(1, o.getAsJsonPrimitive("retention_amount").toString().length() - 1);
-        dealerMayExpend = o.getAsJsonPrimitive("may_expend").toString().substring(1, o.getAsJsonPrimitive("may_expend").toString().length() - 1);
-        dealerFee = o.getAsJsonPrimitive("fee").toString().substring(1, o.getAsJsonPrimitive("fee").toString().length() - 1);
-        dealerSummFuftutres = o.getAsJsonPrimitive("summ_fuftutres").toString().substring(1, o.getAsJsonPrimitive("summ_fuftutres").toString().length() - 1);
-
-        managerName = o.getAsJsonPrimitive("fio").toString().substring(1, o.getAsJsonPrimitive("fio").toString().length() - 1);
-        managerPhone = o.getAsJsonPrimitive("phone").toString().substring(1, o.getAsJsonPrimitive("phone").toString().length() - 1);
-        managerEmail = o.getAsJsonPrimitive("email").toString().substring(1, o.getAsJsonPrimitive("email").toString().length() - 1);
-
-        Settings.set(context, Settings.DEALERS_NAME, dealersName);
-
-        ContentValues cv = new ContentValues();
-
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.rawQuery("DELETE FROM " + DatabaseHelper.DEALER_TABLE_NAME + " WHERE 1", null);
-
-        cv.put("name", dealersName);
-        cv.put("balance", dealersBalance);
-        cv.put("may_expend", dealerMayExpend);
-        cv.put("credit", dealersCredit);
-        cv.put("retention_amount", dealerRetentionAmount);
-        cv.put("fee", dealerFee);
-        cv.put("summ_fuftutres", dealerSummFuftutres);
-        cv.put("fio", managerName);
-        cv.put("phone", managerPhone);
-        cv.put("email", managerEmail);
-
-        db.insert(DatabaseHelper.DEALER_TABLE_NAME, null, cv);
-        cv.clear();
-
-
-     }
         catch(Exception ex)
        {
            // Ошибка разбора
@@ -274,4 +267,32 @@ public class DealerInfo {
         managerEmail           = "Отсутствует";  // = почта менеджера;
     }
 
+    public String requestDealerInfo() throws Exception {
+
+        URL url = new URL("http://"+ Settings.get(context, Settings.NODE_HOST)+":"+ Settings.get(context, Settings.NODE_PORT)+"/dealers_info/"+ Settings.get(context, Settings.POINT_ID));
+        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+
+        InputStream in = null;
+        BufferedReader r = null;
+
+        try {
+            in = new BufferedInputStream(connection.getInputStream());
+            r = new BufferedReader(new InputStreamReader(in));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line);
+            }
+            return total.toString();
+        } finally {
+
+            if(in != null) {
+                try { in.close(); } catch (Exception ex){}
+            }
+
+            if(r != null) {
+                try { r.close();} catch (Exception ex){}
+            }
+        }
+    }
 }

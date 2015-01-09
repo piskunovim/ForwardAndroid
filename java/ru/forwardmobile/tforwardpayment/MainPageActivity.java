@@ -85,14 +85,17 @@ public class MainPageActivity extends AbstractBaseActivity {
 
                         @Override
                         protected Void doInBackground(Void... voids) {
-
+                            Log.d(LOG_TAG, "Выполняется запрос данных с сервера...");
                             dealerInfo.getDealerInfo();
+                            Log.d(LOG_TAG, "Запрос завершен");
                             return null;
                         }
 
                         @Override
                         protected void onPostExecute(Void aVoid) {
+                            Log.d(LOG_TAG, "Обновление отображения...");
                             dealerInfo.getBlockInfo();
+                            Log.d(LOG_TAG, "Отображение обновлено");
                             swipeView.setRefreshing(false);
                         }
                     }.execute();
