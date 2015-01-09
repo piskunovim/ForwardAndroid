@@ -80,14 +80,22 @@ public class MainPageActivity extends AbstractBaseActivity {
                 public void onRefresh() {
                     swipeView.setRefreshing(true);
                     Log.d(LOG_TAG, "Обновление Информации Агента");
-                    ( new Handler()).postDelayed(new Runnable() {
+
+                    new AsyncTask<Void,Void,Void >() {
+
                         @Override
-                        public void run() {
-                            swipeView.setRefreshing(false);
+                        protected Void doInBackground(Void... voids) {
+
                             dealerInfo.getDealerInfo();
-                            dealerInfo.getBlockInfo();
+                            return null;
                         }
-                    }, 3000);
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            dealerInfo.getBlockInfo();
+                            swipeView.setRefreshing(false);
+                        }
+                    }.execute();
                 }
             });
 
