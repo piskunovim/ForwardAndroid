@@ -73,7 +73,7 @@
     <string name="dealer_info_money_go">Деньги в пути:</string>
     <string name="dealer_info_money_real">Можно израсходовать:</string>
     <string name="dealer_info_fee">Невыплаченное вознаграждение:</string>
-    <string name="dealer_info_blocked_money">Заблокировано средств:</string>
+    <string name="dealer_info_blocked_money">Удержание (Заблокировано средств):</string>
     <string name="dealer_info_manager">Ваш менеджер:</string>
     <string name="dealer_info_manager_contacts">Контакты:</string>
 

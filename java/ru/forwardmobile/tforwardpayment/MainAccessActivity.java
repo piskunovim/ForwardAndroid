@@ -112,7 +112,7 @@ public class MainAccessActivity extends ActionBarActivity implements  View.OnCli
         // Пробуем проинициализировать модуль цифровых подписей, если ключ расшифровался неверно,
         // получим исключение. При этом модуль безопасности не будет инициализирован, можно повторять
         // операцию сколько угодно раз
-        CryptEngineFactory.getEngine( getApplicationContext() );
+        CryptEngineFactory.getEngine( this );
     }
 
     /**
