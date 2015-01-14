@@ -157,7 +157,7 @@ public class MainPageActivity extends AbstractBaseActivity {
 
 
                 @Override
-                public void onPageScrolled(int position, float positionOffset,
+                public void onPageScrolled(int position, float positionzzOffset,
                                            int positionOffsetPixels) {
                     SlideIndicator(position);
                 }

@@ -1,7 +1,9 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,6 +42,7 @@ public class ReportCommonFilter extends LinearLayout implements DatePickerDialog
         this(ctx, container, new Date(), state);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public ReportCommonFilter(Context ctx, ViewGroup container, Date initDate, Integer state) {
         super(ctx);
 

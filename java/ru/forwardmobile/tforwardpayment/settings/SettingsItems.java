@@ -2,12 +2,15 @@ package ru.forwardmobile.tforwardpayment.settings;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.InputFilter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ru.forwardmobile.tforwardpayment.R;
+import ru.forwardmobile.tforwardpayment.phonefilter.PhoneNumberFilter;
+import ru.forwardmobile.tforwardpayment.phonefilter.PhoneNumberTextWatcher;
 
 /**
  * Created by PiskunovI on 01.10.2014.
@@ -60,6 +63,14 @@ public class SettingsItems extends LinearLayout{
     public void createEditText(Context context, String text){
         Value = new EditText(context);
         Value.setText(text);
+        Value.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+    }
+
+    public void createEditPhone(Context context){
+        Value = new EditText(context);
+        Value.addTextChangedListener(new PhoneNumberTextWatcher());
+        Value.setFilters(new InputFilter[]{new PhoneNumberFilter(), new InputFilter.LengthFilter(12)});
+        //Value.setText(text);
         Value.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 

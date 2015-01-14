@@ -33,7 +33,7 @@ import ru.forwardmobile.util.android.ITaskListener;
 public class PageSettings extends ActionBarActivity implements View.OnClickListener {
 
     final static String LOG_TAG = "TFORWARD.PageSettings";
-    SettingsItems testBtn, testText, testEditable, operatorsBtn,passwordWidget,updateCheckBtn;
+    SettingsItems testBtn, testText, testEditable, operatorsBtn,passwordWidget,updateCheckBtn,testEditablePhone;
 
 
     @Override
@@ -60,6 +60,8 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
         operatorsBtn = new SettingsItems(this);
         // Version
         updateCheckBtn = new SettingsItems(this);
+        //EditView
+        //testEditablePhone = new SettingsItems(this);
 
 
         //Просто добавим какой-нибудь TextView
@@ -81,6 +83,9 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
         passwordWidget.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
         someSetting.addItem(passwordWidget, viewGroup);
 
+        testEditablePhone = new SettingsItems(this);
+        testEditablePhone.createEditPhone(this);
+        someSetting.addItem(testEditablePhone,viewGroup);
 
         //Создадим кнопку, чтобы сохранить изменения
         testBtn.createButton(this,"Сохранить");

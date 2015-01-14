@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,7 +35,11 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paymentlist);
 
-        ListView paymentList = (ListView) findViewById(R.id.listView);
+        final ListView paymentList = (ListView) findViewById(R.id.listView);
+
+        Button fullList = (Button) findViewById(R.id.fullList);
+
+        Button dateList = (Button) findViewById(R.id.dateList);
 
         IPaymentDao paymentDao = PaymentDaoFactory.getPaymentDao(this);
 
@@ -43,6 +48,32 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
         paymentList.setAdapter(paymentReportAdapter);
 
         paymentList.setOnItemClickListener(this);
+
+        fullList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                findViewById(R.id.dateFilter).setVisibility(View.GONE);
+
+                /*
+                IPaymentDao paymentDao = PaymentDaoFactory.getPaymentDao(PaymentReportActivity.this);
+
+                final PaymentReportAdapter paymentReportAdapter = new PaymentReportAdapter(paymentDao.getPayments(), PaymentReportActivity.this);
+
+                paymentList.setAdapter(paymentReportAdapter);
+
+                paymentList.setOnItemClickListener(PaymentReportActivity.this);
+                */
+            }
+        });
+
+        dateList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                findViewById(R.id.dateFilter).setVisibility(View.VISIBLE);
+            }
+        });
+
+
 
     }
 
