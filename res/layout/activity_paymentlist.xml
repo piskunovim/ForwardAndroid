@@ -5,66 +5,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="3dp"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:paddingBottom="5dp"
-        >
-        <Button
-            android:id="@+id/fullList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Все отчеты"
-            android:layout_weight="1"
-            android:background="@drawable/gardient_login_form_button"
-            android:textColor="@color/white"/>
-        <Button
-            android:id="@+id/dateList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Указать период"
-            android:layout_weight="1"
-            android:background="@drawable/gardient_login_form_button"
-            android:textColor="@color/white"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/dateFilter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        >
-        <EditText
-            android:id="@+id/startDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:textSize="30dp"
-            android:text="-"
-            />
-        <EditText
-            android:id="@+id/finishDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:id="@+id/listViewContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="2"
     >
     <TextView
         android:layout_width="wrap_content"
@@ -86,6 +30,69 @@
         android:id="@+id/listView"
         />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dateFilter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_weight="8"
+    >
+        <EditText
+            android:id="@+id/startDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textSize="30dp"
+            android:text="-"
+            android:layout_weight="1.8"
+            />
+        <EditText
+            android:id="@+id/finishDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="3dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="5dp"
+        android:layout_weight="8"
+        >
+        <Button
+            android:id="@+id/fullList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Все отчеты"
+            android:layout_weight="1"
+            android:background="@drawable/gardient_login_form_button"
+            android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/dateList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Указать период"
+            android:layout_weight="1"
+            android:background="@drawable/gardient_login_form_button"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+
 
 
 

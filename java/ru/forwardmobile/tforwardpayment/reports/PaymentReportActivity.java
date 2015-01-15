@@ -1,9 +1,11 @@
 package ru.forwardmobile.tforwardpayment.reports;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -41,6 +43,8 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
 
         Button dateList = (Button) findViewById(R.id.dateList);
 
+        onFilterHide();
+
         IPaymentDao paymentDao = PaymentDaoFactory.getPaymentDao(this);
 
         final PaymentReportAdapter paymentReportAdapter = new PaymentReportAdapter(paymentDao.getPayments(), this);
@@ -52,7 +56,9 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
         fullList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                findViewById(R.id.dateFilter).setVisibility(View.GONE);
+                onFilterHide();
+
+                Dialog
 
                 /*
                 IPaymentDao paymentDao = PaymentDaoFactory.getPaymentDao(PaymentReportActivity.this);
@@ -69,7 +75,7 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
         dateList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                findViewById(R.id.dateFilter).setVisibility(View.VISIBLE);
+                onFilterShow();
             }
         });
 
@@ -114,5 +120,26 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
                 builder.show();
     }
 
+    public void onFilterShow(){
+        findViewById(R.id.dateFilter).setVisibility(View.VISIBLE);
+        findViewById(R.id.buttonPanel).setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, 8.0f));
+        findViewById(R.id.listViewContainer).setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, 2.0f));
+
+    }
+
+    public void onFilterHide(){
+        findViewById(R.id.dateFilter).setVisibility(View.GONE);
+        findViewById(R.id.buttonPanel).setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, 8.0f));
+        findViewById(R.id.listViewContainer).setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, 1.0f));
+
+    }
 
 }

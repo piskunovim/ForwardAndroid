@@ -125,6 +125,7 @@ public class ReportBaseFilter extends LinearLayout implements DatePickerDialog.O
             month.setText("Месяц");
             month.setOnClickListener(this);
 
+            month.setLayoutParams();
             addContentView(month, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT, 1f));
         }
 
