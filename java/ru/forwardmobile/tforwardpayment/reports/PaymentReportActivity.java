@@ -1,18 +1,28 @@
 package ru.forwardmobile.tforwardpayment.reports;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import ru.forwardmobile.tforwardpayment.AbstractBaseActivity;
 import ru.forwardmobile.tforwardpayment.R;
@@ -26,10 +36,14 @@ import ru.forwardmobile.tforwardpayment.spp.PaymentDaoFactory;
  */
 public class PaymentReportActivity extends AbstractBaseActivity implements AdapterView.OnItemClickListener {
 
+    String LOG_TAG = "PaymentReportActivity";
+    EditText startDate, finishDate;
+
+    Calendar calendar = Calendar.getInstance();
+
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     @Override
@@ -37,11 +51,63 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paymentlist);
 
+        final DatePickerDialog.OnDateSetListener sDate = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateStartLabel();
+            }
+
+        };
+
+        final DatePickerDialog.OnDateSetListener fDate = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateFinishLabel();
+            }
+
+        };
+
         final ListView paymentList = (ListView) findViewById(R.id.listView);
 
         Button fullList = (Button) findViewById(R.id.fullList);
 
         Button dateList = (Button) findViewById(R.id.dateList);
+
+        startDate = (EditText) findViewById(R.id.startDate);
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(LOG_TAG, "startDate clicked");
+                new DatePickerDialog(PaymentReportActivity.this, sDate, calendar
+                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
+        finishDate = (EditText) findViewById(R.id.finishDate);
+        finishDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(LOG_TAG, "finishtDate clicked");
+                new DatePickerDialog(PaymentReportActivity.this, fDate, calendar
+                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
 
         onFilterHide();
 
@@ -56,9 +122,8 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
         fullList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onFilterHide();
 
-                Dialog
+                openPaymentsDialog();
 
                 /*
                 IPaymentDao paymentDao = PaymentDaoFactory.getPaymentDao(PaymentReportActivity.this);
@@ -78,7 +143,6 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
                 onFilterShow();
             }
         });
-
 
 
     }
@@ -140,6 +204,89 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT, 1.0f));
 
+    }
+
+    private void openPaymentsDialog()
+    {
+        String[] a = {"Полный список","Проведенные","В обработке","Завершены ошибкой"};
+
+        new AlertDialog.Builder(this)
+                .setTitle("Все отчеты")
+                .setItems(a,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialoginterface, int i) {
+                                onFilterHide();
+
+                                final ListView paymentList = (ListView) findViewById(R.id.listView);
+
+                                IPaymentDao paymentDao;
+
+                                final PaymentReportAdapter paymentReportAdapter;
+
+                                if (i == 0) {
+                                    Toast.makeText(PaymentReportActivity.this, "Полный список", Toast.LENGTH_SHORT).show();
+
+                                    paymentDao = PaymentDaoFactory.getPaymentDao(PaymentReportActivity.this);
+
+                                    paymentReportAdapter = new PaymentReportAdapter(paymentDao.getPayments(), PaymentReportActivity.this);
+
+                                    paymentList.setAdapter(paymentReportAdapter);
+
+                                    paymentList.setOnItemClickListener(PaymentReportActivity.this);
+
+                                } else if (i == 1) {
+                                    Toast.makeText(PaymentReportActivity.this, "Проведенные", Toast.LENGTH_SHORT).show();
+
+                                    paymentDao = PaymentDaoFactory.getPaymentDao(PaymentReportActivity.this);
+
+                                    paymentReportAdapter = new PaymentReportAdapter(paymentDao.getDone(), PaymentReportActivity.this);
+
+                                    paymentList.setAdapter(paymentReportAdapter);
+
+                                    paymentList.setOnItemClickListener(PaymentReportActivity.this);
+
+                                } else if (i == 2) {
+                                    Toast.makeText(PaymentReportActivity.this, "В обработке", Toast.LENGTH_SHORT).show();
+                                    paymentDao = PaymentDaoFactory.getPaymentDao(PaymentReportActivity.this);
+
+                                    paymentReportAdapter = new PaymentReportAdapter(paymentDao.getUnprocessed(), PaymentReportActivity.this);
+
+                                    paymentList.setAdapter(paymentReportAdapter);
+
+                                    paymentList.setOnItemClickListener(PaymentReportActivity.this);
+                                } else if (i == 3) {
+                                    Toast.makeText(PaymentReportActivity.this, "Завершены ошибкой", Toast.LENGTH_SHORT).show();
+
+                                    paymentDao = PaymentDaoFactory.getPaymentDao(PaymentReportActivity.this);
+
+                                    paymentReportAdapter = new PaymentReportAdapter(paymentDao.getFailed(), PaymentReportActivity.this);
+
+                                    paymentList.setAdapter(paymentReportAdapter);
+
+                                    paymentList.setOnItemClickListener(PaymentReportActivity.this);
+                                }
+
+                            }
+                        })
+                .show();
+    }
+
+    //StartLabel
+
+    private void updateStartLabel() {
+
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        startDate.setText(sdf.format(calendar.getTime()));
+    }
+
+    private void updateFinishLabel() {
+
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        finishDate.setText(sdf.format(calendar.getTime()));
     }
 
 }

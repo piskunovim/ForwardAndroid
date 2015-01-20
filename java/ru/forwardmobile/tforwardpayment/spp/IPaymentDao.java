@@ -14,6 +14,8 @@ public interface IPaymentDao {
     public IPayment                 findByTransaction(Integer transactid);
     public Collection<IPayment>     getCollection();
     public Collection<IPayment>     getUnprocessed();
+    public Collection<IPayment>     getFailed();
+    public Collection<IPayment>     getDone();
     public Collection<IPayment>     getPayments(Date startDate, Date finishDate);
     public Collection<IPayment>     getPayments();
     public void                     delete(IPayment payment);

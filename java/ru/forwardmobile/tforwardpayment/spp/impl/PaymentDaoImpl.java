@@ -240,6 +240,88 @@ public class PaymentDaoImpl implements IPaymentDao {
         return collection;
     }
 
+    public synchronized Collection<IPayment> getFailed() {
+
+        List<IPayment> collection = new ArrayList<IPayment>();
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate, pstitle from "
+                + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where status =" + IPayment.FAILED
+                , new String[]{});
+        try {
+            while (cursor.moveToNext()) {
+
+                Collection<IField> fields = parseFields(cursor.getString(3));
+
+                IPayment payment = PaymentFactory.getPayment(context);
+                payment.setPsid(cursor.getInt(1));
+                payment.setValue((double) cursor.getInt(4) / 100 );
+                payment.setFullValue((double) cursor.getInt(5) / 100);
+                payment.setFields(fields);
+                payment.setErrorCode(cursor.getInt(6));
+                payment.setErrorDescription(cursor.getString(7));
+                payment.setStartDate(new Date(cursor.getLong(8)));
+                payment.setStatus(cursor.getInt(9));
+                payment.setDateOfProcess(new Date(cursor.getLong(10)));
+                payment.setPsTitle(cursor.getString(11));
+
+                payment.setId(cursor.getInt(0));
+                payment.setTransactionId(cursor.getInt(2));
+
+                Log.v(LOGGER_TAG, "Fetching payment id "
+                        + payment.getId()
+                        + ", StartDate " + payment.getStartDate()
+                        + ", psid " + payment.getPsid()
+                        + ", status " + payment.getStatus()
+                        + ", processDate " + payment.getDateOfProcess());
+
+                collection.add(payment);
+            }
+        } finally {
+            cursor.close();
+        }
+        return collection;
+    }
+
+    public synchronized Collection<IPayment> getDone() {
+
+        List<IPayment> collection = new ArrayList<IPayment>();
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(" select id, psid, transactid, fields, value, fullValue, errorCode, errorDescription, startDate, status, processDate, pstitle from "
+                + DatabaseHelper.PAYMENT_QUEUE_TABLE  + " where status =" + IPayment.DONE
+                , new String[]{});
+        try {
+            while (cursor.moveToNext()) {
+
+                Collection<IField> fields = parseFields(cursor.getString(3));
+
+                IPayment payment = PaymentFactory.getPayment(context);
+                payment.setPsid(cursor.getInt(1));
+                payment.setValue((double) cursor.getInt(4) / 100 );
+                payment.setFullValue((double) cursor.getInt(5) / 100);
+                payment.setFields(fields);
+                payment.setErrorCode(cursor.getInt(6));
+                payment.setErrorDescription(cursor.getString(7));
+                payment.setStartDate(new Date(cursor.getLong(8)));
+                payment.setStatus(cursor.getInt(9));
+                payment.setDateOfProcess(new Date(cursor.getLong(10)));
+                payment.setPsTitle(cursor.getString(11));
+
+                payment.setId(cursor.getInt(0));
+                payment.setTransactionId(cursor.getInt(2));
+
+                Log.v(LOGGER_TAG, "Fetching payment id "
+                        + payment.getId()
+                        + ", StartDate " + payment.getStartDate()
+                        + ", psid " + payment.getPsid()
+                        + ", status " + payment.getStatus()
+                        + ", processDate " + payment.getDateOfProcess());
+
+                collection.add(payment);
+            }
+        } finally {
+            cursor.close();
+        }
+        return collection;
+    }
+
     @Override
     public IPayment findByTransaction(Integer transactid) {
         return null;
