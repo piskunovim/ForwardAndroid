@@ -18,11 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
+import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
+import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 
 /**
  * Created by PiskunovI on 15.07.14.
@@ -45,6 +49,15 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flat);
 
+        Calendar c = Calendar.getInstance();
+
+        try {
+            FileOperationsImpl foi = new FileOperationsImpl(this);
+            foi.writeToFile(new TimeClass().getFullCurrentDateString() + ": MainActivityFlat started \n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         view = (ViewGroup) findViewById(R.id.activity_flat_page_container);
 
         DealerInfo dealerInfo = new DealerInfo(view, this);
@@ -52,6 +65,8 @@ public class MainActivityFlat extends AbstractBaseActivity implements View.OnCli
         dealerInfo.getBlockInfo();
 
         initButtons();
+
+
     }
 
     public void enterDealerInfo(View view)

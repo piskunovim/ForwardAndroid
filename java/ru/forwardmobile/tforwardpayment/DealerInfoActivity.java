@@ -14,9 +14,13 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
+import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
+import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 
 /**
  * Created by gorbovi on 20.08.2014.
@@ -37,6 +41,15 @@ public class DealerInfoActivity extends AbstractBaseActivity {
         setContentView(R.layout.activity_dealer_info);
 
         Log.d(LOG_TAG, "Initialize DealerInfoActivity");
+
+        Calendar c = Calendar.getInstance();
+
+        try {
+            FileOperationsImpl foi = new FileOperationsImpl(this);
+            foi.writeToFile(new TimeClass().getFullCurrentDateString() + ": DealerInfoActivity started \n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         call = (LinearLayout) findViewById(R.id.callManager);
         number = (TextView) findViewById(R.id.managerCallNumber);

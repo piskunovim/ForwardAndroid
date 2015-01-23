@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         applyFonts(findViewById(R.id.activity_main_container), null);
 
         //задаем найстройки работы сервера
-        getServerParams(REAL_SERVER);
+        getServerParams(TEST_SERVER);
 
         //Получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
@@ -331,7 +331,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
           Settings.set(this, Settings.SERVER_HOST, "192.168.1.253");
           Settings.set(this, Settings.SERVER_PORT, "8170");
 
-          Settings.set(this, Settings.NODE_HOST, "192.168.1.6");
+          Settings.set(this, Settings.NODE_HOST, "192.168.1.242");
           Settings.set(this, Settings.NODE_PORT, "3000");
         }
     }

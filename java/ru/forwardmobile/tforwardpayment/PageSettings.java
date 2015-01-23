@@ -18,13 +18,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import ru.forwardmobile.tforwardpayment.actions.UpdateApplicationFromLocalRepo;
 import ru.forwardmobile.tforwardpayment.actions.UpdateCheckTask;
+import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
 import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
 import ru.forwardmobile.tforwardpayment.settings.GroupSettingsItems;
 import ru.forwardmobile.tforwardpayment.settings.SettingsItems;
+import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 import ru.forwardmobile.util.android.ITaskListener;
 
 /**
@@ -33,7 +39,7 @@ import ru.forwardmobile.util.android.ITaskListener;
 public class PageSettings extends ActionBarActivity implements View.OnClickListener {
 
     final static String LOG_TAG = "TFORWARD.PageSettings";
-    SettingsItems testBtn, testText, testEditable, operatorsBtn,passwordWidget,updateCheckBtn,testEditablePhone;
+    SettingsItems testBtn, testText, testEditable, operatorsBtn,passwordWidget,updateCheckBtn,testEditablePhone,sendLogBtn;
 
 
     @Override
@@ -58,8 +64,10 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
         testBtn = new SettingsItems(this);
         //Operators
         operatorsBtn = new SettingsItems(this);
-        // Version
+        //Version
         updateCheckBtn = new SettingsItems(this);
+        //Send Log File
+        sendLogBtn = new SettingsItems(this);
         //EditView
         //testEditablePhone = new SettingsItems(this);
 
@@ -98,6 +106,11 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
         someSetting.addItem(updateCheckBtn, viewGroup);
         updateCheckBtn.getButton()
                 .setOnClickListener(this);
+
+        sendLogBtn.createButton(this,"Отправить Log");
+        someSetting.addItem(sendLogBtn,viewGroup);
+        sendLogBtn.getButton().setOnClickListener(this);
+
 
         testBtn.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +202,9 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
         if(updateCheckBtn.getButton().equals(view)) {
             checkForUpdate();
         }
+        else if(sendLogBtn.getButton().equals(view)){
+            sendLogFile();
+        }
     }
 
     private void checkForUpdate() {
@@ -269,5 +285,16 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
 
         builder.setNegativeButton("Не сейчас", null);
         builder.show();
+    }
+
+    private void sendLogFile(){
+        Log.d(LOG_TAG, "Sending " + new TimeClass().getCurrentDateString() + ".txt log-file.");
+
+        try {
+            FileOperationsImpl foi = new FileOperationsImpl(this);
+            foi.sendFile(new TimeClass().getCurrentDateString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.util.Properties;
 import java.util.Set;
 
+import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
 import ru.forwardmobile.tforwardpayment.security.IKeyStorage;
 import ru.forwardmobile.tforwardpayment.security.KeySingleton;
 import ru.forwardmobile.tforwardpayment.security.KeyStorageFactory;
@@ -172,6 +173,7 @@ public class Settings extends Properties {
         KeySingleton.getInstance(context)
                 .setEncKey( encryptedKey );
     }
+
 
 
 }

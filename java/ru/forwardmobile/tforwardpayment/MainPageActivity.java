@@ -21,14 +21,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Objects;
 
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 import ru.forwardmobile.tforwardpayment.dealer.IDealerBalance;
+import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
 import ru.forwardmobile.tforwardpayment.reports.PaymentReportActivity;
+import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
 
@@ -101,6 +105,16 @@ public class MainPageActivity extends AbstractBaseActivity {
                     }.execute();
                 }
             });
+
+
+            try {
+                FileOperationsImpl foi = new FileOperationsImpl(this);
+
+                foi.writeToFile(new TimeClass().getFullCurrentDateString() + ": MainPageActivity started \n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
             // = кнопка "Проведение платежей"
             enterPaymentsBtn = (LinearLayout) findViewById(R.id.payments_button);
