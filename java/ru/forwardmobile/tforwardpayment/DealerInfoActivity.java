@@ -44,13 +44,6 @@ public class DealerInfoActivity extends AbstractBaseActivity {
 
         Calendar c = Calendar.getInstance();
 
-        try {
-            FileOperationsImpl foi = new FileOperationsImpl(this);
-            foi.writeToFile(new TimeClass().getFullCurrentDateString() + ": DealerInfoActivity started \n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         call = (LinearLayout) findViewById(R.id.callManager);
         number = (TextView) findViewById(R.id.managerCallNumber);
 
@@ -89,6 +82,8 @@ public class DealerInfoActivity extends AbstractBaseActivity {
         callNumber.setData(Uri.parse("tel:"+num));
         startActivity(callNumber);
     }
+
+
 
 }
 

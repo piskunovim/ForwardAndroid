@@ -43,6 +43,8 @@ public class MainPageActivity extends AbstractBaseActivity {
 
         final static String LOG_TAG = "TFORWARD.MainPageActivity";
 
+        FileOperationsImpl foi;
+
         //количество страниц в блоке информационных сообщений
         static final int PAGE_COUNT = 3;
 
@@ -90,8 +92,10 @@ public class MainPageActivity extends AbstractBaseActivity {
                         @Override
                         protected Void doInBackground(Void... voids) {
                             Log.d(LOG_TAG, "Выполняется запрос данных с сервера...");
+                            setToLog("DealerInfo | Запрос обновления данных с сервера");
                             dealerInfo.getDealerInfo();
                             Log.d(LOG_TAG, "Запрос завершен");
+                            setToLog("DealerInfo | Запрос завершен");
                             return null;
                         }
 
@@ -106,7 +110,7 @@ public class MainPageActivity extends AbstractBaseActivity {
                 }
             });
 
-
+            /*
             try {
                 FileOperationsImpl foi = new FileOperationsImpl(this);
 
@@ -114,7 +118,7 @@ public class MainPageActivity extends AbstractBaseActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            */
 
             // = кнопка "Проведение платежей"
             enterPaymentsBtn = (LinearLayout) findViewById(R.id.payments_button);
@@ -353,6 +357,16 @@ public class MainPageActivity extends AbstractBaseActivity {
         super.onDestroy();
     }
 
+    void setToLog(String logMessage){
+        foi = null;
+
+        try {
+            foi = new FileOperationsImpl(this);
+            foi.writeToFile(new TimeClass().getFullCurrentDateString() + logMessage + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 

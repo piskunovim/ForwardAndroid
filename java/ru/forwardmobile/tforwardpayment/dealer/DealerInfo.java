@@ -13,6 +13,7 @@ import com.google.gson.JsonParser;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -22,6 +23,8 @@ import java.util.concurrent.ExecutionException;
 import ru.forwardmobile.tforwardpayment.R;
 import ru.forwardmobile.tforwardpayment.Settings;
 import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
+import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
+import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 
 /**
  * Created by PiskunovI on 29.08.2014.
@@ -29,10 +32,12 @@ import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
  *  Класс отвечает за осуществление запроса данных дилера, их разбор,
  *  а также вывод в соответствующих блоках пользовательского интерфейса
  */
+
 public class DealerInfo {
 
     protected ViewGroup viewGroup;
     protected Context context;
+    FileOperationsImpl foi;
 
     public DealerInfo(ViewGroup _viewGroup, Context _context) {
         viewGroup = _viewGroup;
@@ -225,6 +230,8 @@ public class DealerInfo {
         //"очищает" блок данных
         dealerInfoMissing();
 
+        setToLog("Getting dealer's information from the base");
+
         DatabaseHelper dbHelper = new DatabaseHelper(context);
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -246,6 +253,8 @@ public class DealerInfo {
         }
 
         c.close();
+
+        setToLog("Set dealer's information to Block");
 
         setDealerInfoBlock(dealersName, dealersPoint);
         setDealerFinanceBlock(dealersBalance, dealersCredit, dealerSummFuftutres, dealerMayExpend, dealerFee, dealerRetentionAmount);
@@ -295,4 +304,16 @@ public class DealerInfo {
             }
         }
     }
+
+    void setToLog(String logMessage){
+        foi = null;
+
+        try {
+            foi = new FileOperationsImpl(context);
+            foi.writeToFile(new TimeClass().getFullCurrentDateString() + logMessage + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

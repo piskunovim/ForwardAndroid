@@ -40,9 +40,11 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.network.ServerRequestFactory;
 import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
+import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 import ru.forwardmobile.util.DialogSignleton;
 import ru.forwardmobile.util.android.ITaskListener;
 import ru.forwardmobile.util.http.Converter;
@@ -71,9 +73,15 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     Button btnSignIn;
     AuthenticationTask at;
 
+    FileOperationsImpl foi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        foi = null;
+
+        setToLog("Application started");
 
         // Если запросили выход
         if("true" . equals( getIntent().getStringExtra("EXIT"))) {
@@ -97,6 +105,10 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         //задаем найстройки работы сервера
         getServerParams(TEST_SERVER);
+
+        foi = null;
+
+        setToLog( "Initialization | Server: " + TEST_SERVER);
 
         //Получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
@@ -455,6 +467,17 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
             }
         }
 
+    }
+
+    void setToLog(String logMessage){
+        foi = null;
+
+        try {
+            foi = new FileOperationsImpl(this);
+            foi.writeToFile(new TimeClass().getFullCurrentDateString() + logMessage + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

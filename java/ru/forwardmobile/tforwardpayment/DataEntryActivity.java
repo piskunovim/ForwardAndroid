@@ -9,16 +9,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.operators.IProcessingAction;
 import ru.forwardmobile.tforwardpayment.operators.IProcessor;
 import ru.forwardmobile.tforwardpayment.operators.RequestBuilder;
 import ru.forwardmobile.tforwardpayment.security.CryptEngineImpl;
+import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
 import ru.forwardmobile.tforwardpayment.spp.IField;
@@ -46,6 +49,8 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
 
     public  static final String PS_PARAMETER = "psidx2";
     protected static final String VALUES_MAP = "vmapx8";
+
+    FileOperationsImpl foi;
 
     // Старые значения полей, могут быть заполнены при повороте, или при коррекции платежа
     // Ключ - id поля, значение - реальное значение поля
@@ -84,6 +89,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
     protected void onProviderSelect() {
 
         Log.i(LOGGING_KEY, "Starting payment to provider: " + provider.getName());
+        setToLog("Starting payment to provider: " + provider.getName());
 
         // Создаем поля для ввода
         createFieldView();
@@ -270,6 +276,17 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
                 Toast.makeText(this, "Ошибка введенной суммы", Toast.LENGTH_LONG).show();
                 ex.printStackTrace();
                 return null;
+        }
+    }
+
+    void setToLog(String logMessage){
+        foi = null;
+
+        try {
+            foi = new FileOperationsImpl(this);
+            foi.writeToFile(new TimeClass().getFullCurrentDateString() + logMessage + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
