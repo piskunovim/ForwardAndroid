@@ -5,15 +5,18 @@ import org.xmlpull.v1.XmlPullParser;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ru.forwardmobile.tforwardpayment.operators.impl.FieldImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProcessingActionImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProcessorImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProviderImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.ProvidersEntityManagerImpl;
 import ru.forwardmobile.tforwardpayment.operators.impl.RequestPropertyImpl;
+import ru.forwardmobile.tforwardpayment.spp.FieldFactory;
+import ru.forwardmobile.tforwardpayment.spp.IField;
 import ru.forwardmobile.tforwardpayment.spp.IProvider;
 import ru.raketa.util.xml.AbstractXmlDeserializable;
 import ru.raketa.util.xml.XmlHelper;
@@ -44,15 +47,29 @@ public class OperatorsXmlReader  {
         protected static final String   CHECK_NODE_NAME             = "check";
         protected static final String   PAYMENT_NODE_NAME           = "payment";
         protected static final String   STATUS_NODE_NAME            = "status";
+        protected static final String   ENUM_NODE_NAME              = "enum";
+        protected static final String   ENUM_ITEM_NODE_NAME         = "item";
 
         private ProviderImpl            provider;
         private ProcessorImpl           processor;
         private ProcessingActionImpl    processingAction;
         private RequestPropertyImpl     requestProperty;
-        private FieldImpl               field;
         private Collection<IRequestProperty>    requestProperties;
 
         private IOperatorsXmlListener   listener = null;
+
+        // Временные переменные для полей ввода
+        private Integer field_id        = null;
+        private String  field_name      = null;
+        private String  field_comment   = null;
+        private String  field_type      = null;
+        private String  field_mask      = null;
+        private Map<String,String> enum_options = null;
+        private String enum_item_value  = null;
+
+        private boolean inside_enum = false;
+        private boolean inside_field = false;
+
 
         protected Reader(IOperatorsXmlListener listener) {
             this.listener = listener;
@@ -73,7 +90,7 @@ public class OperatorsXmlReader  {
 
             // Лимит по провайдеру
             if( LIMIT_NODE_NAME . equals(name) ) {
-                provider.setMaxLimit( readDouble(parser, "max") );
+                provider.setMaxLimit(readDouble(parser, "max"));
                 provider.setMinLimit(readDouble(parser, "min"));
 
                 //Log.i(LOGGER_TAG, "Limits " + provider.getMinLimit()
@@ -83,12 +100,10 @@ public class OperatorsXmlReader  {
             // Старт разбора поля
             if( FIELD_NODE_NAME . equals(name) ) {
 
-                Integer id   = readInt(parser, "id");
-                String  type = parser.getAttributeValue(null, "type");
+                field_id   = readInt(parser, "id");
+                field_type = parser.getAttributeValue(null,"type");
 
-                field = new FieldImpl();
-                field.setId(id);
-                field.setType(type);
+                inside_field = true;
 
                 //Log.i(LOGGER_TAG, "New field: " + field.getId() + " - " + field.getType());
             } else
@@ -138,7 +153,17 @@ public class OperatorsXmlReader  {
                 processingAction = new ProcessingActionImpl();
                 requestProperties = new ArrayList<IRequestProperty>();
                 //Log.i(LOGGER_TAG, "Found processor action status.");
-            }
+            } else
+            // Поле с перечислением
+            if( ENUM_NODE_NAME . equals(name) && inside_field) {
+
+                enum_options = new HashMap<String, String>();
+                inside_enum = true;
+            } else
+            if( ENUM_ITEM_NODE_NAME . equals(name) && inside_field && inside_enum) {
+
+                enum_item_value = parser.getAttributeValue(null,"value");
+            } else
             // Старт разбора свойства запроса
             if( "request-property" . equals(name) ) {
 
@@ -176,18 +201,29 @@ public class OperatorsXmlReader  {
                 } else
                 // Название оператора
                 if( OPERATOR_NAME_NODE_NAME . equals(name) ) {
-                    if(field == null) {
+                    if(!inside_field) {
                         provider.setName(text);
                     } else {
-                        field.setName(text);
+                        field_name = text;
                     }
                     //Log.i(LOGGER_TAG, "Name: " + provider.getName());
                 } else
 
                 if( FIELD_NODE_NAME . equals( name )) {
 
+                    IField field = FieldFactory.getField(field_type, field_comment, field_mask, enum_options);
+                    field.setId(field_id);
+                    field.setName(field_name);
+
                     provider.addField(field);
-                    field = null;
+
+                    field_name = null;
+                    field_id = null;
+                    field_comment = null;
+                    field_mask = null;
+                    enum_options = null;
+
+                    inside_field = false;
                 } else
 
                 if( PROCESSOR_NODE_NAME . equals(name)) {
@@ -196,20 +232,17 @@ public class OperatorsXmlReader  {
 
                     //Log.i(LOGGER_TAG,"Saving processor");
                 } else
-                if( "name" . equals(name) ) {
-                    if(field != null) {
-                        field.setName(text);
-                    }
+                if( "name" . equals(name) && inside_field) {
+
+                    field_name = text;
                 } else
-                if( "mask" . equals(name)) {
-                    if(field != null) {
-                        field.setMask(text);
-                    }
+                if( "mask" . equals(name) && inside_field) {
+
+                    field_mask = text;
                 } else
-                if( "comment" . equals(name)) {
-                    if(field != null) {
-                          field.setComment(text.replaceAll("\\[/?\\w+\\]",""));
-                    }
+                if( "comment" . equals(name) && inside_field) {
+
+                    field_comment = text.replaceAll("\\[/?\\w+\\]","");
                 } else
                 if( CHECK_NODE_NAME.equals(name) ) {
 
@@ -245,6 +278,12 @@ public class OperatorsXmlReader  {
                 } else
                 if( "group" . equals(name) ) {
                     listener.onGroupEnd();
+                } else
+                if( ENUM_ITEM_NODE_NAME . equals(name) && inside_enum ) {
+                    enum_options.put(enum_item_value, text.trim());
+                } else
+                if(ENUM_NODE_NAME . equals(name)) {
+                    inside_enum = false;
                 }
         }
     }

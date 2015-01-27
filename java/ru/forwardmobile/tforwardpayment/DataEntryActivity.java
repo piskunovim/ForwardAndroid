@@ -118,7 +118,7 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         // Создание и вывод полей
         for(IField field: provider.getFields()) {
 
-            Log.i(LOGGING_KEY, "Rendering field: " + field.getName());
+            Log.i(LOGGING_KEY, "Rendering field: " + field.getName() + ": " + field.getType());
 
             FieldWidget widget = FieldWidgetFactory.createWidget(field, this);
 
