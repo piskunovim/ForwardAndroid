@@ -8,12 +8,18 @@ import ru.forwardmobile.tforwardpayment.spp.IField;
  */
 public class FieldImpl implements IField {
 
-    private Integer id;
-    private String  type;
-    private String  comment;
-    private String  name;
-    private String  value;
-    private String  mask;
+    protected Integer id;
+    protected String  type;
+    protected String  comment;
+    protected String  name;
+    protected String  value;
+    protected String  mask;
+
+    public FieldImpl() {}
+    public FieldImpl(String mask, String comment) {
+        this.mask = mask;
+        this.comment = comment;
+    }
 
     public String getMask() {
         return mask;

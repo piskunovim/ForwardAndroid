@@ -372,7 +372,7 @@ public class PaymentDaoImpl implements IPaymentDao {
         public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
             if("f" . equals(localName)) {
 
-                field = FieldFactory.getField();
+                field = FieldFactory.getField(IField.TYPE_MASKED, null,null,null);
 
                 field.setId(Integer.parseInt(atts.getValue(0)));
                 field.setName(atts.getValue(1));

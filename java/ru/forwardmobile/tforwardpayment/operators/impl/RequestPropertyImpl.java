@@ -106,7 +106,7 @@ public class RequestPropertyImpl implements IRequestProperty {
     }
     
     protected String exportField(final String name, final String value) {
-        return "<f n=\"" + name + "\">" + value + "</f>";
+        return "<f n=\"" + name.replaceAll("\\|","") + "\">" + value + "</f>";
     }
     
 }

@@ -9,6 +9,7 @@ import ru.forwardmobile.tforwardpayment.operators.IValue;
 public interface IField {
 
     public static final String TYPE_MASKED = "masked";
+    public static final String TYPE_ENUM = "enum";
 
     public Integer      getId();
     public String       getType();
@@ -18,4 +19,6 @@ public interface IField {
     public void         setValue(String value);
     public void         setId(Integer id);
     public void         setName(String name);
+    public void         setComment(String comment);
+    public void         setType(String type);
 }
