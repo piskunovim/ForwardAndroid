@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,7 +13,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.Settings;
+import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
+import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 import ru.forwardmobile.tforwardpayment.spp.ICommand;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
@@ -33,6 +36,8 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
     List<IPayment> activePayments = new ArrayList<IPayment>();
     List<IPayment> storedPayments = new ArrayList<IPayment>();
+
+    FileOperationsImpl foi;
 
     private boolean     stop    = false;
     private boolean     active  = false;
@@ -86,6 +91,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
         this.storedPayments.clear();
 
         Log.i(LOGGER_TAG, "Queue was stopped...");
+        setToLog(LOGGER_TAG + " | Queue was stopped...");
 
         synchronized (this) {
             notifyAll();
@@ -112,6 +118,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
 
         Log.i(LOGGER_TAG, "New payment started with id "
                 + payment.getId());
+        setToLog(LOGGER_TAG + " | " + payment.getId());
 
         synchronized ( activePayments ) {
             activePayments.add( payment );
@@ -170,6 +177,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     paymentDao.delete(payment);
                     // Application.getCounter().count(payment,IPaymentCounter.COUNT_REMOVE);
                     Log.i(LOGGER_TAG, "#" + payment.getId() + " Payment deleted.");
+                    setToLog(LOGGER_TAG + " | #" + payment.getId() + " Payment deleted.");
                 } else {
                     throw new Exception("Платеж со статусом отличным от \"Ошибочный\" и \"Отмененный\" (\"" + payment.getStatusName() + "\")!");
                 }
@@ -215,6 +223,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
                     payment.setDelayed(false);
                     payment.setTryCount(0);
                     Log.i(LOGGER_TAG, "#" + payment.getId() + " Payment started.");
+                    setToLog(LOGGER_TAG + " | #" + payment.getId() + " Payment started.");
                 }
             } else {
                 throw new Exception(PAYMENT_ABSENT);
@@ -236,6 +245,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
         Log.v(LOGGER_TAG, "Initial queue size: " + activePayments.size());
 
         Log.v(LOGGER_TAG, "Queue daemon started...");
+        setToLog(LOGGER_TAG + " | Queue daemon started...");
         try {
             Thread.sleep(3000); // delayed start
 
@@ -266,6 +276,7 @@ public class PaymentQueueImpl implements IPaymentQueue {
         }
 
         Log.i(LOGGER_TAG, "Queue daemon stopped...");
+        setToLog(LOGGER_TAG + " | Queue daemon stopped...");
     }
 
 
@@ -422,6 +433,17 @@ public class PaymentQueueImpl implements IPaymentQueue {
         }
         storedPayments.add(payment);
         Log.i(LOGGER_TAG, "Payment (" + payment.getId() + ") is removed from queue.");
+    }
+
+    void setToLog(String logMessage){
+        foi = null;
+
+        try {
+            foi = new FileOperationsImpl(ctx);
+            foi.writeToFile(new TimeClass().getFullCurrentDateString() + logMessage + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
