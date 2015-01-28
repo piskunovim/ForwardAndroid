@@ -28,6 +28,7 @@ import ru.forwardmobile.tforwardpayment.actions.UpdateApplicationFromLocalRepo;
 import ru.forwardmobile.tforwardpayment.actions.UpdateCheckTask;
 import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
 import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
+import ru.forwardmobile.tforwardpayment.operators.OperatorsEntityManagerFactory;
 import ru.forwardmobile.tforwardpayment.settings.GroupSettingsItems;
 import ru.forwardmobile.tforwardpayment.settings.SettingsItems;
 import ru.forwardmobile.tforwardpayment.settings.TimeClass;
@@ -147,6 +148,7 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
 
                         if (status == 1)
                         {
+                            OperatorsEntityManagerFactory.getManager(PageSettings.this, true);
                             Toast.makeText(PageSettings.this,"Operators.xml загружен успешно!", Toast.LENGTH_SHORT).show();
                         }
                         else {
