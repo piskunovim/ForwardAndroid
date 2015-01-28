@@ -16,7 +16,13 @@ public class OperatorsEntityManagerFactory {
     private static ProvidersEntityManagerImpl manager;
 
     public static ProvidersEntityManagerImpl getManager(Context ctx) {
-        if (manager == null) {
+
+        return getManager(ctx, false);
+    }
+
+    public static ProvidersEntityManagerImpl getManager(Context ctx, boolean reload) {
+
+        if(manager == null || reload) {
             try {
 
                 File file = new File(ctx.getFilesDir() + "/" + "operators.xml");
@@ -24,12 +30,11 @@ public class OperatorsEntityManagerFactory {
 
                 manager = new OperatorsXmlReader()
                         .readOperators(fileInputStream);
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         }
 
         return manager;
     }
-
 }
