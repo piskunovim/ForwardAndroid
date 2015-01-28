@@ -1,5 +1,6 @@
 package ru.forwardmobile.tforwardpayment;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,8 +43,7 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
     final static String LOG_TAG = "TFORWARD.PageSettings";
     SettingsItems testBtn, testText, testEditable, operatorsBtn,passwordWidget,updateCheckBtn,testEditablePhone,sendLogBtn;
 
-
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -85,15 +86,20 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
         testEditable.createTextView(this, "Номер точки: " + Settings.get(this, Settings.POINT_ID));
         someSetting.addItem(testEditable, viewGroup);
 
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+
         passwordWidget = new SettingsItems(this);
         passwordWidget.createEditSettings(this, "Пароль:", "******");
         passwordWidget.getEditText().setRawInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordWidget.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
         someSetting.addItem(passwordWidget, viewGroup);
 
+/*
         testEditablePhone = new SettingsItems(this);
         testEditablePhone.createEditPhone(this);
         someSetting.addItem(testEditablePhone,viewGroup);
+*/
 
         //Создадим кнопку, чтобы сохранить изменения
         testBtn.createButton(this,"Сохранить");
