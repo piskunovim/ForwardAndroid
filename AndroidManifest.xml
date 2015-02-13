@@ -53,6 +53,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".HelpActivity"
+            android:label="@string/help" >
+        </activity>
+        <activity
             android:name=".MainPageActivity"
             android:label="@string/title_activity_main_list" >
         </activity>

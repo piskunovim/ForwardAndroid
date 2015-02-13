@@ -40,7 +40,7 @@ public class Settings extends Properties {
     public static final String MAXIMUM_TRY_COUNT        = "maximum_try_count";
     public static final char   CRLF                     = '\n';
 
-    public static final Integer VERSION_CODE            = 102;
+    public static final Integer VERSION_CODE            = 107;
     public static final String  LOCAL_REPOSITORY_URL    = "http://www.forwardmobile.ru/files/android/payment.apk";
 
     // Набор стандартных настроек
@@ -51,7 +51,7 @@ public class Settings extends Properties {
     private static final String DEFAULT_NODE_PORT       = "3000";
 
     public static String getVersion() {
-        return "Android_102";
+        return "Android_107";
     }
     
     /**

@@ -1,7 +1,10 @@
 package ru.forwardmobile.tforwardpayment.files;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,12 +29,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ru.forwardmobile.tforwardpayment.Settings;
+import ru.forwardmobile.tforwardpayment.db.DatabaseHelper;
 import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 import ru.forwardmobile.util.http.IRequest;
 import ru.forwardmobile.util.http.IResponse;
@@ -65,20 +71,36 @@ public class FileOperationsImpl implements IFileOperations {
         }*/
         Log.d(LOG_TAG, "FileOperationsImpl accessed");
 
-        try {
+        /*try {
+            File dir = new File("logs");
 
-            fos = this.context.openFileOutput(currentDate, Context.MODE_APPEND);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            Log.d(LOG_TAG, "FileLogPath: " + dir.getAbsolutePath());
+            File file = new File(dir.getAbsolutePath(), currentDate);
+            if(!file.exists()) {
+                Log.d(LOG_TAG, "FileLogPath: " + file.getAbsolutePath());
+                file.createNewFile();
+            }
+
+
+
+            fos = new FileOutputStream(file);
+
+
+            //fos = this.context.openFileOutput(currentDate, Context.MODE_APPEND);
 
             fos.write(("").getBytes());
 
-            fos.close();
+          //  fos.close();
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
         }
-
+        */
 
     }
 
@@ -137,7 +159,10 @@ public class FileOperationsImpl implements IFileOperations {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
                 nameValuePairs.add(new BasicNameValuePair("pointid", Settings.get(context,Settings.POINT_ID)));
                 nameValuePairs.add(new BasicNameValuePair("filename", currentDate));
-                nameValuePairs.add(new BasicNameValuePair("log_text", readFile(currentDate)));
+                nameValuePairs.add(new BasicNameValuePair("log_text", getLogFromSql(context)));
+
+                //использовалось когда лог хранился в текстовом файле
+                //nameValuePairs.add(new BasicNameValuePair("log_text", readFile(currentDate)));
 
                 post.setEntity(new UrlEncodedFormEntity(nameValuePairs,"UTF8"));
                 String response = client.execute(post, new BasicResponseHandler());
@@ -199,6 +224,47 @@ public class FileOperationsImpl implements IFileOperations {
                 return stringBuffer.toString();
 
             } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+
+            return "";
+        }
+
+        protected String getLogFromSql(Context context){
+
+            try{
+                Calendar today = Calendar.getInstance();
+                today.set(Calendar.HOUR_OF_DAY, 0);
+
+                DatabaseHelper dbHelper = new DatabaseHelper(context);
+
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+                Log.d(LOG_TAG, Long.toString(today.getTime().getTime()));
+
+                Cursor c = db.rawQuery("SELECT * FROM " + dbHelper.LOGS_TABLE_NAME + " WHERE stamp >= " + today.getTime().getTime(), null);
+
+                String log = "";
+
+                c.moveToFirst();
+                do{
+                    Date date = new Date(c.getLong(c.getColumnIndex("stamp")));
+                    Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                    log += formatter.format(date) + " : " + c.getString(c.getColumnIndex("message")) + "\n";
+                }
+                while(c.moveToNext());
+
+                c.close();
+
+                Log.d(LOG_TAG, log);
+
+                return log;
+                //select * FROM logs WHERE strftime('%Y-%m-%d', stamp / 1000, 'unixepoch');
+            }
+            catch(Exception e){
 
                 e.printStackTrace();
 

@@ -297,12 +297,13 @@ public class PageSettings extends ActionBarActivity implements View.OnClickListe
 
     private void sendLogFile(){
         Log.d(LOG_TAG, "Sending " + new TimeClass().getCurrentDateString() + ".txt log-file.");
-
         try {
             FileOperationsImpl foi = new FileOperationsImpl(this);
             foi.sendFile(new TimeClass().getCurrentDateString());
+            Toast.makeText(this, "Спасибо! Log-файл успешно отправлен.", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(this, "Ошибка отправки log-файла.", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.util.Iterator;
 
 import ru.forwardmobile.tforwardpayment.Settings;
+import ru.forwardmobile.tforwardpayment.files.LogFile;
 import ru.forwardmobile.tforwardpayment.security.ICryptEngine;
 import ru.forwardmobile.tforwardpayment.spp.ICommandRequest;
 import ru.forwardmobile.tforwardpayment.spp.IResponseSet;
@@ -34,6 +35,8 @@ public class HttpTransport
     
     public byte[] send(IRequest request, Context context) throws Exception {
 
+        LogFile.setToLog(context, "HttpTransport started");
+
         StringBuilder requestBody = new StringBuilder(new String(request.getData()));
         
         // Если для запроса необходима цифровая подпись,
@@ -49,12 +52,17 @@ public class HttpTransport
         request.setPath("/?v=" + Settings.getVersion());
 
         Log.i("TFORWARD.HttpTransport", request.toString());
+
+        LogFile.setToLog(context, request.toString());
         
         ITransport transport = TransportFactory.getTransport();
         IResponse  response  = transport.send(request);        
         
         Log.i("TFORWARD.HttpTransport", response.toString());
-        
+
+        LogFile.setToLog(context, response.toString());
+        LogFile.setToLog(context, new String(response.getData()));
+
         //  Ответ от сервера так же может быть разбит на две части
         InputStream is =  new ByteArrayInputStream(response.getData());
         ByteArrayOutputStream answer    = new ByteArrayOutputStream();

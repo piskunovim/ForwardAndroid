@@ -41,6 +41,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
+import ru.forwardmobile.tforwardpayment.files.LogFile;
 import ru.forwardmobile.tforwardpayment.network.HttpTransport;
 import ru.forwardmobile.tforwardpayment.network.ServerRequestFactory;
 import ru.forwardmobile.tforwardpayment.operators.GetOperatorsXML;
@@ -53,6 +54,7 @@ import ru.forwardmobile.util.http.IRequest;
 public class MainActivity extends ActionBarActivity implements EditText.OnEditorActionListener {
 
     static final String TEST_SERVER = "test";
+    static final String LOCAL_SERVER = "local";
     static final String REAL_SERVER = "online";
 
     //Инициализация строковой переменной логирования
@@ -79,9 +81,12 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        foi = null;
+        LogFile.setToLog(this, "Application started");
 
-        setToLog("Application started");
+//       Try to delete if you are not if you are not afraid ;)
+//       foi = null;
+
+
 
         // Если запросили выход
         if("true" . equals( getIntent().getStringExtra("EXIT"))) {
@@ -108,7 +113,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
         foi = null;
 
-        setToLog( "Initialization | Server: " + TEST_SERVER);
+        LogFile.setToLog(this, "Initialization | Server: " + REAL_SERVER);
+        //setToLog( "Initialization | Server: " + TEST_SERVER);
 
         //Получаем идентификаторы точки доступа и пароль
         etName = (EditText) findViewById(R.id.epid);
@@ -187,6 +193,8 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_help) {
+            Intent intent = new Intent(this, HelpActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -297,8 +305,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
         try {
             GCMRegistrar.onDestroy(this);
         } catch (Exception e) {
-            Log.e("UnRegister Receiver Error", "> " +
-                    e.getMessage());
+            Log.e("UnRegister Receiver Error", "> " + e.getMessage());
         }
 
         if(progressDialog != null && progressDialog.isShowing()){
@@ -335,16 +342,25 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
           Settings.set(this, Settings.SERVER_HOST, "www.forwardmobile.ru");
           Settings.set(this, Settings.SERVER_PORT, "8193");
 
-          Settings.set(this, Settings.NODE_HOST, "192.168.1.6");
+          Settings.set(this, Settings.NODE_HOST, "www.forwardmobile.ru");
           Settings.set(this, Settings.NODE_PORT, "3000");
         }
-        else{
+        else if(params.equals("test")){
           // Для тестового сервера
           Settings.set(this, Settings.SERVER_HOST, "192.168.1.253");
           Settings.set(this, Settings.SERVER_PORT, "8170");
 
-          Settings.set(this, Settings.NODE_HOST, "192.168.1.242");
+          Settings.set(this, Settings.NODE_HOST, "192.168.1.6");
           Settings.set(this, Settings.NODE_PORT, "3000");
+        }
+        else {
+            // Для локального подключения к боевому среверу
+            Settings.set(this, Settings.SERVER_HOST, "192.168.1.252");
+            Settings.set(this, Settings.SERVER_PORT, "8193");
+
+            Settings.set(this, Settings.NODE_HOST, "192.168.1.6");
+            Settings.set(this, Settings.NODE_PORT, "3000");
+
         }
     }
 
@@ -469,16 +485,7 @@ public class MainActivity extends ActionBarActivity implements EditText.OnEditor
 
     }
 
-    void setToLog(String logMessage){
-        foi = null;
 
-        try {
-            foi = new FileOperationsImpl(this);
-            foi.writeToFile(new TimeClass().getFullCurrentDateString() + logMessage + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 }

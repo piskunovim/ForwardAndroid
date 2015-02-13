@@ -19,12 +19,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final int        SQLITE_DATABASE_VERSION = 8;
     public static final String     SQLITE_DATABASE_NAME    = "forward";
     public static final String     SETTINGS_TABLE_NAME     = "settings2";
-    public static final String     DEALER_TABLE_NAME        = "dealer";
+    public static final String     DEALER_TABLE_NAME       = "dealer";
     public static final String     PG_TABLE_NAME           = "groups";
     public static final String     P_TABLE_NAME            = "providers";
     public static final String     F_TABLE_NAME            = "provider_fields";
     public static final String     PAYMENT_QUEUE_TABLE     = "payments";
     public static final String     MESSAGES_TABLE_NAME     = "messages";
+    public static final String     LOGS_TABLE_NAME         = "logs";
+
 
     public DatabaseHelper(Context context) {
         super(context, SQLITE_DATABASE_NAME, null, SQLITE_DATABASE_VERSION);
@@ -92,6 +94,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqld.execSQL("insert into " + MESSAGES_TABLE_NAME + " (id, type, messageText, regDate) values('31', '1', 'Новых уведомлений нет', '3333');");
 
         sqld.execSQL("CREATE TABLE " + DEALER_TABLE_NAME + " (id integer primary key, name text, balance text, may_expend text, credit text, retention_amount text, fee text, summ_fuftutres text, fio text, phone text, email text)");
+
+        sqld.execSQL("CREATE TABLE " + LOGS_TABLE_NAME + " (stamp long, message text);");
 
     }
 

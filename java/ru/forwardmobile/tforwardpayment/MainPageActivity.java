@@ -31,6 +31,7 @@ import ru.forwardmobile.tforwardpayment.dealer.DealerDataSource;
 import ru.forwardmobile.tforwardpayment.dealer.DealerInfo;
 import ru.forwardmobile.tforwardpayment.dealer.IDealerBalance;
 import ru.forwardmobile.tforwardpayment.files.FileOperationsImpl;
+import ru.forwardmobile.tforwardpayment.files.LogFile;
 import ru.forwardmobile.tforwardpayment.reports.PaymentReportActivity;
 import ru.forwardmobile.tforwardpayment.settings.TimeClass;
 import ru.forwardmobile.tforwardpayment.spp.ICommandResponse;
@@ -63,6 +64,8 @@ public class MainPageActivity extends AbstractBaseActivity {
             setContentView(R.layout.activity_main_page);
 
             Log.d(LOG_TAG, "Initialize MainPageActivity");
+
+            LogFile.setToLog(this, "Initialize MainPageActivity");
 
             // сброс индикатора страниц #информационного_блока_сообщений
             ClearDots();

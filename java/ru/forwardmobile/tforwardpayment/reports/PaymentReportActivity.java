@@ -242,9 +242,10 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
 
     private void openPaymentsDialog()
     {
-        final boolean[] mCheckedItems = filterParams;
+        final boolean[] mCheckedItems = filterParams; //для фильтра множественного выбора
         final String[] itemsList = {"Полный список","Проведенные","В обработке","Завершены ошибкой"};
 
+        /* Фильтр множественного выбора
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Выберите настройки отображения")
                 .setCancelable(false)
@@ -298,12 +299,12 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
                                 dialog.cancel();
 
                             }
-                        }).show();
+                        }).show();*/
 
 
-        /*new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
                 .setTitle("Все отчеты")
-                .setItems(a,
+                .setItems(itemsList,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialoginterface, int i) {
                                 onFilterHide();
@@ -360,7 +361,7 @@ public class PaymentReportActivity extends AbstractBaseActivity implements Adapt
                             }
                         })
                 .show();
-                */
+
     }
 
     //StartLabel

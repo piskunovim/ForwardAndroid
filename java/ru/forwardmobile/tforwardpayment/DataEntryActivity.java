@@ -262,6 +262,8 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         }
         catch (Exception ex){
             Toast.makeText(this, "Ошибка введенной суммы", Toast.LENGTH_LONG).show();
+            TextView valueView = (TextView) findViewById(R.id.mde_value_value);
+            valueView.setError("Ошибка введенной суммы");
             ex.printStackTrace();
             return null;
         }
@@ -274,6 +276,8 @@ public class DataEntryActivity extends AbstractBaseActivity implements View.OnCl
         }
         catch (Exception ex){
                 Toast.makeText(this, "Ошибка введенной суммы", Toast.LENGTH_LONG).show();
+                TextView valueView = (TextView) findViewById(R.id.mde_full_value_value);
+                valueView.setError("Ошибка введенной суммы");
                 ex.printStackTrace();
                 return null;
         }
